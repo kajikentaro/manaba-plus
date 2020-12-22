@@ -3,21 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>My Chrome Extension</title>
-    <link rel="stylesheet" href="popup.css" />
+    <link rel="stylesheet" href="popup.css"/>
 </head>
 <body>
   <div class="app">
-    <p class="counter-label">Counter</p>
     <div id="counter" class="counter"></div>
-    <div class="button-container">
-      <button id="decrementBtn" class="button">-</button>
-      <button id="incrementBtn" class="button">+</button>
-    </div>
-
-    <hr class="divider" />
-
-    <p class="title">Chrome Extension is Ready!</p>
-    <p class="subtitle">Start by updating <code>popup.html</code></p>
+		<button id="startDL" class="button">コースコンテンツをDL</button>
+    <p class="subtitle">まだPCにダウンロードされていないコンテンツを、まとめてPCにダウンロードします。<br>自動でコース別にフォルダ分けされます</p>
+		<button id="clear-cache" class="button">内部キャッシュを消去</button>
+    <p class="subtitle">重複ダウンロードを防ぐために内部に保存している履歴を消去します</p>
   </div>
 
   <script src="popup.js"></script>
