@@ -27,6 +27,7 @@ chrome.tabs.onUpdated.addListener((tabId) => {
 });
 */
 let downloading_num;
+let downloading_id = -1;
 let download_list_new = [];
 let download_list_old;
 function startDL(){
@@ -39,21 +40,23 @@ function startDL(){
 	let path = path_module.join('Manaba', d_info.course, d_info.content, filename_ex);
 	path = path.replace(/\s+/g, "");
 	chrome.downloads.download({ url: d_info.url, filename: path }, (downloadID) => {
+		downloading_id = downloadID;
 		chrome.runtime.sendMessage({ type: 'progress_start', page: d_info.page });
 	});
 }
 chrome.downloads.onChanged.addListener((downloadDelta) => {
-  if (downloadDelta.state){
-	  if(downloadDelta.state.current == 'interrupted'){
-	  }
-	  if(downloadDelta.state.current == 'complete'){
-		  download_list_old.push(download_list_new[downloading_num]);
-		  chrome.storage.local.set({ 'download_list': download_list_old }, () => { console.log('complete') });
-	  }
-	  chrome.runtime.sendMessage({ type: 'progress_finish', status:downloadDelta.state.current});
-	  downloading_num++;
-	  startDL();
-  }
+	if (downloading_id != downloadDelta.id)return;
+	if (downloadDelta.state) {
+		if (downloadDelta.state.current == 'interrupted') {
+		}
+		if (downloadDelta.state.current == 'complete') {
+			download_list_old.push(download_list_new[downloading_num]);
+			chrome.storage.local.set({ 'download_list': download_list_old }, () => { console.log('complete') });
+		}
+		chrome.runtime.sendMessage({ type: 'progress_finish', status: downloadDelta.state.current });
+		downloading_num++;
+		startDL();
+	}
 });
 function initializeDL(request){
 	download_list_new = [];
@@ -61,6 +64,11 @@ function initializeDL(request){
 	for (let i = 0; i < download_list_now.length; i++) {
 		let isNew = true;
 		for (let j = 0; j < download_list_old.length; j++) {
+			if (download_list_old[j] == null){
+				download_list_old.splice(j,1);
+				j--;
+				continue;
+			}
 			if (download_list_now[i].url == download_list_old[j].url) isNew = false;
 		}
 		if (isNew) {

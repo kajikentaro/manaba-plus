@@ -63,7 +63,7 @@ function getFilesStructure(){
 	function received_content(){
 		let domparser = new DOMParser();
 		let doc = domparser.parseFromString(this.responseText,'text/html');
-		let pages = doc.getElementsByClassName("contentslist")[0].getElementsByClassName("GRIread");
+		let pages = doc.getElementsByClassName("contentslist")[0].getElementsByTagName("li");
 		for(let page of pages){
 			let url = page.getElementsByTagName("a")[0].href;
 			let page_name = page.getElementsByTagName("a")[0].innerHTML;
