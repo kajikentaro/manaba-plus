@@ -118,14 +118,6 @@ let tmp =[
 		"url": "https://room.chuo-u.ac.jp/ct/page_2043377c1340651_1342875135_1342875134/%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88%E8%AA%B2%E9%A1%8C_02_%E9%87%8D%E5%8A%9B%E7%A7%BB%E5%8B%95.pdf?view=full"
 	}];
 
-function develop(){
-			chrome.runtime.sendMessage(
-				{
-					type: 'startDL-32',
-					download_list: tmp,
-					progress_tabid:33
-				});
-}
 
 let progress_tabid;
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -215,6 +207,31 @@ function getAssignment(){
 		}
 	}
 }
+function develop(){
+	filter_assignment(dev_doc);
+}
+var dev_txt = '<tr onmouseover="hilite(this)" onclick="OpenChildAnchor(this)" class="row1"> <td class="border center" title="第1回授業（導入，風化）レポート"> <h3 class="report-title"><img src="/icon-assignment.png" class="inline" title=""> <!--提出済みか未提出か--> <a href="course_1340651_report_2012958">第1回授業（導入，風化）レポート</a> </h3> </td> <!-- <td class="border center"> </td> --> <!--        <td style="text-align:center;">0</td> <td> <div class="period">不明</div> <div class="period"> ファイル送信     </div> </td> --> <td class="border center"> <div>受付終了</div> <strong>提出済み</strong> (1ファイル) </td> <td class="border center">2020-09-24 15:00</td> <td class="border center">2020-10-01 13:20</td> </tr>'
+let dev_domparser = new DOMParser();
+let dev_doc = domparser.parseFromString(dev_txt,'text/html');
+
+var hided_assignment;
+function pre_func(){
+	chrome.storage.sync.get(['hided_assignment'], function(result) {
+		hided_assignment = result;
+		console.log('Value currently is ' + result);
+	});
+}
+function filter_assignment(row){
+	var url = row.getElementsByClassName("a")[0].href;
+	hided_assignment.forEach(e => {
+		if(e == url)return true;
+	});
+	return false;
+
+	chrome.storage.sync.set({key: "kkk"}, function() {
+		console.log('Value is set to ' + value);
+	});
+}
 let mark = document.getElementsByClassName("contentbody-left")[0];
 mark.insertAdjacentHTML('afterbegin','<button id="show-assignment">未提出課題を表示</button><table id="assignment-table"><tbody id="add-parent"><tr id="show-assignment-fin"></tr></tbody></table>');
 let show_assignment_button = document.getElementById('show-assignment');
@@ -223,7 +240,7 @@ assignment_table.style.width = '100%';
 assignment_table.style.padding = '2px 15px 5px 0px';
 show_assignment_button.addEventListener('click',()=>{
 	show_assignment_button.innerHTML = "読み込み中";
-	getAssignment();
-	//develop();
+	//getAssignment();
+	develop();
 });
 
