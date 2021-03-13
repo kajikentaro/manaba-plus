@@ -104,21 +104,6 @@ function getFilesStructure(){
 		request.send();
 	}
 }
-let tmp =[
-	{
-		"course": "xxx",
-		"content": " xxxxx ",
-		"page": "xxxx",
-		"url": "https://room.chuo-u.ac.jp/ct/page_2043377c1340651_1342875133_1342875132/%E9%85%8D%E4%BB%98%E8%B3%87%E6%96%99_03_%E9%87%8D%E5%8A%9B%E7%A7%BB%E5%8B%95.pdf?view=full"
-	},
-	{
-		"course": "yyy",
-		"content": " yyyy ",
-		"page": "yyyyyyy",
-		"url": "https://room.chuo-u.ac.jp/ct/page_2043377c1340651_1342875135_1342875134/%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88%E8%AA%B2%E9%A1%8C_02_%E9%87%8D%E5%8A%9B%E7%A7%BB%E5%8B%95.pdf?view=full"
-	}];
-
-
 let progress_tabid;
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	if(request.type == 'startDL-trigger'){
@@ -129,6 +114,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	}
 });
 function getAssignment(){
+	let assignment_yet = []
 	let course_size = 0;
 	let course_n = 0;
 	function progress(type) {
@@ -136,45 +122,9 @@ function getAssignment(){
 			course_n += 1;
 		}
 		if (course_size == course_n ){
-			let show_assignment_fin = document.getElementById('show-assignment-fin');
-			let add_parent = document.getElementById('add-parent');
-			let shuffle_adapter = [];
-			let now_time = new Date(new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }));
-			for(let i = 0;i < assignment_yet.length;i++){
-				let target_time = new Date(assignment_yet[i].children[3].innerText);
-				let time_diff = target_time.getTime() - now_time.getTime();
-				let day_diff = Math.floor(time_diff / (1000 * 60 * 60 * 24));
-				let deadline_css = "fake";
-				let deadline_color = "auto";
-				if (day_diff < 1) {
-					deadline_css = "one-day-before";
-					deadline_color = '#ffe6e9';
-				} else if (day_diff < 3) {
-					deadline_css = "three-days-before";
-					deadline_color = '#fff4d1';
-				} else if (day_diff < 7) {
-					deadline_css = "seven-days-before";
-					deadline_color = '#cce8cc';
-				}
-				assignment_yet[i].classList.add(deadline_css);//set for manaba enhanced
-				assignment_yet[i].children[0].style.backgroundColor = deadline_color;
-				shuffle_adapter.push({date: target_time, position: i});
-			}
-			shuffle_adapter.sort((a, b) => {
-				if (a.date < b.date) {
-					return -1;
-				} else {
-					return 1;
-				}
-			});
-			for(let i of shuffle_adapter){
-				add_parent.insertBefore(assignment_yet[i.position], show_assignment_fin);
-			}
-			show_assignment_button.style.display = "none";
-			console.log(assignment_yet);
+			setAssignment(assignment_yet);
 		}
 	}
-	let assignment_yet = []
 	function received_course(){
 		let domparser = new DOMParser();
 		let doc = domparser.parseFromString(this.responseText,'text/html');
@@ -193,26 +143,140 @@ function getAssignment(){
 		}
 		progress('course');
 	}
-	let courses = getCourses();
-	let suffixs = ['_query','_survey','_report'];
-	course_size = courses.length * suffixs.length;
-	for(let course of courses){
-		for(let suffix of suffixs){
-			let url  = course['href'] + suffix;
-			let request = new XMLHttpRequest();
-			request.addEventListener('load', received_course);
-			request.course = course['name'];
-			request.open('get',url);
-			request.send();
+	function start(){
+		assignment_yet = [];
+		let courses = getCourses();
+		let suffixs = ['_query','_survey','_report'];
+		course_size = courses.length * suffixs.length;
+		for(let course of courses){
+			for(let suffix of suffixs){
+				let url  = course['href'] + suffix;
+				let request = new XMLHttpRequest();
+				request.addEventListener('load', received_course);
+				request.course = course['name'];
+				request.open('get',url);
+				request.send();
+			}
 		}
 	}
-	function init(){
-
-	}
+	start();
 }
-//ddddddddddddddddddddddddddddddddddddddddddddddddddd
-var assignment_yet;
+function setAssignment(assignment_yet){
+	function start(){
+		function insert_label(){
+			var label = document.createElement('tr');
+			label.innerHTML = '<td>課題名</td><td>状態</td><td>非表示</td><td>受付開始</td><td>受付終了</td>'
+			let add_parent = document.getElementById('add-parent');
+			let show_assignment_fin = document.getElementById('show-assignment-fin');
+			add_parent.insertBefore(label, show_assignment_fin);
+		}
+		insert_label();
+		document.getElementById('toggle_disable').style.display = "inline-block";
+		document.getElementById('toggle_disable').onclick = ()=>{
+			show_disable = !show_disable;
+			show_dev(assignment_yet, show_disable);
+			if(show_disable){
+				document.getElementById('toggle_disable').innerHTML = "非表示にする"
+			}else{
+				document.getElementById('toggle_disable').innerHTML = "非表示を表示"
+			}
+		}
+		chrome.storage.sync.get(["hided_assignment"], function(result) {
+			console.log(result.hided_assignment);
+			set_disable_button(assignment_yet, result.hided_assignment);
+			show_dev(assignment_yet, show_disable);
+		});
+	}
+	var show_disable = false;
+	function set_disable_button(rows, hide_url){
+		for(var row of rows){
+			let td = document.createElement('td');
+			td.style.textAlign = 'center';
+			td.style.verticalAlign = 'bottom';
+			td.onclick = (e)=>{
+				e.stopPropagation();
+				collect_and_preserve();
+				show_dev(assignment_yet, show_disable);
+			}
+			row.insertBefore(td,row.getElementsByTagName('td')[2]);
+
+			var url = row.getElementsByTagName("a")[0].href;
+			if(hide_url.includes(url)){
+				td.innerHTML = '<input type="checkbox" checked="true">'
+			}else{
+				td.innerHTML = '<input type="checkbox">'
+			}
+		}
+		return rows;
+	}
+	function collect_and_preserve(){
+		var disable_href = [];
+		for(var row of assignment_yet){
+			var input = row.getElementsByTagName('input')[0];
+			if(input.checked){
+				var url = row.getElementsByTagName("a")[0].href;
+				disable_href.push(url);
+			}
+		}
+		chrome.storage.sync.set({hided_assignment: disable_href}, function() {
+			console.log('seted disable list');
+		});
+	}
+	function show_dev(rows, show_disable){
+		let show_assignment_fin = document.getElementById('show-assignment-fin');
+		let add_parent = document.getElementById('add-parent');
+		let shuffle_adapter = [];
+		let now_time = new Date(new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }));
+		for(let i = 0;i < rows.length;i++){
+			let target_time = new Date(rows[i].children[3].innerText);
+			let time_diff = target_time.getTime() - now_time.getTime();
+			let day_diff = Math.floor(time_diff / (1000 * 60 * 60 * 24));
+			let deadline_css = "fake";
+			let deadline_color = "auto";
+			if (day_diff < 1) {
+				deadline_css = "one-day-before";
+				deadline_color = '#ffe6e9';
+			} else if (day_diff < 3) {
+				deadline_css = "three-days-before";
+				deadline_color = '#fff4d1';
+			} else if (day_diff < 7) {
+				deadline_css = "seven-days-before";
+				deadline_color = '#cce8cc';
+			}
+			rows[i].classList.add(deadline_css);//set for manaba enhanced
+			rows[i].children[0].style.backgroundColor = deadline_color;
+			shuffle_adapter.push({date: target_time, position: i});
+		}
+		shuffle_adapter.sort((a, b) => {
+			if (a.date < b.date) {
+				return -1;
+			} else {
+				return 1;
+			}
+		});
+		for(let i of shuffle_adapter){
+			add_parent.insertBefore(rows[i.position], show_assignment_fin);
+			rows[i.position].style.display = "table-row";
+
+			var no_disp_if_checked = () =>{
+				var input = rows[i.position].getElementsByTagName('input')[0];
+				if(input.checked){
+					rows[i.position].style.display = "none";
+				}
+			}
+			if(show_disable == false)no_disp_if_checked();
+		}
+		show_assignment_button.style.display = "none";
+	}
+	start();
+}
+//ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
 function develop(){
+	function createElementFromHTML(html) {
+		const tempEl = document.createElement('div');
+		tempEl.innerHTML = html;
+		return tempEl.firstElementChild;
+	}
 	var dev_txt = '<table class="stdlist" width="100%"> <tbody><tr class="title"> <th width="50%">タイトル</th> <!--   <th width="10%">閲覧設定</th> --> <th width="20%">状態</th> <th width="15%">受付開始日時</th> <th width="15%">受付終了日時</th> </tr> <!-- レポート一覧　--> <tr onmouseover="hilite(this)" onclick="OpenChildAnchor(this)" class="row1 hilitecolor"> <td class="border center" title="第1回授業（導入，風化）レポート"> <h3 class="report-title"><img src="/icon-assignment.png" class="inline" title=""> <!--提出済みか未提出か--> <a href="course_1340651_report_2012958">第1回授業（導入，風化）レポート</a> </h3> </td> <!-- <td class="border center"> </td> --> <!--        <td style="text-align:center;">0</td> <td> <div class="period">不明</div> <div class="period"> ファイル送信     </div> </td> --> <td class="border center"> <div>受付終了</div> <strong>提出済み</strong> (1ファイル) </td> <td class="border center">2020-09-24 15:00</td> <td class="border center">2020-10-01 13:20</td> </tr> <tr onmouseover="hilite(this)" onclick="OpenChildAnchor(this)" class="row"> <td class="border center" title="第2回授業（重力移動）レポート"> <h3 class="report-title"><img src="/icon-assignment.png" class="inline" title=""> <!--提出済みか未提出か--> <a href="course_1340651_report_2043385">第2回授業（重力移動）レポート</a> </h3> </td> <!-- <td class="border center"> </td> --> <!--        <td style="text-align:center;">0</td> <td> <div class="period">不明</div> <div class="period"> ファイル送信     </div> </td> --> <td class="border center"> <div>受付終了</div> <strong>提出済み</strong> (1ファイル) </td> <td class="border center">2020-10-01 15:00</td> <td class="border center">2020-10-08 13:20</td> </tr> <tr onmouseover="hilite(this)" onclick="OpenChildAnchor(this)" class="row1"> <td class="border center" title="第3回授業（河川①）レポート"> <h3 class="report-title"><img src="/icon-assignment.png" class="inline" title=""> <!--提出済みか未提出か--> <a href="course_1340651_report_2072532">第3回授業（河川①）レポート</a> </h3> </td> <!-- <td class="border center"> </td> --> <!--        <td style="text-align:center;">0</td> <td> <div class="period">不明</div> <div class="period"> ファイル送信     </div> </td> --> <td class="border center"> <div>受付終了</div> <strong>提出済み</strong> (1ファイル) </td> <td class="border center">2020-10-08 15:00</td> <td class="border center">2020-10-15 13:20</td> </tr> <tr onmouseover="hilite(this)" onclick="OpenChildAnchor(this)" class="row"> <td class="border center" title="第4回授業（河川②）レポート"> <h3 class="report-title"><img src="/icon-assignment.png" class="inline" title=""> <!--提出済みか未提出か--> <a href="course_1340651_report_2104706">第4回授業（河川②）レポート</a> </h3> </td> <!-- <td class="border center"> </td> --> <!--        <td style="text-align:center;">0</td> <td> <div class="period">不明</div> <div class="period"> ファイル送信     </div> </td> --> <td class="border center"> <div>受付終了</div> <strong>提出済み</strong> (1ファイル) </td> <td class="border center">2020-10-15 15:00</td> <td class="border center">2020-10-22 13:20</td> </tr> <tr onmouseover="hilite(this)" onclick="OpenChildAnchor(this)" class="row1"> <td class="border center" title="第5回授業（地下水）レポート"> <h3 class="report-title"><img src="/icon-assignment.png" class="inline" title=""> <!--提出済みか未提出か--> <a href="course_1340651_report_2137304">第5回授業（地下水）レポート</a> </h3> </td> <!-- <td class="border center"> </td> --> <!--        <td style="text-align:center;">0</td> <td> <div class="period">不明</div> <div class="period"> ファイル送信     </div> </td> --> <td class="border center"> <div>受付終了</div> <strong>提出済み</strong> (1ファイル) </td> <td class="border center">2020-10-22 15:00</td> <td class="border center">2020-11-05 13:20</td> </tr> <tr onmouseover="hilite(this)" onclick="OpenChildAnchor(this)" class="row"> <td class="border center" title="第6回授業（氷河①）レポート"> <h3 class="report-title"><img src="/icon-assignment.png" class="inline" title=""> <!--提出済みか未提出か--> <a href="course_1340651_report_2191715">第6回授業（氷河①）レポート</a> </h3> </td> <!-- <td class="border center"> </td> --> <!--        <td style="text-align:center;">0</td> <td> <div class="period">不明</div> <div class="period"> ファイル送信     </div> </td> --> <td class="border center"> <div>受付終了</div> <strong>提出済み</strong> (1ファイル) </td> <td class="border center">2020-11-05 15:00</td> <td class="border center">2020-11-12 13:20</td> </tr> <tr onmouseover="hilite(this)" onclick="OpenChildAnchor(this)" class="row1"> <td class="border center" title="第7回授業（氷河②）レポート"> <h3 class="report-title"><img src="/icon-assignment.png" class="inline" title=""> <!--提出済みか未提出か--> <a href="course_1340651_report_2214342">第7回授業（氷河②）レポート</a> </h3> </td> <!-- <td class="border center"> </td> --> <!--        <td style="text-align:center;">0</td> <td> <div class="period">不明</div> <div class="period"> ファイル送信     </div> </td> --> <td class="border center"> <div>受付終了</div> <strong>提出済み</strong> (1ファイル) </td> <td class="border center">2020-11-12 15:00</td> <td class="border center">2020-11-19 13:20</td> </tr> <tr onmouseover="hilite(this)" onclick="OpenChildAnchor(this)" class="row"> <td class="border center" title="第8回授業（氷河③）レポート"> <h3 class="report-title"><img src="/icon-assignment.png" class="inline" title=""> <!--提出済みか未提出か--> <a href="course_1340651_report_2282582">第8回授業（氷河③）レポート</a> </h3> </td> <!-- <td class="border center"> </td> --> <!--        <td style="text-align:center;">0</td> <td> <div class="period">不明</div> <div class="period"> ファイル送信     </div> </td> --> <td class="border center"> <div>受付終了</div> <strong>提出済み</strong> (1ファイル) </td> <td class="border center">2020-11-19 15:00</td> <td class="border center">2020-11-26 13:20</td> </tr> <tr onmouseover="hilite(this)" onclick="OpenChildAnchor(this)" class="row1"> <td class="border center" title="第9回授業（砂漠と風）レポート"> <h3 class="report-title"><img src="/icon-assignment.png" class="inline" title=""> <!--提出済みか未提出か--> <a href="course_1340651_report_2322454">第9回授業（砂漠と風）レポート</a> </h3> </td> <!-- <td class="border center"> </td> --> <!--        <td style="text-align:center;">0</td> <td> <div class="period">不明</div> <div class="period"> ファイル送信     </div> </td> --> <td class="border center"> <div>受付終了</div> <strong>提出済み</strong> (1ファイル) </td> <td class="border center">2020-11-26 15:00</td> <td class="border center">2020-12-03 13:20</td> </tr> <tr onmouseover="hilite(this)" onclick="OpenChildAnchor(this)" class="row"> <td class="border center" title="第10回授業（海岸と海）レポート"> <h3 class="report-title"><img src="/icon-assignment.png" class="inline" title=""> <!--提出済みか未提出か--> <a href="course_1340651_report_2352670">第10回授業（海岸と海）レポート</a> </h3> </td> <!-- <td class="border center"> </td> --> <!--        <td style="text-align:center;">0</td> <td> <div class="period">不明</div> <div class="period"> ファイル送信     </div> </td> --> <td class="border center"> <div>受付終了</div> <strong>提出済み</strong> (1ファイル) </td> <td class="border center">2020-12-03 15:00</td> <td class="border center">2020-12-10 13:20</td> </tr> <tr onmouseover="hilite(this)" onclick="OpenChildAnchor(this)" class="row1"> <td class="border center" title="第11回授業（地質年代）レポート"> <h3 class="report-title"><img src="/icon-assignment.png" class="inline" title=""> <!--提出済みか未提出か--> <a href="course_1340651_report_2395308">第11回授業（地質年代）レポート</a> </h3> </td> <!-- <td class="border center"> </td> --> <!--        <td style="text-align:center;">0</td> <td> <div class="period">不明</div> <div class="period"> ファイル送信     </div> </td> --> <td class="border center"> <div>受付終了</div> <strong>提出済み</strong> (1ファイル) </td> <td class="border center">2020-12-10 15:00</td> <td class="border center">2020-12-17 13:20</td> </tr> <tr onmouseover="hilite(this)" onclick="OpenChildAnchor(this)" class="row"> <td class="border center" title="第12回授業（地質年代②）レポート"> <h3 class="report-title"><img src="/icon-assignment.png" class="inline" title=""> <!--提出済みか未提出か--> <a href="course_1340651_report_2420705">第12回授業（地質年代②）レポート</a> </h3> </td> <!-- <td class="border center"> </td> --> <!--        <td style="text-align:center;">0</td> <td> <div class="period">不明</div> <div class="period"> ファイル送信     </div> </td> --> <td class="border center"> <div>受付終了</div> <strong>提出済み</strong> (1ファイル) </td> <td class="border center">2020-12-17 15:00</td> <td class="border center">2021-01-07 13:20</td> </tr> </tbody></table>'
 	var dev_doc = createElementFromHTML(dev_txt);
 	var rows = dev_doc.getElementsByTagName("tr");
@@ -225,147 +289,22 @@ function develop(){
 			dev_assignment_yet.push(row.cloneNode(true));
 		}
 	}
-	assignment_yet = dev_assignment_yet;
-
-
-	//start--------------
-	function insert_label(){
-		var label = document.createElement('tr');
-		label.innerHTML = '<td>課題名</td><td>状態</td><td>非表示</td><td>受付開始</td><td>受付終了</td>'
-		let add_parent = document.getElementById('add-parent');
-		let show_assignment_fin = document.getElementById('show-assignment-fin');
-		add_parent.insertBefore(label, show_assignment_fin);
-	}
-	insert_label();
-	document.getElementById('toggle_disable').style.display = "inline-block";
-	document.getElementById('toggle_disable').onclick = ()=>{
-		show_disable = !show_disable;
-		show_dev(assignment_yet, show_disable);
-		if(show_disable){
-			document.getElementById('toggle_disable').innerHTML = "非表示にする"
-		}else{
-			document.getElementById('toggle_disable').innerHTML = "非表示を表示"
-		}
-	}
-	chrome.storage.sync.get(["hided_assignment"], function(result) {
-		console.log(result.hided_assignment);
-		set_disable_button(assignment_yet, result.hided_assignment);
-		show_dev(assignment_yet, show_disable);
-	});
- }
-var show_disable = false;
-function set_disable_button(rows, hide_url){
-	for(var row of rows){
-		let td = document.createElement('td');
-		td.style.textAlign = 'center';
-		td.style.verticalAlign = 'bottom';
-		td.onclick = (e)=>{
-			e.stopPropagation();
-			collect_and_preserve();
-			show_dev(assignment_yet, show_disable);
-		}
-		row.insertBefore(td,row.getElementsByTagName('td')[2]);
-
-		var url = row.getElementsByTagName("a")[0].href;
-		if(hide_url.includes(url)){
-			td.innerHTML = '<input type="checkbox" checked="true">'
-		}else{
-			td.innerHTML = '<input type="checkbox">'
-		}
-	}
-	return rows;
+	setAssignment(dev_assignment_yet);
 }
-function collect_and_preserve(){
-	var disable_href = [];
-	for(var row of assignment_yet){
-		var input = row.getElementsByTagName('input')[0];
-		if(input.checked){
-			var url = row.getElementsByTagName("a")[0].href;
-			disable_href.push(url);
-		}
-	}
-	chrome.storage.sync.set({hided_assignment: disable_href}, function() {
-		console.log('seted disable list');
-	});
-}
-function createElementFromHTML(html) {
-    const tempEl = document.createElement('div');
-    tempEl.innerHTML = html;
-    return tempEl.firstElementChild;
-}
-
-
-var hided_assignment;
-function pre_func(){
-	chrome.storage.sync.get(['hided_assignment'], function(result) {
-		hided_assignment = result;
-		console.log(result);
-	});
-}
-function remove_dev(){
-	let rows = document.getElementById('add-parent').getElementsByTagName('tr');
-	for(var row of rows){
-		row.remove();
-	}
-}
-function show_dev(rows, show_disable){
-	let show_assignment_fin = document.getElementById('show-assignment-fin');
-	let add_parent = document.getElementById('add-parent');
-	let shuffle_adapter = [];
-	let now_time = new Date(new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }));
-	for(let i = 0;i < rows.length;i++){
-		let target_time = new Date(rows[i].children[3].innerText);
-		let time_diff = target_time.getTime() - now_time.getTime();
-		let day_diff = Math.floor(time_diff / (1000 * 60 * 60 * 24));
-		let deadline_css = "fake";
-		let deadline_color = "auto";
-		if (day_diff < 1) {
-			deadline_css = "one-day-before";
-			deadline_color = '#ffe6e9';
-		} else if (day_diff < 3) {
-			deadline_css = "three-days-before";
-			deadline_color = '#fff4d1';
-		} else if (day_diff < 7) {
-			deadline_css = "seven-days-before";
-			deadline_color = '#cce8cc';
-		}
-		rows[i].classList.add(deadline_css);//set for manaba enhanced
-		rows[i].children[0].style.backgroundColor = deadline_color;
-		shuffle_adapter.push({date: target_time, position: i});
-	}
-	shuffle_adapter.sort((a, b) => {
-		if (a.date < b.date) {
-			return -1;
-		} else {
-			return 1;
-		}
-	});
-	for(let i of shuffle_adapter){
-		add_parent.insertBefore(rows[i.position], show_assignment_fin);
-		rows[i.position].style.display = "table-row";
-
-		var no_disp_if_checked = () =>{
-			var input = rows[i.position].getElementsByTagName('input')[0];
-			if(input.checked){
-				rows[i.position].style.display = "none";
-			}
-		}
-		if(show_disable == false)no_disp_if_checked();
-	}
-	show_assignment_button.style.display = "none";
-}
-
 //ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-let mark = document.getElementsByClassName("contentbody-left")[0];
-mark.insertAdjacentHTML('afterbegin','<button id="show-assignment">未提出課題を表示</button><button id="toggle_disable" style="display:none">非表示を表示</button><table id="assignment-table"><tbody id="add-parent"><tr id="show-assignment-fin"></tr></tbody></table>');
-let show_assignment_button = document.getElementById('show-assignment');
-let assignment_table = document.getElementById('assignment-table');
-assignment_table.style.width = '100%';
-assignment_table.style.padding = '2px 15px 5px 0px';
-show_assignment_button.addEventListener('click',()=>{
-	console.log("develop mode");
-	show_assignment_button.innerHTML = "読み込み中";
-	//getAssignment();
-	develop();
-});
+function init(){
+	let mark = document.getElementsByClassName("contentbody-left")[0];
+	mark.insertAdjacentHTML('afterbegin','<button id="show-assignment">未提出課題を表示</button><button id="toggle_disable" style="display:none">非表示を表示</button><table id="assignment-table"><tbody id="add-parent"><tr id="show-assignment-fin"></tr></tbody></table>');
+	let show_assignment_button = document.getElementById('show-assignment');
+	let assignment_table = document.getElementById('assignment-table');
+	assignment_table.style.width = '100%';
+	assignment_table.style.padding = '2px 15px 5px 0px';
+	show_assignment_button.addEventListener('click',()=>{
+		console.log("develop mode");
+		show_assignment_button.innerHTML = "読み込み中";
+		//getAssignment();
+		develop();
+	});
+}
+init();
 
