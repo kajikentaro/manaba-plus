@@ -122,6 +122,7 @@ function getAssignment(){
 			course_n += 1;
 		}
 		if (course_size == course_n ){
+			document.getElementById('show-assignment').style.display = 'none';
 			setAssignment(assignment_yet);
 		}
 	}
@@ -162,6 +163,10 @@ function getAssignment(){
 	start();
 }
 function setAssignment(assignment_yet){
+	if(assignment_yet.length == 0){
+		document.getElementById('assignment-message').innerHTML = "未提出課題はありませんでした・ω・"
+
+	}
 	function start(){
 		function insert_label(){
 			var label = document.createElement('tr');
@@ -182,7 +187,6 @@ function setAssignment(assignment_yet){
 			}
 		}
 		chrome.storage.sync.get(["hided_assignment"], function(result) {
-			console.log(result.hided_assignment);
 			set_disable_button(assignment_yet, result.hided_assignment);
 			show_dev(assignment_yet, show_disable);
 		});
@@ -219,7 +223,6 @@ function setAssignment(assignment_yet){
 			}
 		}
 		chrome.storage.sync.set({hided_assignment: disable_href}, function() {
-			console.log('seted disable list');
 		});
 	}
 	function show_dev(rows, show_disable){
@@ -266,12 +269,12 @@ function setAssignment(assignment_yet){
 			}
 			if(show_disable == false)no_disp_if_checked();
 		}
-		show_assignment_button.style.display = "none";
 	}
 	start();
 }
 //ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
 function develop(){
+	console.log("develop mode");
 	function createElementFromHTML(html) {
 		const tempEl = document.createElement('div');
 		tempEl.innerHTML = html;
@@ -294,16 +297,15 @@ function develop(){
 //ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
 function init(){
 	let mark = document.getElementsByClassName("contentbody-left")[0];
-	mark.insertAdjacentHTML('afterbegin','<button id="show-assignment">未提出課題を表示</button><button id="toggle_disable" style="display:none">非表示を表示</button><table id="assignment-table"><tbody id="add-parent"><tr id="show-assignment-fin"></tr></tbody></table>');
+	mark.insertAdjacentHTML('afterbegin','<button id="show-assignment">未提出課題を表示</button><button id="toggle_disable" style="display:none">非表示を表示</button><table id="assignment-table"><tbody id="add-parent"><tr id="show-assignment-fin"><td><p id="assignment-message"></p></td></tr></tbody></table>');
 	let show_assignment_button = document.getElementById('show-assignment');
 	let assignment_table = document.getElementById('assignment-table');
 	assignment_table.style.width = '100%';
 	assignment_table.style.padding = '2px 15px 5px 0px';
 	show_assignment_button.addEventListener('click',()=>{
-		console.log("develop mode");
 		show_assignment_button.innerHTML = "読み込み中";
-		//getAssignment();
-		develop();
+		getAssignment();
+		//develop();
 	});
 }
 init();
