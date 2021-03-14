@@ -108,3 +108,8 @@ code {
     border: .5px dashed #000;
     opacity: .1;
 }
+
+.button-parent{
+    margin:20px auto;
+    text-align: center;;
+}
