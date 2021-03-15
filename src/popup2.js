@@ -1,33 +1,52 @@
 'use strict';
 import * as download from './methods/download-popup.js';
-let dot_num = 0;
+let status = 1;
+//0 error
+//1 waiting init
+//2 downloading
+//3 finish
 document.addEventListener('DOMContentLoaded', ()=>{
+  loading_disp();
   detect_contentscript_close();
   send_dl_start();
   set_stop_dl();
-  loading_disp();
   progress_disp_cs();
 });
 function detect_contentscript_close(){
   var func = (tabId, removeInfo)=>{
     let manaba_tabid = parseInt((new URL(document.location)).searchParams.get('tabid'));
-    if(tabId == manaba_tabid){alert("manabaのタブが閉じられたため、中止されました")}
+    if(tabId == manaba_tabid && status == 1){alert("manabaのタブが閉じられたため、中止されました")}
   }
   chrome.tabs.onRemoved.addListener(func);
 }
 function set_stop_dl(){
   document.getElementById('stop-dl').onclick = ()=>{
-    download.stop_dl();
+    if(status == 1){
+      let manaba_tabid = parseInt((new URL(document.location)).searchParams.get('tabid'));
+        chrome.tabs.sendMessage(
+          manaba_tabid,
+          { type: 'stopDL-trigger'},
+        );
+    }
+    if(status != 3){
+      download.stop_dl();
+      status = 0;
+    }
   }
 }
 let callback = (value)=>{
   console.log(value);
-  dot_num = -1;
   if(value.permit == false){
     let message = document.getElementById('message');
     message.innerHTML = 'すでに他のタブでダウンロードされています。'
+    status = 0;
   }else{
-    download.download(value.dl_urls);
+    if(status == 1){
+      status = 2;
+      download.download(value.dl_urls).then(()=>{
+        status = 3;
+      });
+    }
   }
 }
 function send_dl_start(){
@@ -41,22 +60,22 @@ function send_dl_start(){
   });
 }
 function loading_disp(){
+  var dot_num = 0;
   initializing_dot();
   function initializing_dot(){
     let message = document.getElementById('message');
     let text = ['準備中','準備中 .','準備中 . .','準備中 . . .'];
-    if(dot_num >= 0){
+    if(status == 1){
       dot_num++;
       message.innerHTML = text[dot_num % 4];
       setTimeout(initializing_dot, 500);
-      console.log('hey');
     }
   }
 }
 function progress_disp_cs(){
   let number_counter = document.getElementById('number-counter');
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.type == 'initializing'){
+    if (request.type == 'initializing' && status == 1){
       number_counter.innerHTML = request.file_num + "のファイルを検出"
     }
     return true;

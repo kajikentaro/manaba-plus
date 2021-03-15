@@ -9,12 +9,15 @@ export async function download(raw_urls){
 	var pure_urls = filter_urls(raw_urls, stored_urls);
 	if(pure_urls.length == 0){
 		progress_disp('完了。新規ファイルはありませんでした。');
+		send_finish_dl();
 		return;
 	}else{
 		progress_disp('ダウンロードを開始します。','0/' + pure_urls.length);
+		await download_files(pure_urls, stored_urls);
+		progress_disp('ダウンロードが完了しました。', null, 100);
+		send_finish_dl();
+		return;
 	}
-	await download_files(pure_urls, stored_urls);
-	progress_disp('ダウンロードが完了しました。', null, 100);
 }
 export function stop_dl(){
 	progress_disp('ダウンロードの中止. . .')
@@ -22,6 +25,14 @@ export function stop_dl(){
 		progress_disp('ダウンロードが中止されました。')
 	});
 	permit_dl = false;
+}
+function send_finish_dl(){
+	let manaba_tabid = parseInt((new URL(document.location)).searchParams.get('tabid'));
+	chrome.tabs.getCurrent((tab)=>{
+	chrome.tabs.sendMessage(
+		manaba_tabid,
+		{ type: 'finishDL-trigger'}
+	)});
 }
 let id = -1;
 async function download_files(urls, stored_urls){
