@@ -32,7 +32,8 @@
       "run_at": "document_idle",
       "js": [
         "contentScript.js"
-      ]
+      ],
+      "css": ["style.css"]
     }
   ]
 }

@@ -61,8 +61,10 @@ export var set_assignment = (assignment_yet)=>{
         insert_label();
         set_toggle_disable();
         sort_rows(assignment_yet);
-        set_color(assignment_yet);
+		set_color(assignment_yet);
+		disable_hilite(assignment_yet);
 		chrome.storage.sync.get(["hided_assignment"], function(result) {
+			if(!result.hided_assignment)result.hided_assignment = [];
 			set_disable_button(assignment_yet, result.hided_assignment);
 			display(assignment_yet, show_disable);
 		});
@@ -155,7 +157,15 @@ export var set_assignment = (assignment_yet)=>{
 			rows[i].classList.add(deadline_css);//set for manaba enhanced
 			rows[i].children[0].style.backgroundColor = deadline_color;
         }
-    }
+	}
+	function disable_hilite(rows){
+		for(var row of rows){
+			row.removeAttribute('onmouseover');
+			row.addEventListener('mouseover', function (event) {
+				event.stopPropagation();
+			}, true);
+		}
+	}
     function sort_rows(rows){
 		let shuffle_adapter = [];
         for(let i = 0;i<rows.length;i++){
