@@ -14,8 +14,8 @@ Automately download contents on Chuo University Manaba
 
 ## 使い方
 ・コンテンツダウンロード
-* manabaのトップページ（https://room.chuo-u.ac.jp/ct/home）にアクセスすると、Chrome右上のManaba Downloaderアイコンが点灯するのでそれをクリック。
-* 「コースコンテンツをDL」ボタンを押すとダウンロードが始まります。ブラウザを閉じると中止できますが、もう一度この手順を踏めば途中から再開できます。
+* manabaのトップページ（ https://room.chuo-u.ac.jp/ct/home ）にアクセスすると、Chrome右上のManaba Downloaderアイコンが点灯するのでそれをクリック。
+* 「コースコンテンツをDL」ボタンを押すとダウンロードが始まります。ブラウザを閉じてしまったり、ダウンロードを中止しても次回は途中から再開できます。
 
 ・未提出課題検索
 * この拡張機能をインストール後、manabaのトップページにアクセスすると「お知らせ」の上に「未提出課題を表示」ボタンが表示されるのでそれを押してください。
@@ -31,16 +31,19 @@ Automately download contents on Chuo University Manaba
 * コンテンツをダウンロードし、保存するために必要です。
 
 ## バージョン情報
+1.1.0
+* 課題の非表示機能を追加。
+* ダウンロード中止ボタンを追加。
 0.3.1
 * ダウンロード中に別サイトのファイルをダウンロードするとファイルの不整合が生じる問題を修正
 0.2.1
 * コースコンテンツ内のページが既読状態でない時ダウンロードされない不具合を修正
 0.1.1
 * new release
-## Install
+##  Install
 
-[**Chrome** extension](https://chrome.google.com/webstore/detail/manaba-downloader/aeidkdokanbhoefbgaadaicdmggdeegf?hl=ja)
+[* * Chrome* *  extension](https://chrome.google.com/webstore/detail/manaba-downloader/aeidkdokanbhoefbgaadaicdmggdeegf?hl=ja)
 
-## Contribution
+##  Contribution
 Thanks for Chrome-Extension-Cli
 
