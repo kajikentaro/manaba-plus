@@ -58,7 +58,7 @@ async function download_files(urls, stored_urls){
 		let filename_ex = decodeURI(url.url.match(".+/(.+?)([\?#;].*)?$")[1]);
 		let path = path_module.join('Manaba', url.course, url.content, filename_ex);
 		path = path.replace(/\s+/g, "");
-		chrome.downloads.download({ url: url.url, filename: path }, (downloadID) => {
+		chrome.downloads.download({ url: url.url, filename: path, saveAs: false}, (downloadID) => {
 			id = downloadID;
 		});
 		return new Promise((resolve, reject) =>{
