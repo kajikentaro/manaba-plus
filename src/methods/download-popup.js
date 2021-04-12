@@ -56,7 +56,7 @@ async function download_files(urls, stored_urls){
 	}
 	async function download_file(url){
 		let filename_ex = decodeURI(url.url.match(".+/(.+?)([\?#;].*)?$")[1]);
-		let path = path_module.join('Manaba', url.course, url.content, filename_ex);
+		let path = path_module.join('Manaba', url.course.replace("/","-"), url.content.replace("/","-"), filename_ex.replace("/","-"));
 		path = path.replace(/\s+/g, "");
 		chrome.downloads.download({ url: url.url, filename: path, saveAs: false}, (downloadID) => {
 			id = downloadID;
