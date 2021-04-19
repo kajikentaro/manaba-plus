@@ -51,36 +51,44 @@ export var get_assignment = ()=>{
 }
 export var set_assignment = (assignment_yet)=>{
 	var show_disable = false;
+	let MANAGE_CLS = "MD-assignment";
     start();
 	function start(){
-        //assignment_yet = assignment_yet;
-        if(assignment_yet.length == 0){
-            document.getElementById('assignment-message').innerHTML = "未提出課題はありませんでした・ω・"
-            return;
-        }
-        insert_label();
-        set_toggle_disable();
+		add_class(assignment_yet);
         sort_rows(assignment_yet);
 		set_color(assignment_yet);
 		disable_hilite(assignment_yet);
+		insert_toggle();
 		chrome.storage.sync.get(["hided_assignment"], function(result) {
 			if(!result.hided_assignment)result.hided_assignment = [];
-			set_disable_button(assignment_yet, result.hided_assignment);
-			display(assignment_yet, show_disable);
+			set_disable_checked(assignment_yet, result.hided_assignment);
+			filter_and_show(assignment_yet, show_disable);
 		});
-    }
+	}
+	function add_class(rows){
+		for(let row of rows){
+			row.classList.add(MANAGE_CLS);
+		}
+	}
+	function clear_assignment(){
+		let remove_rows = document.getElementsByClassName(MANAGE_CLS);
+		while(remove_rows.length){
+			remove_rows[0].remove();
+		}
+	}
     function insert_label(){
         var label = document.createElement('tr');
-        label.innerHTML = '<td>課題名</td><td>状態</td><td>非表示</td><td>受付開始</td><td>受付終了</td>'
+		label.innerHTML = '<td>課題名</td><td>状態</td><td>非表示</td><td>受付開始</td><td>受付終了</td>'
+		label.classList.add(MANAGE_CLS );
         let add_parent = document.getElementById('add-parent');
         let show_assignment_fin = document.getElementById('show-assignment-fin');
         add_parent.insertBefore(label, show_assignment_fin);
     }
-    function set_toggle_disable(){
+    function insert_toggle(){
 		document.getElementById('toggle_disable').style.display = "inline-block";
 		document.getElementById('toggle_disable').onclick = ()=>{
 			show_disable = !show_disable;
-			display(assignment_yet, show_disable);
+			filter_and_show(assignment_yet, show_disable);
 			if(show_disable){
 				document.getElementById('toggle_disable').innerHTML = "非表示にする"
 			}else{
@@ -88,7 +96,7 @@ export var set_assignment = (assignment_yet)=>{
 			}
 		}
     }
-	function set_disable_button(rows, hide_url){
+	function set_disable_checked(rows, hide_url){
 		for(var row of rows){
 			let td = document.createElement('td');
 			td.style.textAlign = 'center';
@@ -96,7 +104,7 @@ export var set_assignment = (assignment_yet)=>{
 			td.onclick = (e)=>{
 				e.stopPropagation();
 				collect_and_preserve();
-				display(assignment_yet, show_disable);
+				filter_and_show(assignment_yet, show_disable);
 			}
 			row.insertBefore(td,row.getElementsByTagName('td')[2]);
 
@@ -121,20 +129,31 @@ export var set_assignment = (assignment_yet)=>{
 		chrome.storage.sync.set({hided_assignment: disable_href}, function() {
 		});
 	}
-	function display(rows, show_disable){
-		let show_assignment_fin = document.getElementById('show-assignment-fin');
-		let add_parent = document.getElementById('add-parent');
-		for(let row of rows){
-			add_parent.insertBefore(row, show_assignment_fin);
-			row.style.display = "table-row";
-			var no_disp_if_checked = () =>{
-				var input = row.getElementsByTagName('input')[0];
-				if(input.checked){
-					row.style.display = "none";
-				}
+	function display(rows){
+		clear_assignment();
+		if(rows.length == 0){
+			document.getElementById('assignment-message').innerHTML = "課題はありませんでした・ω・";
+		}else{
+			insert_label();
+			document.getElementById('assignment-message').innerHTML = "";
+			let show_assignment_fin = document.getElementById('show-assignment-fin');
+			let add_parent = document.getElementById('add-parent');
+			for(let row of rows){
+				add_parent.insertBefore(row, show_assignment_fin);
 			}
-			if(show_disable == false)no_disp_if_checked();
 		}
+	}
+	function filter_and_show(rows, show_disable){
+		let enable_row = [];
+		for(let row of rows){
+			//フィルターがオンの場合、inputにチェックが入っていたら追加しない
+			if(show_disable == false){
+				var input = row.getElementsByTagName('input')[0];
+				if(input.checked)continue;
+			}
+			enable_row.push(row);
+		}
+		display(enable_row);
     }
     function set_color(rows){
 		let now_time = new Date(new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }));
@@ -167,18 +186,10 @@ export var set_assignment = (assignment_yet)=>{
 		}
 	}
     function sort_rows(rows){
-		let shuffle_adapter = [];
-        for(let i = 0;i<rows.length;i++){
-			let target_time = new Date(rows[i].children[3].innerText);
-			shuffle_adapter.push({date: target_time, position: i});
-        }
-		shuffle_adapter.sort((a, b) => {
-			if (a.date < b.date) { return -1; } else { return 1; }
+		rows.sort((a, b) => {
+			let a_time = new Date(a.children[3].innerText);
+			let b_time = new Date(b.children[3].innerText);
+			if (a_time < b_time) { return -1; } else { return 1; }
         });
-        var rows_out = [];
-        for(var i of shuffle_adapter){
-            rows_out.push(rows[i.position]);
-        }
-        rows = rows_out;
     }
 }
