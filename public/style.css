@@ -1,0 +1,22 @@
+.MD-assignment td{
+    white-space:nowrap;
+    padding: 2px;
+}
+.MD-assignment .course{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 0;
+    width:30%;
+}
+.MD-assignment .ass{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 0;
+    width:70%;
+}
+.MD-assignment .input{
+    text-align: center;
+    vertical-align: bottom;
+}

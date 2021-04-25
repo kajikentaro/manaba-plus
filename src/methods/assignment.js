@@ -3,7 +3,17 @@ import * as component from './component.js';
 let MANAGE_CLS = "MD-assignment";
 let DEV = JSON.parse('[{"course_name":"社会情報学２","href":"https://room.chuo-u.ac.jp/ct/course_2369010_report_2631393","assignment_name":"第3回講義レポート","status":"受付中","disable":true,"start_time":"2021-04-23T08:00:00.000Z","deadline":"2021-04-29T14:55:00.000Z","color_code":"#cce8cc"},{"course_name":"実践プログラミング","href":"https://room.chuo-u.ac.jp/ct/course_2369115_report_2653818","assignment_name":"[03A]","status":"受付中","disable":true,"start_time":"2021-04-22T04:00:00.000Z","deadline":"2021-04-27T03:00:00.000Z","color_code":"#fff4d1"},{"course_name":"計算幾何学","href":"https://room.chuo-u.ac.jp/ct/course_2368875_query_2649329","assignment_name":"第3回小テスト","status":"受付中","disable":true,"start_time":"2021-04-23T05:30:00.000Z","deadline":"2021-04-25T15:00:00.000Z","color_code":"#ffe6e9"},{"course_name":"ディジタル信号処理","href":"https://room.chuo-u.ac.jp/ct/course_2368995_report_2606859","assignment_name":"第1回演習問題","status":"受付中","disable":true,"start_time":"2021-04-14T07:50:00.000Z","deadline":"2021-04-28T06:10:00.000Z","color_code":"#cce8cc"},{"course_name":"ディジタル信号処理","href":"https://room.chuo-u.ac.jp/ct/course_2368995_report_2610929","assignment_name":"第2回演習問題","status":"受付中","disable":true,"start_time":"2021-04-21T07:50:00.000Z","deadline":"2021-04-28T06:10:00.000Z","color_code":"#cce8cc"}]');
 class Assignment{
-	constructor(row, course_name){
+	init_json(dict){
+		this.course_name = dict.course_name;
+		this.href = dict.href;
+		this.assignment_name = dict.assignment_name;
+		this.status = dict.status;
+		this.disable = dict.disable;
+		this.start_time = new Date(dict.start_time);
+		this.deadline = new Date(dict.deadline);
+		this.color_code = dict.color_code;
+	}
+	init_row(row, course_name){
 		this.course_name = course_name;
 		this.href = row.children[0].getElementsByTagName("a")[0].href;
 		this.assignment_name = row.children[0].getElementsByTagName("a")[0].innerHTML;
@@ -22,9 +32,6 @@ class Assignment{
 			}
 		}
 	}
-	set_input_click_event(input_click_event){
-		this.input_click_event = input_click_event;
-	}
     get_color(deadline){
 		let now_time = new Date(new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }));
 		let time_diff = deadline.getTime() - now_time.getTime();
@@ -36,7 +43,7 @@ class Assignment{
 		} else if (day_diff < 7) {
 			return '#cce8cc';
 		}else{
-			return "auto";
+			return "#e8e8e8";
 		}
 	}
 	date_to_str(date){
@@ -49,16 +56,11 @@ class Assignment{
 		return txt;
 	}
 	setup_input(td){
-		td.style.textAlign = 'center';
-		td.style.verticalAlign = 'bottom';
+		td.classList.add("input");
 		td.onclick = (e)=>{
+			this.disable = !this.disable;
+			input_click();
 			e.stopPropagation();
-			if(td.checked){
-				this.disable = true;
-			}else{
-				this.disable = false;
-			}
-			this.input_click_event();
 		}
 		if(this.disable == true){
 			td.innerHTML = '<input type="checkbox" checked="true">'
@@ -69,13 +71,79 @@ class Assignment{
 	get_td(){
 		let tr = document.createElement("tr");
 		tr.classList.add(MANAGE_CLS);
-		tr.insertCell().innerHTML = this.course_name;
-		tr.insertCell().innerHTML = "<a href='" + this.href + "'>" + this.assignment_name + "</a>";
+
+		let td_course = tr.insertCell();
+		td_course.innerHTML = this.course_name;
+		td_course.classList.add("course");
+
+		let td_ass = tr.insertCell();
+		td_ass.innerHTML = "<a href='" + this.href + "'>" + this.assignment_name + "</a>";
+		td_ass.classList.add("ass");
 		this.setup_input(tr.insertCell());
 		tr.insertCell().innerHTML = this.date_to_str(this.start_time)
 		tr.insertCell().innerHTML = this.date_to_str(this.deadline)
 		tr.style.backgroundColor = this.color_code;
 		return tr;
+	}
+}
+var input_click = () => {
+	collect_and_preserve();
+	review_table(backup_AY);
+	function collect_and_preserve() {
+		var disable_href = [];
+		for (var row of backup_AY) {
+			if (row.disable == true) {
+				disable_href.push(row.href);
+			}
+		}
+		chrome.storage.sync.set({ hided_assignment: disable_href }, function () {
+		});
+	}
+}
+var review_table = (rows) => {
+	clear_assignment();
+	insert_label();
+	let enable_rows = filter();
+	insert_rows(enable_rows);
+	function filter() {
+		let enable_row = [];
+		for (let row of rows) {
+			if (show_disable == false) {//フィルターがオンの場合
+				if (row.disable == true) continue;//非表示なら表示しない
+			}
+			enable_row.push(row);
+		}
+		//ソート
+		enable_row.sort((a, b) => {
+			if (a.deadline < b.deadline) { return -1; } else { return 1; }
+		});
+		return enable_row;
+	}
+    function insert_label(){
+        var label = document.createElement('tr');
+		label.innerHTML = '<td>コース</td><td>課題名</td><td>非表示</td><td>受付開始</td><td>受付終了</td>'
+		label.classList.add(MANAGE_CLS );
+        let add_parent = document.getElementById('add-parent');
+        let show_assignment_fin = document.getElementById('show-assignment-fin');
+        add_parent.insertBefore(label, show_assignment_fin);
+    }
+	function insert_rows(rows) {
+		if (rows.length == 0) {
+			document.getElementById('assignment-message').innerHTML = "課題はありませんでした・ω・";
+		} else {
+			document.getElementById('assignment-message').innerHTML = "";
+			let show_assignment_fin = document.getElementById('show-assignment-fin');
+			let add_parent = document.getElementById('add-parent');
+			for (let row of rows) {
+				add_parent.insertBefore(row.get_td(), show_assignment_fin);
+			}
+		}
+	}
+	function clear_assignment(){
+		let remove_rows = document.getElementsByClassName(MANAGE_CLS);
+		while(remove_rows.length){
+			remove_rows[0].remove();
+		}
 	}
 }
 export var get_assignment = ()=>{
@@ -130,14 +198,23 @@ export var get_assignment = ()=>{
 		}
 	}
 }
+export var dev = ()=>{
+	var rows = [];
+	for(var a of DEV){
+		var r = new Assignment();
+		r.init_json(a);
+		rows.push(r);
+	}
+	set_assignment(rows);
+}
+let backup_AY;
+var show_disable = false;
 var set_assignment = (assignment_yet)=>{
-	console.log(JSON.stringify(assignment_yet));
-	var show_disable = false;
+	backup_AY = assignment_yet;
 	var hided_assignment;
     start();
 	async function start(){
 		insert_toggle();
-		set_input_click_event(assignment_yet);
 		hided_assignment = await new Promise((resolve) => {
 			chrome.storage.sync.get(["hided_assignment"], function(result) {
 				if(!result.hided_assignment)resolve([]);
@@ -145,79 +222,19 @@ var set_assignment = (assignment_yet)=>{
 			});
 		});
 		Assignment.set_disables(assignment_yet, hided_assignment);
-		filter_and_show(assignment_yet);
+		document.getElementById('show-assignment').style.display = "none";
+		review_table(assignment_yet);
 	}
-	function set_input_click_event(rows){
-		for(let row of rows){
-			row.set_input_click_event(()=>{
-				collect_and_preserve();
-				filter_and_show(assignment_yet);
-			});
-		}
-	}
-	function clear_assignment(){
-		let remove_rows = document.getElementsByClassName(MANAGE_CLS);
-		while(remove_rows.length){
-			remove_rows[0].remove();
-		}
-	}
-    function insert_label(){
-        var label = document.createElement('tr');
-		label.innerHTML = '<td>コース</td><td>課題名</td><td>非表示</td><td>受付開始</td><td>受付終了</td>'
-		label.classList.add(MANAGE_CLS );
-        let add_parent = document.getElementById('add-parent');
-        let show_assignment_fin = document.getElementById('show-assignment-fin');
-        add_parent.insertBefore(label, show_assignment_fin);
-    }
     function insert_toggle(){
 		document.getElementById('toggle_disable').style.display = "inline-block";
 		document.getElementById('toggle_disable').onclick = ()=>{
 			show_disable = !show_disable;
-			filter_and_show(assignment_yet);
+			review_table(assignment_yet);
 			if(show_disable){
-				document.getElementById('toggle_disable').innerHTML = "非表示にする"
+				document.getElementById('toggle_disable').innerHTML = "非表示にする";
 			}else{
-				document.getElementById('toggle_disable').innerHTML = "非表示を表示"
-			}
-		}
-    }
-	function collect_and_preserve(){
-		var disable_href = [];
-		for(var row of assignment_yet){
-			if(row.disable == true){
-				disable_href.push(row.href);
-			}
-		}
-		chrome.storage.sync.set({hided_assignment: disable_href}, function() {
-		});
-	}
-	function display(rows){
-		clear_assignment();
-		if(rows.length == 0){
-			document.getElementById('assignment-message').innerHTML = "課題はありませんでした・ω・";
-		}else{
-			insert_label();
-			document.getElementById('assignment-message').innerHTML = "";
-			let show_assignment_fin = document.getElementById('show-assignment-fin');
-			let add_parent = document.getElementById('add-parent');
-			for(let row of rows){
-				add_parent.insertBefore(row.get_td(), show_assignment_fin);
+				document.getElementById('toggle_disable').innerHTML = "非表示も表示";
 			}
 		}
 	}
-	function filter_and_show(rows){
-		let enable_row = [];
-		for(let row of rows){
-			if(show_disable == false){//フィルターがオンの場合
-				if(row.disable == true)continue;//非表示なら表示しない
-				enable_row.push(row)
-			}
-			enable_row.push(row);
-		}
-		//ソート
-		enable_row.sort((a, b) => {
-			if (a.deadline < b.deadline) { return -1; } else { return 1; }
-        });
-		display(enable_row);
-    }
 }
