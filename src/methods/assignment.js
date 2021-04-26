@@ -2,6 +2,8 @@
 import * as component from './component.js';
 let MANAGE_CLS = "MD-assignment";
 let DEV = JSON.parse('[{"course_name":"社会情報学２","href":"https://room.chuo-u.ac.jp/ct/course_2369010_report_2631393","assignment_name":"第3回講義レポート","status":"受付中","disable":true,"start_time":"2021-04-23T08:00:00.000Z","deadline":"2021-04-29T14:55:00.000Z","color_code":"#cce8cc"},{"course_name":"実践プログラミング","href":"https://room.chuo-u.ac.jp/ct/course_2369115_report_2653818","assignment_name":"[03A]","status":"受付中","disable":true,"start_time":"2021-04-22T04:00:00.000Z","deadline":"2021-04-27T03:00:00.000Z","color_code":"#fff4d1"},{"course_name":"計算幾何学","href":"https://room.chuo-u.ac.jp/ct/course_2368875_query_2649329","assignment_name":"第3回小テスト","status":"受付中","disable":true,"start_time":"2021-04-23T05:30:00.000Z","deadline":"2021-04-25T15:00:00.000Z","color_code":"#ffe6e9"},{"course_name":"ディジタル信号処理","href":"https://room.chuo-u.ac.jp/ct/course_2368995_report_2606859","assignment_name":"第1回演習問題","status":"受付中","disable":true,"start_time":"2021-04-14T07:50:00.000Z","deadline":"2021-04-28T06:10:00.000Z","color_code":"#cce8cc"},{"course_name":"ディジタル信号処理","href":"https://room.chuo-u.ac.jp/ct/course_2368995_report_2610929","assignment_name":"第2回演習問題","status":"受付中","disable":true,"start_time":"2021-04-21T07:50:00.000Z","deadline":"2021-04-28T06:10:00.000Z","color_code":"#cce8cc"}]');
+let pre_clicked_label = "deadline";
+var continuous_click = 1;
 class Assignment{
 	init_json(dict){
 		this.course_name = dict.course_name;
@@ -100,9 +102,9 @@ var input_click = () => {
 		});
 	}
 }
-var review_table = (rows) => {
+var review_table = (rows, sort_base = "deadline", reverse = false) => {
 	clear_assignment();
-	insert_label();
+	insert_label2(sort_base, reverse);
 	let enable_rows = filter();
 	insert_rows(enable_rows);
 	function filter() {
@@ -115,9 +117,42 @@ var review_table = (rows) => {
 		}
 		//ソート
 		enable_row.sort((a, b) => {
-			if (a.deadline < b.deadline) { return -1; } else { return 1; }
+			if(reverse){
+				if (a[sort_base]>= b[sort_base]) { return -1; } else { return 1; }
+			}else{
+				if (a[sort_base]< b[sort_base]) { return -1; } else { return 1; }
+			}
 		});
 		return enable_row;
+	}
+	function insert_label2(_sort_base, _reverse){
+		let tr = document.createElement("tr");
+		tr.classList.add(MANAGE_CLS);
+
+		let sort_bases = ["course_name", "assignment_name", null, "start_time", "deadline"];
+		let texts = ["コース", "題名", "非表示", "受付開始", "受付終了"];
+		for(let i=0;i<5;i++){
+			let td = tr.insertCell();
+			td.innerHTML = texts[i];
+			if(sort_bases[i] == _sort_base){
+				td.innerHTML = _reverse ? texts[i] + "▼" : texts[i] + "▲";
+			}
+			if(!sort_bases[i])continue;
+			td.classList.add("label");
+			td.onclick = function(){
+				var closer = ()=>{
+					var reverse = continuous_click % 2;
+					if(pre_clicked_label == sort_bases[i])continuous_click++;
+					else continuous_click = 0;
+					pre_clicked_label = sort_bases[i];
+					review_table(backup_AY, sort_bases[i] , reverse);
+				}
+				return closer;
+			}();
+		}
+        let add_parent = document.getElementById('add-parent');
+        let show_assignment_fin = document.getElementById('show-assignment-fin');
+        add_parent.insertBefore(tr, show_assignment_fin);
 	}
     function insert_label(){
         var label = document.createElement('tr');

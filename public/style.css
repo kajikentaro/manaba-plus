@@ -2,6 +2,12 @@
     white-space:nowrap;
     padding: 2px;
 }
+.MD-assignment .label:hover{
+    background-color:#e8e8e8;
+}
+.MD-assignment .label{
+    user-select: none;
+}
 .MD-assignment .course{
     text-overflow: ellipsis;
     white-space: nowrap;
