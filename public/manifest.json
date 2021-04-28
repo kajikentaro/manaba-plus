@@ -27,6 +27,16 @@
   "content_scripts": [
     {
       "matches": [
+        "https://room.chuo-u.ac.jp/ct/course*_report_*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "dropFile.js"
+      ],
+      "css": ["style.css"]
+    },
+    {
+      "matches": [
         "https://room.chuo-u.ac.jp/ct/home"
       ],
       "run_at": "document_idle",
