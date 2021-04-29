@@ -16,16 +16,16 @@ function submit(){
 }
 function insert_drop_message(){
     let mess = document.createElement("p");
-    mess.innerHTML = "ここにファイルをドロップ(1つまで)";
-    form.appendChild(mess);
+    mess.innerHTML = "またはここにファイルをドロップ";
+    input.parentElement.parentElement.appendChild(mess);
 }
 function add_listener(){
     form.addEventListener("dragover", ()=>{
         event.preventDefault();
-        form.style.opacity = 0.1;
+        form.parentElement.style.backgroundColor = "#d7e2fc";
     });
     form.addEventListener("dragleave", ()=>{
-        form.style.opacity = 1.0;
+        form.parentElement.style.backgroundColor = "";
     });
     form.addEventListener("drop", (event)=>{
         event.preventDefault();

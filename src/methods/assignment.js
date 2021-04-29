@@ -231,7 +231,7 @@ class Assignment {
 	date_to_str(date) {
 		let dates_jp = ["日", "月", "火", "水", "木", "金", "土"];
 		let txt = "";
-		txt += date.getMonth() + "/";
+		txt += (date.getMonth()+1) + "/";
 		txt += date.getDate() + "(";
 		txt += dates_jp[date.getDay()] + ") ";
 		txt += date.getHours() + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
