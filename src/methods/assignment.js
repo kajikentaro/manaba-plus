@@ -2,10 +2,10 @@
 import * as component from './component.js';
 let MANAGE_CLS = "MD-assignment";
 let pre_clicked_label = "deadline";
-var continuous_click = 1;
+let continuous_click = 1;
 let backup_AY;
-var show_disable = false;
-export var insert_button = () => {
+let show_disable = false;
+export let insert_button = () => {
 	let mark = document.getElementsByClassName("contentbody-left")[0];
 	mark.insertAdjacentHTML('afterbegin', '<button id="show-assignment">未提出課題を表示</button><button id="toggle_disable" style="display:none">非表示も表示</button><table id="assignment-table"><tbody id="add-parent"><tr id="show-assignment-fin"><td><p id="assignment-message"></p></td></tr></tbody></table>');
 	let show_assignment_button = document.getElementById('show-assignment');
@@ -21,12 +21,12 @@ async function load_unsub() {
 	let assignment_yet = await get_assignment();
 	set_assignment(assignment_yet);
 }
-var input_click = () => {
+let input_click = () => {
 	collect_and_preserve();
 	review_table(backup_AY);
 	function collect_and_preserve() {
-		var disable_href = [];
-		for (var row of backup_AY) {
+		let disable_href = [];
+		for (let row of backup_AY) {
 			if (row.disable == true) {
 				disable_href.push(row.href);
 			}
@@ -35,7 +35,7 @@ var input_click = () => {
 		});
 	}
 }
-var review_table = (rows, sort_base = "deadline", reverse = false) => {
+let review_table = (rows, sort_base = "deadline", reverse = false) => {
 	clear_assignment();
 	insert_label(sort_base, reverse);
 	let enable_rows = filter();
@@ -73,8 +73,8 @@ var review_table = (rows, sort_base = "deadline", reverse = false) => {
 			if (!sort_bases[i]) continue;
 			td.classList.add("label");
 			td.onclick = function () {
-				var closer = () => {
-					var reverse = continuous_click % 2;
+				let closer = () => {
+					let reverse = continuous_click % 2;
 					if (pre_clicked_label == sort_bases[i]) continuous_click++;
 					else continuous_click = 0;
 					pre_clicked_label = sort_bases[i];
@@ -155,9 +155,9 @@ async function get_assignment() {
 		}
 	});
 }
-var set_assignment = (assignment_yet) => {
+let set_assignment = (assignment_yet) => {
 	backup_AY = assignment_yet;
-	var hided_assignment;
+	let hided_assignment;
 	start();
 	async function start() {
 		insert_toggle();
@@ -202,7 +202,7 @@ class Assignment {
 		this.status = "受付中";
 		this.disable = true;
 		this.start_time = new Date(row.children[2].innerHTML);
-		this.deadline = new Date(row.children[3].innerHTML);
+		this.deadline = row.children[3].innerHTML ? new Date(row.children[3].innerHTML) : Infinity;
 		this.color_code = this.get_color(this.deadline);
 	}
 	static set_disables(assignments, hide_urls) {
@@ -215,6 +215,7 @@ class Assignment {
 		}
 	}
 	get_color(deadline) {
+		if(deadline == Infinity)return "#e8e8e8";
 		let now_time = new Date(new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }));
 		let time_diff = deadline.getTime() - now_time.getTime();
 		let day_diff = Math.floor(time_diff / (1000 * 60 * 60 * 24));
@@ -229,6 +230,7 @@ class Assignment {
 		}
 	}
 	date_to_str(date) {
+		if(date == Infinity) return ""
 		let dates_jp = ["日", "月", "火", "水", "木", "金", "土"];
 		let txt = "";
 		txt += (date.getMonth()+1) + "/";
@@ -271,10 +273,10 @@ class Assignment {
 //CODE FOR DEVELOPMENT
 /*
 let DEV = JSON.parse('[{"course_name":"社会情報学２","href":"https://room.chuo-u.ac.jp/ct/course_2369010_report_2631393","assignment_name":"第3回講義レポート","status":"受付中","disable":true,"start_time":"2021-04-23T08:00:00.000Z","deadline":"2021-04-29T14:55:00.000Z","color_code":"#cce8cc"},{"course_name":"実践プログラミング","href":"https://room.chuo-u.ac.jp/ct/course_2369115_report_2653818","assignment_name":"[03A]","status":"受付中","disable":true,"start_time":"2021-04-22T04:00:00.000Z","deadline":"2021-04-27T03:00:00.000Z","color_code":"#fff4d1"},{"course_name":"計算幾何学","href":"https://room.chuo-u.ac.jp/ct/course_2368875_query_2649329","assignment_name":"第3回小テスト","status":"受付中","disable":true,"start_time":"2021-04-23T05:30:00.000Z","deadline":"2021-04-25T15:00:00.000Z","color_code":"#ffe6e9"},{"course_name":"ディジタル信号処理","href":"https://room.chuo-u.ac.jp/ct/course_2368995_report_2606859","assignment_name":"第1回演習問題","status":"受付中","disable":true,"start_time":"2021-04-14T07:50:00.000Z","deadline":"2021-04-28T06:10:00.000Z","color_code":"#cce8cc"},{"course_name":"ディジタル信号処理","href":"https://room.chuo-u.ac.jp/ct/course_2368995_report_2610929","assignment_name":"第2回演習問題","status":"受付中","disable":true,"start_time":"2021-04-21T07:50:00.000Z","deadline":"2021-04-28T06:10:00.000Z","color_code":"#cce8cc"}]');
-export var dev = ()=>{
-	var rows = [];
-	for(var a of DEV){
-		var r = new Assignment();
+export let dev = ()=>{
+	let rows = [];
+	for(let a of DEV){
+		let r = new Assignment();
 		r.init_json(a);
 		rows.push(r);
 	}
