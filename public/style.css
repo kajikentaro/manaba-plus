@@ -26,16 +26,3 @@
     text-align: center;
     vertical-align: bottom;
 }
-#show-assignment{
-  color: #fff;
-  background: linear-gradient(to bottom, #6aae00, #529c09);
-  border-bottom: 5px solid #315210;
-  -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
-  box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
-}
-#show-assignment:hover{
-  margin-top: 3px;
-  color: #fff;
-  background: linear-gradient(to bottom, #6aae00, #529c09);
-  border-bottom: 2px solid #315210;
-}
