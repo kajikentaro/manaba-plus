@@ -3,8 +3,10 @@
 const SizePlugin = require('size-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
 const PATHS = require('./paths');
+
+const { merge } = require('webpack-merge');
+
 
 // To re-use webpack configuration across templates,
 // CLI maintains a common webpack configuration file - `webpack.common.js`.
@@ -64,4 +66,15 @@ const common = {
   ],
 };
 
-module.exports = common;
+// Merge webpack configuration files
+const config = merge(common, {
+  entry: {
+    popup: PATHS.src + '/popup.js',
+    popup2: PATHS.src + '/popup2.js',
+    contentScript: PATHS.src + '/contentScript.js',
+    background: PATHS.src + '/background.js',
+    dropFile: PATHS.src + '/dropFile.js',
+  },
+});
+
+module.exports = config;
