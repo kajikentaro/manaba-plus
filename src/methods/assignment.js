@@ -7,7 +7,7 @@ let backup_AY;
 let show_disable = false;
 export let insert_button = () => {
 	let mark = document.getElementsByClassName("contentbody-left")[0];
-	mark.insertAdjacentHTML('afterbegin', '<button id="show-assignment">未提出課題を表示</button><button id="toggle_disable" style="display:none">非表示も表示</button><table id="assignment-table"><tbody id="add-parent"><tr id="show-assignment-fin"><td><p id="assignment-message"></p></td></tr></tbody></table>');
+	mark.insertAdjacentHTML('afterbegin', '<a id="show-assignment">未提出課題を表示</a><a id="toggle_disable" style="display:none">非表示も表示</a><table id="assignment-table"><tbody id="add-parent"><tr id="show-assignment-fin"><td><p id="assignment-message"></p></td></tr></tbody></table>');
 	let show_assignment_button = document.getElementById('show-assignment');
 	let assignment_table = document.getElementById('assignment-table');
 	assignment_table.style.width = '100%';

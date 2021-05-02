@@ -1,28 +1,57 @@
-.MD-assignment td{
-    white-space:nowrap;
-    padding: 2px;
+.MD-assignment td {
+  white-space: nowrap;
+  padding: 2px;
 }
-.MD-assignment .label:hover{
-    background-color:#e8e8e8;
+.MD-assignment .label:hover {
+  background-color: #e8e8e8;
 }
-.MD-assignment .label{
-    user-select: none;
+.MD-assignment .label {
+  user-select: none;
 }
-.MD-assignment .course{
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    max-width: 0;
-    width:30%;
+.MD-assignment .course {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 0;
+  width: 30%;
 }
-.MD-assignment .ass{
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    max-width: 0;
-    width:70%;
+.MD-assignment .ass {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 0;
+  width: 70%;
 }
-.MD-assignment .input{
-    text-align: center;
-    vertical-align: bottom;
+.MD-assignment .input {
+  text-align: center;
+  vertical-align: bottom;
+}
+
+
+#toggle_disable, #show-assignment {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+  position: relative;
+  display: inline-block;
+  padding: 5px 8px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.1s;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  letter-spacing: 0.15em;
+  border-radius: 5px;
+  color: #fff;
+  background: linear-gradient(to bottom, #6aae00, #529c09);
+  border-bottom: solid 4px #396310;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+#toggle_disable:hover, #show-assignment:hover {
+  margin-top: 3px;
+  color: #fff;
+  background: linear-gradient(to bottom, #6aae00, #529c09);
+  border-bottom: 1px solid #396310;
 }
