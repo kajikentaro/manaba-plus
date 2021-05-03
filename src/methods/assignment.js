@@ -64,6 +64,7 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 		tr.classList.add("table-header");
 		tr.classList.add(DELETABLE_ROW);
 
+		let classes = ["course", "ass", null, null, null];
 		let sort_bases = ["course_name", "assignment_name", null, "start_time", "deadline"];
 		let texts = ["コース", "題名", "非表示", "受付開始", "受付終了"];
 		for (let i = 0; i < 5; i++) {
@@ -78,6 +79,7 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 				th.innerHTML = texts[i];
 			}
 			if (!sort_bases[i]) continue;
+			if(classes[i])th.classList.add(classes[i]);
 			th.classList.add("sort-label");
 			th.onclick = function () {
 				let closer = () => {
@@ -99,6 +101,7 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 			let no_ass_message = document.createElement("tr");
 			no_ass_message.classList.add(DELETABLE_ROW);
 			no_ass_message.innerHTML = "課題はありませんでした・ω・";
+			no_ass_message.setAttribute("rowspan","5");
 			add_parent.appendChild(no_ass_message);
 		} else {
 			for (let row of rows) {
