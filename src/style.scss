@@ -16,7 +16,6 @@
       border-left: none;
     }
   }
-
   th {
     background-color: #fff;
     border-bottom: 3px solid rgb(158, 207, 76);
@@ -28,6 +27,9 @@
     border-left: 1px solid rgb(158, 207, 76);
     padding: 3px 6px;
     white-space: nowrap;
+  }
+  .sort-active{
+    background-color:red;
   }
 
   .deletable-class:last-child {

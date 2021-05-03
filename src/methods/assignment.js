@@ -61,26 +61,20 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 	}
 	function insert_label(_sort_base, _reverse) {
 		let tr = document.createElement("tr");
-		tr.classList.add("table-header");//追加
+		tr.classList.add("table-header");
 		tr.classList.add(DELETABLE_ROW);
 
 		let sort_bases = ["course_name", "assignment_name", null, "start_time", "deadline"];
 		let texts = ["コース", "題名", "非表示", "受付開始", "受付終了"];
 		for (let i = 0; i < 5; i++) {
-			//削除
-			//let td = tr.insertCell();
-
-			let th = document.createElement("th");//追加
-			tr.appendChild(th);//追加
-			//以下tdをthに変更
-
-			if (sort_bases[i] == _sort_base) {
-				//th.innerHTML = _reverse ? "　" + texts[i] + "▼" : "　" + texts[i] + "▲";
+			let th = document.createElement("th");
+			tr.appendChild(th);
+			if (sort_bases[i] == _sort_base) {//ここを基準にソートした場合
+				th.classList.add("sort-active");
 				th.innerHTML = _reverse ? texts[i] + "▼" : texts[i] + "▲";
-			}else if(sort_bases[i]){
-				//th.innerHTML = "　" + texts[i] + "　";
+			}else if(sort_bases[i]){//それ以外の場合
 				th.innerHTML = texts[i] + "　";
-			}else{
+			}else{//非表示の場合
 				th.innerHTML = texts[i];
 			}
 			if (!sort_bases[i]) continue;
