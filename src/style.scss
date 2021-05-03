@@ -1,12 +1,12 @@
 #assignment-table {
   margin: 8px 0 12px 0;
-  border: 1px solid rgb(158, 207, 76);
+  border: 1px solid #ffb566;
   border-collapse: separate;
   border-spacing: 0;
   border-radius: 6px;
   overflow: hidden;
   td {
-    border-bottom: 1px solid rgb(158, 207, 76);
+    border-bottom: 1px solid #ffb566;
     &.course {
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -19,13 +19,13 @@
 
   th {
     background-color: #fff;
-    border-bottom: 3px solid rgb(158, 207, 76);
+    border-bottom: 3px solid #ffb566;
     text-align: center;
   }
 
   td,
   th {
-    border-left: 1px solid rgb(158, 207, 76);
+    border-left: 1px solid #ffb566;
     padding: 3px 6px;
     white-space: nowrap;
   }
@@ -87,13 +87,13 @@
   letter-spacing: 0.15em;
   border-radius: 5px;
   color: #fff;
-  background: linear-gradient(to bottom, #6aae00, #529c09);
-  border-bottom: solid 4px #396310;
+  background: linear-gradient(to bottom, #ffb05b, #ffa23f);
+  border-bottom: solid 4px #e28945;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
   &:hover {
     margin-top: 3px;
     color: #fff;
-    background: linear-gradient(to bottom, #6aae00, #529c09);
-    border-bottom: 1px solid #396310;
+    background: linear-gradient(to bottom, #ffb05b, #ffa23f);
+    border-bottom: 1px solid #e28945;
   }
 }
