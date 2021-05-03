@@ -60,19 +60,26 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 	}
 	function insert_label(_sort_base, _reverse) {
 		let tr = document.createElement("tr");
+		tr.classList.add("topic");//追加
 		tr.classList.add(MANAGE_CLS);
 
 		let sort_bases = ["course_name", "assignment_name", null, "start_time", "deadline"];
 		let texts = ["コース", "題名", "非表示", "受付開始", "受付終了"];
 		for (let i = 0; i < 5; i++) {
-			let td = tr.insertCell();
-			td.innerHTML = texts[i];
+			//削除
+			//let td = tr.insertCell();
+
+			let th = document.createElement("th");//追加
+			tr.appendChild(th);//追加
+			//以下tdをthに変更
+
+			th.innerHTML = texts[i];
 			if (sort_bases[i] == _sort_base) {
-				td.innerHTML = _reverse ? texts[i] + "▼" : texts[i] + "▲";
+				th.innerHTML = _reverse ? texts[i] + "▼" : texts[i] + "▲";
 			}
 			if (!sort_bases[i]) continue;
-			td.classList.add("label");
-			td.onclick = function () {
+			th.classList.add("label");
+			th.onclick = function () {
 				let closer = () => {
 					let reverse = continuous_click % 2;
 					if (pre_clicked_label == sort_bases[i]) continuous_click++;

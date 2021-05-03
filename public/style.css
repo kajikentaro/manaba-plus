@@ -1,4 +1,4 @@
-.MD-assignment td {
+.MD-assignment td, .MD-assignment th {
   white-space: nowrap;
   padding: 2px;
 }
