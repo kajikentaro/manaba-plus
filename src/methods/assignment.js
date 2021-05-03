@@ -7,7 +7,10 @@ let backup_AY;
 let show_disable = false;
 export let insert_button = () => {
 	let mark = document.getElementsByClassName("contentbody-left")[0];
-	mark.insertAdjacentHTML('afterbegin', '<a id="show-assignment">未提出課題を表示</a><a id="toggle_disable" style="display:none">非表示も表示</a><div id=table-frame style="display:none"><table id="assignment-table"><tbody id="add-parent"></tbody></table></div>');
+	mark.insertAdjacentHTML(
+    "afterbegin",
+    '<div id="manabaPlus-title"><p>Manaba Plus</p></div><a id="show-assignment">未提出課題を表示</a><a id="toggle_disable" style="display:none">非表示も表示</a><div id=table-frame style="display:none"><table id="assignment-table"><tbody id="add-parent"></tbody></table></div>'
+  );
 	let show_assignment_button = document.getElementById('show-assignment');
 	let assignment_table = document.getElementById('assignment-table');
 	let table_frame = document.getElementById('table-frame');
@@ -75,7 +78,7 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 				th.innerHTML = _reverse ? texts[i] + "▼" : texts[i] + "▲";
 			}else if(sort_bases[i]){//それ以外の場合
 				th.innerHTML = texts[i] + "　";
-			}else{//非表示の場合
+			}else{//inputの場合
 				th.innerHTML = texts[i];
 			}
 			if (!sort_bases[i]) continue;
@@ -100,7 +103,7 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 			let no_ass_message = document.createElement("tr");
 			no_ass_message.classList.add(DELETABLE_ROW);
 			no_ass_message.classList.add("no-assignment-message");
-			no_ass_message.innerHTML = "課題はありませんでした・ω・";
+			no_ass_message.innerHTML = "ないヨ。 _(:3 」∠ )_ ";
 			no_ass_message.setAttribute("rowspan","5");
 			add_parent.appendChild(no_ass_message);
 		} else {
