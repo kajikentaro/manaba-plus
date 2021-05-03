@@ -29,8 +29,35 @@ const common = {
     rules: [
       // Help webpack in understanding CSS files imported in .js files
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        test: /\.(css|scss|sass)$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          {
+            loader: "css-loader",
+            options: {
+              //URL の解決を無効に
+              url: false,
+              // ソースマップを有効に
+              sourceMap: true,
+            },
+          },
+          // Sass を CSS へ変換するローダー
+          {
+            loader: "sass-loader",
+            options: {
+              // dart-sass を優先
+              implementation: require('sass'),
+              sassOptions: {
+                // fibers を使わない場合は以下で false を指定
+                fiber: require('fibers'),
+              },
+              // ソースマップを有効に
+              sourceMap: true,
+            },
+          },
+        ]
       },
       // Check for images imported in .js files and
       {

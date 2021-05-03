@@ -1,6 +1,6 @@
 'use strict';
 
-import './popup.css';
+import './popup.scss';
 document.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('clear-cache').addEventListener('click', () => {
     chrome.storage.local.set({'download_list': []}, ()=>{console.log('complete')});
