@@ -1,33 +1,36 @@
-.MD-assignment td {
-  white-space: nowrap;
-  padding: 2px;
+#assignment-table{
+  th{
+    text-align: left;
+  }
+  td, th{
+    white-space: nowrap;
+    padding: 2px;
+  }
+  .sort-label{
+    user-select: none;
+    &:hover{
+      background-color: #e8e8e8;
+    }
+  }
+  .course{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 0;
+    width: 30%;
+  }
+  .ass{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 0;
+    width: 70%;
+  }
+  .input{
+    text-align: center;
+    vertical-align: bottom;
+  }
 }
-.MD-assignment .label:hover {
-  background-color: #e8e8e8;
-}
-.MD-assignment .label {
-  user-select: none;
-}
-.MD-assignment .course {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  max-width: 0;
-  width: 30%;
-}
-.MD-assignment .ass {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  max-width: 0;
-  width: 70%;
-}
-.MD-assignment .input {
-  text-align: center;
-  vertical-align: bottom;
-}
-
-
 #toggle_disable, #show-assignment {
   font-size: 11px;
   font-weight: 600;
@@ -48,7 +51,6 @@
   border-bottom: solid 4px #396310;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
 }
-
 #toggle_disable:hover, #show-assignment:hover {
   margin-top: 3px;
   color: #fff;
