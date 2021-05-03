@@ -7,11 +7,12 @@ let backup_AY;
 let show_disable = false;
 export let insert_button = () => {
 	let mark = document.getElementsByClassName("contentbody-left")[0];
-	mark.insertAdjacentHTML('afterbegin', '<a id="show-assignment">未提出課題を表示</a><a id="toggle_disable" style="display:none">非表示も表示</a><table id="assignment-table"><tbody id="add-parent"><tr id="show-assignment-fin"><td><p id="assignment-message"></p></td></tr></tbody></table>');
+	mark.insertAdjacentHTML('afterbegin', '<a id="show-assignment">未提出課題を表示</a><a id="toggle_disable" style="display:none">非表示も表示</a><div id=table-frame><table id="assignment-table"><tbody id="add-parent"><tr id="show-assignment-fin"><td><p id="assignment-message"></p></td></tr></tbody></table></div>');
 	let show_assignment_button = document.getElementById('show-assignment');
 	let assignment_table = document.getElementById('assignment-table');
+	let table_frame = document.getElementById('table-frame');
 	assignment_table.style.width = '100%';
-	assignment_table.style.padding = '2px 15px 5px 0px';
+	table_frame.style.margin = '2px 15px 5px 0px';
 	show_assignment_button.addEventListener('click', () => {
 		show_assignment_button.innerHTML = "読み込み中";
 		load_unsub();

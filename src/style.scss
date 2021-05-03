@@ -1,37 +1,77 @@
-#assignment-table{
-  th{
-    text-align: left;
-  }
-  td, th{
-    white-space: nowrap;
-    padding: 2px;
-  }
-  .sort-label{
-    user-select: none;
-    &:hover{
-      background-color: #e8e8e8;
+#assignment-table {
+  margin: 8px 0 12px 0;
+  border: 1px solid rgb(158, 207, 76);
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  td {
+    border-bottom: 1px solid rgb(158, 207, 76);
+    &.course {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 0;
+      width: 40%;
+      border-left: none;
     }
   }
-  .course{
+
+  th {
+    background-color: #fff;
+    border-bottom: 3px solid rgb(158, 207, 76);
+    text-align: center;
+  }
+
+  td,
+  th {
+    border-left: 1px solid rgb(158, 207, 76);
+    padding: 3px 6px;
+    white-space: nowrap;
+  }
+
+  .deletable-class:last-child {
+    border-bottom: none;
+    td:first-child {
+      border-left: none;
+    }
+  }
+
+  .sort-label {
+    user-select: none;
+    &:first-child {
+      border-left: none;
+    }
+    &:hover {
+      color: #2e7c40;
+      cursor: pointer;
+    }
+    /*
+    &:active {
+      background: linear-gradient(
+        rgb(181, 206, 138) 0%,
+        rgb(219, 242, 176) 0%,
+        rgb(255, 255, 255) 100%
+      );
+    }
+    */
+  }
+
+  .ass {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     max-width: 0;
-    width: 30%;
+    width: 60%;
   }
-  .ass{
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    max-width: 0;
-    width: 70%;
-  }
-  .input{
+  .input {
     text-align: center;
     vertical-align: bottom;
   }
 }
-#toggle_disable, #show-assignment {
+
+#toggle_disable,
+#show-assignment {
   font-size: 11px;
   font-weight: 600;
   line-height: 1.5;
@@ -49,11 +89,11 @@
   color: #fff;
   background: linear-gradient(to bottom, #6aae00, #529c09);
   border-bottom: solid 4px #396310;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
-}
-#toggle_disable:hover, #show-assignment:hover {
-  margin-top: 3px;
-  color: #fff;
-  background: linear-gradient(to bottom, #6aae00, #529c09);
-  border-bottom: 1px solid #396310;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
+  &:hover {
+    margin-top: 3px;
+    color: #fff;
+    background: linear-gradient(to bottom, #6aae00, #529c09);
+    border-bottom: 1px solid #396310;
+  }
 }
