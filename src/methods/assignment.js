@@ -7,7 +7,7 @@ let backup_AY;
 let show_disable = false;
 export let insert_button = () => {
 	let mark = document.getElementsByClassName("contentbody-left")[0];
-	mark.insertAdjacentHTML('afterbegin', '<a id="show-assignment">未提出課題を表示</a><a id="toggle_disable" style="display:none">非表示も表示</a><div id=table-frame><table id="assignment-table"><tbody id="add-parent"><tr id="show-assignment-fin"><td><p id="assignment-message"></p></td></tr></tbody></table></div>');
+	mark.insertAdjacentHTML('afterbegin', '<a id="show-assignment">未提出課題を表示</a><a id="toggle_disable" style="display:none">非表示も表示</a><div id=table-frame style="display:none"><table id="assignment-table"><tbody id="add-parent"></tbody></table></div>');
 	let show_assignment_button = document.getElementById('show-assignment');
 	let assignment_table = document.getElementById('assignment-table');
 	let table_frame = document.getElementById('table-frame');
@@ -74,9 +74,14 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 			tr.appendChild(th);//追加
 			//以下tdをthに変更
 
-			th.innerHTML = texts[i];
 			if (sort_bases[i] == _sort_base) {
+				//th.innerHTML = _reverse ? "　" + texts[i] + "▼" : "　" + texts[i] + "▲";
 				th.innerHTML = _reverse ? texts[i] + "▼" : texts[i] + "▲";
+			}else if(sort_bases[i]){
+				//th.innerHTML = "　" + texts[i] + "　";
+				th.innerHTML = texts[i] + "　";
+			}else{
+				th.innerHTML = texts[i];
 			}
 			if (!sort_bases[i]) continue;
 			th.classList.add("sort-label");
@@ -92,18 +97,18 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 			}();
 		}
 		let add_parent = document.getElementById('add-parent');
-		let show_assignment_fin = document.getElementById('show-assignment-fin');
-		add_parent.insertBefore(tr, show_assignment_fin);
+		add_parent.appendChild(tr);
 	}
 	function insert_rows(rows) {
+		let add_parent = document.getElementById('add-parent');
 		if (rows.length == 0) {
-			document.getElementById('assignment-message').innerHTML = "課題はありませんでした・ω・";
+			let no_ass_message = document.createElement("tr");
+			no_ass_message.classList.add(DELETABLE_ROW);
+			no_ass_message.innerHTML = "課題はありませんでした・ω・";
+			add_parent.appendChild(no_ass_message);
 		} else {
-			document.getElementById('assignment-message').innerHTML = "";
-			let show_assignment_fin = document.getElementById('show-assignment-fin');
-			let add_parent = document.getElementById('add-parent');
 			for (let row of rows) {
-				add_parent.insertBefore(row.get_td(), show_assignment_fin);
+				add_parent.appendChild(row.get_td());
 			}
 		}
 	}
@@ -168,6 +173,7 @@ let set_assignment = (assignment_yet) => {
 	let hided_assignment;
 	start();
 	async function start() {
+		document.getElementById('table-frame').style.display = "block";
 		insert_toggle();
 		hided_assignment = await new Promise((resolve) => {
 			chrome.storage.sync.get(["hided_assignment"], function (result) {
