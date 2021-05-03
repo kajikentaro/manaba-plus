@@ -1,6 +1,5 @@
 # <img src="public/icons/icon_48.png" width="45" align="left"> Manaba Downloader
 
-Automately download contents on Chuo University Manaba
 中央大学のLMS、manabaをもっと便利に使うことのできる拡張機能です。
 
 ## 機能
@@ -13,10 +12,12 @@ Automately download contents on Chuo University Manaba
 全科目の未提出課題を検索し、トップページに色分け表示します。
 課題を締切ギリギリでこなす私達に便利な機能。いちいち各科目にアクセスし、確認しに行く必要はありません。
 
+* ドロップ提出  
+ドラッグ＆ドロップでレポートを提出できます。
 
 ## 使い方
 * コンテンツダウンロード  
-manabaのトップページ（https://room.chuo-u.ac.jp/ct/home）にアクセスすると、Chrome右上のManaba Downloaderアイコンが点灯するのでそれをクリック。
+[manabaのトップページ](https://room.chuo-u.ac.jp/ct/home)にアクセスすると、Chrome右上のManaba Plusアイコンが点灯するのでそれをクリック。
 「コースコンテンツをDL」ボタンを押すとダウンロードが始まります。ブラウザを閉じてしまったり、ダウンロードを中止しても次回は途中のファイルから再開できます。
 
 * 未提出課題検索  
@@ -24,7 +25,7 @@ manabaのトップページ（https://room.chuo-u.ac.jp/ct/home）にアクセ�
 
 
 ## 免責事項
-Manaba Downloaderは中央大学非公式であり大学、Manabaのベンダーである朝日ネットとも一切関係がありません。
+Manaba Plusは中央大学非公式であり大学、Manabaのベンダーである朝日ネットとも一切関係がありません。
 この拡張機能を使用して被ったいかなる損害について作者は責任を負わないものとします。
 
 
@@ -33,6 +34,13 @@ Manaba Downloaderは中央大学非公式であり大学、Manabaのベンダー
 コンテンツをダウンロードし、保存するために必要です。
 
 ## バージョン情報
+* 1.3.0  
+デザインの変更
+「Manaba-Downloader」→「Manaba Plus」に改名
+* 1.2.3  
+バグフィックス
+* 1.2.1  
+ドロップ提出追加
 * 1.2.0  
 レイアウトの変更、任意の並び替え機能追加
 * 1.1.4  
@@ -50,8 +58,9 @@ Manaba Downloaderは中央大学非公式であり大学、Manabaのベンダー
 コースコンテンツ内のページが既読状態でない時ダウンロードされない不具合を修正
 * 0.1.1  
 new release
+
 ## ソース
-https://github.com/kajikentaro/manaba-downloader
+https://github.com/kajikentaro/manaba-plus
 ##  Install
 [* * Chrome* *  extension](https://chrome.google.com/webstore/detail/manaba-downloader/aeidkdokanbhoefbgaadaicdmggdeegf?hl=ja)
 ##  Contribution
