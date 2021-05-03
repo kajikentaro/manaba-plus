@@ -1,5 +1,22 @@
+#manabaPlus-title {
+  border: 1.5px solid #e98a24;
+  background: linear-gradient(to bottom, #fff, #ffc07c 10%, #ffb566);
+  margin: 8px 15px 8px 0px;
+  overflow: hidden;
+  border-radius: 6px 6px 0 0;
+  box-shadow: 0 1px 2px rgba(114, 49, 9, 0.3);
+  p {
+    padding: 7px 0 7px 45px;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    transform: scale(1.1, 1);
+  }
+}
+
 #assignment-table {
-  margin: 8px 0 12px 0;
+  margin-top: -8px;
+  margin-bottom: 16px;
   border: 1px solid #ffb566;
   border-collapse: separate;
   border-spacing: 0;
@@ -7,19 +24,23 @@
   overflow: hidden;
   td {
     border-bottom: 1px solid #ffb566;
-    &.course {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-      max-width: 0;
-      width: 40%;
-      border-left: none;
-    }
+  }
+  .no-assignment-message {
+    text-align: center;
   }
   th {
+    color: #f18b1e;
     background-color: #fff;
     border-bottom: 3px solid #ffb566;
     text-align: left;
+  }
+  .course {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 0;
+    width: 40%;
+    border-left: none;
   }
 
   td,
@@ -28,8 +49,8 @@
     padding: 3px 6px;
     white-space: nowrap;
   }
-  .sort-active{
-    background-color:red;
+  .sort-active {
+    background: linear-gradient(to bottom, #ffdeba, #fff);
   }
 
   .deletable-class:last-child {
@@ -45,18 +66,9 @@
       border-left: none;
     }
     &:hover {
-      color: #2e7c40;
+      color: #3c89ad;
       cursor: pointer;
     }
-    /*
-    &:active {
-      background: linear-gradient(
-        rgb(181, 206, 138) 0%,
-        rgb(219, 242, 176) 0%,
-        rgb(255, 255, 255) 100%
-      );
-    }
-    */
   }
 
   .ass {
@@ -74,7 +86,7 @@
 
 #toggle_disable,
 #show-assignment {
-  margin : 8px 0;
+  margin-bottom: 16px;
   font-size: 11px;
   font-weight: 600;
   line-height: 1.5;
@@ -92,9 +104,9 @@
   color: #fff;
   background: linear-gradient(to bottom, #ffb05b, #ffa23f);
   border-bottom: solid 4px #e28945;
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 3px rgba(80, 35, 7, 0.39);
   &:hover {
-    margin-top: 11px;
+    margin-top: 3px;
     color: #fff;
     background: linear-gradient(to bottom, #ffb05b, #ffa23f);
     border-bottom: 1px solid #e28945;
