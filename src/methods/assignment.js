@@ -1,6 +1,6 @@
 "use strict"
 import * as component from './component.js';
-let MANAGE_CLS = "MD-assignment";
+const DELETABLE_ROW= "deletable-row";
 let pre_clicked_label = "deadline";
 let continuous_click = 1;
 let backup_AY;
@@ -60,8 +60,8 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 	}
 	function insert_label(_sort_base, _reverse) {
 		let tr = document.createElement("tr");
-		tr.classList.add("topic");//追加
-		tr.classList.add(MANAGE_CLS);
+		tr.classList.add("table-header");//追加
+		tr.classList.add(DELETABLE_ROW);
 
 		let sort_bases = ["course_name", "assignment_name", null, "start_time", "deadline"];
 		let texts = ["コース", "題名", "非表示", "受付開始", "受付終了"];
@@ -78,7 +78,7 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 				th.innerHTML = _reverse ? texts[i] + "▼" : texts[i] + "▲";
 			}
 			if (!sort_bases[i]) continue;
-			th.classList.add("label");
+			th.classList.add("sort-label");
 			th.onclick = function () {
 				let closer = () => {
 					let reverse = continuous_click % 2;
@@ -107,7 +107,7 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 		}
 	}
 	function clear_assignment() {
-		let remove_rows = document.getElementsByClassName(MANAGE_CLS);
+		let remove_rows = document.getElementsByClassName(DELETABLE_ROW);
 		while (remove_rows.length) {
 			remove_rows[0].remove();
 		}
@@ -261,7 +261,7 @@ class Assignment {
 	}
 	get_td() {
 		let tr = document.createElement("tr");
-		tr.classList.add(MANAGE_CLS);
+		tr.classList.add(DELETABLE_ROW);
 
 		let td_course = tr.insertCell();
 		td_course.innerHTML = this.course_name;
