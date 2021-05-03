@@ -2,7 +2,7 @@
 import * as component from './component.js';
 const DELETABLE_ROW= "deletable-row";
 let pre_clicked_label = "deadline";
-let continuous_click = 1;
+let sort_is_reverse = false;
 let backup_AY;
 let show_disable = false;
 export let insert_button = () => {
@@ -83,11 +83,10 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 			th.classList.add("sort-label");
 			th.onclick = function () {
 				let closer = () => {
-					let reverse = continuous_click % 2;
-					if (pre_clicked_label == sort_bases[i]) continuous_click++;
-					else continuous_click = 0;
+					if (pre_clicked_label == sort_bases[i]) sort_is_reverse = !sort_is_reverse;
+					else sort_is_reverse = false;
 					pre_clicked_label = sort_bases[i];
-					review_table(backup_AY, sort_bases[i], reverse);
+					review_table(backup_AY, sort_bases[i], sort_is_reverse);
 				}
 				return closer;
 			}();

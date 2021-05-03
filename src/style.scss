@@ -7,7 +7,13 @@
   overflow: hidden;
   td {
     border-bottom: 1px solid rgb(158, 207, 76);
-    &.course {
+  }
+  th {
+    background-color: #fff;
+    border-bottom: 3px solid rgb(158, 207, 76);
+    text-align: left;
+  }
+    .course {
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
@@ -15,12 +21,6 @@
       width: 40%;
       border-left: none;
     }
-  }
-  th {
-    background-color: #fff;
-    border-bottom: 3px solid rgb(158, 207, 76);
-    text-align: left;
-  }
 
   td,
   th {
