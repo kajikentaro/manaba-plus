@@ -100,6 +100,7 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 		if (rows.length == 0) {
 			let no_ass_message = document.createElement("tr");
 			no_ass_message.classList.add(DELETABLE_ROW);
+			no_ass_message.classList.add("no-assignment-message");
 			no_ass_message.innerHTML = "課題はありませんでした・ω・";
 			no_ass_message.setAttribute("rowspan","5");
 			add_parent.appendChild(no_ass_message);
