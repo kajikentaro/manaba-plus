@@ -1,4 +1,4 @@
-# <img src="public/icons/icon_48.png" width="45" align="left"> Manaba Downloader
+# <img src="public/icons/icon_48.png" width="45" align="left"> Manaba Plus
 
 中央大学のLMS、manabaをもっと便利に使うことのできる拡張機能です。
 
