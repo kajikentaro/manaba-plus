@@ -31,7 +31,7 @@
       ],
       "run_at": "document_idle",
       "js": [
-        "dropFile.js"
+        "drop-file.js"
       ],
       "css": ["style.css"]
     },
@@ -45,5 +45,9 @@
       ],
       "css": ["style.css"]
     }
+  ],
+  "web_accessible_resources":[
+    "images/manaba_plus_icon.svg"
+
   ]
 }

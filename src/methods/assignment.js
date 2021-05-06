@@ -1,6 +1,6 @@
 "use strict"
 import * as component from './component.js';
-const DELETABLE_ROW= "deletable-row";
+const DELETABLE_ROW = "deletable-row";
 let pre_clicked_label = "deadline";
 let sort_is_reverse = false;
 let backup_AY;
@@ -8,9 +8,11 @@ let show_disable = false;
 export let insert_button = () => {
 	let mark = document.getElementsByClassName("contentbody-left")[0];
 	mark.insertAdjacentHTML(
-    "afterbegin",
-    '<div id="manabaPlus-title"><p>Manaba Plus</p></div><a id="show-assignment">未提出課題を表示</a><a id="toggle_disable" style="display:none">非表示も表示</a><div id=table-frame style="display:none"><table id="assignment-table"><tbody id="add-parent"></tbody></table></div>'
-  );
+		"afterbegin",
+		'<div id="manaba-plus-title"><img id="manaba-plus-icon"><p>Manaba Plus</p></div><a id="show-assignment">未提出課題を表示</a><a id="toggle_disable" style="display:none">非表示も表示</a><div id=table-frame style="display:none"><table id="assignment-table"><tbody id="add-parent"></tbody></table></div>'
+	);
+	let manabaPlus_icon = document.getElementById("manaba-plus-icon");
+	manabaPlus_icon.src = chrome.extension.getURL("images/manaba_plus_icon.svg");
 	let show_assignment_button = document.getElementById('show-assignment');
 	let assignment_table = document.getElementById('assignment-table');
 	let table_frame = document.getElementById('table-frame');
@@ -76,13 +78,13 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 			if (sort_bases[i] == _sort_base) {//ここを基準にソートした場合
 				th.classList.add("sort-active");
 				th.innerHTML = _reverse ? texts[i] + "▼" : texts[i] + "▲";
-			}else if(sort_bases[i]){//それ以外の場合
+			} else if (sort_bases[i]) {//それ以外の場合
 				th.innerHTML = texts[i] + "　";
-			}else{//inputの場合
+			} else {//inputの場合
 				th.innerHTML = texts[i];
 			}
 			if (!sort_bases[i]) continue;
-			if(classes[i])th.classList.add(classes[i]);
+			if (classes[i]) th.classList.add(classes[i]);
 			th.classList.add("sort-label");
 			th.onclick = function () {
 				let closer = () => {
@@ -104,7 +106,7 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 			no_ass_message.classList.add(DELETABLE_ROW);
 			no_ass_message.classList.add("no-assignment-message");
 			no_ass_message.innerHTML = "ないヨ。 _(:3 」∠ )_ ";
-			no_ass_message.setAttribute("rowspan","5");
+			no_ass_message.setAttribute("rowspan", "5");
 			add_parent.appendChild(no_ass_message);
 		} else {
 			for (let row of rows) {
@@ -229,7 +231,7 @@ class Assignment {
 		}
 	}
 	get_color(deadline) {
-		if(deadline == Infinity)return "#e8e8e8";
+		if (deadline == Infinity) return "#e8e8e8";
 		let now_time = new Date(new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }));
 		let time_diff = deadline.getTime() - now_time.getTime();
 		let day_diff = Math.floor(time_diff / (1000 * 60 * 60 * 24));
@@ -244,10 +246,10 @@ class Assignment {
 		}
 	}
 	date_to_str(date) {
-		if(date == Infinity) return ""
+		if (date == Infinity) return ""
 		let dates_jp = ["日", "月", "火", "水", "木", "金", "土"];
 		let txt = "";
-		txt += (date.getMonth()+1) + "/";
+		txt += (date.getMonth() + 1) + "/";
 		txt += date.getDate() + "(";
 		txt += dates_jp[date.getDay()] + ") ";
 		txt += date.getHours() + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());

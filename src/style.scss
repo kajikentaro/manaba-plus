@@ -1,4 +1,5 @@
-#manabaPlus-title {
+#manaba-plus-title {
+  height: 30px;
   border: 1.5px solid #e98a24;
   background: linear-gradient(to bottom, #fff, #ffc07c 10%, #ffb566);
   margin: 8px 15px 8px 0px;
@@ -6,14 +7,20 @@
   border-radius: 6px 6px 0 0;
   box-shadow: 0 1px 2px rgba(114, 49, 9, 0.3);
   p {
-    padding: 7px 0 7px 45px;
+    margin: 0 10px;
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: super;
     color: #fff;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    transform: scale(1.1, 1);
+    font-weight: 500;
   }
 }
-
+#manaba-plus-icon {
+  padding: 2.5px;
+  vertical-align: bottom;
+  display: inline;
+  height: 25px;
+}
 #assignment-table {
   margin-top: -8px;
   margin-bottom: 16px;
@@ -113,7 +120,7 @@
   }
 }
 
-#drop-state{
+#drop-state {
   font-weight: 600;
   max-width: 200px;
   border-bottom: dotted 3px orange;

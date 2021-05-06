@@ -77,7 +77,7 @@ const config = merge(common, {
     popup2: PATHS.src + '/popup2.js',
     contentScript: PATHS.src + '/contentScript.js',
     background: PATHS.src + '/background.js',
-    dropFile: PATHS.src + '/dropFile.js',
+    "drop-file": PATHS.src + '/drop-file.js',
     style: PATHS.src + '/style.scss',
   },
 });
