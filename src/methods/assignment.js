@@ -9,7 +9,7 @@ export let insert_button = () => {
 	let mark = document.getElementsByClassName("contentbody-left")[0];
 	mark.insertAdjacentHTML(
     "afterbegin",
-    '<div id="manabaPlus-title"><p>Manaba Plus</p></div><a id="show-assignment">未提出課題を表示</a><a id="toggle_disable" style="display:none">非表示も表示</a><div id=table-frame style="display:none"><table id="assignment-table"><tbody id="add-parent"></tbody></table></div>'
+    '<img src="./icon_16.png" alt="b"><div id="manabaPlus-title"><p>Manaba Plus</p></div><a id="show-assignment">未提出課題を表示</a><a id="toggle_disable" style="display:none">非表示も表示</a><div id=table-frame style="display:none"><table id="assignment-table"><tbody id="add-parent"></tbody></table></div>'
   );
 	let show_assignment_button = document.getElementById('show-assignment');
 	let assignment_table = document.getElementById('assignment-table');
