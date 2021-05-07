@@ -231,7 +231,7 @@ class Assignment {
 		}
 	}
 	get_color(deadline) {
-		if (deadline == Infinity) return "#e8e8e8";
+		if (deadline == Infinity) return "#F4F4F4";
 		let now_time = new Date(new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }));
 		let time_diff = deadline.getTime() - now_time.getTime();
 		let day_diff = Math.floor(time_diff / (1000 * 60 * 60 * 24));
@@ -242,7 +242,7 @@ class Assignment {
 		} else if (day_diff < 7) {
 			return '#cce8cc';
 		} else {
-			return "#e8e8e8";
+			return "#F4F4F4";
 		}
 	}
 	date_to_str(date) {
