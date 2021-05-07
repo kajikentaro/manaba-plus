@@ -16,9 +16,9 @@ function submit() {
   form.submit();
 }
 function insert_drop_message() {
-  let mess = document.createElement("p");
+  let mess = document.createElement("div");
   mess.setAttribute("id", "drop-state");
-  mess.innerHTML = "またはここにファイルをドロップ";
+  mess.innerHTML = "<p>またはここにファイルをドロップ</p>";
   input.parentElement.parentElement.appendChild(mess);
 }
 function add_listener() {
