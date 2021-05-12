@@ -13,7 +13,8 @@
 レポートをドラッグ&ドロップで提出
 
 ### YouTube紹介動画
-<a href="https://www.youtube.com/watch?v=BmCXfWZzhks" rel="some text"><img src="http://img.youtube.com/vi/BmCXfWZzhks/mqdefault.jpg" style="border: 1px solid black"/></a>
+|<a href="https://www.youtube.com/watch?v=BmCXfWZzhks" rel="some text"><img src="http://img.youtube.com/vi/BmCXfWZzhks/mqdefault.jpg"></a>|
+| ------ |
 
 ## Contribution
 [Chrome-Extension-Cli](https://github.com/dutiyesh/chrome-extension-cli) を利用して作成されています。
