@@ -23,10 +23,11 @@ export function stop_dl(){
 	progress_disp('ダウンロードの中止. . .')
 	chrome.downloads.cancel(id,()=>{
 		progress_disp('ダウンロードが中止されました。')
+		send_finish_dl();
 	});
 	permit_dl = false;
 }
-function send_finish_dl(){
+export function send_finish_dl(){
 	let manaba_tabid = parseInt((new URL(document.location)).searchParams.get('tabid'));
 	chrome.tabs.getCurrent((tab)=>{
 	chrome.tabs.sendMessage(
@@ -54,6 +55,7 @@ async function download_files(urls, stored_urls){
 			stored_urls.push(url);
 			chrome.storage.local.set({ 'download_list': stored_urls}, () => { console.log('store url') });
 		}).catch(()=>{
+			if(permit_dl == false)throw new Error('ユーザーによるダウンロード中止');
 			if(window.confirm("接続エラーが発生したか、ウィンドウが閉じられました。次のファイルを続けてダウンロードしますか？")){
 			}else{
 				stop_dl();

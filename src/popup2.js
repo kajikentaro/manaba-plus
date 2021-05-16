@@ -10,12 +10,21 @@ document.addEventListener('DOMContentLoaded', ()=>{
   detect_contentscript_close();
   send_dl_start();
   set_stop_dl();
+  set_tab_close();
   progress_disp_cs();
 });
+function set_tab_close(){
+  window.addEventListener('beforeunload',()=>{
+    download.send_finish_dl();
+  });
+}
 function detect_contentscript_close(){
   var func = (tabId, removeInfo)=>{
     let manaba_tabid = parseInt((new URL(document.location)).searchParams.get('tabid'));
-    if(tabId == manaba_tabid && status == 1){alert("manabaのタブが閉じられたため、中止されました")}
+    if(tabId == manaba_tabid && status == 1){
+      download.stop_dl();
+      alert("manabaのタブが閉じられたため、中止されました")
+    }
   }
   chrome.tabs.onRemoved.addListener(func);
 }
