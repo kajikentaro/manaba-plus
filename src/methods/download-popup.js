@@ -41,6 +41,7 @@ async function download_files(urls, stored_urls){
 	chrome.downloads.onChanged.addListener((downloadDelta) => {
 		if (id != downloadDelta.id)return;
 		if (downloadDelta.state) {
+			console.log(downloadDelta.state);
 			if (downloadDelta.state.current == 'interrupted')reject_hold();
 			if (downloadDelta.state.current == 'complete')resolve_hold();
 		}
@@ -52,6 +53,12 @@ async function download_files(urls, stored_urls){
 		await download_file(url).then(()=>{
 			stored_urls.push(url);
 			chrome.storage.local.set({ 'download_list': stored_urls}, () => { console.log('store url') });
+		}).catch(()=>{
+			if(window.confirm("接続エラーが発生したか、ウィンドウが閉じられました。次のファイルを続けてダウンロードしますか？")){
+			}else{
+				stop_dl();
+				throw new Error('ユーザーconfirmによるダウンロード中止');
+			}
 		});
 	}
 	async function download_file(url){

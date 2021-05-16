@@ -18,10 +18,6 @@ body {
     width: 350px;
     height: 300px;
 }
-.download-body{
-    width:500px;
-    margin:100px auto;
-}
 #message{
     width:100%;
     text-align:left;
@@ -108,8 +104,28 @@ code {
     border: .5px dashed #000;
     opacity: .1;
 }
-
 .button-parent{
     margin:20px auto;
     text-align: center;;
+}
+
+.download-body{
+    width:800px;
+    margin:100px auto;
+    p{
+        font-size:15px;
+    }
+    .discription{
+        margin:100px 0 0 0;
+    }
+    img{
+        display:block;
+        margin:0 auto;
+        border:solid 2px #ddd;
+        margin-top:20px;
+    }
+    .screenshot-caption{
+        text-align: center;
+        margin-bottom:30px;
+    }
 }
