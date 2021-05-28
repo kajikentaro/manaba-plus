@@ -1,7 +1,7 @@
 {
-  "name": "manaba-downloader",
+  "name": "manaba-plus",
   "version": "0.3.1",
-  "description": "My Chrome Extension",
+  "description": "Automately download contents on Chuo University Manaba",
   "private": true,
   "scripts": {
     "watch": "webpack --mode=development --watch --config config/webpack.common.js",
