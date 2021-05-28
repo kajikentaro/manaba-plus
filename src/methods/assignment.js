@@ -217,7 +217,7 @@ class Assignment {
 		this.assignment_name = row.children[0].getElementsByTagName("a")[0].innerHTML;
 		this.status = "受付中";
 		this.disable = true;
-		this.start_time = new Date(row.children[2].innerHTML);
+		this.start_time = row.children[2].innerHTML ? new Date(row.children[2].innerHTML) : -Infinity;
 		this.deadline = row.children[3].innerHTML ? new Date(row.children[3].innerHTML) : Infinity;
 		this.color_code = this.get_color(this.deadline);
 	}
@@ -246,7 +246,7 @@ class Assignment {
 		}
 	}
 	date_to_str(date) {
-		if (date == Infinity) return ""
+		if (date == Infinity || date == -Infinity) return ""
 		let dates_jp = ["日", "月", "火", "水", "木", "金", "土"];
 		let txt = "";
 		txt += (date.getMonth() + 1) + "/";
