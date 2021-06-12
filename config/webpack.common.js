@@ -78,6 +78,7 @@ const config = merge(common, {
     contentScript: PATHS.src + '/contentScript.js',
     background: PATHS.src + '/background.js',
     "drop-file": PATHS.src + '/drop-file.js',
+    timeout: PATHS.src + '/timeout.js',
     style: PATHS.src + '/style.scss',
   },
 });

@@ -27,13 +27,24 @@
   "content_scripts": [
     {
       "matches": [
+        "https://gakunin-idp.c.chuo-u.ac.jp/sso/timeout.cgi*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "timeout.js"
+      ],
+      "css": [
+        "style.css"
+      ]
+    },
+    {
+      "matches": [
         "https://room.chuo-u.ac.jp/ct/course*_report_*"
       ],
       "run_at": "document_idle",
       "js": [
         "drop-file.js"
-      ],
-      "css": ["style.css"]
+      ]
     },
     {
       "matches": [
@@ -43,10 +54,12 @@
       "js": [
         "contentScript.js"
       ],
-      "css": ["style.css"]
+      "css": [
+        "style.css"
+      ]
     }
   ],
-  "web_accessible_resources":[
+  "web_accessible_resources": [
     "images/manabaPlus_white.svg"
   ]
 }
