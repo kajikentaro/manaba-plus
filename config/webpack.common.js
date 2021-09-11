@@ -75,7 +75,8 @@ const config = merge(common, {
   entry: {
     popup: PATHS.src + '/popup.js',
     popup2: PATHS.src + '/popup2.js',
-    contentScript: PATHS.src + '/contentScript.js',
+    home: PATHS.src + '/home.js',
+    "summary": PATHS.src + '/summary.js',
     background: PATHS.src + '/background.js',
     "drop-file": PATHS.src + '/drop-file.js',
     timeout: PATHS.src + '/timeout.js',

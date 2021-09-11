@@ -52,7 +52,19 @@
       ],
       "run_at": "document_idle",
       "js": [
-        "contentScript.js"
+        "home.js"
+      ],
+      "css": [
+        "style.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://room.chuo-u.ac.jp/ct/home_summary_*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "summary.js"
       ],
       "css": [
         "style.css"
