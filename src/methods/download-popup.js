@@ -1,8 +1,6 @@
 "use strict"
-
-import { throws } from 'assert';
-
 var path_module = require('path');
+
 var permit_dl = true;
 export async function download(raw_urls){
 	var stored_urls = await get_stored_urls();
