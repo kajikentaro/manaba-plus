@@ -33,8 +33,21 @@ let fetch_hided = async () => {
 	return res;
 }
 const start_mp = async ()=>{
+	//set class that defined originally
+	document.getElementsByClassName("current")[0].classList.remove("current");
+	document.getElementById("mp-li").classList.add("current");
+	//remove default table
+	document.getElementsByClassName("stdlist")[0].style.display = "none";
+	document.getElementsByClassName("contentbody-footer")[0].style.display = "none";
+	//fetch assignment datas
 	all_assignments = await fetch_summaries();
 	hided_assignments = await fetch_hided();
+	//insert frame
+	let add_parent = document.getElementsByClassName('contentbody-l')[0];
+	const table = document.createElement("table");
+	table.id = "mp-table";
+	add_parent.appendChild(table);
+
 	set_disables(all_assignments, hided_assignments);//all_assignmentsのdisableを設定する。
 	review_table(all_assignments);
 }
@@ -59,12 +72,12 @@ const fetch_summaries = async () => {
 		for (let i = 0; i < assignment_dom_rows.length; i++){
 			if (i == 0) continue; // skip title
 			let cols = assignment_dom_rows[i].children;
+			console.log(cols[2].innerText,new Date(cols[2]));
 			let dict = {
 				course_name: clip_str(cols[1]),
 				href: cols[0].getElementsByTagName('a')[0].href,
 				assignment_name: clip_str(cols[0]),
-				start_time: new Date(clip_str(cols[2])),
-				deadline: new Date(clip_str(cols[2])),//暫定処置
+				deadline: cols[2].innerText ? new Date(cols[2].innerText) : undefined,//暫定処置
 			}
 			let assignment = new Assignment();
 			assignment.init_json(dict);
@@ -87,6 +100,7 @@ const insert_mp_button = ()=>{
 	mp_start.innerHTML = "Manaba Plus";
 	let mp_li = document.createElement("li");
 	mp_li.appendChild(mp_start);
+	mp_li.id = "mp-li"
 	let infolist_tab = document.getElementsByClassName("infolist-tab")[0];
 	infolist_tab.appendChild(mp_li);
 	mp_start.onclick = start_mp;
@@ -135,9 +149,9 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 		tr.classList.add(DELETABLE_ROW);
 
 		let classes = ["course", "ass", null, null, null];
-		let sort_bases = ["course_name", "assignment_name", null, "start_time", "deadline"];
-		let texts = ["コース", "題名", "非表示", "受付開始", "受付終了"];
-		for (let i = 0; i < 5; i++) {
+		let sort_bases = ["course_name", "assignment_name", null, "deadline"];
+		let texts = ["コース", "題名", "非表示",  "受付終了"];
+		for (let i = 0; i < 4; i++) {
 			let th = document.createElement("th");
 			tr.appendChild(th);
 			if (sort_bases[i] == _sort_base) {//ここを基準にソートした場合
@@ -161,11 +175,11 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 				return closer;
 			}();
 		}
-		let add_parent = document.getElementsByClassName('contentbody-l')[0];
+		let add_parent = document.getElementById('mp-table');
 		add_parent.appendChild(tr);
 	}
 	function insert_rows(rows) {
-		let add_parent = document.getElementsByClassName('contentbody-l')[0];
+		let add_parent = document.getElementById('mp-table');
 		if (rows.length == 0) {
 			let no_ass_message = document.createElement("tr");
 			no_ass_message.classList.add(DELETABLE_ROW);
@@ -193,19 +207,8 @@ class Assignment {
 		this.assignment_name = dict.assignment_name;
 		this.status = dict.status;
 		this.disable = dict.disable;
-		this.start_time = new Date(dict.start_time);
-		this.deadline = new Date(dict.deadline);
+		this.deadline = dict.deadline;
 		this.color_code = dict.color_code;
-	}
-	init_row(row, course_name) {
-		this.course_name = course_name;
-		this.href = row.children[0].getElementsByTagName("a")[0].href;
-		this.assignment_name = row.children[0].getElementsByTagName("a")[0].innerHTML;
-		this.status = "受付中";
-		this.disable = true;
-		this.start_time = row.children[2].innerHTML ? new Date(row.children[2].innerHTML) : -Infinity;
-		this.deadline = row.children[3].innerHTML ? new Date(row.children[3].innerHTML) : Infinity;
-		this.color_code = this.get_color(this.deadline);
 	}
 	get_color(deadline) {
 		if (deadline == Infinity) return "#F4F4F4";
@@ -223,7 +226,7 @@ class Assignment {
 		}
 	}
 	date_to_str(date) {
-		if (date == Infinity || date == -Infinity) return ""
+		if (date == undefined) return ""
 		let dates_jp = ["日", "月", "火", "水", "木", "金", "土"];
 		let txt = "";
 		txt += (date.getMonth() + 1) + "/";
@@ -257,23 +260,9 @@ class Assignment {
 		td_ass.innerHTML = "<a href='" + this.href + "'>" + this.assignment_name + "</a>";
 		td_ass.classList.add("ass");
 		this.setup_input(tr.insertCell());
-		tr.insertCell().innerHTML = this.date_to_str(this.start_time)
 		tr.insertCell().innerHTML = this.date_to_str(this.deadline)
 		tr.style.backgroundColor = this.color_code;
 		return tr;
 	}
 }
 init();
-//CODE FOR DEVELOPMENT
-/*
-let DEV = JSON.parse('[{"course_name":"社会情報学２","href":"https://room.chuo-u.ac.jp/ct/course_2369010_report_2631393","assignment_name":"第3回講義レポート","status":"受付中","disable":true,"start_time":"2021-04-23T08:00:00.000Z","deadline":"2021-04-29T14:55:00.000Z","color_code":"#cce8cc"},{"course_name":"実践プログラミング","href":"https://room.chuo-u.ac.jp/ct/course_2369115_report_2653818","assignment_name":"[03A]","status":"受付中","disable":true,"start_time":"2021-04-22T04:00:00.000Z","deadline":"2021-04-27T03:00:00.000Z","color_code":"#fff4d1"},{"course_name":"計算幾何学","href":"https://room.chuo-u.ac.jp/ct/course_2368875_query_2649329","assignment_name":"第3回小テスト","status":"受付中","disable":true,"start_time":"2021-04-23T05:30:00.000Z","deadline":"2021-04-25T15:00:00.000Z","color_code":"#ffe6e9"},{"course_name":"ディジタル信号処理","href":"https://room.chuo-u.ac.jp/ct/course_2368995_report_2606859","assignment_name":"第1回演習問題","status":"受付中","disable":true,"start_time":"2021-04-14T07:50:00.000Z","deadline":"2021-04-28T06:10:00.000Z","color_code":"#cce8cc"},{"course_name":"ディジタル信号処理","href":"https://room.chuo-u.ac.jp/ct/course_2368995_report_2610929","assignment_name":"第2回演習問題","status":"受付中","disable":true,"start_time":"2021-04-21T07:50:00.000Z","deadline":"2021-04-28T06:10:00.000Z","color_code":"#cce8cc"}]');
-export let dev = ()=>{
-	let rows = [];
-	for(let a of DEV){
-		let r = new Assignment();
-		r.init_json(a);
-		rows.push(r);
-	}
-	set_assignment(rows);
-}
-*/
