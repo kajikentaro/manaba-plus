@@ -33,6 +33,8 @@ Automately download contents on Chuo University Manaba
 　　コンテンツをダウンロードし、保存するために必要です。
 
 《バージョン情報》
+1.4.0
+　　未提出課題一覧に、manaba plusのタブを追加。
 1.3.0
 　　デザインの変更
 　　「Manaba-Downloader」→「Manaba Plus」に改名
