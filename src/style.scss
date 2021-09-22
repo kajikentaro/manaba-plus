@@ -144,8 +144,8 @@
   $color-font:#2e7c40;
 
   border-collapse:collapse;
-  text-overflow: ellipsis;
   border: 1px solid $color-border;
+
   .flex{
     display:flex;
     justify-content: center;
@@ -176,5 +176,10 @@
   }
   .ass{
     width:60%;
+  }
+  .course, .ass{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 0;
   }
 }
