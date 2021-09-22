@@ -4,35 +4,18 @@ const DELETABLE_ROW = "deletable-row";
 let pre_clicked_label = "deadline";
 let sort_is_reverse = false;
 let show_disable = false;
+let all_assignments;
+let hided_assignments;
+let start_mp_done = false;
 const init = async ()=>{
 	insert_mp_button();
 }
-//todo
-function insert_toggle() {
-	document.getElementById('toggle_disable').style.display = "inline-block";
-	document.getElementById('toggle_disable').onclick = () => {
-		show_disable = !show_disable;
-		review_table(assignment_yet);
-		if (show_disable) {
-			document.getElementById('toggle_disable').innerHTML = "非表示にする";
-		} else {
-			document.getElementById('toggle_disable').innerHTML = "非表示も表示";
-		}
-	}
-}
-let all_assignments;
-let hided_assignments;
-//todo
-let fetch_hided = async () => {
-	const res = await new Promise((resolve) => {
-		chrome.storage.sync.get(["hided_assignment"], function (result) {
-			if (!result.hided_assignment) resolve([]);
-			resolve(result.hided_assignment);
-		});
-	});
-	return res;
-}
 const start_mp = async ()=>{
+	//prevent over two times button click
+	if (start_mp_done) {
+		return;
+	}
+	start_mp_done = true;
 	//set class that defined originally
 	document.getElementsByClassName("current")[0].classList.remove("current");
 	document.getElementById("mp-li").classList.add("current");
@@ -47,9 +30,27 @@ const start_mp = async ()=>{
 	const table = document.createElement("table");
 	table.id = "mp-table";
 	add_parent.appendChild(table);
+	//insert toggle
+	let mp_li = document.createElement("li");
+	mp_li.innerHTML = '<label for="toggle-hide" id="toggle-hide-label"><input type=checkbox id="toggle-hide"><p>非表示も表示</p></label>';
+	let infolist_tab = document.getElementsByClassName("infolist-tab")[0];
+	infolist_tab.appendChild(mp_li);
+	document.getElementById("toggle-hide").onchange = (e) => {
+		show_disable = e.target.checked;
+		review_table(all_assignments, pre_clicked_label, sort_is_reverse);
+	}
 
 	set_disables(all_assignments, hided_assignments);//all_assignmentsのdisableを設定する。
 	review_table(all_assignments);
+}
+let fetch_hided = async () => {
+	const res = await new Promise((resolve) => {
+		chrome.storage.sync.get(["hided_assignment"], function (result) {
+			if (!result.hided_assignment) resolve([]);
+			resolve(result.hided_assignment);
+		});
+	});
+	return res;
 }
 function set_disables(all, hided) {
 	for (let ass of all) {
@@ -72,12 +73,11 @@ const fetch_summaries = async () => {
 		for (let i = 0; i < assignment_dom_rows.length; i++){
 			if (i == 0) continue; // skip title
 			let cols = assignment_dom_rows[i].children;
-			console.log(cols[2].innerText,new Date(cols[2]));
 			let dict = {
 				course_name: clip_str(cols[1]),
 				href: cols[0].getElementsByTagName('a')[0].href,
 				assignment_name: clip_str(cols[0]),
-				deadline: cols[2].innerText ? new Date(cols[2].innerText) : undefined,//暫定処置
+				deadline: cols[2].innerText ? new Date(cols[2].innerText) : Infinity,//暫定処置
 			}
 			let assignment = new Assignment();
 			assignment.init_json(dict);
@@ -107,8 +107,9 @@ const insert_mp_button = ()=>{
 }
 
 const input_click = () => {
+	//update disable or enable setting of assignments
 	collect_and_preserve();
-	review_table(all_assignments);
+	review_table(all_assignments, pre_clicked_label, sort_is_reverse);
 	function collect_and_preserve(){
 		let disable_href = [];
 		for (let row of all_assignments) {
@@ -170,7 +171,7 @@ let review_table = (rows, sort_base = "deadline", reverse = false) => {
 					if (pre_clicked_label == sort_bases[i]) sort_is_reverse = !sort_is_reverse;
 					else sort_is_reverse = false;
 					pre_clicked_label = sort_bases[i];
-					review_table(backup_AY, sort_bases[i], sort_is_reverse);
+					review_table(all_assignments, sort_bases[i], sort_is_reverse);
 				}
 				return closer;
 			}();
@@ -208,7 +209,7 @@ class Assignment {
 		this.status = dict.status;
 		this.disable = dict.disable;
 		this.deadline = dict.deadline;
-		this.color_code = dict.color_code;
+		this.color_code = this.get_color(this.deadline);
 	}
 	get_color(deadline) {
 		if (deadline == Infinity) return "#F4F4F4";
@@ -226,7 +227,7 @@ class Assignment {
 		}
 	}
 	date_to_str(date) {
-		if (date == undefined) return ""
+		if (date == Infinity) return ""
 		let dates_jp = ["日", "月", "火", "水", "木", "金", "土"];
 		let txt = "";
 		txt += (date.getMonth() + 1) + "/";
@@ -243,9 +244,9 @@ class Assignment {
 			e.stopPropagation();
 		}
 		if (this.disable == true) {
-			td.innerHTML = '<input type="checkbox" checked="true">'
+			td.innerHTML = '<div class="flex"><input type="checkbox" checked="true"></div>'
 		} else {
-			td.innerHTML = '<input type="checkbox">'
+			td.innerHTML = '<div class="flex"><input type="checkbox"></div>'
 		}
 	}
 	get_td() {

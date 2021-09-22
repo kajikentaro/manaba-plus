@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Manaba Plus",
-  "version": "1.3.5",
+  "version": "1.4.0",
   "description": "Automately download contents on Chuo University Manaba",
   "icons": {
     "16": "icons/manabaPlusIcon_16.png",
