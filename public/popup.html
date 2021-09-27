@@ -6,21 +6,9 @@
     <link rel="stylesheet" href="popup.css"/>
 </head>
 <body>
-  <div class="app">
-    <div id="counter" class="counter"></div>
-		<button id="startDL" class="button">コースコンテンツをDL</button>
-    <p class="subtitle">まだPCにダウンロードされていないコンテンツを、まとめてPCにダウンロードします。<br>自動でコース別にフォルダ分けされます</p>
-		<button id="clear-cache" class="button">内部キャッシュを消去</button>
-    <p class="subtitle">重複ダウンロードを防ぐために内部に保存している履歴を消去します</p>
-  </div>
-
-  <script src="popup.js"></script>
-
-  <!--
-    This HTML file opens when you click on icon from the toolbar.
-
-    To begin the development, run `npm run watch`.
-    To create a production bundle, use `npm run build`.
-  -->
+  <script>
+    window.open("./operations.html");
+    alert("test");
+  </script>
 </body>
 </html>

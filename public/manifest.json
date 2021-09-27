@@ -1,24 +1,25 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Manaba Plus",
   "version": "1.4.2",
   "description": "Automately download contents on Chuo University Manaba",
+
+  "action": {
+    "default_title": "Manaba Plusを開く"
+  },
   "icons": {
     "16": "icons/manabaPlusIcon_16.png",
     "32": "icons/manabaPlusIcon_32.png",
     "48": "icons/manabaPlusIcon_48.png",
     "128": "icons/manabaPlusIcon_128.png"
   },
+
+  "options_page": "options.html",
+
   "background": {
-    "scripts": [
-      "background.js"
-    ],
-    "persistent": false
+    "service_worker": "icon-click.js"
   },
-  "page_action": {
-    "default_title": "Manaba Plus",
-    "default_popup": "popup.html"
-  },
+
   "permissions": [
     "storage",
     "downloads",
@@ -29,7 +30,6 @@
       "matches": [
         "https://gakunin-idp.c.chuo-u.ac.jp/sso/timeout.cgi*"
       ],
-      "run_at": "document_idle",
       "js": [
         "timeout.js"
       ],
@@ -41,7 +41,6 @@
       "matches": [
         "https://room.chuo-u.ac.jp/ct/course*_report_*"
       ],
-      "run_at": "document_idle",
       "js": [
         "drop-file.js"
       ]
@@ -50,7 +49,6 @@
       "matches": [
         "https://room.chuo-u.ac.jp/ct/home"
       ],
-      "run_at": "document_idle",
       "js": [
         "home.js"
       ],
@@ -62,7 +60,6 @@
       "matches": [
         "https://room.chuo-u.ac.jp/ct/home_summary_*"
       ],
-      "run_at": "document_idle",
       "js": [
         "summary.js"
       ],
@@ -72,6 +69,9 @@
     }
   ],
   "web_accessible_resources": [
-    "images/manabaPlus_white.svg"
+    {
+      "resources": ["images/manabaPlus_white.svg"],
+      "matches": [ "https://room.chuo-u.ac.jp/*" ]
+    }
   ]
 }
