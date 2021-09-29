@@ -19,6 +19,9 @@ html {
     p {
         font-size: 15px;
     }
+    >p{
+        margin:0;
+    }
     .discription {
         margin: 100px 0 0 0;
     }
@@ -58,4 +61,13 @@ button{
 .button-parent {
     margin: 20px auto;
     text-align: center;
+}
+.options-body{
+    display:flex;
+    flex-direction: column;
+    margin:0 auto;
+    width:800px;
+    div{
+        margin:15px;
+    }
 }

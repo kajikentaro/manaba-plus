@@ -1,5 +1,4 @@
 'use strict'
-import * as component from './methods/component.js';
 const DELETABLE_ROW = "deletable-row";
 let pre_clicked_label = "deadline";
 let sort_is_reverse = false;

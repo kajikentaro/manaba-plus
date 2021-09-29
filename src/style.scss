@@ -1,19 +1,67 @@
-#manaba-plus-title {
-  max-height: 25px;
-  border: 1.5px solid #e98a24;
-  background: linear-gradient(to bottom, #fff, #ffc07c 10%, #ffb566);
-  margin: 8px 15px 8px 0px;
-  overflow: hidden;
-  border-radius: 6px 6px 0 0;
-  box-shadow: 0 1px 2px rgba(114, 49, 9, 0.3);
-  h2 {
-    padding-left: 7px;
-    padding-bottom: 7.5px;
-    position: 0;
-    display: inline-block;
-    letter-spacing: 0.1em;
-    color: #fff;
+$color-border: #529C09;
+$color-background:#dffabd;
+$color-hover: orange;
+$color-font:#2e7c40;
+
+#manaba-plus-parent{
+  margin:0 15px 15px 0;
+  display: flex;
+  flex-direction: column;
+  .mp-buttons{
+    margin:7px 0;
   }
+  #manaba-plus-title {
+    height:25px;
+    margin-top:6px;
+    display:block;
+    h2 {
+      font-size:12px;
+      padding-left: 15px;
+    }
+  }
+  #toggles{
+    display: flex;
+    label{
+      margin-right:15px;
+      input{
+        margin-right:2px;
+      }
+    }
+  }
+}
+.button{
+    &.button {
+        border: 0;
+        display: inline-block;
+        padding: 8px 15px;
+        margin-right: 5px;
+        background-color: $color-background;
+        border:$color-border solid 1.5px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: transform 0.2s ease;
+        user-select: none;
+    }
+    &.button:focus {
+        outline: none;
+    }
+    &.button:hover {
+      background-color: $color-hover;
+      border:white solid 1.5px;
+      color:white;
+      transition:0.3s;
+      cursor:pointer;
+    }
+}
+.toggle-label{
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 25px;
+  font-size: 13px;
 }
 #manaba-plus-icon {
   padding: 5px 0 5px 5px;
@@ -92,35 +140,8 @@
   }
 }
 
-#toggle_disable,
-#show-assignment,
-#go-home-btn {
-  margin-bottom: 16px;
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.5;
-  position: relative;
-  display: inline-block;
-  padding: 5px 8px;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.1s;
-  text-align: center;
-  vertical-align: middle;
-  text-decoration: none;
-  letter-spacing: 0.15em;
-  border-radius: 5px;
-  color: #fff;
-  background: linear-gradient(to bottom, #ffb05b, #ffa23f);
-  border-bottom: solid 4px #e28945;
-  box-shadow: 0 3px 3px rgba(80, 35, 7, 0.39);
-  &:hover {
-    margin-top: 3px;
-    color: #fff;
-    background: linear-gradient(to bottom, #ffb05b, #ffa23f);
-    border-bottom: 1px solid #e28945;
-  }
-}
+$color-1:#ffb05b;
+
 
 #drop-state {
   p {
@@ -138,10 +159,6 @@
   font-size: 13px;
 }
 #mp-table{
-  $color-border: #529C09;
-  $color-background:#dffabd;
-  $color-hover: orange;
-  $color-font:#2e7c40;
 
   border-collapse:collapse;
   border: 1px solid $color-border;

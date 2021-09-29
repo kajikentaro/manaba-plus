@@ -5,11 +5,11 @@ let pre_clicked_label = "deadline";
 let sort_is_reverse = false;
 let backup_AY;
 let show_disable = false;
-export let insert_button = () => {
+export let insert_button = async () => {
 	let mark = document.getElementsByClassName("contentbody-left")[0];
 	mark.insertAdjacentHTML(
 		"afterbegin",
-		'<div id="manaba-plus-title"><img id="manaba-plus-icon"><h2>Manaba Plus</h2></div><a id="show-assignment">未提出課題を表示</a><a id="toggle_disable" style="display:none">非表示も表示</a><div id=table-frame style="display:none"><table id="assignment-table"><tbody id="add-parent"></tbody></table></div>'
+		(await (await fetch(chrome.runtime.getURL("insert.html"))).text())
 	);
 	let manabaPlus_icon = document.getElementById("manaba-plus-icon");
 	manabaPlus_icon.src = chrome.runtime.getURL("images/manabaPlus_white.svg");
