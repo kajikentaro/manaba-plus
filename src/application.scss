@@ -1,0 +1,61 @@
+html {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+    color: #222;
+}
+.download-body {
+    width: 800px;
+    margin: 100px auto;
+    #message {
+        width: 100%;
+        text-align: left;
+    }
+    #progress {
+        width: 100%;
+    }
+    #number-counter {
+        width: 100%;
+        text-align: right;
+    }
+    p {
+        font-size: 15px;
+    }
+    .discription {
+        margin: 100px 0 0 0;
+    }
+    img {
+        display: block;
+        margin: 0 auto;
+        border: solid 2px #ddd;
+        margin-top: 20px;
+    }
+    .screenshot-caption {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+}
+button{
+    &.button {
+        border: 0;
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 4px;
+        background-color: bisque;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: transform 0.2s ease;
+        user-select: none;
+    }
+    &.button:focus {
+        outline: none;
+    }
+
+    &.button:hover {
+        transform: scale(1.1);
+    }
+}
+.button-parent {
+    margin: 20px auto;
+    text-align: center;
+}

@@ -4,6 +4,7 @@ const SizePlugin = require('size-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PATHS = require('./paths');
+const glob = require('glob');
 
 const { merge } = require('webpack-merge');
 
@@ -29,6 +30,10 @@ const common = {
     rules: [
       // Help webpack in understanding CSS files imported in .js files
       {
+        test: /\.ts$/,
+        use: 'ts-loader',
+      },
+      {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
@@ -51,6 +56,11 @@ const common = {
       },
     ],
   },
+  resolve: {
+    extensions: [
+      '.ts', '.js',
+    ],
+  },
   plugins: [
     // Print file sizes
     new SizePlugin(),
@@ -71,17 +81,12 @@ const common = {
 };
 
 // Merge webpack configuration files
-const config = merge(common, {
-  entry: {
-    options: PATHS.src + '/options.js',
-    "content-dl": PATHS.src + '/content-dl.js',
-    home: PATHS.src + '/home.js',
-    "summary": PATHS.src + '/summary.js',
-    "drop-file": PATHS.src + '/drop-file.js',
-    timeout: PATHS.src + '/timeout.js',
-    style: PATHS.src + '/style.scss',
-    "icon-click":PATHS.src + '/icon-click.js'
-  },
+const entry = glob.sync(PATHS.src + "/*.{js,ts,scss}").map(v => {
+  return [v.match(".+/(.+?)\.[a-z]+([\?#;].*)?$")[1], v];
 });
+const entryObj = Object.fromEntries(entry);
+console.log(entryObj);
+
+const config = merge(common, { entry: entryObj, });
 
 module.exports = config;
