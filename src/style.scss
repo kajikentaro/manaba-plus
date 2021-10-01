@@ -54,6 +54,14 @@ $color-font:#2e7c40;
       cursor:pointer;
     }
 }
+.toggle-label{
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 25px;
+  font-size: 13px;
+}
 #drop-state {
   p {
     font-weight: 600;

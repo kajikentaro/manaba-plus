@@ -31,7 +31,7 @@ const start_mp = async ()=>{
 	add_parent.appendChild(table);
 	//insert toggle
 	let mp_li = document.createElement("li");
-	mp_li.innerHTML = '<label for="toggle-hide" id="toggle-hide-label"><input type=checkbox id="toggle-hide"><p>非表示も表示</p></label>';
+	mp_li.innerHTML = '<label for="toggle-hide" id="toggle-hide-label" class="toggle-label"><input type=checkbox id="toggle-hide"><p>非表示も表示</p></label>';
 	let infolist_tab = document.getElementsByClassName("infolist-tab")[0];
 	infolist_tab.appendChild(mp_li);
 	document.getElementById("toggle-hide").onchange = (e) => {

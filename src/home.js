@@ -7,6 +7,8 @@ let hided_assignments;
 let start_mp_done = false;
 let show_extra_ass = false;
 const init = async () =>{
+	const enable_insert_mp = await is_enable_insert_mp()
+	if (enable_insert_mp === false) return;
 	await insert_mp_button();
 	document.getElementById("download-content").onclick = () => {
 		if (confirm("コースコンテンツをPCにまとめてダウンロードします。続行しますか？")) {
@@ -49,7 +51,16 @@ const getCourseURLs = () => {
   })
   return courseURLs;
 };
-let fetch_hided = async () => {
+const is_enable_insert_mp = async () => {
+	const res = await new Promise((resolve) => {
+		chrome.storage.local.get(["enable_insert_mp"], function (result) {
+			if (result.enable_insert_mp === undefined) resolve(true);
+			resolve(result.enable_insert_mp);
+		});
+	});
+	return res;
+}
+const fetch_hided = async () => {
 	const res = await new Promise((resolve) => {
 		chrome.storage.sync.get(["hided_assignment"], function (result) {
 			if (!result.hided_assignment) resolve([]);
