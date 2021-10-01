@@ -84,7 +84,7 @@ const getCourseURLs = async () => {
 };
 const getContentURLs = async (urls) => {
   let contentURLs = [];
-  for (let url of urls) {
+  await Promise.all(urls.map(async url=> {
     if (downloadStatus !== 1) throw new Error(STOP_MESSAGE_ON_INIT)
     const res = await fetch(url + "_page");
     const domparser = new DOMParser();
@@ -98,12 +98,12 @@ const getContentURLs = async (urls) => {
       contentURLs.push(element.href);
       progressDisp(null, contentURLs.length + "個のコンテンツを検出 (2/4)");
     });
-  }
+  }))
   return contentURLs;
 }
 const getPageURLs = async (urls) => {
   let pageURLs = [];
-  for (let url of urls) {
+  await Promise.all(urls.map(async url=> {
     if (downloadStatus !== 1) throw new Error(STOP_MESSAGE_ON_INIT)
     const res = await fetch(url);
     const domparser = new DOMParser();
@@ -117,13 +117,13 @@ const getPageURLs = async (urls) => {
       pageURLs.push(element.href);
       progressDisp(null, pageURLs.length + "個のページを検出 (3/4)");
     });
-  }
+  }))
   return pageURLs;
 }
 // ファイル情報の配列を返す。例: ({ url: https://hogehoge.pdf, courseName: ○○演習, contentName: 第一回課題資料})
 const getFileInfo = async (urls) => {
   let fileInfo = [];
-  for (let url of urls) {
+  await Promise.all(urls.map(async url => {
     if (downloadStatus !== 1) throw new Error(STOP_MESSAGE_ON_INIT)
     const res = await fetch(url);
     const domparser = new DOMParser();
@@ -141,7 +141,7 @@ const getFileInfo = async (urls) => {
       });
       progressDisp(null, fileInfo.length + " 個のファイルを検出 (4/4)");
     });
-  }
+  }));
   return fileInfo;
 }
 // chromeのローカルストレージに保存されたDL済み情報を返す。
