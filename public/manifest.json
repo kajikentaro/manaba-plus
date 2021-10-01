@@ -22,8 +22,7 @@
 
   "permissions": [
     "storage",
-    "downloads",
-    "declarativeContent"
+    "downloads"
   ],
   "content_scripts": [
     {
