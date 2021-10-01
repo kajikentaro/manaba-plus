@@ -1,35 +1,45 @@
-<!DOCTYPE html>
-<html>
+<html class="options-html">
   <head>
     <meta charset="UTF-8" />
     <title>Manaba Plus Options</title>
-    <link rel="stylesheet" href="application.css" />
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <div class="options-body">
-      <div>
-        <button class="button" id="contents-download">
-          コンテンツダウンロード
-        </button>
-        <p>
-          まだPCにダウンロードされていないコンテンツを、まとめてダウンロードします。自動でコース別にフォルダ分けされます。
-        </p>
+  <body class="options-body">
+    <div class="options">
+      <div class="title">
+        <h1>Manaba Plus オプション</h1>
       </div>
-      <div>
-        <button class="button" id="delete-download-history">
-          ダウンロード履歴リセット
-        </button>
-        <p>
-          コンテンツの重複ダウンロードを防ぐために内部に保存している履歴を消去します。
-        </p>
-      </div>
-      <div>
-        <button class="button" id="reset-hidden-ass">非表示リセット</button>
-        <p>「非表示」に設定した課題を全て表示するように戻します。</p>
-      </div>
-      <div>
-        <button class="button" id="hide-manaba-plus">manaba-plusを隠す</button>
-        <p>トップページに表示されるManaba Plusの見出しとボタンを隠します</p>
+      <div class="contents">
+        <div>
+          <button class="button" id="contents-download">
+            コンテンツダウンロード
+          </button>
+          <p>
+            まだPCにダウンロードされていないコンテンツを、まとめてダウンロードします。自動でコース別にフォルダ分けされます。
+          </p>
+        </div>
+        <div>
+          <button class="button" id="delete-download-history">
+            ダウンロード履歴リセット
+          </button>
+          <p>
+            コンテンツの重複ダウンロードを防ぐために内部に保存している履歴を消去します。
+          </p>
+        </div>
+        <div>
+          <button class="button" id="reset-hidden-ass">非表示リセット</button>
+          <p>「非表示」に設定した課題を全て表示するように戻します。</p>
+        </div>
+        <div>
+          <label for="toggle-hide" class="button">
+            manaba-plusを隠す
+            <input type="checkbox" id="toggle-hide" />
+          </label>
+          <p>
+            トップページに表示されるManaba Plusの見出しとボタンを隠します。<br />
+            再び有効化するためにこのページを訪れるには、拡張機能アイコンをクリックします。
+          </p>
+        </div>
       </div>
     </div>
     <script src="options.js"></script>
