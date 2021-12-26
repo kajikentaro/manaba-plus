@@ -54,17 +54,6 @@
       "css": [
         "style.css"
       ]
-    },
-    {
-      "matches": [
-        "https://room.chuo-u.ac.jp/ct/home_summary_*"
-      ],
-      "js": [
-        "summary.js"
-      ],
-      "css": [
-        "style.css"
-      ]
     }
   ],
   "web_accessible_resources": [

@@ -1,4 +1,4 @@
-import { URL_HOME } from "./const";
+import { URL_HOME } from "./module/const";
 const goHomeBtn = document.createElement("button");
 goHomeBtn.innerHTML = "ログイン画面へ";
 goHomeBtn.classList.add("button");
