@@ -1,4 +1,4 @@
-const path_module = require('path');
+const path = require('path');
 let downloadStatus = 1;
 let id = -1;
 //0 stop, error
@@ -198,9 +198,9 @@ const downloadFiles = async (mustDLfileInfo, stored_urls) => {
   }
   async function downloadFile(file) {
     let filename_ex = decodeURI(file.url.match(".+/(.+?)([\?#;].*)?$")[1]);
-    let path = path_module.join('Manaba', file.courseName.replace("/", "-"), file.contentName.replace("/", "-"), filename_ex.replace("/", "-"));
-    path = path.replace(/\s+/g, "");
-    chrome.downloads.download({ url: file.url, filename: path, saveAs: false }, (downloadID) => {
+    let file_path = path.join('Manaba', file.courseName.replace("/", "-"), file.contentName.replace("/", "-"), filename_ex.replace("/", "-"));
+    file_path = file_path.replace(/\s+/g, "");
+    chrome.downloads.download({ url: file.url, filename: file_path, saveAs: false }, (downloadID) => {
       id = downloadID;
     });
     return new Promise((resolve, reject) => {

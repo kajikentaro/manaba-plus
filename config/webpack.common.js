@@ -1,6 +1,5 @@
 'use strict';
 
-const SizePlugin = require('size-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PATHS = require('./paths');
@@ -60,10 +59,11 @@ const common = {
     extensions: [
       '.ts', '.js',
     ],
+    fallback: {
+      "path": require.resolve("path-browserify")
+    }
   },
   plugins: [
-    // Print file sizes
-    new SizePlugin(),
     // Copy static assets from `public` folder to `build` folder
     new CopyWebpackPlugin({
       patterns: [
