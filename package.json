@@ -27,6 +27,11 @@
     "@typescript-eslint/parser": "^5.8.0",
     "eslint": "^8.5.0",
     "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-config-standard-typescript": "^1.0.3",
     "eslint-plugin-import": "^2.25.3"
+  },
+  "prettier": {
+    "singleQuote": true
   }
 }
