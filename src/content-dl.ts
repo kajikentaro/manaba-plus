@@ -1,15 +1,19 @@
 import * as PathModule from "path";
-import { URL_HOME } from "./const";
+import {
+  DOWNLOAD_LIST,
+  STOP_MESSAGE_ON_DL,
+  STOP_MESSAGE_ON_DL_CONFIRM,
+  STOP_MESSAGE_ON_INIT,
+  URL_HOME,
+} from "./const";
 
-let downloadStatus = 1;
+type DownloadStatus =
+  | "STOPPED_OR_ERROR"
+  | "WAITING_INIT"
+  | "DOWNLOADING"
+  | "DONE";
+let downloadStatus: DownloadStatus = "WAITING_INIT";
 let id = -1;
-// 0 stop, error
-// 1 waiting init
-// 2 downloading
-// 3 finish
-const STOP_MESSAGE_ON_DL = "ファイルダウンロードが中止されました。";
-const STOP_MESSAGE_ON_INIT = "ダウンロードが中止されました。";
-const STOP_MESSAGE_ON_DL_CONFIRM = "ダウンロードが中断されました。";
 
 const startDownloadContents = async () => {
   // 「準備中...」を表示する
@@ -26,15 +30,16 @@ const startDownloadContents = async () => {
 
     const alreadyStoredFileInfo = await getStoredUrls();
     const mustDLfileInfo = filterInfo(allFileInfo, alreadyStoredFileInfo);
-    if (downloadStatus !== 1) throw new Error(STOP_MESSAGE_ON_INIT);
+    if (downloadStatus !== "WAITING_INIT")
+      throw new Error(STOP_MESSAGE_ON_INIT);
     if (mustDLfileInfo.length === 0) {
-      downloadStatus = 3;
+      downloadStatus = "DOWNLOADING";
       progressDisp("完了。新規ファイルはありませんでした。", null, null);
       return;
     }
-    downloadStatus = 2;
+    downloadStatus = "DOWNLOADING";
     await downloadFiles(mustDLfileInfo, alreadyStoredFileInfo);
-    downloadStatus = 3;
+    downloadStatus = "DOWNLOADING";
     progressDisp("ダウンロードが完了しました。", null, null);
   } catch (e) {
     // eが想定外のエラーの場合はそのままthrowする。
@@ -53,7 +58,7 @@ const loadingDisplay = () => {
   const showInitializingDot = () => {
     const message = document.getElementById("message");
     const text = ["準備中", "準備中 .", "準備中 . .", "準備中 . . ."];
-    if (downloadStatus === 1) {
+    if (downloadStatus === "WAITING_INIT") {
       dotNum++;
       message.innerHTML = text[dotNum % 4];
       setTimeout(showInitializingDot, 500);
@@ -62,9 +67,10 @@ const loadingDisplay = () => {
   showInitializingDot();
 };
 const stopDL = () => {
-  if (downloadStatus === 3 || downloadStatus === 0) return;
+  if (downloadStatus === "DOWNLOADING" || downloadStatus === "STOPPED_OR_ERROR")
+    return;
   progressDisp("ダウンロードの中止中. . .", null, null);
-  downloadStatus = 0;
+  downloadStatus = "STOPPED_OR_ERROR";
   if (id !== -1) {
     chrome.downloads.cancel(id, () => {
       console.log("cancel chrome downloads");
@@ -98,7 +104,8 @@ const getContentURLs = async (urls) => {
   const contentURLs = [];
   await Promise.all(
     urls.map(async (url) => {
-      if (downloadStatus !== 1) throw new Error(STOP_MESSAGE_ON_INIT);
+      if (downloadStatus !== "WAITING_INIT")
+        throw new Error(STOP_MESSAGE_ON_INIT);
       const res = await fetch(`${url}_page`);
       const domparser = new DOMParser();
       const doc = domparser.parseFromString(await res.text(), "text/html");
@@ -124,7 +131,8 @@ const getPageURLs = async (urls) => {
   const pageURLs = [];
   await Promise.all(
     urls.map(async (url) => {
-      if (downloadStatus !== 1) throw new Error(STOP_MESSAGE_ON_INIT);
+      if (downloadStatus !== "WAITING_INIT")
+        throw new Error(STOP_MESSAGE_ON_INIT);
       const res = await fetch(url);
       const domparser = new DOMParser();
       const doc = domparser.parseFromString(await res.text(), "text/html");
@@ -147,7 +155,8 @@ const getFileInfo = async (urls) => {
   const fileInfo = [];
   await Promise.all(
     urls.map(async (url) => {
-      if (downloadStatus !== 1) throw new Error(STOP_MESSAGE_ON_INIT);
+      if (downloadStatus !== "WAITING_INIT")
+        throw new Error(STOP_MESSAGE_ON_INIT);
       const res = await fetch(url);
       const domparser = new DOMParser();
       const doc = domparser.parseFromString(await res.text(), "text/html");
@@ -175,10 +184,10 @@ const getFileInfo = async (urls) => {
 // chromeのローカルストレージに保存されたDL済み情報を返す。
 const getStoredUrls = () => {
   return new Promise((resolve) => {
-    chrome.storage.local.get("download_list", (value) => {
+    chrome.storage.local.get([DOWNLOAD_LIST], (value) => {
       let result = [];
       if (value && Object.keys(value).length !== 0) {
-        result = value.download_list;
+        result = value[DOWNLOAD_LIST];
       }
       resolve(result);
     });
@@ -233,7 +242,7 @@ const downloadFiles = async (mustDLfileInfo, storedUrls) => {
     }
   });
   for (let i = 0; i < mustDLfileInfo.length; i++) {
-    if (downloadStatus !== 2) throw new Error(STOP_MESSAGE_ON_DL);
+    if (downloadStatus !== "DOWNLOADING") throw new Error(STOP_MESSAGE_ON_DL);
     const file = mustDLfileInfo[i];
     progressDisp(
       `${file.courseName} をダウンロード中`,
@@ -243,12 +252,13 @@ const downloadFiles = async (mustDLfileInfo, storedUrls) => {
     await downloadFile(file)
       .then(() => {
         storedUrls.push(file);
-        chrome.storage.local.set({ download_list: storedUrls }, () => {
+        chrome.storage.local.set({ [DOWNLOAD_LIST]: storedUrls }, () => {
           console.log("store url");
         });
       })
       .catch((e) => {
-        if (downloadStatus !== 2) throw new Error(STOP_MESSAGE_ON_DL);
+        if (downloadStatus !== "DOWNLOADING")
+          throw new Error(STOP_MESSAGE_ON_DL);
         console.log(e);
         if (
           !window.confirm(

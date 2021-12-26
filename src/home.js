@@ -1,4 +1,4 @@
-import {URL_HOME} from "./const";
+import {URL_HOME, ENABLE_INSERT_MP, HIDED_ASSIGNHMENT} from "./const";
 const DELETABLE_ROW = "deletable-row";
 let preClickedLabel = "deadline";
 let sortIsReverse = false;
@@ -54,7 +54,7 @@ const getCourseURLs = () => {
 };
 const isEnableInsertMp = async () => {
 	const res = await new Promise((resolve) => {
-		chrome.storage.local.get(["enable_insert_mp"], function (result) {
+		chrome.storage.local.get([ENABLE_INSERT_MP], function (result) {
 			if (result.enableInsertMp === undefined) resolve(true);
 			resolve(result.enableInsertMp);
 		});
@@ -63,7 +63,7 @@ const isEnableInsertMp = async () => {
 }
 const fetchHided = async () => {
 	const res = await new Promise((resolve) => {
-		chrome.storage.sync.get(["hided_assignment"], function (result) {
+		chrome.storage.sync.get([HIDED_ASSIGNHMENT], function (result) {
 			if (!result.hidedAssignment) resolve([]);
 			resolve(result.hidedAssignment);
 		});
@@ -136,7 +136,7 @@ const inputClick = () => {
 				disableHref.push(row.href);
 			}
 		}
-		chrome.storage.sync.set({ hided_assignment: disableHref }, function () {
+		chrome.storage.sync.set({ [HIDED_ASSIGNHMENT]: disableHref }, function () {
 		});
 	}
 }
