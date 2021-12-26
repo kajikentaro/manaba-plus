@@ -30,8 +30,5 @@
     "eslint-config-prettier": "^4.0.0",
     "eslint-config-standard-typescript": "^1.0.3",
     "eslint-plugin-import": "^2.25.3"
-  },
-  "prettier": {
-    "singleQuote": true
   }
 }

@@ -1,4 +1,5 @@
-import * as PathModule from 'path';
+import * as PathModule from "path";
+import { URL_HOME } from "./const";
 
 let downloadStatus = 1;
 let id = -1;
@@ -6,17 +7,17 @@ let id = -1;
 // 1 waiting init
 // 2 downloading
 // 3 finish
-const STOP_MESSAGE_ON_DL = 'ファイルダウンロードが中止されました。';
-const STOP_MESSAGE_ON_INIT = 'ダウンロードが中止されました。';
-const STOP_MESSAGE_ON_DL_CONFIRM = 'ダウンロードが中断されました。';
+const STOP_MESSAGE_ON_DL = "ファイルダウンロードが中止されました。";
+const STOP_MESSAGE_ON_INIT = "ダウンロードが中止されました。";
+const STOP_MESSAGE_ON_DL_CONFIRM = "ダウンロードが中断されました。";
 
 const startDownloadContents = async () => {
   // 「準備中...」を表示する
   loadingDisplay();
-  document.getElementById('stop-dl').onclick = stopDL;
+  document.getElementById("stop-dl").onclick = stopDL;
 
   try {
-    progressDisp(null, 'URLリストを取得中', null);
+    progressDisp(null, "URLリストを取得中", null);
     // スクレイピング開始
     const courseURLs = await getCourseURLs();
     const contentURLs = await getContentURLs(courseURLs);
@@ -28,13 +29,13 @@ const startDownloadContents = async () => {
     if (downloadStatus !== 1) throw new Error(STOP_MESSAGE_ON_INIT);
     if (mustDLfileInfo.length === 0) {
       downloadStatus = 3;
-      progressDisp('完了。新規ファイルはありませんでした。', null, null);
+      progressDisp("完了。新規ファイルはありませんでした。", null, null);
       return;
     }
     downloadStatus = 2;
     await downloadFiles(mustDLfileInfo, alreadyStoredFileInfo);
     downloadStatus = 3;
-    progressDisp('ダウンロードが完了しました。', null, null);
+    progressDisp("ダウンロードが完了しました。", null, null);
   } catch (e) {
     // eが想定外のエラーの場合はそのままthrowする。
     if (
@@ -50,8 +51,8 @@ const startDownloadContents = async () => {
 const loadingDisplay = () => {
   let dotNum = 0;
   const showInitializingDot = () => {
-    const message = document.getElementById('message');
-    const text = ['準備中', '準備中 .', '準備中 . .', '準備中 . . .'];
+    const message = document.getElementById("message");
+    const text = ["準備中", "準備中 .", "準備中 . .", "準備中 . . ."];
     if (downloadStatus === 1) {
       dotNum++;
       message.innerHTML = text[dotNum % 4];
@@ -62,28 +63,28 @@ const loadingDisplay = () => {
 };
 const stopDL = () => {
   if (downloadStatus === 3 || downloadStatus === 0) return;
-  progressDisp('ダウンロードの中止中. . .', null, null);
+  progressDisp("ダウンロードの中止中. . .", null, null);
   downloadStatus = 0;
   if (id !== -1) {
     chrome.downloads.cancel(id, () => {
-      console.log('cancel chrome downloads');
+      console.log("cancel chrome downloads");
       // 例外のスローはダウンロードしたメソッドのcatchで行う。
     });
   }
 };
 
 const getCourseURLs = async () => {
-  const topPageRes = await fetch('https://room.chuo-u.ac.jp/ct/home');
+  const topPageRes = await fetch(URL_HOME);
   const domparser = new DOMParser();
   const topPageDOM = domparser.parseFromString(
     await topPageRes.text(),
-    'text/html'
+    "text/html"
   );
-  const base = topPageDOM.createElement('base');
-  base.setAttribute('href', 'https://room.chuo-u.ac.jp/ct/home');
+  const base = topPageDOM.createElement("base");
+  base.setAttribute("href", URL_HOME);
   topPageDOM.head.appendChild(base);
   const manabaCourseDOMs = topPageDOM.querySelectorAll<HTMLAnchorElement>(
-    '.course-cell a:first-child'
+    ".course-cell a:first-child"
   );
 
   const courseURLs = [];
@@ -100,12 +101,12 @@ const getContentURLs = async (urls) => {
       if (downloadStatus !== 1) throw new Error(STOP_MESSAGE_ON_INIT);
       const res = await fetch(`${url}_page`);
       const domparser = new DOMParser();
-      const doc = domparser.parseFromString(await res.text(), 'text/html');
-      const base = doc.createElement('base');
-      base.setAttribute('href', 'https://room.chuo-u.ac.jp/ct/home');
+      const doc = domparser.parseFromString(await res.text(), "text/html");
+      const base = doc.createElement("base");
+      base.setAttribute("href", URL_HOME);
       doc.head.appendChild(base);
       const elements =
-        doc.querySelectorAll<HTMLAnchorElement>('.about-contents a');
+        doc.querySelectorAll<HTMLAnchorElement>(".about-contents a");
 
       elements.forEach((element) => {
         contentURLs.push(element.href);
@@ -126,12 +127,12 @@ const getPageURLs = async (urls) => {
       if (downloadStatus !== 1) throw new Error(STOP_MESSAGE_ON_INIT);
       const res = await fetch(url);
       const domparser = new DOMParser();
-      const doc = domparser.parseFromString(await res.text(), 'text/html');
-      const base = doc.createElement('base');
-      base.setAttribute('href', 'https://room.chuo-u.ac.jp/ct/home');
+      const doc = domparser.parseFromString(await res.text(), "text/html");
+      const base = doc.createElement("base");
+      base.setAttribute("href", URL_HOME);
       doc.head.appendChild(base);
       const elements =
-        doc.querySelectorAll<HTMLAnchorElement>('.contentslist li a');
+        doc.querySelectorAll<HTMLAnchorElement>(".contentslist li a");
 
       elements.forEach((element) => {
         pageURLs.push(element.href);
@@ -149,16 +150,16 @@ const getFileInfo = async (urls) => {
       if (downloadStatus !== 1) throw new Error(STOP_MESSAGE_ON_INIT);
       const res = await fetch(url);
       const domparser = new DOMParser();
-      const doc = domparser.parseFromString(await res.text(), 'text/html');
-      const base = doc.createElement('base');
-      base.setAttribute('href', 'https://room.chuo-u.ac.jp/ct/home');
+      const doc = domparser.parseFromString(await res.text(), "text/html");
+      const base = doc.createElement("base");
+      base.setAttribute("href", URL_HOME);
       doc.head.appendChild(base);
-      const elements = doc.querySelectorAll<HTMLAnchorElement>('.file a');
+      const elements = doc.querySelectorAll<HTMLAnchorElement>(".file a");
 
       const courseName =
-        doc.querySelector<HTMLAnchorElement>('#coursename').innerText;
+        doc.querySelector<HTMLAnchorElement>("#coursename").innerText;
       const contentName =
-        doc.querySelector<HTMLAnchorElement>('.contents a').innerText;
+        doc.querySelector<HTMLAnchorElement>(".contents a").innerText;
       elements.forEach((element) => {
         fileInfo.push({
           url: element.href,
@@ -174,7 +175,7 @@ const getFileInfo = async (urls) => {
 // chromeのローカルストレージに保存されたDL済み情報を返す。
 const getStoredUrls = () => {
   return new Promise((resolve) => {
-    chrome.storage.local.get('download_list', (value) => {
+    chrome.storage.local.get("download_list", (value) => {
       let result = [];
       if (value && Object.keys(value).length !== 0) {
         result = value.download_list;
@@ -202,14 +203,14 @@ const downloadFiles = async (mustDLfileInfo, storedUrls) => {
     contentName: string;
   }
   const downloadFile: (file: File) => Promise<void> = async (file) => {
-    const filenameEx = decodeURI(file.url.match('.+/(.+?)([?#;].*)?$')[1]);
+    const filenameEx = decodeURI(file.url.match(".+/(.+?)([?#;].*)?$")[1]);
     let filePath = PathModule.join(
-      'Manaba',
-      file.courseName.replace('/', '-'),
-      file.contentName.replace('/', '-'),
-      filenameEx.replace('/', '-')
+      "Manaba",
+      file.courseName.replace("/", "-"),
+      file.contentName.replace("/", "-"),
+      filenameEx.replace("/", "-")
     );
-    filePath = filePath.replace(/\s+/g, '');
+    filePath = filePath.replace(/\s+/g, "");
     chrome.downloads.download(
       { url: file.url, filename: filePath, saveAs: false },
       (downloadID) => {
@@ -221,14 +222,14 @@ const downloadFiles = async (mustDLfileInfo, storedUrls) => {
       rejectHold = reject;
     });
   };
-  let resolveHold;
-  let rejectHold;
+  let resolveHold: (value: void | PromiseLike<void>) => void;
+  let rejectHold: (value: void | PromiseLike<void>) => void;
   chrome.downloads.onChanged.addListener((downloadDelta) => {
     if (id !== downloadDelta.id) return;
     if (downloadDelta.state) {
       console.log(downloadDelta.state);
-      if (downloadDelta.state.current === 'interrupted') rejectHold();
-      if (downloadDelta.state.current === 'complete') resolveHold();
+      if (downloadDelta.state.current === "interrupted") rejectHold();
+      if (downloadDelta.state.current === "complete") resolveHold();
     }
   });
   for (let i = 0; i < mustDLfileInfo.length; i++) {
@@ -243,7 +244,7 @@ const downloadFiles = async (mustDLfileInfo, storedUrls) => {
       .then(() => {
         storedUrls.push(file);
         chrome.storage.local.set({ download_list: storedUrls }, () => {
-          console.log('store url');
+          console.log("store url");
         });
       })
       .catch((e) => {
@@ -251,7 +252,7 @@ const downloadFiles = async (mustDLfileInfo, storedUrls) => {
         console.log(e);
         if (
           !window.confirm(
-            '接続エラーが発生しました。次のファイルを続けてダウンロードしますか？'
+            "接続エラーが発生しました。次のファイルを続けてダウンロードしますか？"
           )
         ) {
           stopDL();
@@ -270,10 +271,10 @@ const progressDisp: ProgressDisp = (
   rate = null,
   progressN = null
 ) => {
-  if (message) document.getElementById('message').innerHTML = message;
-  if (rate) document.getElementById('number-counter').innerHTML = rate;
+  if (message) document.getElementById("message").innerHTML = message;
+  if (rate) document.getElementById("number-counter").innerHTML = rate;
   if (progressN)
-    (document.getElementById('progress') as HTMLProgressElement).value =
+    (document.getElementById("progress") as HTMLProgressElement).value =
       progressN;
 };
 startDownloadContents();
