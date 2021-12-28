@@ -2,11 +2,13 @@ import { DOWNLOAD_LIST, ENABLE_INSERT_MP, HIDED_ASSIGNHMENT } from "./module/con
 import { HTMLInputEvent } from "./module/type";
 
 document.getElementById("delete-download-history").addEventListener("click", () => {
+  if (!confirm("よろしいですか？")) return;
   chrome.storage.local.set({ [DOWNLOAD_LIST]: [] }, () => {
     alert("完了");
   });
 });
 document.getElementById("reset-hidden-ass").addEventListener("click", () => {
+  if (!confirm("よろしいですか？")) return;
   chrome.storage.sync.set({ [HIDED_ASSIGNHMENT]: [] }, () => {
     alert("完了");
   });
