@@ -27,7 +27,6 @@ const initToggleCheck = async () => {
   const enableInsertMp = await isEnableInsertMp();
   document.querySelector<HTMLInputElement>("input#toggle-hide").checked = !enableInsertMp;
   document.querySelector<HTMLInputElement>("input#toggle-hide").onchange = (v: HTMLInputEvent) => {
-    console.log(v.target.checked);
     if (v.target.checked) {
       chrome.storage.local.set({ [ENABLE_INSERT_MP]: false });
     } else {

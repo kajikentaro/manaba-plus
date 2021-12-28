@@ -1,5 +1,5 @@
 const form = document.querySelector(".report-form").parentElement.parentElement as HTMLFormElement;
-let input = document.querySelector<HTMLInputElement>("input[type=file]");
+const input = document.querySelector<HTMLInputElement>("input[type=file]");
 if (input) {
   insertDropMessage();
   addListener();

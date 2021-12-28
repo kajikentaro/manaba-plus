@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const PATHS = require('./paths');
-const glob = require('glob');
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PATHS = require("./paths");
+const glob = require("glob");
 
-const { merge } = require('webpack-merge');
+const { merge } = require("webpack-merge");
 
 
 // To re-use webpack configuration across templates,
@@ -17,9 +17,9 @@ const common = {
     // the build folder to output bundles and assets in.
     path: PATHS.build,
     // the filename template for entry chunks
-    filename: '[name].js',
+    filename: "[name].js",
   },
-  devtool: 'source-map',
+  devtool: "source-map",
   stats: {
     all: false,
     errors: true,
@@ -30,25 +30,25 @@ const common = {
       // Help webpack in understanding CSS files imported in .js files
       {
         test: /\.ts$/,
-        use: 'ts-loader',
+        use: "ts-loader",
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
       // Check for images imported in .js files and
       {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              outputPath: 'images',
-              name: '[name].[ext]',
+              outputPath: "images",
+              name: "[name].[ext]",
             },
           },
         ],
@@ -57,7 +57,7 @@ const common = {
   },
   resolve: {
     extensions: [
-      '.ts', '.js',
+      ".ts", ".js",
     ],
     fallback: {
       "path": require.resolve("path-browserify")
@@ -68,21 +68,21 @@ const common = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: '**/*',
-          context: 'public',
+          from: "**/*",
+          context: "public",
         },
       ]
     }),
     // Extract CSS into separate files
     new MiniCssExtractPlugin({
-      filename: '[name].css',
+      filename: "[name].css",
     }),
   ],
 };
 
 // Merge webpack configuration files
 const entry = glob.sync(PATHS.src + "/*.{js,ts,scss}").map(v => {
-  return [v.match(".+/(.+?)\.[a-z]+([\?#;].*)?$")[1], v];
+  return [v.match(".+/(.+?).[a-z]+([?#;].*)?$")[1], v];
 });
 const entryObj = Object.fromEntries(entry);
 console.log(entryObj);

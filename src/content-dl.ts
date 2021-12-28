@@ -1,5 +1,5 @@
 import * as PathModule from "path";
-import { ContentDLError, DOWNLOAD_LIST, STOP_MESSAGE_ON_DL, STOP_MESSAGE_ON_DL_CONFIRM, STOP_MESSAGE_ON_INIT, URL_HOME } from "./module/const";
+import { MPError, DOWNLOAD_LIST, STOP_MESSAGE_ON_DL, STOP_MESSAGE_ON_DL_CONFIRM, STOP_MESSAGE_ON_INIT, URL_HOME } from "./module/const";
 import { UrlDigFunction, DownloadStatus, FileInfo, ProgressDisp, FilterInfo } from "./module/type";
 
 let downloadStatus: DownloadStatus = "WAITING_INIT";
@@ -20,7 +20,7 @@ const startDownloadContents = async () => {
 
     const alreadyStoredFileInfo = await getStoredUrls();
     const mustDLfileInfo = filterInfo(allFileInfo, alreadyStoredFileInfo);
-    if (downloadStatus !== "WAITING_INIT") throw new ContentDLError(STOP_MESSAGE_ON_INIT);
+    if (downloadStatus !== "WAITING_INIT") throw new MPError(STOP_MESSAGE_ON_INIT);
     if (mustDLfileInfo.length === 0) {
       downloadStatus = "DONE";
       progressDisp("完了。新規ファイルはありませんでした。", null, null);
@@ -33,8 +33,9 @@ const startDownloadContents = async () => {
     downloadStatus = "DONE";
     progressDisp("ダウンロードが完了しました。", null, null);
   } catch (e) {
-    if (e instanceof ContentDLError) {
-      progressDisp(e.message, null, null);
+    const mpError = e as MPError;
+    if (mpError.MP_IDENTIFY) {
+      progressDisp(mpError.message, null, null);
     } else {
       throw e;
     }
@@ -60,10 +61,7 @@ const stopDL = () => {
   progressDisp("ダウンロードの中止中. . .", null, null);
   downloadStatus = "STOPPED_OR_ERROR";
   if (id !== -1) {
-    chrome.downloads.cancel(id, () => {
-      console.log("cancel chrome downloads");
-      // 例外のスローはダウンロードしたメソッドのcatchで行う。
-    });
+    chrome.downloads.cancel(id, () => {});
   }
 };
 
@@ -88,7 +86,7 @@ const getContentURLs: UrlDigFunction = async (urls) => {
   const contentURLs = [] as string[];
   await Promise.all(
     urls.map(async (url) => {
-      if (downloadStatus !== "WAITING_INIT") throw new ContentDLError(STOP_MESSAGE_ON_INIT);
+      if (downloadStatus !== "WAITING_INIT") throw new MPError(STOP_MESSAGE_ON_INIT);
       const res = await fetch(`${url}_page`);
       const domparser = new DOMParser();
       const doc = domparser.parseFromString(await res.text(), "text/html");
@@ -98,6 +96,7 @@ const getContentURLs: UrlDigFunction = async (urls) => {
       const elements = doc.querySelectorAll<HTMLAnchorElement>(".about-contents a");
 
       elements.forEach((element) => {
+        if (downloadStatus !== "WAITING_INIT") throw new MPError(STOP_MESSAGE_ON_INIT);
         contentURLs.push(element.href);
         progressDisp(null, `${contentURLs.length}個のコンテンツを検出 (2/4)`, null);
       });
@@ -110,7 +109,7 @@ const getPageURLs: UrlDigFunction = async (urls: string[]) => {
   const pageURLs = [] as string[];
   await Promise.all(
     urls.map(async (url) => {
-      if (downloadStatus !== "WAITING_INIT") throw new ContentDLError(STOP_MESSAGE_ON_INIT);
+      if (downloadStatus !== "WAITING_INIT") throw new MPError(STOP_MESSAGE_ON_INIT);
       const res = await fetch(url);
       const domparser = new DOMParser();
       const doc = domparser.parseFromString(await res.text(), "text/html");
@@ -132,7 +131,7 @@ const getFileInfo = async (urls: string[]) => {
   const fileInfo = [] as FileInfo[];
   await Promise.all(
     urls.map(async (url) => {
-      if (downloadStatus !== "WAITING_INIT") throw new ContentDLError(STOP_MESSAGE_ON_INIT);
+      if (downloadStatus !== "WAITING_INIT") throw new MPError(STOP_MESSAGE_ON_INIT);
       const res = await fetch(url);
       const domparser = new DOMParser();
       const doc = domparser.parseFromString(await res.text(), "text/html");
@@ -202,29 +201,25 @@ const downloadFiles = async (mustDLfileInfo: FileInfo[], storedUrls: FileInfo[])
   chrome.downloads.onChanged.addListener((downloadDelta) => {
     if (id !== downloadDelta.id) return;
     if (downloadDelta.state) {
-      console.log(downloadDelta.state);
       if (downloadDelta.state.current === "interrupted") rejectHold();
       if (downloadDelta.state.current === "complete") resolveHold();
     }
   });
 
   for (let i = 0; i < mustDLfileInfo.length; i++) {
-    if (downloadStatus !== "DOWNLOADING") throw new ContentDLError(STOP_MESSAGE_ON_DL);
+    if (downloadStatus !== "DOWNLOADING") throw new MPError(STOP_MESSAGE_ON_DL);
     const file = mustDLfileInfo[i];
     progressDisp(`${file.courseName} をダウンロード中`, `${i + 1}/${mustDLfileInfo.length}`, ((i + 1) / mustDLfileInfo.length) * 100);
     await downloadFile(file)
       .then(() => {
         storedUrls.push(file);
-        chrome.storage.local.set({ [DOWNLOAD_LIST]: storedUrls }, () => {
-          console.log("store url");
-        });
+        chrome.storage.local.set({ [DOWNLOAD_LIST]: storedUrls }, () => {});
       })
       .catch((e) => {
-        if (downloadStatus !== "DOWNLOADING") throw new ContentDLError(STOP_MESSAGE_ON_DL);
-        console.log(e);
+        if (downloadStatus !== "DOWNLOADING") throw new MPError(STOP_MESSAGE_ON_DL);
         if (!window.confirm("接続エラーが発生しました。次のファイルを続けてダウンロードしますか？")) {
           stopDL();
-          throw new ContentDLError(STOP_MESSAGE_ON_DL_CONFIRM);
+          throw new MPError(STOP_MESSAGE_ON_DL_CONFIRM);
         }
       });
   }

@@ -1,5 +1,5 @@
 import { AssignmentInterface, AssignmentMember } from "./type";
-import { Infinity, getLocalDateStr, DELETABLE_ROW } from "./const";
+import { InfinityDate, getLocalDateStr, DELETABLE_ROW } from "./const";
 
 export default class Assignment implements AssignmentInterface {
   courseName: string;
@@ -20,7 +20,7 @@ export default class Assignment implements AssignmentInterface {
   }
 
   getColor(deadline: Date) {
-    if (deadline === Infinity) return "#F4F4F4";
+    if (deadline === InfinityDate) return "#F4F4F4";
     const nowTime = new Date(getLocalDateStr());
     const timeDiff = deadline.getTime() - nowTime.getTime();
     const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
@@ -36,7 +36,7 @@ export default class Assignment implements AssignmentInterface {
   }
 
   dateToStr(date: Date) {
-    if (date === Infinity) return "";
+    if (date === InfinityDate) return "";
     const datesJp = ["日", "月", "火", "水", "木", "金", "土"];
     let txt = "";
     txt += date.getMonth() + 1 + "/";
@@ -69,7 +69,7 @@ export default class Assignment implements AssignmentInterface {
     tdCourse.classList.add("course");
 
     const tdAss = tr.insertCell();
-    tdAss.innerHTML = "<a href='" + this.href + "'>" + this.assignmentName + "</a>";
+    tdAss.innerHTML = `<a href='${this.href}'>${this.assignmentName}</a>`;
     tdAss.classList.add("ass");
     this.setupInput(tr.insertCell());
     tr.insertCell().innerHTML = this.dateToStr(this.deadline);

@@ -1,4 +1,4 @@
-import { DELETABLE_ROW, Infinity, URL_HOME, ENABLE_INSERT_MP, HIDED_ASSIGNHMENT, getLocalDateStr } from "./module/const";
+import { InfinityDate, URL_HOME, ENABLE_INSERT_MP, HIDED_ASSIGNHMENT } from "./module/const";
 import { HTMLInputEvent, AssignmentMember } from "./module/type";
 import Assignment from "./module/Assignment";
 import AssignmentViewer from "./module/AssignmentViewer";
@@ -92,7 +92,7 @@ const fetchSummaries = async () => {
         courseName: clipStr(cols[1]),
         href: cols[0].getElementsByTagName("a")[0].href,
         assignmentName: clipStr(cols[0]),
-        deadline: cols[2].innerText ? new Date(cols[2].innerText) : Infinity,
+        deadline: cols[2].innerText ? new Date(cols[2].innerText) : InfinityDate,
         disable: false,
         colorCode: "#fff",
       };
@@ -102,7 +102,7 @@ const fetchSummaries = async () => {
     }
   };
 
-  let assignments = [] as Assignment[];
+  const assignments = [] as Assignment[];
   const targetUrls = [URL_HOME + "_summary_query", URL_HOME + "_summary_survey", URL_HOME + "_summary_report"];
   for (const url of targetUrls) {
     const res = await fetch(url);

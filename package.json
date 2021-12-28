@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "watch": "webpack --mode=development --watch --config config/webpack.common.js",
-    "build": "webpack --mode=production --config config/webpack.prod.js"
+    "build": "eslint . && rm -rf build/* && webpack --mode=production --config config/webpack.prod.js",
+    "eslint": "eslint . --fix"
   },
   "dependencies": {
     "webpack": "^5.65.0",
@@ -26,9 +27,10 @@
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
     "eslint": "^8.5.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-config-standard-typescript": "^1.0.3"
   },
-  "prettier":{
+  "prettier": {
     "printWidth": 160
   }
 }

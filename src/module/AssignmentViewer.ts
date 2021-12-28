@@ -9,7 +9,6 @@ export default class AssignmentViewer {
   private showDisable = false;
   private showExtraAss = false;
   private sortBase = "deadline";
-  private reverse = false;
 
   constructor(allAss: Assignment[], hidedAss: string[], courseURLs: string[]) {
     for (const a of allAss) {
@@ -88,11 +87,11 @@ export default class AssignmentViewer {
     enableRow.sort((a: Assignment, b: Assignment) => {
       let cmpRes: number;
       if (a[this.sortBase] >= b[this.sortBase]) {
-        cmpRes = -1;
-      } else {
         cmpRes = 1;
+      } else {
+        cmpRes = -1;
       }
-      if (this.reverse) cmpRes *= -1;
+      if (this.sortIsReverse) cmpRes *= -1;
       return cmpRes;
     });
     return enableRow;
@@ -111,7 +110,7 @@ export default class AssignmentViewer {
     tr.classList.add(DELETABLE_ROW);
 
     const classes = ["course", "ass", null, null, null];
-    const sortBases = ["course_name", "assignment_name", null, "deadline"];
+    const sortBases = ["courseName", "assignmentName", null, "deadline"];
     const texts = ["コース", "題名", "非表示", "受付終了"];
     for (let i = 0; i < 4; i++) {
       const th = document.createElement("th");
@@ -119,7 +118,7 @@ export default class AssignmentViewer {
       if (sortBases[i] === this.sortBase) {
         // ここを基準にソートした場合
         th.classList.add("sort-active");
-        th.innerHTML = this.reverse ? texts[i] + "▼" : texts[i] + "▲";
+        th.innerHTML = this.sortIsReverse ? texts[i] + "▼" : texts[i] + "▲";
       } else if (sortBases[i]) {
         // それ以外の場合
         th.innerHTML = texts[i] + "　";
@@ -129,11 +128,11 @@ export default class AssignmentViewer {
       }
       if (!sortBases[i]) continue;
       if (classes[i]) th.classList.add(classes[i]);
+      th.classList.add("sort-label");
       th.onclick = () => {
         if (this.sortBase === sortBases[i]) this.sortIsReverse = !this.sortIsReverse;
         else this.sortIsReverse = false;
         this.sortBase = sortBases[i];
-        console.log(i, this.sortBase, this.sortIsReverse);
         this.repaint();
       };
     }
