@@ -42,6 +42,9 @@
       ],
       "js": [
         "drop-file.js"
+      ],
+      "css": [
+        "style.css"
       ]
     },
     {
