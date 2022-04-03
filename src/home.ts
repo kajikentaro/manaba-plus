@@ -1,9 +1,9 @@
-import { InfinityDate, URL_HOME, ENABLE_INSERT_MP, HIDED_ASSIGNHMENT } from "./module/const";
-import { HTMLInputEvent, AssignmentMember } from "./module/type";
 import Assignment from "./module/Assignment";
 import AssignmentViewer from "./module/AssignmentViewer";
+import { ENABLE_INSERT_MP, HIDED_ASSIGNHMENT, InfinityDate, URL_HOME } from "./module/const";
+import { AssignmentMember, HTMLInputEvent } from "./module/type";
 
-let startMpDone = false;
+let didDisplayAssignments = false;
 
 const init = async () => {
   const enableInsertMp = await isEnableInsertMp();
@@ -19,10 +19,10 @@ const init = async () => {
   };
 };
 
-const startMp = async () => {
+const displayAssignments = async () => {
   // prevent over two times button click
-  if (startMpDone) return;
-  startMpDone = true;
+  if (didDisplayAssignments) return;
+  didDisplayAssignments = true;
 
   // fetch assignment datas
   const allAssignments = await fetchSummaries();
@@ -84,7 +84,7 @@ const fetchSummaries = async () => {
       return str;
     };
 
-    const assignmentDomRows = doc.querySelector<HTMLTableElement>("table").getElementsByTagName("tr");
+    const assignmentDomRows = doc.querySelectorAll<HTMLTableElement>(".pagebody table tr");
     for (let i = 0; i < assignmentDomRows.length; i++) {
       if (i === 0) continue; // skip title
       const cols = assignmentDomRows[i].children as HTMLCollectionOf<HTMLElement>;
@@ -118,7 +118,7 @@ const insertMpButton = async () => {
   const mark = document.getElementsByClassName("contentbody-left")[0];
   mark.insertAdjacentHTML("afterbegin", await (await fetch(chrome.runtime.getURL("insert.html"))).text());
   document.getElementById("show-assignment").onclick = () => {
-    startMp();
+    displayAssignments();
   };
 };
 
