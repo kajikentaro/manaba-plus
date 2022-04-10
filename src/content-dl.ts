@@ -1,6 +1,7 @@
+import { DOWNLOAD_LIST, MPError, STOP_MESSAGE_ON_DL, STOP_MESSAGE_ON_DL_CONFIRM, STOP_MESSAGE_ON_INIT, URL_HOME } from "module/const";
 import downloadFile from "module/DownloadFile";
-import { DOWNLOAD_LIST, MPError, STOP_MESSAGE_ON_DL, STOP_MESSAGE_ON_DL_CONFIRM, STOP_MESSAGE_ON_INIT, URL_HOME } from "./module/const";
-import { DownloadStatus, FileInfo, FilterInfo, ProgressDisp, UrlDigFunction } from "./module/type";
+import fetchDocument from "module/FetchDocument";
+import { DownloadStatus, FileInfo, FilterInfo, ProgressDisp, UrlDigFunction } from "module/type";
 
 let downloadStatus: DownloadStatus = "WAITING_INIT";
 let downloadChromeId = -1;
@@ -66,13 +67,8 @@ const stopDL = () => {
 };
 
 const getCourseURLs: () => Promise<string[]> = async () => {
-  const topPageRes = await fetch(URL_HOME);
-  const domparser = new DOMParser();
-  const topPageDOM = domparser.parseFromString(await topPageRes.text(), "text/html");
-  const base = topPageDOM.createElement("base");
-  base.setAttribute("href", URL_HOME);
-  topPageDOM.head.appendChild(base);
-  const manabaCourseDOMs = topPageDOM.querySelectorAll<HTMLAnchorElement>(".course-cell a:first-child");
+  const doc = await fetchDocument(URL_HOME);
+  const manabaCourseDOMs = doc.querySelectorAll<HTMLAnchorElement>(".course-cell a:first-child");
 
   const courseURLs = [] as string[];
   manabaCourseDOMs.forEach((manabaCourseDOM) => {
@@ -87,12 +83,7 @@ const getContentURLs: UrlDigFunction = async (urls) => {
   await Promise.all(
     urls.map(async (url) => {
       if (downloadStatus !== "WAITING_INIT") throw new MPError(STOP_MESSAGE_ON_INIT);
-      const res = await fetch(`${url}_page`);
-      const domparser = new DOMParser();
-      const doc = domparser.parseFromString(await res.text(), "text/html");
-      const base = doc.createElement("base");
-      base.setAttribute("href", URL_HOME);
-      doc.head.appendChild(base);
+      const doc = await fetchDocument(`${url}_page`);
       const elements = doc.querySelectorAll<HTMLAnchorElement>(".about-contents a");
 
       elements.forEach((element) => {
@@ -110,14 +101,8 @@ const getPageURLs: UrlDigFunction = async (urls: string[]) => {
   await Promise.all(
     urls.map(async (url) => {
       if (downloadStatus !== "WAITING_INIT") throw new MPError(STOP_MESSAGE_ON_INIT);
-      const res = await fetch(url);
-      const domparser = new DOMParser();
-      const doc = domparser.parseFromString(await res.text(), "text/html");
-      const base = doc.createElement("base");
-      base.setAttribute("href", URL_HOME);
-      doc.head.appendChild(base);
+      const doc = await fetchDocument(url);
       const elements = doc.querySelectorAll<HTMLAnchorElement>(".contentslist li a");
-
       elements.forEach((element) => {
         pageURLs.push(element.href);
         progressDisp(null, `${pageURLs.length}個のページを検出 (3/4)`, null);
@@ -132,12 +117,7 @@ const getFileInfo = async (urls: string[]) => {
   await Promise.all(
     urls.map(async (url) => {
       if (downloadStatus !== "WAITING_INIT") throw new MPError(STOP_MESSAGE_ON_INIT);
-      const res = await fetch(url);
-      const domparser = new DOMParser();
-      const doc = domparser.parseFromString(await res.text(), "text/html");
-      const base = doc.createElement("base");
-      base.setAttribute("href", URL_HOME);
-      doc.head.appendChild(base);
+      const doc = await fetchDocument(url);
       const elements = doc.querySelectorAll<HTMLAnchorElement>(".file a");
       const courseName = doc.querySelector<HTMLAnchorElement>("#coursename").innerText;
       const contentName = doc.querySelector<HTMLAnchorElement>(".contents a").innerText;

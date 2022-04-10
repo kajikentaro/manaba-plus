@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Manaba Plus",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "Automately download contents on Chuo University Manaba",
   "action": {
     "default_title": "Manaba Plusを開く"
