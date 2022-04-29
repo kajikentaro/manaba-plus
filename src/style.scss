@@ -3,7 +3,7 @@ $color-background: #dffabd;
 $color-hover: orange;
 $color-font: #2e7c40;
 #manaba-plus-parent {
-  margin: 0 15px 15px 0;
+  margin: 0 0px 15px 0;
   display: flex;
   flex-direction: column;
   .mp-buttons {
@@ -72,6 +72,7 @@ $color-font: #2e7c40;
 #mp-table {
   border-collapse: collapse;
   border: 1px solid $color-border;
+  margin-right: 15px;
   .flex {
     display: flex;
     justify-content: center;
@@ -161,7 +162,7 @@ $color-font: #2e7c40;
     flex-direction: column;
     margin: 0 auto;
     width: 800px;
-    height: 100%;
+    height: auto;
     background-color: white;
   }
   .contents {
