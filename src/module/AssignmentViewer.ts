@@ -1,5 +1,5 @@
 import Assignment from "./Assignment";
-import { HIDED_ASSIGNHMENT, DELETABLE_ROW } from "./const";
+import { HIDDEN_ASSIGNMENTS, DELETABLE_ROW } from "./const";
 
 export default class AssignmentViewer {
   private allAss: Assignment[];
@@ -30,7 +30,7 @@ export default class AssignmentViewer {
         disableHref.push(row.href);
       }
     }
-    chrome.storage.sync.set({ [HIDED_ASSIGNHMENT]: disableHref }, function () {});
+    chrome.storage.sync.set({ [HIDDEN_ASSIGNMENTS]: disableHref }, function () {});
     this.repaint();
   };
 
