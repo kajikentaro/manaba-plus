@@ -3,7 +3,7 @@ import { MPError, DOWNLOAD_LIST, STOP_MESSAGE_ON_DL, STOP_MESSAGE_ON_DL_CONFIRM,
 import { UrlDigFunction, DownloadStatus, FileInfo, ProgressDisp, FilterInfo } from "./module/type";
 
 let downloadStatus: DownloadStatus = "WAITING_INIT";
-let id = -1;
+let id = -1; // ダウンロードファイルのID
 
 const startDownloadContents = async () => {
   // 「準備中...」を表示する
@@ -42,6 +42,7 @@ const startDownloadContents = async () => {
   }
 };
 
+// 「準備中」と表示してドットを増やす。
 const loadingDisplay = () => {
   let dotNum = 0;
   const showInitializingDot = () => {
@@ -56,6 +57,7 @@ const loadingDisplay = () => {
   showInitializingDot();
 };
 
+// ダウンロードを中止する。
 const stopDL = () => {
   if (downloadStatus === "DONE" || downloadStatus === "STOPPED_OR_ERROR") return;
   progressDisp("ダウンロードの中止中. . .", null, null);
@@ -65,6 +67,7 @@ const stopDL = () => {
   }
 };
 
+// 各コースのURLを取得する。
 const getCourseURLs: () => Promise<string[]> = async () => {
   const topPageRes = await fetch(URL_HOME);
   const domparser = new DOMParser();
@@ -82,6 +85,7 @@ const getCourseURLs: () => Promise<string[]> = async () => {
   return courseURLs;
 };
 
+// 各コースから各コースコンテンツのURLを取得する。
 const getContentURLs: UrlDigFunction = async (urls) => {
   const contentURLs = [] as string[];
   await Promise.all(
@@ -105,6 +109,7 @@ const getContentURLs: UrlDigFunction = async (urls) => {
   return contentURLs;
 };
 
+// 各コースコンテンツから各ページのURLを取得する。
 const getPageURLs: UrlDigFunction = async (urls: string[]) => {
   const pageURLs = [] as string[];
   await Promise.all(
@@ -127,6 +132,7 @@ const getPageURLs: UrlDigFunction = async (urls: string[]) => {
   return pageURLs;
 };
 
+// 各ページから各ファイルのURLを取得する。
 const getFileInfo = async (urls: string[]) => {
   const fileInfo = [] as FileInfo[];
   await Promise.all(
@@ -181,6 +187,7 @@ const filterInfo: FilterInfo = (raws, storeds) => {
   return mustDLfileInfo;
 };
 
+// ファイルをダウンロードする。
 const downloadFiles = async (mustDLfileInfo: FileInfo[], storedUrls: FileInfo[]) => {
   const downloadFile: (file: FileInfo) => Promise<void> = async (file) => {
     const filenameEx = decodeURI(file.url.match(".+/(.+?)([?#;].*)?$")[1]);
@@ -206,25 +213,32 @@ const downloadFiles = async (mustDLfileInfo: FileInfo[], storedUrls: FileInfo[])
     }
   });
 
-  for (let i = 0; i < mustDLfileInfo.length; i++) {
-    if (downloadStatus !== "DOWNLOADING") throw new MPError(STOP_MESSAGE_ON_DL);
-    const file = mustDLfileInfo[i];
-    progressDisp(`${file.courseName} をダウンロード中`, `${i + 1}/${mustDLfileInfo.length}`, ((i + 1) / mustDLfileInfo.length) * 100);
-    await downloadFile(file)
-      .then(() => {
-        storedUrls.push(file);
-        chrome.storage.local.set({ [DOWNLOAD_LIST]: storedUrls }, () => {});
-      })
-      .catch((e) => {
-        if (downloadStatus !== "DOWNLOADING") throw new MPError(STOP_MESSAGE_ON_DL);
-        if (!window.confirm("接続エラーが発生しました。次のファイルを続けてダウンロードしますか？")) {
-          stopDL();
-          throw new MPError(STOP_MESSAGE_ON_DL_CONFIRM);
-        }
-      });
+  try {
+    for (let i = 0; i < mustDLfileInfo.length; i++) {
+      if (downloadStatus !== "DOWNLOADING") throw new MPError(STOP_MESSAGE_ON_DL);
+      const file = mustDLfileInfo[i];
+      progressDisp(`${file.courseName} をダウンロード中`, `${i + 1}/${mustDLfileInfo.length}`, ((i + 1) / mustDLfileInfo.length) * 100);
+      await downloadFile(file)
+        .then(() => {
+          storedUrls.push(file);
+        })
+        .catch((e) => {
+          if (downloadStatus !== "DOWNLOADING") throw new MPError(STOP_MESSAGE_ON_DL);
+          if (!window.confirm("接続エラーが発生しました。次のファイルを続けてダウンロードしますか？")) {
+            stopDL();
+            throw new MPError(STOP_MESSAGE_ON_DL_CONFIRM);
+          }
+        });
+    }
+  } catch (e) {
+    throw e;
+  }
+  finally {
+    chrome.storage.local.set({ [DOWNLOAD_LIST]: storedUrls }, () => {});
   }
 };
 
+// 進行状況を表示する。
 const progressDisp: ProgressDisp = (message = null, rate = null, progressN = null) => {
   if (message) document.getElementById("message").innerHTML = message;
   if (rate) document.getElementById("number-counter").innerHTML = rate;
