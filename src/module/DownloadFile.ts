@@ -17,12 +17,14 @@ const waitForComplete: (downloadId: number) => Promise<void> = (downloadId) => {
   return new Promise((resolve, reject) => {
     const callback: (downloadDelta: chrome.downloads.DownloadDelta) => void = (downloadDelta) => {
       if (downloadId !== downloadDelta.id) return;
-      chrome.downloads.onChanged.removeListener(callback);
-      if (downloadDelta.state) {
-        if (downloadDelta.state.current === "interrupted") reject(downloadDelta.error || new Error());
-        if (downloadDelta.state.current === "complete") resolve();
-      } else {
-        reject(new Error());
+      if (typeof downloadDelta.state === "undefined") return;
+      if (downloadDelta.state.current === "interrupted") {
+        reject(downloadDelta.error || new Error());
+        chrome.downloads.onChanged.removeListener(callback);
+      }
+      if (downloadDelta.state.current === "complete") {
+        resolve();
+        chrome.downloads.onChanged.removeListener(callback);
       }
     };
     chrome.downloads.onChanged.addListener(callback);

@@ -169,15 +169,18 @@ const downloadFiles = async (mustDLfileInfo: FileInfo[], storedUrls: FileInfo[])
     const setGlobalDownloadId = (downloadId: number) => {
       downloadChromeId = downloadId;
     };
-    await downloadFile(file, setGlobalDownloadId).catch((e) => {
-      if (downloadStatus !== "DOWNLOADING") throw new MPError(STOP_MESSAGE_ON_DL);
-      if (!window.confirm("接続エラーが発生しました。次のファイルを続けてダウンロードしますか？")) {
-        stopDL();
-        throw new MPError(STOP_MESSAGE_ON_DL_CONFIRM);
-      }
-    });
-    storedUrls.push(file);
-    chrome.storage.local.set({ [DOWNLOAD_LIST]: storedUrls }, () => {});
+    await downloadFile(file, setGlobalDownloadId)
+      .then(() => {
+        storedUrls.push(file);
+        chrome.storage.local.set({ [DOWNLOAD_LIST]: storedUrls }, () => {});
+      })
+      .catch((e) => {
+        if (downloadStatus !== "DOWNLOADING") throw new MPError(STOP_MESSAGE_ON_DL);
+        if (!window.confirm("接続エラーが発生しました。次のファイルを続けてダウンロードしますか？")) {
+          stopDL();
+          throw new MPError(STOP_MESSAGE_ON_DL_CONFIRM);
+        }
+      });
   }
 };
 
