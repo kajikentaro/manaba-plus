@@ -1,4 +1,4 @@
-import { DOWNLOAD_LIST, STORAGE_KEY_ASSIGNMENT_HISTORY, ENABLE_INSERT_MP, STORAGE_KEY_KIKUZOU, STORAGE_KEY_SEARCH_SYLLABUS, STORAGE_KEY_SMARTPHONE, STORAGE_KEY_STYLE_PERMISSION, HIDDEN_ASSIGNMENTS } from "./module/const";
+import { DOWNLOAD_LIST, STORAGE_KEY_ASSIGNMENT_HISTORY, STORAGE_KEY_TOP_MENU, STORAGE_KEY_KIKUZOU, STORAGE_KEY_SEARCH_SYLLABUS, STORAGE_KEY_SMARTPHONE, STORAGE_KEY_STYLE_PERMISSION, HIDDEN_ASSIGNMENTS } from "./module/const";
 import { BooleanStorageKey, HTMLInputEvent } from "./module/type";
 import * as Storage from "./module/storage";
 
@@ -18,13 +18,6 @@ document.getElementById("contents-download").addEventListener("click", () => {
   window.open("download-progress.html");
 });
 
-const initToggleCheck = async () => {
-  const enableInsertMp = await Storage.getBoolean(ENABLE_INSERT_MP);
-  const input = document.querySelector<HTMLInputElement>("input#toggle-hide");
-  input.checked = !enableInsertMp;
-  input.onchange = (e: HTMLInputEvent) => Storage.setBoolean(ENABLE_INSERT_MP, !e.target.checked);
-};
-
 const bindBoolean = async (key: BooleanStorageKey) => {
   const input = document.getElementById(`${key.name}_checkbox`) as HTMLInputElement;
   input.checked = await Storage.getBoolean(key);
@@ -33,8 +26,7 @@ const bindBoolean = async (key: BooleanStorageKey) => {
   }
 }
 
-initToggleCheck();
-
+bindBoolean(STORAGE_KEY_TOP_MENU);
 bindBoolean(STORAGE_KEY_STYLE_PERMISSION);
 bindBoolean(STORAGE_KEY_SEARCH_SYLLABUS);
 bindBoolean(STORAGE_KEY_ASSIGNMENT_HISTORY);

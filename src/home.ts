@@ -1,4 +1,4 @@
-import { InfinityDate, URL_HOME, ENABLE_INSERT_MP, HIDDEN_ASSIGNMENTS, STORAGE_KEY_KIKUZOU, STORAGE_KEY_SMARTPHONE, STORAGE_KEY_ASSIGNMENT_HISTORY, STORAGE_KEY_SEARCH_SYLLABUS, STORAGE_KEY_STYLE_PERMISSION } from "./module/const";
+import { InfinityDate, URL_HOME, HIDDEN_ASSIGNMENTS, STORAGE_KEY_TOP_MENU, STORAGE_KEY_STYLE_PERMISSION, STORAGE_KEY_KIKUZOU, STORAGE_KEY_SMARTPHONE, STORAGE_KEY_ASSIGNMENT_HISTORY, STORAGE_KEY_SEARCH_SYLLABUS } from "./module/const";
 import { HTMLInputEvent, AssignmentMember } from "./module/type";
 import Assignment from "./module/Assignment";
 import AssignmentViewer from "./module/AssignmentViewer";
@@ -15,7 +15,7 @@ const init = async () => {
 
 // manaba上部にManaba Plusのコンテンツを挿入する。
 const insertMpButton = async () => {
-  const enableInsertMp = await Storage.getBoolean(ENABLE_INSERT_MP);
+  const enableInsertMp = await Storage.getBoolean(STORAGE_KEY_TOP_MENU);
   if (enableInsertMp === false) return;
 
   const mark = document.getElementsByClassName("contentbody-left")[0];

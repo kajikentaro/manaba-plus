@@ -12,7 +12,7 @@ export class MPError extends Error {
 /* chrome.storage key */
 export const DOWNLOAD_LIST = "download_list"; // すでにダウンロードされたファイルのリスト
 export const HIDDEN_ASSIGNMENTS = "hidden_assignments"; // 非表示にされた課題
-export const ENABLE_INSERT_MP: BooleanStorageKey = { name: "enable_insert_mp", defaultValue: true }; // Manaba Plusが有効かどうか（隠されていないかどうか）
+export const STORAGE_KEY_TOP_MENU: BooleanStorageKey = { name: "top_menu", defaultValue: true }; // Manaba Plusが有効かどうか（隠されていないかどうか）
 export const STORAGE_KEY_STYLE_PERMISSION: BooleanStorageKey = { name: "style_permission", defaultValue: true }; // スタイルの変更を許可するかどうか
 export const STORAGE_KEY_SEARCH_SYLLABUS: BooleanStorageKey = { name: "search_syllabus", defaultValue: true }; // 「シラバス検索」を非表示にするかどうか
 export const STORAGE_KEY_ASSIGNMENT_HISTORY: BooleanStorageKey = { name: "assignment_history", defaultValue: true }; // 未提出課題一覧と課題提出記録を非表示にするかどうか
