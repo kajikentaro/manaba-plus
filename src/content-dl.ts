@@ -213,28 +213,22 @@ const downloadFiles = async (mustDLfileInfo: FileInfo[], storedUrls: FileInfo[])
     }
   });
 
-  try {
-    for (let i = 0; i < mustDLfileInfo.length; i++) {
-      if (downloadStatus !== "DOWNLOADING") throw new MPError(STOP_MESSAGE_ON_DL);
-      const file = mustDLfileInfo[i];
-      progressDisp(`${file.courseName} をダウンロード中`, `${i + 1}/${mustDLfileInfo.length}`, ((i + 1) / mustDLfileInfo.length) * 100);
-      await downloadFile(file)
-        .then(() => {
-          storedUrls.push(file);
-        })
-        .catch((e) => {
-          if (downloadStatus !== "DOWNLOADING") throw new MPError(STOP_MESSAGE_ON_DL);
-          if (!window.confirm("接続エラーが発生しました。次のファイルを続けてダウンロードしますか？")) {
-            stopDL();
-            throw new MPError(STOP_MESSAGE_ON_DL_CONFIRM);
-          }
-        });
-    }
-  } catch (e) {
-    throw e;
-  }
-  finally {
-    chrome.storage.local.set({ [DOWNLOAD_LIST]: storedUrls }, () => {});
+  for (let i = 0; i < mustDLfileInfo.length; i++) {
+    if (downloadStatus !== "DOWNLOADING") throw new MPError(STOP_MESSAGE_ON_DL);
+    const file = mustDLfileInfo[i];
+    progressDisp(`${file.courseName} をダウンロード中`, `${i + 1}/${mustDLfileInfo.length}`, ((i + 1) / mustDLfileInfo.length) * 100);
+    await downloadFile(file)
+      .then(() => {
+        storedUrls.push(file);
+        chrome.storage.local.set({ [DOWNLOAD_LIST]: storedUrls }, () => {});
+      })
+      .catch((e) => {
+        if (downloadStatus !== "DOWNLOADING") throw new MPError(STOP_MESSAGE_ON_DL);
+        if (!window.confirm("接続エラーが発生しました。次のファイルを続けてダウンロードしますか？")) {
+          stopDL();
+          throw new MPError(STOP_MESSAGE_ON_DL_CONFIRM);
+        }
+      });
   }
 };
 
