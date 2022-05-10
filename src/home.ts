@@ -4,7 +4,7 @@ import Assignment from "./module/Assignment";
 import AssignmentViewer from "./module/AssignmentViewer";
 import * as Storage from "./module/storage";
 
-let startMpDone = false; // 未提出課題一覧が表示されているかどうか
+let didDisplayAssignments = false; // 未提出課題一覧が表示されているかどうか
 
 // 初期化する。
 const init = async () => {
@@ -21,7 +21,7 @@ const insertMpButton = async () => {
   const mark = document.getElementsByClassName("contentbody-left")[0];
   mark.insertAdjacentHTML("afterbegin", await (await fetch(chrome.runtime.getURL("insert.html"))).text());
   document.getElementById("show-assignment").onclick = () => {
-    startMp();
+    displayAssignments();
   };
   document.getElementById("download-content").onclick = () => {
     if (confirm("コースコンテンツをPCにまとめてダウンロードします。続行しますか？")) {
@@ -103,10 +103,10 @@ const hideElements = async () => {
 }
 
 // 未提出課題一覧を表示する。
-const startMp = async () => {
+const displayAssignments = async () => {
   // prevent over two times button click
-  if (startMpDone) return;
-  startMpDone = true;
+  if (didDisplayAssignments) return;
+  didDisplayAssignments = true;
 
   // fetch assignment datas
   const allAssignments = await fetchSummaries();
@@ -140,7 +140,7 @@ const fetchSummaries = async () => {
       return str;
     };
 
-    const assignmentDomRows = doc.querySelector<HTMLTableElement>("table").getElementsByTagName("tr");
+    const assignmentDomRows = doc.querySelectorAll<HTMLTableElement>(".pagebody table tr");
     for (let i = 0; i < assignmentDomRows.length; i++) {
       if (i === 0) continue; // skip title
       const cols = assignmentDomRows[i].children as HTMLCollectionOf<HTMLElement>;

@@ -1,9 +1,10 @@
-import * as PathModule from "path";
-import { MPError, DOWNLOAD_LIST, STOP_MESSAGE_ON_DL, STOP_MESSAGE_ON_DL_CONFIRM, STOP_MESSAGE_ON_INIT, URL_HOME } from "./module/const";
-import { UrlDigFunction, DownloadStatus, FileInfo, ProgressDisp, FilterInfo } from "./module/type";
+import { DOWNLOAD_LIST, MPError, STOP_MESSAGE_ON_DL, STOP_MESSAGE_ON_DL_CONFIRM, STOP_MESSAGE_ON_INIT, URL_HOME } from "./module/const";
+import downloadFile from "module/DownloadFile";
+import fetchDocument from "module/FetchDocument";
+import { DownloadStatus, FileInfo, FilterInfo, ProgressDisp, UrlDigFunction } from "./module/type";
 
 let downloadStatus: DownloadStatus = "WAITING_INIT";
-let id = -1; // ダウンロードファイルのID
+let downloadChromeId = -1; // ダウンロードファイルのID
 
 const startDownloadContents = async () => {
   // 「準備中...」を表示する
@@ -62,20 +63,15 @@ const stopDL = () => {
   if (downloadStatus === "DONE" || downloadStatus === "STOPPED_OR_ERROR") return;
   progressDisp("ダウンロードの中止中. . .", null, null);
   downloadStatus = "STOPPED_OR_ERROR";
-  if (id !== -1) {
-    chrome.downloads.cancel(id, () => {});
+  if (downloadChromeId !== -1) {
+    chrome.downloads.cancel(downloadChromeId, () => {});
   }
 };
 
 // 各コースのURLを取得する。
 const getCourseURLs: () => Promise<string[]> = async () => {
-  const topPageRes = await fetch(URL_HOME);
-  const domparser = new DOMParser();
-  const topPageDOM = domparser.parseFromString(await topPageRes.text(), "text/html");
-  const base = topPageDOM.createElement("base");
-  base.setAttribute("href", URL_HOME);
-  topPageDOM.head.appendChild(base);
-  const manabaCourseDOMs = topPageDOM.querySelectorAll<HTMLAnchorElement>(".course-cell a:first-child");
+  const doc = await fetchDocument(URL_HOME);
+  const manabaCourseDOMs = doc.querySelectorAll<HTMLAnchorElement>(".course-cell a:first-child");
 
   const courseURLs = [] as string[];
   manabaCourseDOMs.forEach((manabaCourseDOM) => {
@@ -91,12 +87,7 @@ const getContentURLs: UrlDigFunction = async (urls) => {
   await Promise.all(
     urls.map(async (url) => {
       if (downloadStatus !== "WAITING_INIT") throw new MPError(STOP_MESSAGE_ON_INIT);
-      const res = await fetch(`${url}_page`);
-      const domparser = new DOMParser();
-      const doc = domparser.parseFromString(await res.text(), "text/html");
-      const base = doc.createElement("base");
-      base.setAttribute("href", URL_HOME);
-      doc.head.appendChild(base);
+      const doc = await fetchDocument(`${url}_page`);
       const elements = doc.querySelectorAll<HTMLAnchorElement>(".about-contents a");
 
       elements.forEach((element) => {
@@ -115,14 +106,8 @@ const getPageURLs: UrlDigFunction = async (urls: string[]) => {
   await Promise.all(
     urls.map(async (url) => {
       if (downloadStatus !== "WAITING_INIT") throw new MPError(STOP_MESSAGE_ON_INIT);
-      const res = await fetch(url);
-      const domparser = new DOMParser();
-      const doc = domparser.parseFromString(await res.text(), "text/html");
-      const base = doc.createElement("base");
-      base.setAttribute("href", URL_HOME);
-      doc.head.appendChild(base);
+      const doc = await fetchDocument(url);
       const elements = doc.querySelectorAll<HTMLAnchorElement>(".contentslist li a");
-
       elements.forEach((element) => {
         pageURLs.push(element.href);
         progressDisp(null, `${pageURLs.length}個のページを検出 (3/4)`, null);
@@ -138,12 +123,7 @@ const getFileInfo = async (urls: string[]) => {
   await Promise.all(
     urls.map(async (url) => {
       if (downloadStatus !== "WAITING_INIT") throw new MPError(STOP_MESSAGE_ON_INIT);
-      const res = await fetch(url);
-      const domparser = new DOMParser();
-      const doc = domparser.parseFromString(await res.text(), "text/html");
-      const base = doc.createElement("base");
-      base.setAttribute("href", URL_HOME);
-      doc.head.appendChild(base);
+      const doc = await fetchDocument(url);
       const elements = doc.querySelectorAll<HTMLAnchorElement>(".file a");
       const courseName = doc.querySelector<HTMLAnchorElement>("#coursename").innerText;
       const contentName = doc.querySelector<HTMLAnchorElement>(".contents a").innerText;
@@ -189,35 +169,14 @@ const filterInfo: FilterInfo = (raws, storeds) => {
 
 // ファイルをダウンロードする。
 const downloadFiles = async (mustDLfileInfo: FileInfo[], storedUrls: FileInfo[]) => {
-  const downloadFile: (file: FileInfo) => Promise<void> = async (file) => {
-    const filenameEx = decodeURI(file.url.match(".+/(.+?)([?#;].*)?$")[1]);
-    let filePath = PathModule.join("Manaba", file.courseName.replace("/", "-"), file.contentName.replace("/", "-"), filenameEx.replace("/", "-"));
-    filePath = filePath.replace(/\s+/g, "");
-    chrome.downloads.download({ url: file.url, filename: filePath, saveAs: false }, (downloadID) => {
-      id = downloadID;
-    });
-    return await new Promise((resolve, reject) => {
-      resolveHold = resolve;
-      rejectHold = reject;
-    });
-  };
-
-  let resolveHold: (value: void | PromiseLike<void>) => void;
-  let rejectHold: (value: void | PromiseLike<void>) => void;
-
-  chrome.downloads.onChanged.addListener((downloadDelta) => {
-    if (id !== downloadDelta.id) return;
-    if (downloadDelta.state) {
-      if (downloadDelta.state.current === "interrupted") rejectHold();
-      if (downloadDelta.state.current === "complete") resolveHold();
-    }
-  });
-
   for (let i = 0; i < mustDLfileInfo.length; i++) {
     if (downloadStatus !== "DOWNLOADING") throw new MPError(STOP_MESSAGE_ON_DL);
     const file = mustDLfileInfo[i];
     progressDisp(`${file.courseName} をダウンロード中`, `${i + 1}/${mustDLfileInfo.length}`, ((i + 1) / mustDLfileInfo.length) * 100);
-    await downloadFile(file)
+    const setGlobalDownloadId = (downloadId: number) => {
+      downloadChromeId = downloadId;
+    };
+    await downloadFile(file, setGlobalDownloadId)
       .then(() => {
         storedUrls.push(file);
         chrome.storage.local.set({ [DOWNLOAD_LIST]: storedUrls }, () => {});
@@ -240,4 +199,3 @@ const progressDisp: ProgressDisp = (message = null, rate = null, progressN = nul
 };
 
 startDownloadContents();
-// debug(JSON.parse('[{"url":"https://room.chuo-u.ac.jp/ct/page_3102310c2368869_3222457479_3759335733/20210927os.pdf?view=full","courseName":"オペレーティングシステム技術","contentName":"授業資料"},{"url":"https://room.chuo-u.ac.jp/ct/page_3102310c2368869_3222457479_3490916946/20210927os-sub.pdf?view=full","courseName":"オペレーティングシステム技術","contentName":"授業資料"},{"url":"https://room.chuo-u.ac.jp/ct/page_3085900c2368863_1343431926_2417224013/%E9%85%8D%E5%B8%83%E7%94%A8_%E7%AC%AC1%E5%9B%9E_%E6%9C%80%E9%81%A9%E5%8C%96_2021.pdf?view=full","courseName":"最適化","contentName":"オンライン参加用の講義資料"},{"url":"https://room.chuo-u.ac.jp/ct/page_3085900c2368863_2685602822_2954059957/%E9%85%8D%E5%B8%83%E7%94%A8_%E7%AC%AC2%E5%9B%9E_%E6%9C%80%E9%81%A9%E5%8C%96_2021.pdf?view=full","courseName":"最適化","contentName":"オンライン参加用の講義資料"},{"url":"https://room.chuo-u.ac.jp/ct/page_3083499c2368986_1611858048_1880272815/%E7%AC%AC1%E5%9B%9E_%E8%AC%9B%E7%BE%A9%E8%B3%87%E6%96%99.pdf?view=full","courseName":"開発系プログラミング演習","contentName":"授業"},{"url":"https://room.chuo-u.ac.jp/ct/page_3111153c2368884_1074985888_3222453811/01_mental.pdf?view=full","courseName":"ソフトウェア技術","contentName":"履修方法と質問方法"},{"url":"https://room.chuo-u.ac.jp/ct/page_3111153c2368884_1074989961_1343441366/02_competency.pdf?view=full","courseName":"ソフトウェア技術","contentName":"履修方法と質問方法"},{"url":"https://room.chuo-u.ac.jp/ct/page_3100797c2368866_1880270090_2148725126/01.pdf?view=full","courseName":"数理情報学３","contentName":"[01]"},{"url":"https://room.chuo-u.ac.jp/ct/page_3100797c2368866_1880270090_3759331448/01A.pdf?view=full","courseName":"数理情報学３","contentName":"[01]"},{"url":"https://room.chuo-u.ac.jp/ct/page_3128882c2368866_269688168_2685605749/02.pdf?view=full","courseName":"数理情報学３","contentName":"[02]"},{"url":"https://room.chuo-u.ac.jp/ct/page_3102332c2368872_806551547_806551544/20210927lf.pdf?view=full","courseName":"大規模・高速計算","contentName":"授業資料"},{"url":"https://room.chuo-u.ac.jp/ct/page_3089922c2365554_2685593211_3759327649/%E7%A7%91%E5%AD%A6%E6%8A%80%E8%A1%93%E8%8B%B1%E8%AA%9E2021%EF%BC%88%E7%94%B0%E4%B8%AD%EF%BC%89%E7%AC%AC3%E5%9B%9E%E6%96%87%E7%8C%AE.pdf?view=full","courseName":"科学技術英語","contentName":"第３回授業（2021-10-05）の課題文献"},{"url":"https://room.chuo-u.ac.jp/ct/page_3117904c2365554_1880276057_3490916835/%E7%A7%91%E5%AD%A6%E6%8A%80%E8%A1%93%E8%8B%B1%E8%AA%9E2021%EF%BC%88%E7%94%B0%E4%B8%AD%EF%BC%89%E7%AC%AC3%E5%9B%9E%E8%AC%9B%E7%BE%A9%E7%94%A8%EF%BC%88%E4%BA%8B%E5%89%8D%E9%85%8D%E5%B8%83%E7%94%A8%EF%BC%89.pdf?view=full","courseName":"科学技術英語","contentName":"第３回授業（2021-10-05）の講義ノート"},{"url":"https://room.chuo-u.ac.jp/ct/page_3117895c2365554_3759334705_538116965/%E7%A7%91%E5%AD%A6%E6%8A%80%E8%A1%93%E8%8B%B1%E8%AA%9E2021%EF%BC%88%E7%94%B0%E4%B8%AD%EF%BC%89%E7%AC%AC4%E5%9B%9E%E6%96%87%E7%8C%AE.pdf?view=full","courseName":"科学技術英語","contentName":"第４回授業（2021-10-12）の課題文献"},{"url":"https://room.chuo-u.ac.jp/ct/page_3080183c2365554_2417222730_3222447365/%E7%A7%91%E5%AD%A6%E6%8A%80%E8%A1%93%E8%8B%B1%E8%AA%9E2021%EF%BC%88%E7%94%B0%E4%B8%AD%EF%BC%89%E7%AC%AC%EF%BC%91%E5%9B%9E%E6%96%87%E7%8C%AE.pdf?view=full","courseName":"科学技術英語","contentName":"第１回授業（2021-09-21）の講義マテリアル"},{"url":"https://room.chuo-u.ac.jp/ct/page_3080183c2365554_2417222730_3222448987/%E7%A7%91%E5%AD%A6%E6%8A%80%E8%A1%93%E8%8B%B1%E8%AA%9E2021%EF%BC%88%E7%94%B0%E4%B8%AD%EF%BC%89%E7%AC%AC%EF%BC%91%E5%9B%9E%20%E8%AC%9B%E7%BE%A9%E7%94%A8%EF%BC%88%E4%BA%8B%E5%89%8D%E9%85%8D%E5%B8%83%EF%BC%894in1.pdf?view=full","courseName":"科学技術英語","contentName":"第１回授業（2021-09-21）の講義マテリアル"},{"url":"https://room.chuo-u.ac.jp/ct/page_3080279c2365554_2417222734_1611856817/%E7%A7%91%E5%AD%A6%E6%8A%80%E8%A1%93%E8%8B%B1%E8%AA%9E2021%EF%BC%88%E7%94%B0%E4%B8%AD%EF%BC%89%E7%AC%AC%EF%BC%92%E5%9B%9E%E6%96%87%E7%8C%AE.pdf?view=full","courseName":"科学技術英語","contentName":"第２回授業（2021-09-28）の 課題文献"},{"url":"https://room.chuo-u.ac.jp/ct/page_3089910c2365554_806543032_3089909/%E7%A7%91%E5%AD%A6%E6%8A%80%E8%A1%93%E8%8B%B1%E8%AA%9E2021%EF%BC%88%E7%94%B0%E4%B8%AD%EF%BC%89%E7%AC%AC%EF%BC%92%E5%9B%9E%E8%AC%9B%E7%BE%A9%E7%94%A8%EF%BC%88%E4%BA%8B%E5%89%8D%E9%85%8D%E5%B8%83%E7%94%A8%EF%BC%89.pdf?view=full","courseName":"科学技術英語","contentName":"第２回授業（2021-09-28）の 講義ノート"}]'))
