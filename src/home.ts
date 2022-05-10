@@ -35,14 +35,14 @@ const insertMpButton = async () => {
 
 // manabaのHTML要素のstyleを上書きする。
 const overwriteStyles = async () => {
-  const style_permission = await Storage.getBoolean(STORAGE_KEY_STYLE_PERMISSION);
-  if (style_permission !== true) {
+  const stylePermission = await Storage.getBoolean(STORAGE_KEY_STYLE_PERMISSION);
+  if (stylePermission !== true) {
     return;
   }
 
-  const contentbody_left = document.getElementsByClassName("contentbody-left")[0] as HTMLElement;
-  contentbody_left.style.width = "671px";
-  contentbody_left.style.paddingRight = "15px";
+  const contentbodyLeft = document.getElementsByClassName("contentbody-left")[0] as HTMLElement;
+  contentbodyLeft.style.width = "671px";
+  contentbodyLeft.style.paddingRight = "15px";
 
   document.getElementById("courselistweekly").style.paddingRight = "0px";
   const infolistHeaders = document.getElementsByClassName("my-infolist-header") as HTMLCollectionOf<HTMLElement>;
@@ -64,17 +64,17 @@ const hideElements = async () => {
     target.setAttribute("hidden", "");
   }
 
-  const style_permission = await Storage.getBoolean(STORAGE_KEY_STYLE_PERMISSION);
-  const search_syllabus = await Storage.getBoolean(STORAGE_KEY_SEARCH_SYLLABUS);
-  const assignment_history = await Storage.getBoolean(STORAGE_KEY_ASSIGNMENT_HISTORY);
+  const stylePermission = await Storage.getBoolean(STORAGE_KEY_STYLE_PERMISSION);
+  const searchSyllabus = await Storage.getBoolean(STORAGE_KEY_SEARCH_SYLLABUS);
+  const assignmentHistory = await Storage.getBoolean(STORAGE_KEY_ASSIGNMENT_HISTORY);
   const smartphone = await Storage.getBoolean(STORAGE_KEY_SMARTPHONE);
   const kikuzou = await Storage.getBoolean(STORAGE_KEY_KIKUZOU);
 
-  if (search_syllabus) {
+  if (searchSyllabus) {
     hide("my-infolist-searchall");
   }
 
-  if (assignment_history) {
+  if (assignmentHistory) {
     hide("my-infolist-event");
   }
 
@@ -88,12 +88,12 @@ const hideElements = async () => {
     hide("my-infolist-kikuzou");
   }
 
-  if (style_permission && [search_syllabus, assignment_history, smartphone, kikuzou].every(x => x)) {
-    const contentbody_left = document.getElementsByClassName("contentbody-left")[0] as HTMLElement;
-    contentbody_left.style.width = "916px";
+  if (stylePermission && [searchSyllabus, assignmentHistory, smartphone, kikuzou].every(x => x)) {
+    const contentbodyLeft = document.getElementsByClassName("contentbody-left")[0] as HTMLElement;
+    contentbodyLeft.style.width = "916px";
 
-    const my_infolist_mycourses = document.getElementsByClassName("my-infolist-mycourses")[0] as HTMLElement;
-    my_infolist_mycourses.style.paddingLeft = "10px";
+    const myInfolistMycourses = document.getElementsByClassName("my-infolist-mycourses")[0] as HTMLElement;
+    myInfolistMycourses.style.paddingLeft = "10px";
 
     const elements = document.getElementsByClassName("course") as HTMLCollectionOf<HTMLElement>;
     Array.from(elements).forEach(element => {
