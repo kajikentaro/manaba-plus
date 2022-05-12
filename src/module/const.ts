@@ -14,8 +14,8 @@ export const DOWNLOAD_LIST = "download_list"; // すでにダウンロードさ�
 export const HIDDEN_ASSIGNMENTS = "hidden_assignments"; // 非表示にされた課題
 export const STORAGE_KEY_TOP_MENU: BooleanStorageKey = { name: "top_menu", defaultValue: true }; // Manaba Plusが有効かどうか（隠されていないかどうか）
 export const STORAGE_KEY_STYLE_PERMISSION: BooleanStorageKey = { name: "style_permission", defaultValue: true }; // スタイルの変更を許可するかどうか
-export const STORAGE_KEY_SEARCH_SYLLABUS: BooleanStorageKey = { name: "search_syllabus", defaultValue: true }; // 「シラバス検索」を非表示にするかどうか
-export const STORAGE_KEY_ASSIGNMENT_HISTORY: BooleanStorageKey = { name: "assignment_history", defaultValue: true }; // 未提出課題一覧と課題提出記録を非表示にするかどうか
+export const STORAGE_KEY_SEARCH_SYLLABUS: BooleanStorageKey = { name: "search_syllabus", defaultValue: false }; // 「シラバス検索」を非表示にするかどうか
+export const STORAGE_KEY_ASSIGNMENT_HISTORY: BooleanStorageKey = { name: "assignment_history", defaultValue: false }; // 未提出課題一覧と課題提出記録を非表示にするかどうか
 export const STORAGE_KEY_SMARTPHONE: BooleanStorageKey = { name: "smartphone", defaultValue: true }; // 「旧スマートフォン版について」を非表示にするかどうか
 export const STORAGE_KEY_KIKUZOU: BooleanStorageKey = { name: "kikuzou", defaultValue: true }; // 朝日新聞の広告を非表示にするかどうか
 

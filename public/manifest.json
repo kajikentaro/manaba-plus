@@ -45,7 +45,7 @@
     },
     {
       "matches": [
-        "https://room.chuo-u.ac.jp/ct/home"
+        "https://room.chuo-u.ac.jp/ct/home*"
       ],
       "js": [
         "home.js"

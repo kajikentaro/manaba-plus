@@ -44,7 +44,10 @@ const overwriteStyles = async () => {
   contentbodyLeft.style.width = "671px";
   contentbodyLeft.style.paddingRight = "15px";
 
-  document.getElementById("courselistweekly").style.paddingRight = "0px";
+  const courselistweekly = document.getElementById("courselistweekly");
+  if (courselistweekly !== null) {
+    courselistweekly.style.paddingRight = "0px";
+  }
   const infolistHeaders = document.getElementsByClassName("my-infolist-header") as HTMLCollectionOf<HTMLElement>;
   Array.from(infolistHeaders).forEach((element) => {
     element.style.backgroundSize = "100% 100%";
