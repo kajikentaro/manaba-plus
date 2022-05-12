@@ -93,7 +93,8 @@ const hideElements = async () => {
     contentbodyLeft.style.width = "916px";
 
     const myInfolistMycourses = document.getElementsByClassName("my-infolist-mycourses")[0] as HTMLElement;
-    myInfolistMycourses.style.paddingLeft = "10px";
+    const myInfolistHeader = myInfolistMycourses.getElementsByClassName("my-infolist-header")[0] as HTMLElement;
+    myInfolistHeader.style.paddingLeft = "10px";
 
     const elements = document.getElementsByClassName("course") as HTMLCollectionOf<HTMLElement>;
     Array.from(elements).forEach(element => {
