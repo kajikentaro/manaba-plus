@@ -30,3 +30,9 @@ export interface AssignmentInterface extends AssignmentMember {
 export interface HTMLInputEvent extends Event {
   target: HTMLInputElement;
 }
+
+/* storage.ts */
+export type BooleanStorageKey = {
+  name: string;
+  defaultValue: boolean;
+};

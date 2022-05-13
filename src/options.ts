@@ -1,5 +1,6 @@
-import { DOWNLOAD_LIST, ENABLE_INSERT_MP, HIDED_ASSIGNHMENT } from "./module/const";
-import { HTMLInputEvent } from "./module/type";
+import { DOWNLOAD_LIST, STORAGE_KEY_ASSIGNMENT_HISTORY, STORAGE_KEY_TOP_MENU, STORAGE_KEY_KIKUZOU, STORAGE_KEY_SEARCH_SYLLABUS, STORAGE_KEY_SMARTPHONE, STORAGE_KEY_STYLE_PERMISSION, HIDDEN_ASSIGNMENTS } from "./module/const";
+import { BooleanStorageKey, HTMLInputEvent } from "./module/type";
+import * as Storage from "./module/storage";
 
 document.getElementById("delete-download-history").addEventListener("click", () => {
   if (!confirm("よろしいですか？")) return;
@@ -9,31 +10,25 @@ document.getElementById("delete-download-history").addEventListener("click", () 
 });
 document.getElementById("reset-hidden-ass").addEventListener("click", () => {
   if (!confirm("よろしいですか？")) return;
-  chrome.storage.sync.set({ [HIDED_ASSIGNHMENT]: [] }, () => {
+  chrome.storage.sync.set({ [HIDDEN_ASSIGNMENTS]: [] }, () => {
     alert("完了");
   });
 });
 document.getElementById("contents-download").addEventListener("click", () => {
   window.open("download-progress.html");
 });
-const isEnableInsertMp = async () => {
-  const res = await new Promise((resolve) => {
-    chrome.storage.local.get([ENABLE_INSERT_MP], function (result) {
-      if (result[ENABLE_INSERT_MP] === undefined) resolve(true);
-      resolve(result[ENABLE_INSERT_MP]);
-    });
-  });
-  return res as boolean;
-};
-const initToggleCheck = async () => {
-  const enableInsertMp = await isEnableInsertMp();
-  document.querySelector<HTMLInputElement>("input#toggle-hide").checked = !enableInsertMp;
-  document.querySelector<HTMLInputElement>("input#toggle-hide").onchange = (v: HTMLInputEvent) => {
-    if (v.target.checked) {
-      chrome.storage.local.set({ [ENABLE_INSERT_MP]: false });
-    } else {
-      chrome.storage.local.set({ [ENABLE_INSERT_MP]: true });
-    }
-  };
-};
-initToggleCheck();
+
+const bindBoolean = async (key: BooleanStorageKey) => {
+  const input = document.getElementById(`${key.name}_checkbox`) as HTMLInputElement;
+  input.checked = await Storage.getBoolean(key);
+  input.onchange = (e: HTMLInputEvent) => {
+    Storage.setBoolean(key, e.target.checked);
+  }
+}
+
+bindBoolean(STORAGE_KEY_TOP_MENU);
+bindBoolean(STORAGE_KEY_STYLE_PERMISSION);
+bindBoolean(STORAGE_KEY_SEARCH_SYLLABUS);
+bindBoolean(STORAGE_KEY_ASSIGNMENT_HISTORY);
+bindBoolean(STORAGE_KEY_SMARTPHONE);
+bindBoolean(STORAGE_KEY_KIKUZOU);

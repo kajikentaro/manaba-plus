@@ -1,10 +1,10 @@
-import { DOWNLOAD_LIST, MPError, STOP_MESSAGE_ON_DL, STOP_MESSAGE_ON_DL_CONFIRM, STOP_MESSAGE_ON_INIT, URL_HOME } from "module/const";
+import { DOWNLOAD_LIST, MPError, STOP_MESSAGE_ON_DL, STOP_MESSAGE_ON_DL_CONFIRM, STOP_MESSAGE_ON_INIT, URL_HOME } from "./module/const";
 import downloadFile from "module/DownloadFile";
 import fetchDocument from "module/FetchDocument";
-import { DownloadStatus, FileInfo, FilterInfo, ProgressDisp, UrlDigFunction } from "module/type";
+import { DownloadStatus, FileInfo, FilterInfo, ProgressDisp, UrlDigFunction } from "./module/type";
 
 let downloadStatus: DownloadStatus = "WAITING_INIT";
-let downloadChromeId = -1;
+let downloadChromeId = -1; // ダウンロードファイルのID
 
 const startDownloadContents = async () => {
   // 「準備中...」を表示する
@@ -43,6 +43,7 @@ const startDownloadContents = async () => {
   }
 };
 
+// 「準備中」と表示してドットを増やす。
 const loadingDisplay = () => {
   let dotNum = 0;
   const showInitializingDot = () => {
@@ -57,6 +58,7 @@ const loadingDisplay = () => {
   showInitializingDot();
 };
 
+// ダウンロードを中止する。
 const stopDL = () => {
   if (downloadStatus === "DONE" || downloadStatus === "STOPPED_OR_ERROR") return;
   progressDisp("ダウンロードの中止中. . .", null, null);
@@ -66,6 +68,7 @@ const stopDL = () => {
   }
 };
 
+// 各コースのURLを取得する。
 const getCourseURLs: () => Promise<string[]> = async () => {
   const doc = await fetchDocument(URL_HOME);
   const manabaCourseDOMs = doc.querySelectorAll<HTMLAnchorElement>(".course-cell a:first-child");
@@ -78,6 +81,7 @@ const getCourseURLs: () => Promise<string[]> = async () => {
   return courseURLs;
 };
 
+// 各コースから各コースコンテンツのURLを取得する。
 const getContentURLs: UrlDigFunction = async (urls) => {
   const contentURLs = [] as string[];
   await Promise.all(
@@ -96,6 +100,7 @@ const getContentURLs: UrlDigFunction = async (urls) => {
   return contentURLs;
 };
 
+// 各コースコンテンツから各ページのURLを取得する。
 const getPageURLs: UrlDigFunction = async (urls: string[]) => {
   const pageURLs = [] as string[];
   await Promise.all(
@@ -112,6 +117,7 @@ const getPageURLs: UrlDigFunction = async (urls: string[]) => {
   return pageURLs;
 };
 
+// 各ページから各ファイルのURLを取得する。
 const getFileInfo = async (urls: string[]) => {
   const fileInfo = [] as FileInfo[];
   await Promise.all(
@@ -161,6 +167,7 @@ const filterInfo: FilterInfo = (raws, storeds) => {
   return mustDLfileInfo;
 };
 
+// ファイルをダウンロードする。
 const downloadFiles = async (mustDLfileInfo: FileInfo[], storedUrls: FileInfo[]) => {
   for (let i = 0; i < mustDLfileInfo.length; i++) {
     if (downloadStatus !== "DOWNLOADING") throw new MPError(STOP_MESSAGE_ON_DL);
@@ -184,6 +191,7 @@ const downloadFiles = async (mustDLfileInfo: FileInfo[], storedUrls: FileInfo[])
   }
 };
 
+// 進行状況を表示する。
 const progressDisp: ProgressDisp = (message = null, rate = null, progressN = null) => {
   if (message) document.getElementById("message").innerHTML = message;
   if (rate) document.getElementById("number-counter").innerHTML = rate;

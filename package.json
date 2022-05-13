@@ -1,7 +1,7 @@
 {
   "name": "manaba-plus",
   "version": "0.3.1",
-  "description": "Automately download contents on Chuo University Manaba",
+  "description": "Automatically download contents on Chuo University Manaba",
   "private": true,
   "scripts": {
     "watch": "webpack --mode=development --watch --config config/webpack.common.js",
