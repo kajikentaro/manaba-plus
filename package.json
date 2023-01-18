@@ -6,7 +6,8 @@
   "scripts": {
     "watch": "webpack --mode=development --watch --config config/webpack.common.js",
     "build": "eslint . && rm -rf build/* && webpack --mode=production --config config/webpack.prod.js",
-    "format": "prettier --write . && eslint --fix ."
+    "format": "prettier --write . && eslint --fix .",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.{ts,js,html,json}": [
@@ -17,19 +18,20 @@
     ]
   },
   "devDependencies": {
+    "@types/chrome": "0.0.180",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
+    "copy-webpack-plugin": "^10.2.0",
+    "css-loader": "^6.5.1",
     "eslint": "^8.5.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-standard-typescript": "^1.0.3",
-    "lint-staged": "^13.1.0",
-    "prettier": "^2.8.3",
-    "@types/chrome": "0.0.180",
-    "copy-webpack-plugin": "^10.2.0",
-    "css-loader": "^6.5.1",
     "glob": "^7.2.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
     "mini-css-extract-plugin": "^2.4.5",
     "path-browserify": "^1.0.1",
+    "prettier": "^2.8.3",
     "sass": "^1.45.1",
     "sass-loader": "^12.4.0",
     "ts-loader": "^9.2.6",
