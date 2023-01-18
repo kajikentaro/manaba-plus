@@ -1,4 +1,13 @@
-import { DOWNLOAD_LIST, STORAGE_KEY_ASSIGNMENT_HISTORY, STORAGE_KEY_TOP_MENU, STORAGE_KEY_KIKUZOU, STORAGE_KEY_SEARCH_SYLLABUS, STORAGE_KEY_SMARTPHONE, STORAGE_KEY_STYLE_PERMISSION, HIDDEN_ASSIGNMENTS } from "./module/const";
+import {
+  DOWNLOAD_LIST,
+  STORAGE_KEY_ASSIGNMENT_HISTORY,
+  STORAGE_KEY_TOP_MENU,
+  STORAGE_KEY_KIKUZOU,
+  STORAGE_KEY_SEARCH_SYLLABUS,
+  STORAGE_KEY_SMARTPHONE,
+  STORAGE_KEY_STYLE_PERMISSION,
+  HIDDEN_ASSIGNMENTS,
+} from "./module/const";
 import { BooleanStorageKey, HTMLInputEvent } from "./module/type";
 import * as Storage from "./module/storage";
 
@@ -23,8 +32,8 @@ const bindBoolean = async (key: BooleanStorageKey) => {
   input.checked = await Storage.getBoolean(key);
   input.onchange = (e: HTMLInputEvent) => {
     Storage.setBoolean(key, e.target.checked);
-  }
-}
+  };
+};
 
 bindBoolean(STORAGE_KEY_TOP_MENU);
 bindBoolean(STORAGE_KEY_STYLE_PERMISSION);
