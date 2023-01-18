@@ -6,7 +6,15 @@
   "scripts": {
     "watch": "webpack --mode=development --watch --config config/webpack.common.js",
     "build": "eslint . && rm -rf build/* && webpack --mode=production --config config/webpack.prod.js",
-    "eslint": "eslint . --fix"
+    "format": "prettier --write . && eslint --fix ."
+  },
+  "lint-staged": {
+    "*.{ts,js,html,json}": [
+      "prettier --write"
+    ],
+    "*.{ts,js,html}": [
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "@types/chrome": "0.0.180",
@@ -29,7 +37,9 @@
     "@typescript-eslint/parser": "^5.8.0",
     "eslint": "^8.5.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-config-standard-typescript": "^1.0.3"
+    "eslint-config-standard-typescript": "^1.0.3",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.3"
   },
   "prettier": {
     "printWidth": 160
