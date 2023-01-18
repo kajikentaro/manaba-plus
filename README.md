@@ -35,7 +35,7 @@
    `npm run watch`  
    build ディレクトリの中に結果が格納されます.
 6. インストール  
-   [Chrome Extensions](chrome://extensions/)の Developer mode を ON にし、build ディレクトリをドラックアンドドロップします。
+   [Chromeの拡張機能設定画面](chrome://extensions/)から Developer mode を ON にし、build ディレクトリをドラックアンドドロップします。
 7. Hacking.
 8. 本番用ビルドを行います  
    `npm run build`  
@@ -46,7 +46,7 @@
 
 - `src/`  
   `src`直下の各 ts ファイルは、Manaba-Plus の機能をそれぞれ 1 つずつ担っています。詳細はファイル先頭のコメントを確認してください
-- `src/module/`
+- `src/module/`  
   `src/*.ts`から使用するモジュールです
 - `public/`  
   画像や html ファイルなど, Webpack でコンパイルを行わないファイルを配置します.`build`ディレクトリに直接コピーされます.
