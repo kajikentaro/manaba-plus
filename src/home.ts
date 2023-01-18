@@ -1,19 +1,22 @@
-import {
-  InfinityDate,
-  URL_HOME,
-  HIDDEN_ASSIGNMENTS,
-  STORAGE_KEY_TOP_MENU,
-  STORAGE_KEY_STYLE_PERMISSION,
-  STORAGE_KEY_KIKUZOU,
-  STORAGE_KEY_SMARTPHONE,
-  STORAGE_KEY_ASSIGNMENT_HISTORY,
-  STORAGE_KEY_SEARCH_SYLLABUS,
-} from "./module/const";
-import { HTMLInputEvent, AssignmentMember } from "./module/type";
 import Assignment from "./module/Assignment";
 import AssignmentViewer from "./module/AssignmentViewer";
+import {
+  HIDDEN_ASSIGNMENTS,
+  InfinityDate,
+  STORAGE_KEY_ASSIGNMENT_HISTORY,
+  STORAGE_KEY_KIKUZOU,
+  STORAGE_KEY_SEARCH_SYLLABUS,
+  STORAGE_KEY_SMARTPHONE,
+  STORAGE_KEY_STYLE_PERMISSION,
+  STORAGE_KEY_TOP_MENU,
+  URL_HOME,
+} from "./module/const";
 import * as Storage from "./module/storage";
+import { AssignmentMember, HTMLInputEvent } from "./module/type";
 
+/**
+ * Manabaホーム画面で動作するプログラム
+ */
 let didDisplayAssignments = false; // 未提出課題一覧が表示されているかどうか
 
 // 初期化する。

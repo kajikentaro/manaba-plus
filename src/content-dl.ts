@@ -1,7 +1,11 @@
-import { DOWNLOAD_LIST, MPError, STOP_MESSAGE_ON_DL, STOP_MESSAGE_ON_DL_CONFIRM, STOP_MESSAGE_ON_INIT, URL_HOME } from "./module/const";
 import downloadFile from "module/DownloadFile";
 import fetchDocument from "module/FetchDocument";
+import { DOWNLOAD_LIST, MPError, STOP_MESSAGE_ON_DL, STOP_MESSAGE_ON_DL_CONFIRM, STOP_MESSAGE_ON_INIT, URL_HOME } from "./module/const";
 import { DownloadStatus, FileInfo, FilterInfo, ProgressDisp, UrlDigFunction } from "./module/type";
+
+/**
+ * コンテンツをダウンロードするプログラム
+ */
 
 let downloadStatus: DownloadStatus = "WAITING_INIT";
 let downloadChromeId = -1; // ダウンロードファイルのID

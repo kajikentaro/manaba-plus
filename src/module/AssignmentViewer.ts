@@ -1,6 +1,9 @@
 import Assignment from "./Assignment";
-import { HIDDEN_ASSIGNMENTS, DELETABLE_ROW } from "./const";
+import { DELETABLE_ROW, HIDDEN_ASSIGNMENTS } from "./const";
 
+/**
+ * 課題の表示を管理するクラス
+ */
 export default class AssignmentViewer {
   private allAss: Assignment[];
   private courseURLs: string[];

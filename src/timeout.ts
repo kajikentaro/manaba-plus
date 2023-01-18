@@ -1,4 +1,8 @@
 import { URL_HOME } from "./module/const";
+
+/**
+ * タイムアウト画面にログイン画面に遷移するボタンを配置するプログラム
+ */
 const goHomeBtn = document.createElement("button");
 goHomeBtn.innerHTML = "ログイン画面へ";
 goHomeBtn.classList.add("button");
