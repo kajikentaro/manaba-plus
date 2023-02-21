@@ -19,8 +19,8 @@ module.exports = {
       },
       plugins: ["@typescript-eslint"],
       rules: {
-        "@typescript-eslint/semi": "off",
-        "@typescript-eslint/member-delimiter-style": "off",
+        "@typescript-eslint/semi": "error",
+        "@typescript-eslint/member-delimiter-style": "error",
         "@typescript-eslint/no-explicit-any": "error",
         "@typescript-eslint/no-unsafe-call": "error",
         "@typescript-eslint/no-unsafe-member-access": "error",

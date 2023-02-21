@@ -13,4 +13,4 @@ module.exports = merge(common, {
       filename: "build.zip",
     }),
   ],
-})
+});

@@ -1,7 +1,19 @@
-import { DOWNLOAD_LIST, STORAGE_KEY_ASSIGNMENT_HISTORY, STORAGE_KEY_TOP_MENU, STORAGE_KEY_KIKUZOU, STORAGE_KEY_SEARCH_SYLLABUS, STORAGE_KEY_SMARTPHONE, STORAGE_KEY_STYLE_PERMISSION, HIDDEN_ASSIGNMENTS } from "./module/const";
-import { BooleanStorageKey, HTMLInputEvent } from "./module/type";
+import {
+  DOWNLOAD_LIST,
+  HIDDEN_ASSIGNMENTS,
+  STORAGE_KEY_ASSIGNMENT_HISTORY,
+  STORAGE_KEY_KIKUZOU,
+  STORAGE_KEY_SEARCH_SYLLABUS,
+  STORAGE_KEY_SMARTPHONE,
+  STORAGE_KEY_STYLE_PERMISSION,
+  STORAGE_KEY_TOP_MENU,
+} from "./module/const";
 import * as Storage from "./module/storage";
+import { BooleanStorageKey, HTMLInputEvent } from "./module/type";
 
+/**
+ * Manaba Plus オプション画面のボタン動作を定義するプログラム
+ */
 document.getElementById("delete-download-history").addEventListener("click", () => {
   if (!confirm("よろしいですか？")) return;
   chrome.storage.local.set({ [DOWNLOAD_LIST]: [] }, () => {
@@ -23,8 +35,8 @@ const bindBoolean = async (key: BooleanStorageKey) => {
   input.checked = await Storage.getBoolean(key);
   input.onchange = (e: HTMLInputEvent) => {
     Storage.setBoolean(key, e.target.checked);
-  }
-}
+  };
+};
 
 bindBoolean(STORAGE_KEY_TOP_MENU);
 bindBoolean(STORAGE_KEY_STYLE_PERMISSION);

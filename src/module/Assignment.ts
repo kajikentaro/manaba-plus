@@ -1,6 +1,9 @@
+import { DELETABLE_ROW, getLocalDateStr, InfinityDate } from "./const";
 import { AssignmentInterface, AssignmentMember } from "./type";
-import { InfinityDate, getLocalDateStr, DELETABLE_ROW } from "./const";
 
+/**
+ * 課題1つについてのデータを保持するクラス
+ */
 export default class Assignment implements AssignmentInterface {
   courseName: string;
   href: string;

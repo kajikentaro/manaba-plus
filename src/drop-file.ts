@@ -1,3 +1,6 @@
+/**
+ * ドラックアンドドロップでレポートを提出するプログラム
+ */
 const form = document.querySelector(".report-form").parentElement.parentElement as HTMLFormElement;
 const input = document.querySelector<HTMLInputElement>("input[type=file]");
 if (input) {

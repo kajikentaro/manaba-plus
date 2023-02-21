@@ -1,9 +1,22 @@
-import { InfinityDate, URL_HOME, HIDDEN_ASSIGNMENTS, STORAGE_KEY_TOP_MENU, STORAGE_KEY_STYLE_PERMISSION, STORAGE_KEY_KIKUZOU, STORAGE_KEY_SMARTPHONE, STORAGE_KEY_ASSIGNMENT_HISTORY, STORAGE_KEY_SEARCH_SYLLABUS } from "./module/const";
-import { HTMLInputEvent, AssignmentMember } from "./module/type";
 import Assignment from "./module/Assignment";
 import AssignmentViewer from "./module/AssignmentViewer";
+import {
+  HIDDEN_ASSIGNMENTS,
+  InfinityDate,
+  STORAGE_KEY_ASSIGNMENT_HISTORY,
+  STORAGE_KEY_KIKUZOU,
+  STORAGE_KEY_SEARCH_SYLLABUS,
+  STORAGE_KEY_SMARTPHONE,
+  STORAGE_KEY_STYLE_PERMISSION,
+  STORAGE_KEY_TOP_MENU,
+  URL_HOME,
+} from "./module/const";
 import * as Storage from "./module/storage";
+import { AssignmentMember, HTMLInputEvent } from "./module/type";
 
+/**
+ * Manabaホーム画面で動作するプログラム
+ */
 let didDisplayAssignments = false; // 未提出課題一覧が表示されているかどうか
 
 // 初期化する。
@@ -58,14 +71,14 @@ const overwriteStyles = async () => {
   tableHeaders[1].setAttribute("width", "50px");
   tableHeaders[2].setAttribute("width", "50px");
   tableHeaders[3].setAttribute("width", "20%");
-}
+};
 
 // 要素を非表示にする。
 const hideElements = async () => {
   const hide = (className: string) => {
     const target = document.getElementsByClassName(className)[0] as HTMLElement;
     target.setAttribute("hidden", "");
-  }
+  };
 
   const stylePermission = await Storage.getBoolean(STORAGE_KEY_STYLE_PERMISSION);
   const searchSyllabus = await Storage.getBoolean(STORAGE_KEY_SEARCH_SYLLABUS);
@@ -83,7 +96,7 @@ const hideElements = async () => {
 
   if (smartphone) {
     const elements = document.getElementsByClassName("my-infolist-tips") as HTMLCollectionOf<HTMLElement>;
-    const target = Array.from(elements).find(element => !element.classList.contains("my-infolist-kikuzou"));
+    const target = Array.from(elements).find((element) => !element.classList.contains("my-infolist-kikuzou"));
     target.setAttribute("hidden", "");
   }
 
@@ -91,7 +104,7 @@ const hideElements = async () => {
     hide("my-infolist-kikuzou");
   }
 
-  if (stylePermission && [searchSyllabus, assignmentHistory, smartphone, kikuzou].every(x => x)) {
+  if (stylePermission && [searchSyllabus, assignmentHistory, smartphone, kikuzou].every((x) => x)) {
     const contentbodyLeft = document.getElementsByClassName("contentbody-left")[0] as HTMLElement;
     contentbodyLeft.style.width = "916px";
 
@@ -100,11 +113,11 @@ const hideElements = async () => {
     myInfolistHeader.style.paddingLeft = "10px";
 
     const elements = document.getElementsByClassName("course") as HTMLCollectionOf<HTMLElement>;
-    Array.from(elements).forEach(element => {
+    Array.from(elements).forEach((element) => {
       element.style.height = "60px";
     });
   }
-}
+};
 
 // 未提出課題一覧を表示する。
 const displayAssignments = async () => {
