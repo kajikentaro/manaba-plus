@@ -27,7 +27,7 @@ Check to see what [types of contributions](/contributing/types-of-contributions.
 3. ディレクトリを移動します  
    `cd manaba-plus`
 4. npm の依存関係をインストールします  
-   `npm install --legacy-peer-deps`
+   `npm install`
 5. 開発用のビルドを行います  
    `npm run watch`  
    build ディレクトリの中に結果が格納されます.
