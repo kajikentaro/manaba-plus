@@ -36,7 +36,12 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["images/manabaPlus_white.svg", "insert.html", "download-progress.html", "options.html"],
+      "resources": [
+        "images/manabaPlus_white.svg",
+        "insert.html",
+        "download-progress.html",
+        "options.html"
+      ],
       "matches": ["https://room.chuo-u.ac.jp/*"]
     }
   ]

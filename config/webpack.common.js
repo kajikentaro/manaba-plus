@@ -1,12 +1,12 @@
-"use strict";
+"use strict"
 
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const PATHS = require("./paths");
-const glob = require("glob");
-const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const PATHS = require("./paths")
+const glob = require("glob")
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
 
-const { merge } = require("webpack-merge");
+const { merge } = require("webpack-merge")
 
 // To re-use webpack configuration across templates,
 // CLI maintains a common webpack configuration file - `webpack.common.js`.
@@ -77,15 +77,15 @@ const common = {
       filename: "[name].css",
     }),
   ],
-};
+}
 
 // Merge webpack configuration files
 const entry = glob.sync(PATHS.src + "/*.{js,ts,scss}").map((v) => {
-  return [v.match(".+/(.+?).[a-z]+([?#;].*)?$")[1], v];
-});
-const entryObj = Object.fromEntries(entry);
-console.log(entryObj);
+  return [v.match(".+/(.+?).[a-z]+([?#;].*)?$")[1], v]
+})
+const entryObj = Object.fromEntries(entry)
+console.log(entryObj)
 
-const config = merge(common, { entry: entryObj });
+const config = merge(common, { entry: entryObj })
 
-module.exports = config;
+module.exports = config

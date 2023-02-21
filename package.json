@@ -7,17 +7,6 @@
     "build": "eslint . && rm -rf build/* && webpack --mode=production --config config/webpack.prod.js",
     "version": "auto-changelog -p && git add CHANGELOG.md"
   },
-  "lint-staged": {
-    "*.{ts,js,html,json}": [
-      "prettier --write"
-    ],
-    "*.{ts,js,html}": [
-      "eslint --fix"
-    ]
-  },
-  "prettier": {
-    "printWidth": 160
-  },
   "devDependencies": {
     "@types/chrome": "^0.0.217",
     "auto-changelog": "^2.4.0",

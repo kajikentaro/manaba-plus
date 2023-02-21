@@ -1,10 +1,10 @@
-"use strict";
+"use strict"
 
-const ZipPlugin = require("zip-webpack-plugin");
-const PATHS = require("./paths");
-const { merge } = require("webpack-merge");
+const ZipPlugin = require("zip-webpack-plugin")
+const PATHS = require("./paths")
+const { merge } = require("webpack-merge")
 
-const common = require("./webpack.common.js");
+const common = require("./webpack.common.js")
 
 module.exports = merge(common, {
   plugins: [
@@ -13,4 +13,4 @@ module.exports = merge(common, {
       filename: "build.zip",
     }),
   ],
-});
+})
