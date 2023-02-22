@@ -4,7 +4,7 @@
     "target": "ES5",
     "module": "ES2015",
     "baseUrl": "src",
-    
+
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true

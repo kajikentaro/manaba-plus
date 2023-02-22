@@ -54,8 +54,7 @@ const insertMpButton = async () => {
 }
 
 // manabaのHTML要素のstyleを上書きする。
-const overwriteStyles = async () => {
-}
+const overwriteStyles = async () => {}
 
 // 要素を非表示にする。
 const hideElements = async () => {

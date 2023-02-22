@@ -8,7 +8,7 @@ const PATHS = require("./paths")
 const common = require("./webpack.common.js")
 
 module.exports = merge(common, {
-  mode: 'production',
+  mode: "production",
   plugins: [
     // Copy static production assets from `public/prod` folder to `build` folder
     new CopyWebpackPlugin({

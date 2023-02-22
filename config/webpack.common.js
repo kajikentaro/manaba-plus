@@ -1,6 +1,6 @@
 "use strict"
 
-const path = require("path");
+const path = require("path")
 const glob = require("glob")
 
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
@@ -12,14 +12,19 @@ const PATHS = require("./paths")
 
 // Search entry files.
 const entries = Object.fromEntries(
-  glob.sync("{*.scss,**/index.{ts,js}}", {
-    cwd: PATHS.src,
-  }).map(entryPath => {
-    const parsedEntryPath = path.parse(entryPath)
-    return [path.join(parsedEntryPath.dir, parsedEntryPath.name), path.join(PATHS.src, entryPath)]
-  })
+  glob
+    .sync("{*.scss,**/index.{ts,js}}", {
+      cwd: PATHS.src,
+    })
+    .map((entryPath) => {
+      const parsedEntryPath = path.parse(entryPath)
+      return [
+        path.join(parsedEntryPath.dir, parsedEntryPath.name),
+        path.join(PATHS.src, entryPath),
+      ]
+    })
 )
-console.log('Entries:')
+console.log("Entries:")
 console.log(entries)
 
 // To re-use webpack configuration across templates,

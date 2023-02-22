@@ -1,4 +1,5 @@
 {
-  "*.{ts,js,html,json}": ["prettier --write"],
-  "*.{ts,js,html}": ["eslint --fix"]
+  "*.{js,ts,scss,md}": "prettier --check --loglevel=warn",
+  "*.{js,ts}": "eslint --max-warnings=0",
+  "*.{css,scss}": "stylelint"
 }

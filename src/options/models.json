@@ -1,66 +1,66 @@
 {
-    "title": "Manaba Plus オプション",
-    "contents": {
-        "title": "コンテンツ",
-        "download-contents": {
-            "hint": "",
-            "description": "まだPCにダウンロードされていないコンテンツを、まとめてダウンロードします。自動でコース別にフォルダ分けされます。",
-            "type": "button",
-            "value": "コンテンツのダウンロード..."
-        },
-        "delete-history": {
-            "hint": "",
-            "description": "コンテンツの重複ダウンロードを防ぐために内部に保存している履歴を消去します。",
-            "type": "button",
-            "value": "ダウンロード履歴のリセット"
-        }
+  "title": "Manaba Plus オプション",
+  "contents": {
+    "title": "コンテンツ",
+    "download-contents": {
+      "hint": "",
+      "description": "まだPCにダウンロードされていないコンテンツを、まとめてダウンロードします。自動でコース別にフォルダ分けされます。",
+      "type": "button",
+      "value": "コンテンツのダウンロード..."
     },
-    "home": {
-        "title": "ホーム画面",
-        "allow-changing": {
-            "hint": "変更を許可する",
-            "description": "チェックを入れると、Manaba Plusにホーム画面の変更を許可することになります。ホーム画面の読み込みが遅いと感じたら、チェックを外してください。",
-            "type": "checkbox",
-            "value": true
-        },
-        "show-home-panel": {
-            "hint": "ホームパネルを表示する",
-            "description": "チェックを入れると、ホーム画面にManaba Plusのボタンが表示されます。チェックが入っていないときにこのページを訪れるには、拡張機能アイコンをクリックします。",
-            "type": "checkbox",
-            "value": true
-        },
-        "show-syllabus": {
-            "hint": "「シラバス検索」を表示する",
-            "description": "チェックを入れると、ホーム画面にシラバス検索ボックスが表示されます。",
-            "type": "checkbox",
-            "value": true
-        },
-        "show-assignment": {
-            "hint": "「課題」を表示する",
-            "description": "チェックを入れると、ホーム画面に本家の未提出課題一覧と課題提出記録が表示されます。",
-            "type": "checkbox",
-            "value": true
-        },
-        "show-former-link": {
-            "hint": "「旧スマートフォン版について」を表示する",
-            "description": "チェックを入れると、ホーム画面に旧スマートフォン版へのリンクが表示されます。",
-            "type": "checkbox",
-            "value": false
-        },
-        "show-kikuzou": {
-            "hint": "朝日新聞の広告を表示する",
-            "description": "チェックを入れると、ホーム画面に朝日新聞の広告が表示されます。",
-            "type": "checkbox",
-            "value": false
-        }
-    },
-    "other": {
-        "title": "その他",
-        "reset-options": {
-            "hint": "",
-            "description": "設定を初期値に戻します。",
-            "type": "button",
-            "value": "設定のリセット"
-        }
+    "delete-history": {
+      "hint": "",
+      "description": "コンテンツの重複ダウンロードを防ぐために内部に保存している履歴を消去します。",
+      "type": "button",
+      "value": "ダウンロード履歴のリセット"
     }
+  },
+  "home": {
+    "title": "ホーム画面",
+    "allow-changing": {
+      "hint": "変更を許可する",
+      "description": "チェックを入れると、Manaba Plusにホーム画面の変更を許可することになります。ホーム画面の読み込みが遅いと感じたら、チェックを外してください。",
+      "type": "checkbox",
+      "value": true
+    },
+    "show-home-panel": {
+      "hint": "ホームパネルを表示する",
+      "description": "チェックを入れると、ホーム画面にManaba Plusのボタンが表示されます。チェックが入っていないときにこのページを訪れるには、拡張機能アイコンをクリックします。",
+      "type": "checkbox",
+      "value": true
+    },
+    "show-syllabus": {
+      "hint": "「シラバス検索」を表示する",
+      "description": "チェックを入れると、ホーム画面にシラバス検索ボックスが表示されます。",
+      "type": "checkbox",
+      "value": true
+    },
+    "show-assignment": {
+      "hint": "「課題」を表示する",
+      "description": "チェックを入れると、ホーム画面に本家の未提出課題一覧と課題提出記録が表示されます。",
+      "type": "checkbox",
+      "value": true
+    },
+    "show-former-link": {
+      "hint": "「旧スマートフォン版について」を表示する",
+      "description": "チェックを入れると、ホーム画面に旧スマートフォン版へのリンクが表示されます。",
+      "type": "checkbox",
+      "value": false
+    },
+    "show-kikuzou": {
+      "hint": "朝日新聞の広告を表示する",
+      "description": "チェックを入れると、ホーム画面に朝日新聞の広告が表示されます。",
+      "type": "checkbox",
+      "value": false
+    }
+  },
+  "other": {
+    "title": "その他",
+    "reset-options": {
+      "hint": "",
+      "description": "設定を初期値に戻します。",
+      "type": "button",
+      "value": "設定のリセット"
+    }
+  }
 }

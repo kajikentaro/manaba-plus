@@ -9,19 +9,18 @@ while (sectionQueue.length) {
 
   const keys = Object.keys(section).slice(1)
 
-  keys.forEach(key => {
+  keys.forEach((key) => {
     const item = section[key]
-    if ('title' in item) {
+    if ("title" in item) {
       sectionQueue.push(item)
-    }
-    else {
+    } else {
       items[key] = item
     }
   })
 }
 
 // Get stored values.
-chrome.storage.sync.get(Object.keys(items), pairs => {
+chrome.storage.sync.get(Object.keys(items), (pairs) => {
   for (const key in pairs) {
     items[key].value = pairs[key]
   }
@@ -32,16 +31,16 @@ for (const key in items) {
   const item = items[key]
 
   item._value = item.value
-  Object.defineProperty(item, 'value', {
+  Object.defineProperty(item, "value", {
     get() {
       return this._value
     },
     set(value) {
-      if (this._value != value) {
+      if (this._value !== value) {
         chrome.storage.sync.set({ [key]: value })
         this._value = value
       }
-    }
+    },
   })
 }
 
@@ -83,10 +82,6 @@ export default options
 
 // _options.contents["delete-history"].value
 
-
-
-
-
 // const options = _options.map(section => {
 //   return new Section(
 //     section.title,
@@ -95,8 +90,6 @@ export default options
 //     })
 //   )
 // })
-
-
 
 // const options = [
 //   new Section('', [
