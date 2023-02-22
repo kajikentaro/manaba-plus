@@ -1,19 +1,36 @@
 "use strict"
 
-const CopyWebpackPlugin = require("copy-webpack-plugin")
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const PATHS = require("./paths")
+const path = require("path");
 const glob = require("glob")
+
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
 
-const { merge } = require("webpack-merge")
+const CopyWebpackPlugin = require("copy-webpack-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+
+const PATHS = require("./paths")
+
+// Search entry files.
+const entries = Object.fromEntries(
+  glob.sync("{*.scss,**/index.{ts,js}}", {
+    cwd: PATHS.src,
+  }).map(entryPath => {
+    const parsedEntryPath = path.parse(entryPath)
+    return [path.join(parsedEntryPath.dir, parsedEntryPath.name), path.join(PATHS.src, entryPath)]
+  })
+)
+console.log('Entries:')
+console.log(entries)
 
 // To re-use webpack configuration across templates,
 // CLI maintains a common webpack configuration file - `webpack.common.js`.
 // Whenever user creates an extension, CLI adds `webpack.common.js` file
 // in template's `config` folder
-const common = {
+module.exports = {
+  entry: entries,
   output: {
+    // to clean up build folder
+    clean: true,
     // the build folder to output bundles and assets in.
     path: PATHS.build,
     // the filename template for entry chunks
@@ -63,12 +80,12 @@ const common = {
     plugins: [new TsconfigPathsPlugin({ configFile: "./tsconfig.json" })],
   },
   plugins: [
-    // Copy static assets from `public` folder to `build` folder
+    // Copy static common assets from `public/common` folder to `build` folder
     new CopyWebpackPlugin({
       patterns: [
         {
           from: "**/*",
-          context: "public",
+          context: "public/common",
         },
       ],
     }),
@@ -78,14 +95,3 @@ const common = {
     }),
   ],
 }
-
-// Merge webpack configuration files
-const entry = glob.sync(PATHS.src + "/*.{js,ts,scss}").map((v) => {
-  return [v.match(".+/(.+?).[a-z]+([?#;].*)?$")[1], v]
-})
-const entryObj = Object.fromEntries(entry)
-console.log(entryObj)
-
-const config = merge(common, { entry: entryObj })
-
-module.exports = config

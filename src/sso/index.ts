@@ -1,4 +1,4 @@
-import { URL_HOME } from "./module/const"
+import { URL_HOME } from "../module/const"
 
 /**
  * タイムアウト画面にログイン画面に遷移するボタンを配置するプログラム

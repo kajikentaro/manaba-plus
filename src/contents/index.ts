@@ -7,14 +7,14 @@ import {
   STOP_MESSAGE_ON_DL_CONFIRM,
   STOP_MESSAGE_ON_INIT,
   URL_HOME,
-} from "./module/const"
+} from "../module/const"
 import {
   DownloadStatus,
   FileInfo,
   FilterInfo,
   ProgressDisp,
   UrlDigFunction,
-} from "./module/type"
+} from "../module/type"
 
 /**
  * コンテンツをダウンロードするプログラム

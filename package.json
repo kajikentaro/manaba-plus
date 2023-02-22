@@ -3,8 +3,8 @@
   "scripts": {
     "prepare": "husky install",
     "format": "prettier --write . && eslint --fix .",
-    "watch": "webpack --mode=development --watch --config config/webpack.common.js",
-    "build": "eslint . && rm -rf build/* && webpack --mode=production --config config/webpack.prod.js",
+    "watch": "webpack --watch --config config/webpack.dev.js",
+    "build": "eslint . && rm -rf build/* && webpack --config config/webpack.prod.js",
     "version": "auto-changelog -p && git add CHANGELOG.md"
   },
   "devDependencies": {
