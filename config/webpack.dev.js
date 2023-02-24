@@ -1,19 +1,19 @@
-"use strict"
+'use strict'
 
-const CopyWebpackPlugin = require("copy-webpack-plugin")
-const { merge } = require("webpack-merge")
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const { merge } = require('webpack-merge')
 
-const common = require("./webpack.common.js")
+const common = require('./webpack.common.js')
 
 module.exports = merge(common, {
-  mode: "development",
+  mode: 'development',
   plugins: [
     // Copy static debug assets from `public/dev` folder to `build` folder
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: "**/*",
-          context: "public/dev",
+          from: '**/*',
+          context: 'public/dev',
         },
       ],
     }),

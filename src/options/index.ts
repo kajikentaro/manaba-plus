@@ -1,8 +1,8 @@
-import getOptions from "./models"
+import getOptions from './models'
 
 getOptions().then((options) => {
   // Get the holder to insert option sections and items to.
-  const holder = document.querySelector("#options-holder")
+  const holder = document.querySelector('#options-holder')
 
   // Add option sections.
   const sectionQueue = [[options, holder]]
@@ -14,44 +14,44 @@ getOptions().then((options) => {
     keys.forEach((key) => {
       const item = section[key]
 
-      const child = document.createElement("div")
+      const child = document.createElement('div')
 
       const title = item.title
       if (title === undefined) {
         // If `item` is a item, add item element.
-        child.className = "item"
+        child.className = 'item'
 
-        const itemLabel = document.createElement("label")
-        itemLabel.className = " "
+        const itemLabel = document.createElement('label')
+        itemLabel.className = ' '
         itemLabel.innerHTML = item.hint
         child.appendChild(itemLabel)
 
-        const itemInput = document.createElement("input")
+        const itemInput = document.createElement('input')
         itemInput.id = key
         itemInput.placeholder = item.hint
         itemInput.title = item.description
         const type = (itemInput.type = item.type)
-        if (type === "checkbox") {
+        if (type === 'checkbox') {
           itemInput.checked = item.value
-          itemInput.addEventListener("input", (e) => {
+          itemInput.addEventListener('input', (e) => {
             item.value = (e.target as HTMLInputElement).checked
           })
         } else {
           itemInput.value = item.value
-          itemInput.addEventListener("input", (e) => {
+          itemInput.addEventListener('input', (e) => {
             item.value = (e.target as HTMLInputElement).value
           })
         }
         child.appendChild(itemInput)
 
-        const descriptionDiv = document.createElement("div")
+        const descriptionDiv = document.createElement('div')
         descriptionDiv.innerHTML = item.description
         child.appendChild(descriptionDiv)
       } else {
         // If `item` is a section, add section element.
-        child.className = "section"
+        child.className = 'section'
 
-        const titleH1 = document.createElement("h1")
+        const titleH1 = document.createElement('h1')
         titleH1.innerHTML = title
         child.appendChild(titleH1)
 
@@ -63,5 +63,23 @@ getOptions().then((options) => {
   }
 
   // Add button actions.
-  console.error("Not Implementation")
+  document
+    .querySelector('#download-contents')
+    .addEventListener('input', (e) => {})
+
+  document.querySelector('#delete-history').addEventListener('input', (e) => {
+    if (
+      !confirm(
+        options.contents['delete-history'].description + 'よろしいですか？'
+      )
+    ) {
+      return
+    }
+    chrome.storage.local.set({ 'contents-history': [] }, () => {
+      alert('ダウンロード履歴を削除しました。')
+    })
+  })
+
+  document.querySelector('#reset-options').addEventListener('input', (e) => {})
+  console.error('Not Implementation')
 })

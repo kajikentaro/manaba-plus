@@ -1,5 +1,5 @@
-import Assignment from "../module/Assignment"
-import AssignmentViewer from "../module/AssignmentViewer"
+import Assignment from '../module/Assignment'
+import AssignmentViewer from '../module/AssignmentViewer'
 import {
   HIDDEN_ASSIGNMENTS,
   InfinityDate,
@@ -10,9 +10,9 @@ import {
   STORAGE_KEY_STYLE_PERMISSION,
   STORAGE_KEY_TOP_MENU,
   URL_HOME,
-} from "../module/const"
-import * as Storage from "../module/storage"
-import { AssignmentMember, HTMLInputEvent } from "../module/type"
+} from '../module/const'
+import * as Storage from '../module/storage'
+import { AssignmentMember, HTMLInputEvent } from '../module/type'
 
 /**
  * Manabaホーム画面で動作するプログラム
@@ -31,25 +31,25 @@ const insertMpButton = async () => {
   const enableInsertMp = await Storage.getBoolean(STORAGE_KEY_TOP_MENU)
   if (enableInsertMp === false) return
 
-  const mark = document.getElementsByClassName("contentbody-left")[0]
+  const mark = document.getElementsByClassName('contentbody-left')[0]
   mark.insertAdjacentHTML(
-    "afterbegin",
-    await (await fetch(chrome.runtime.getURL("insert.html"))).text()
+    'afterbegin',
+    await (await fetch(chrome.runtime.getURL('insert.html'))).text()
   )
-  document.getElementById("show-assignment").onclick = () => {
+  document.getElementById('show-assignment').onclick = () => {
     displayAssignments()
   }
-  document.getElementById("download-content").onclick = () => {
+  document.getElementById('download-content').onclick = () => {
     if (
       confirm(
-        "コースコンテンツをPCにまとめてダウンロードします。続行しますか？"
+        'コースコンテンツをPCにまとめてダウンロードします。続行しますか？'
       )
     ) {
-      window.open(chrome.runtime.getURL("download-progress.html"))
+      window.open(chrome.runtime.getURL('download-progress.html'))
     }
   }
-  document.getElementById("open-option").onclick = () => {
-    window.open(chrome.runtime.getURL("options.html"))
+  document.getElementById('open-option').onclick = () => {
+    window.open(chrome.runtime.getURL('options.html'))
   }
 }
 
@@ -60,7 +60,7 @@ const overwriteStyles = async () => {}
 const hideElements = async () => {
   const hide = (className: string) => {
     const target = document.getElementsByClassName(className)[0] as HTMLElement
-    target.setAttribute("hidden", "")
+    target.setAttribute('hidden', '')
   }
 
   const stylePermission = await Storage.getBoolean(STORAGE_KEY_STYLE_PERMISSION)
@@ -72,25 +72,25 @@ const hideElements = async () => {
   const kikuzou = await Storage.getBoolean(STORAGE_KEY_KIKUZOU)
 
   if (searchSyllabus) {
-    hide("my-infolist-searchall")
+    hide('my-infolist-searchall')
   }
 
   if (assignmentHistory) {
-    hide("my-infolist-event")
+    hide('my-infolist-event')
   }
 
   if (smartphone) {
     const elements = document.getElementsByClassName(
-      "my-infolist-tips"
+      'my-infolist-tips'
     ) as HTMLCollectionOf<HTMLElement>
     const target = Array.from(elements).find(
-      (element) => !element.classList.contains("my-infolist-kikuzou")
+      (element) => !element.classList.contains('my-infolist-kikuzou')
     )
-    target.setAttribute("hidden", "")
+    target.setAttribute('hidden', '')
   }
 
   if (kikuzou) {
-    hide("my-infolist-kikuzou")
+    hide('my-infolist-kikuzou')
   }
 
   if (
@@ -98,23 +98,23 @@ const hideElements = async () => {
     [searchSyllabus, assignmentHistory, smartphone, kikuzou].every((x) => x)
   ) {
     const contentbodyLeft = document.getElementsByClassName(
-      "contentbody-left"
+      'contentbody-left'
     )[0] as HTMLElement
-    contentbodyLeft.style.width = "916px"
+    contentbodyLeft.style.width = '916px'
 
     const myInfolistMycourses = document.getElementsByClassName(
-      "my-infolist-mycourses"
+      'my-infolist-mycourses'
     )[0] as HTMLElement
     const myInfolistHeader = myInfolistMycourses.getElementsByClassName(
-      "my-infolist-header"
+      'my-infolist-header'
     )[0] as HTMLElement
-    myInfolistHeader.style.paddingLeft = "10px"
+    myInfolistHeader.style.paddingLeft = '10px'
 
     const elements = document.getElementsByClassName(
-      "course"
+      'course'
     ) as HTMLCollectionOf<HTMLElement>
     Array.from(elements).forEach((element) => {
-      element.style.height = "60px"
+      element.style.height = '60px'
     })
   }
 }
@@ -138,14 +138,14 @@ const displayAssignments = async () => {
   Assignment.inputClick = viewer.inputClick
 
   // show toggles
-  document.getElementById("toggles").style.display = "flex"
-  document.getElementById("toggle-extra-ass-hide").onchange = (
+  document.getElementById('toggles').style.display = 'flex'
+  document.getElementById('toggle-extra-ass-hide').onchange = (
     e: HTMLInputEvent
   ) => {
     viewer.showExtraAssIs(e.target.checked)
     viewer.repaint()
   }
-  document.getElementById("toggle-hide").onchange = (e: HTMLInputEvent) => {
+  document.getElementById('toggle-hide').onchange = (e: HTMLInputEvent) => {
     viewer.showDisableAssIs(e.target.checked)
     viewer.repaint()
   }
@@ -158,26 +158,26 @@ const fetchSummaries = async () => {
   const docParser = (doc: Document) => {
     const clipStr = (element: HTMLElement) => {
       let str = element.innerText
-      str = str.replace(/\r?\n/g, "") // delete return
-      str = str.replace(/\s+/g, "") // delete space
+      str = str.replace(/\r?\n/g, '') // delete return
+      str = str.replace(/\s+/g, '') // delete space
       return str
     }
 
     const assignmentDomRows =
-      doc.querySelectorAll<HTMLTableElement>(".pagebody table tr")
+      doc.querySelectorAll<HTMLTableElement>('.pagebody table tr')
     for (let i = 0; i < assignmentDomRows.length; i++) {
       if (i === 0) continue // skip title
       const cols = assignmentDomRows[i]
         .children as HTMLCollectionOf<HTMLElement>
       const dict: AssignmentMember = {
         courseName: clipStr(cols[1]),
-        href: cols[0].getElementsByTagName("a")[0].href,
+        href: cols[0].getElementsByTagName('a')[0].href,
         assignmentName: clipStr(cols[0]),
         deadline: cols[2].innerText
           ? new Date(cols[2].innerText)
           : InfinityDate,
         disable: false,
-        colorCode: "#fff",
+        colorCode: '#fff',
       }
       const assignment = new Assignment()
       assignment.initJson(dict)
@@ -187,15 +187,15 @@ const fetchSummaries = async () => {
 
   const assignments = [] as Assignment[]
   const targetUrls = [
-    URL_HOME + "_summary_query",
-    URL_HOME + "_summary_survey",
-    URL_HOME + "_summary_report",
+    URL_HOME + '_summary_query',
+    URL_HOME + '_summary_survey',
+    URL_HOME + '_summary_report',
   ]
   for (const url of targetUrls) {
     const res = await fetch(url)
     const text = await res.text()
     const domparser = new DOMParser()
-    const doc = domparser.parseFromString(text, "text/html")
+    const doc = domparser.parseFromString(text, 'text/html')
     docParser(doc)
   }
   return assignments
@@ -215,7 +215,7 @@ const fetchHided = async () => {
 // 各コースのURLを取得する。
 const getCourseURLs = () => {
   const manabaCourseDOMs = document.querySelectorAll<HTMLAnchorElement>(
-    ".course-cell a:first-child"
+    '.course-cell a:first-child'
   )
   const courseURLs = [] as string[]
   manabaCourseDOMs.forEach((manabaCourseDOM) => {

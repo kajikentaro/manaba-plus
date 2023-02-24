@@ -1,10 +1,10 @@
 /* content-dl.ts */
 export type UrlDigFunction = (urls: string[]) => Promise<string[]>
 export type DownloadStatus =
-  | "STOPPED_OR_ERROR"
-  | "WAITING_INIT"
-  | "DOWNLOADING"
-  | "DONE"
+  | 'STOPPED_OR_ERROR'
+  | 'WAITING_INIT'
+  | 'DOWNLOADING'
+  | 'DONE'
 export type FileInfo = {
   url: string
   courseName: string

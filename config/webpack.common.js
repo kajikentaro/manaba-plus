@@ -1,19 +1,19 @@
-"use strict"
+'use strict'
 
-const path = require("path")
-const glob = require("glob")
+const path = require('path')
+const glob = require('glob')
 
-const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin")
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
-const CopyWebpackPlugin = require("copy-webpack-plugin")
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const PATHS = require("./paths")
+const PATHS = require('./paths')
 
 // Search entry files.
 const entries = Object.fromEntries(
   glob
-    .sync("{*.scss,**/index.{ts,js}}", {
+    .sync('{*.scss,**/index.{ts,js}}', {
       cwd: PATHS.src,
     })
     .map((entryPath) => {
@@ -24,7 +24,7 @@ const entries = Object.fromEntries(
       ]
     })
 )
-console.log("Entries:")
+console.log('Entries:')
 console.log(entries)
 
 // To re-use webpack configuration across templates,
@@ -39,9 +39,9 @@ module.exports = {
     // the build folder to output bundles and assets in.
     path: PATHS.build,
     // the filename template for entry chunks
-    filename: "[name].js",
+    filename: '[name].js',
   },
-  devtool: "source-map",
+  devtool: 'source-map',
   stats: {
     all: false,
     errors: true,
@@ -52,25 +52,25 @@ module.exports = {
       // Help webpack in understanding CSS files imported in .js files
       {
         test: /\.ts$/,
-        use: "ts-loader",
+        use: 'ts-loader',
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       // Check for images imported in .js files and
       {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
-            loader: "file-loader",
+            loader: 'file-loader',
             options: {
-              outputPath: "images",
-              name: "[name].[ext]",
+              outputPath: 'images',
+              name: '[name].[ext]',
             },
           },
         ],
@@ -78,25 +78,25 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".ts", ".js"],
+    extensions: ['.ts', '.js'],
     fallback: {
-      path: require.resolve("path-browserify"),
+      path: require.resolve('path-browserify'),
     },
-    plugins: [new TsconfigPathsPlugin({ configFile: "./tsconfig.json" })],
+    plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],
   },
   plugins: [
     // Copy static common assets from `public/common` folder to `build` folder
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: "**/*",
-          context: "public/common",
+          from: '**/*',
+          context: 'public/common',
         },
       ],
     }),
     // Extract CSS into separate files
     new MiniCssExtractPlugin({
-      filename: "[name].css",
+      filename: '[name].css',
     }),
   ],
 }

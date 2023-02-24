@@ -1,4 +1,4 @@
-import { BooleanStorageKey } from "./type"
+import { BooleanStorageKey } from './type'
 
 // ストレージからboolean値を取得する。
 export const getBoolean = async (key: BooleanStorageKey): Promise<boolean> =>

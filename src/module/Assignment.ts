@@ -1,5 +1,5 @@
-import { DELETABLE_ROW, getLocalDateStr, InfinityDate } from "./const"
-import { AssignmentInterface, AssignmentMember } from "./type"
+import { DELETABLE_ROW, getLocalDateStr, InfinityDate } from './const'
+import { AssignmentInterface, AssignmentMember } from './type'
 
 /**
  * 課題1つについてのデータを保持するクラス
@@ -23,37 +23,37 @@ export default class Assignment implements AssignmentInterface {
   }
 
   getColor(deadline: Date) {
-    if (deadline === InfinityDate) return "#F4F4F4"
+    if (deadline === InfinityDate) return '#F4F4F4'
     const nowTime = new Date(getLocalDateStr())
     const timeDiff = deadline.getTime() - nowTime.getTime()
     const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24))
     if (dayDiff < 1) {
-      return "#ffe6e9"
+      return '#ffe6e9'
     } else if (dayDiff < 3) {
-      return "#fff4d1"
+      return '#fff4d1'
     } else if (dayDiff < 7) {
-      return "#cce8cc"
+      return '#cce8cc'
     } else {
-      return "#F4F4F4"
+      return '#F4F4F4'
     }
   }
 
   dateToStr(date: Date) {
-    if (date === InfinityDate) return ""
-    const datesJp = ["日", "月", "火", "水", "木", "金", "土"]
-    let txt = ""
-    txt += date.getMonth() + 1 + "/"
-    txt += date.getDate() + "("
-    txt += datesJp[date.getDay()] + ") "
+    if (date === InfinityDate) return ''
+    const datesJp = ['日', '月', '火', '水', '木', '金', '土']
+    let txt = ''
+    txt += date.getMonth() + 1 + '/'
+    txt += date.getDate() + '('
+    txt += datesJp[date.getDay()] + ') '
     txt +=
       date.getHours() +
-      ":" +
-      (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes())
+      ':' +
+      (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
     return txt
   }
 
   setupInput(td: HTMLTableCellElement) {
-    td.classList.add("input")
+    td.classList.add('input')
     td.onclick = (e) => {
       this.disable = !this.disable
       Assignment.inputClick()
@@ -68,16 +68,16 @@ export default class Assignment implements AssignmentInterface {
   }
 
   getTd() {
-    const tr = document.createElement("tr")
+    const tr = document.createElement('tr')
     tr.classList.add(DELETABLE_ROW)
 
     const tdCourse = tr.insertCell()
     tdCourse.innerHTML = this.courseName
-    tdCourse.classList.add("course")
+    tdCourse.classList.add('course')
 
     const tdAss = tr.insertCell()
     tdAss.innerHTML = `<a href='${this.href}'>${this.assignmentName}</a>`
-    tdAss.classList.add("ass")
+    tdAss.classList.add('ass')
     this.setupInput(tr.insertCell())
     tr.insertCell().innerHTML = this.dateToStr(this.deadline)
     tr.style.backgroundColor = this.colorCode

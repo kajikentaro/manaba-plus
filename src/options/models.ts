@@ -1,4 +1,4 @@
-import options from "./models.json"
+import options from './models.json'
 
 export default async () => {
   // Flatten option items.
@@ -14,7 +14,7 @@ export default async () => {
       const item = section[key]
 
       // If `item` is a section...
-      if ("title" in item) {
+      if ('title' in item) {
         sectionQueue.push(item)
       } else {
         items[key] = item
@@ -34,13 +34,13 @@ export default async () => {
     const item = items[key]
 
     item._value = item.value
-    Object.defineProperty(item, "value", {
+    Object.defineProperty(item, 'value', {
       get() {
         return this._value
       },
       set(value) {
         if (this._value !== value) {
-          chrome.storage.sync.set({ [key]: value })
+          chrome.storage.sync.set({ key: value })
           this._value = value
         }
       },
