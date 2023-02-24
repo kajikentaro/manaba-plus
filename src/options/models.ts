@@ -40,7 +40,7 @@ export default async () => {
       },
       set(value) {
         if (this._value !== value) {
-          chrome.storage.sync.set({ key: value })
+          chrome.storage.sync.set({ [key]: value })
           this._value = value
         }
       },

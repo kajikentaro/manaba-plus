@@ -42,7 +42,7 @@ getOptions().then((options) => {
             item.value = (e.target as HTMLInputElement).value
           })
         }
-        child.appendChild(itemInput)
+        itemLabel.appendChild(itemInput)
 
         const descriptionDiv = document.createElement('div')
         descriptionDiv.innerHTML = item.description
@@ -65,21 +65,31 @@ getOptions().then((options) => {
   // Add button actions.
   document
     .querySelector('#download-contents')
-    .addEventListener('input', (e) => {})
+    .addEventListener('click', (e) => {
+      window.open('../contents/index.html')
+    })
 
-  document.querySelector('#delete-history').addEventListener('input', (e) => {
-    if (
-      !confirm(
-        options.contents['delete-history'].description + 'よろしいですか？'
-      )
-    ) {
-      return
-    }
-    chrome.storage.local.set({ 'contents-history': [] }, () => {
+  document
+    .querySelector('#delete-history')
+    .addEventListener('click', async (e) => {
+      if (!confirm(options.contents['delete-history'].description)) {
+        return
+      }
+
+      console.error('Not Implementation')
+      await chrome.storage.local.remove('contents-history')
       alert('ダウンロード履歴を削除しました。')
     })
-  })
 
-  document.querySelector('#reset-options').addEventListener('input', (e) => {})
-  console.error('Not Implementation')
+  document
+    .querySelector('#reset-options')
+    .addEventListener('click', async (e) => {
+      if (!confirm(options.other['reset-options'].description)) {
+        return
+      }
+
+      await chrome.storage.sync.clear()
+      location.reload()
+      alert('設定をリセットしました。')
+    })
 })
