@@ -1,121 +1,55 @@
 import options from "./models.json"
 
-// Flatten option items.
-const items = {}
+export default async () => {
+  // Flatten option items.
+  const items = {}
 
-const sectionQueue = [options]
-while (sectionQueue.length) {
-  const section = sectionQueue.pop()
+  const sectionQueue = [options]
+  while (sectionQueue.length) {
+    const section = sectionQueue.pop()
 
-  const keys = Object.keys(section).slice(1)
+    const keys = Object.keys(section).slice(1)
 
-  keys.forEach((key) => {
-    const item = section[key]
-    if ("title" in item) {
-      sectionQueue.push(item)
-    } else {
-      items[key] = item
-    }
-  })
-}
+    keys.forEach((key) => {
+      const item = section[key]
 
-// Get stored values.
-chrome.storage.sync.get(Object.keys(items), (pairs) => {
+      // If `item` is a section...
+      if ("title" in item) {
+        sectionQueue.push(item)
+      } else {
+        items[key] = item
+      }
+    })
+  }
+
+  // Get stored values.
+  const pairs = await chrome.storage.sync.get(Object.keys(items))
+
   for (const key in pairs) {
     items[key].value = pairs[key]
   }
-})
 
-// Add setter in items.
-for (const key in items) {
-  const item = items[key]
+  // Add setter in items.
+  for (const key in items) {
+    const item = items[key]
 
-  item._value = item.value
-  Object.defineProperty(item, "value", {
-    get() {
-      return this._value
-    },
-    set(value) {
-      if (this._value !== value) {
-        chrome.storage.sync.set({ [key]: value })
-        this._value = value
-      }
-    },
-  })
+    item._value = item.value
+    Object.defineProperty(item, "value", {
+      get() {
+        return this._value
+      },
+      set(value) {
+        if (this._value !== value) {
+          chrome.storage.sync.set({ [key]: value })
+          this._value = value
+        }
+      },
+    })
+  }
+
+  console.log(options)
+  return options
 }
-
-console.log(options)
-export default options
-
-// class Section {
-//   constructor(
-//     public title: string,
-//     public items: Item[],
-//   ) { }
-// }
-
-// const convertSection = (section) => {
-//   if ('title' in section) {
-//     const keys = Object.keys(section).slice(1)
-
-//     keys.forEach(key => {
-//       section[key] = convertSection(section[key])
-//     })
-
-//     return section
-//   }
-//   else {
-//     const defaultValue = section.value
-//     if (defaultValue === undefined) {
-//       throw new Error('Missing default value of ' + section.hint)
-//     }
-
-//     delete section.value
-//     return Object.assign(new Item(defaultValue), section)
-//   }
-// }
-
-// const options = convertSection(_options)
-
-// console.log(options)
-// console.log(_options)
-
-// _options.contents["delete-history"].value
-
-// const options = _options.map(section => {
-//   return new Section(
-//     section.title,
-//     section.items.map(item => {
-//       return Object.assign(new Item(), item)
-//     })
-//   )
-// })
-
-// const options = [
-//   new Section('', [
-//     new Item(
-//       'show-home-panel',
-//       'ホームパネルを表示する',
-//       'チェックを入れると、ホーム画面にManaba Plusの見出しとボタンが表示されます。チェックが入っていないときにこのページを訪れるには、拡張機能アイコンをクリックします。',
-//       'checkbox',
-//       true
-//     ),
-//     new Item(
-//       'show-home-panel',
-//       'ホーム画面にManaba Plusのパネルを表示するかどうか',
-//       'チェックを入れると、ホーム画面にManaba Plusの見出しとボタンが表示されます。チェックが入っていないときにこのページを訪れるには、拡張機能アイコンをクリックします。',
-//       'checkbox',
-//       true
-//     ),
-//     new Item(
-//       'show-home-panel',
-//       'ホーム画面にManaba Plusのパネルを表示するかどうか',
-//       'チェックを入れると、ホーム画面にManaba Plusの見出しとボタンが表示されます。チェックが入っていないときにこのページを訪れるには、拡張機能アイコンをクリックします。',
-//       'checkbox',
-//       true
-//     ),
-//   ])
-// ]
 
 // import {
 //   DOWNLOAD_LIST,
@@ -150,20 +84,3 @@ export default options
 // document.getElementById("contents-download").addEventListener("click", () => {
 //   window.open("download-progress.html")
 // })
-
-// const bindBoolean = async (key: BooleanStorageKey) => {
-//   const input = document.getElementById(
-//     `${key.name}_checkbox`
-//   ) as HTMLInputElement
-//   input.checked = await Storage.getBoolean(key)
-//   input.onchange = (e: HTMLInputEvent) => {
-//     Storage.setBoolean(key, e.target.checked)
-//   }
-// }
-
-// bindBoolean(STORAGE_KEY_TOP_MENU)
-// bindBoolean(STORAGE_KEY_STYLE_PERMISSION)
-// bindBoolean(STORAGE_KEY_SEARCH_SYLLABUS)
-// bindBoolean(STORAGE_KEY_ASSIGNMENT_HISTORY)
-// bindBoolean(STORAGE_KEY_SMARTPHONE)
-// bindBoolean(STORAGE_KEY_KIKUZOU)
