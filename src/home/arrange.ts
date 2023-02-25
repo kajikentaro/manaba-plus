@@ -1,31 +1,28 @@
-// import * as Storage from "../module/storage"
+export default () => {
+  const contentbodyLeft =
+    document.querySelector<HTMLElement>('.contentbody-left')
+  if (contentbodyLeft !== null) {
+    contentbodyLeft.style.width = '671px'
+    contentbodyLeft.style.paddingRight = '15px'
+  }
 
-// export default async () => {
-//     const stylePermission = await Storage.getBoolean(STORAGE_KEY_STYLE_PERMISSION)
-//     if (stylePermission !== true) {
-//       return
-//     }
+  const courselistweekly =
+    document.querySelector<HTMLElement>('#courselistweekly')
+  if (courselistweekly !== null) {
+    courselistweekly.style.paddingRight = '0px'
+  }
+  document
+    .querySelectorAll<HTMLElement>('.my-infolist-header')
+    .forEach((element) => {
+      element.style.backgroundSize = '100% 100%'
+    })
 
-//     const contentbodyLeft = document.getElementsByClassName(
-//       "contentbody-left"
-//     )[0] as HTMLElement
-//     contentbodyLeft.style.width = "671px"
-//     contentbodyLeft.style.paddingRight = "15px"
+  document.querySelectorAll<HTMLElement>('.courselist').forEach((element) => {
+    const tableHeaders = element.querySelectorAll('th')
 
-//     const courselistweekly = document.getElementById("courselistweekly")
-//     if (courselistweekly !== null) {
-//       courselistweekly.style.paddingRight = "0px"
-//     }
-//     const infolistHeaders = document.getElementsByClassName(
-//       "my-infolist-header"
-//     ) as HTMLCollectionOf<HTMLElement>
-//     Array.from(infolistHeaders).forEach((element) => {
-//       element.style.backgroundSize = "100% 100%"
-//     })
-
-//     const tableHeaders = document.querySelectorAll<HTMLElement>(".courselist th")
-//     tableHeaders[0].setAttribute("width", "auto")
-//     tableHeaders[1].setAttribute("width", "50px")
-//     tableHeaders[2].setAttribute("width", "50px")
-//     tableHeaders[3].setAttribute("width", "20%")
-// }
+    const widths = ['auto', '50px', '50px', '20%']
+    for (let i = 0; i < 4; i++) {
+      tableHeaders[i].setAttribute('width', widths[i])
+    }
+  })
+}
