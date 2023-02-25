@@ -10,7 +10,7 @@ export default async () => {
 
     const keys = Object.keys(section).slice(1)
 
-    keys.forEach((key) => {
+    for (const key of keys) {
       const item = section[key]
 
       // If `item` is a section...
@@ -19,7 +19,7 @@ export default async () => {
       } else {
         items[key] = item
       }
-    })
+    }
   }
 
   // Get stored values.

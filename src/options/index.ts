@@ -61,7 +61,7 @@ getOptions().then((options) => {
 
     const keys = Object.keys(section).slice(1)
 
-    keys.forEach((key) => {
+    for (const key of keys) {
       const item = section[key]
 
       const child = document.createElement('div')
@@ -77,8 +77,8 @@ getOptions().then((options) => {
         sectionQueue.push([item, child])
       }
 
-      ;(parent as Element).appendChild(child)
-    })
+      (parent as Element).appendChild(child)
+    }
   }
 
   // Add button actions.
