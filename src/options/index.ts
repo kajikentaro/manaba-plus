@@ -21,13 +21,13 @@ const createItemElement = (key: string, item, child: HTMLElement) => {
   const type = (itemInput.type = item.type)
   if (type === 'checkbox') {
     itemInput.checked = item.value
-    itemInput.addEventListener('input', (e) => {
-      item.value = (e.target as HTMLInputElement).checked
+    itemInput.addEventListener('input', (event) => {
+      item.value = (event.target as HTMLInputElement).checked
     })
   } else {
     itemInput.value = item.value
-    itemInput.addEventListener('input', (e) => {
-      item.value = (e.target as HTMLInputElement).value
+    itemInput.addEventListener('input', (event) => {
+      item.value = (event.target as HTMLInputElement).value
     })
   }
   itemLabel.appendChild(itemInput)
@@ -85,13 +85,13 @@ getOptions().then((options) => {
   // Add button actions.
   document
     .querySelector('#download-contents')
-    ?.addEventListener('click', (e) => {
+    ?.addEventListener('click', (_) => {
       window.open('../contents/index.html')
     })
 
   document
     .querySelector('#delete-history')
-    ?.addEventListener('click', async (e) => {
+    ?.addEventListener('click', async (_) => {
       if (!confirm(options.contents['delete-history'].description)) {
         return
       }
@@ -107,7 +107,7 @@ getOptions().then((options) => {
 
   document
     .querySelector('#reset-options')
-    ?.addEventListener('click', async (e) => {
+    ?.addEventListener('click', async (_) => {
       if (!confirm(options.other['reset-options'].description)) {
         return
       }
@@ -118,19 +118,21 @@ getOptions().then((options) => {
     })
 
   // Add constraint actions.
-  document.querySelector('#allow-changing').addEventListener('input', (e) => {
-    const target = e.target as HTMLInputElement
-    const allowChanging = target.checked
+  document
+    .querySelector('#allow-changing')
+    .addEventListener('input', (event) => {
+      const target = event.target as HTMLInputElement
+      const allowChanging = target.checked
 
-    target
-      .closest('.section')
-      .querySelectorAll<HTMLElement>('[id|="show"]')
-      .forEach((element) => {
-        if (allowChanging) {
-          element.removeAttribute('disabled')
-        } else {
-          element.setAttribute('disabled', '')
-        }
-      })
-  })
+      target
+        .closest('.section')
+        .querySelectorAll<HTMLElement>('[id|="show"]')
+        .forEach((element) => {
+          if (allowChanging) {
+            element.removeAttribute('disabled')
+          } else {
+            element.setAttribute('disabled', '')
+          }
+        })
+    })
 })
