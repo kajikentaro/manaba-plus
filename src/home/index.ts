@@ -2,6 +2,7 @@ import getOptions from '../options/models'
 
 import arrange from './arrange'
 import hide from './hide'
+import getAssignments from './scrape'
 
 getOptions().then((options) => {
   if (!options.home['allow-changing'].value) {
@@ -77,84 +78,10 @@ getOptions().then((options) => {
 
 // // 未提出課題一覧を表示する。
 // const displayAssignments = async () => {
-//   // prevent over two times button click
-//   if (didDisplayAssignments) return
-//   didDisplayAssignments = true
-
-//   // fetch assignment datas
-//   const allAssignments = await fetchSummaries()
-//   const hidedAssignments = await fetchHided()
-//   const courseURLs = getCourseURLs()
-
-//   const viewer = new AssignmentViewer(
-//     allAssignments,
-//     hidedAssignments,
-//     courseURLs
-//   )
-//   Assignment.inputClick = viewer.inputClick
-
-//   // show toggles
-//   document.getElementById('toggles').style.display = 'flex'
-//   document.getElementById('toggle-extra-ass-hide').onchange = (
-//     e: HTMLInputEvent
-//   ) => {
-//     viewer.showExtraAssIs(e.target.checked)
-//     viewer.repaint()
-//   }
-//   document.getElementById('toggle-hide').onchange = (e: HTMLInputEvent) => {
-//     viewer.showDisableAssIs(e.target.checked)
-//     viewer.repaint()
-//   }
-
-//   viewer.repaint()
 // }
 
 // // manabaの未提出課題一覧から課題のリストを取得する。
 // const fetchSummaries = async () => {
-//   const docParser = (doc: Document) => {
-//     const clipStr = (element: HTMLElement) => {
-//       let str = element.innerText
-//       str = str.replace(/\r?\n/g, '') // delete return
-//       str = str.replace(/\s+/g, '') // delete space
-//       return str
-//     }
-
-//     const assignmentDomRows =
-//       doc.querySelectorAll<HTMLTableElement>('.pagebody table tr')
-//     for (let i = 0; i < assignmentDomRows.length; i++) {
-//       if (i === 0) continue // skip title
-//       const cols = assignmentDomRows[i]
-//         .children as HTMLCollectionOf<HTMLElement>
-//       const dict: AssignmentMember = {
-//         courseName: clipStr(cols[1]),
-//         href: cols[0].getElementsByTagName('a')[0].href,
-//         assignmentName: clipStr(cols[0]),
-//         deadline: cols[2].innerText
-//           ? new Date(cols[2].innerText)
-//           : InfinityDate,
-//         disable: false,
-//         colorCode: '#fff',
-//       }
-//       const assignment = new Assignment()
-//       assignment.initJson(dict)
-//       assignments.push(assignment)
-//     }
-//   }
-
-//   const assignments = [] as Assignment[]
-//   const targetUrls = [
-//     URL_HOME + '_summary_query',
-//     URL_HOME + '_summary_survey',
-//     URL_HOME + '_summary_report',
-//   ]
-//   for (const url of targetUrls) {
-//     const res = await fetch(url)
-//     const text = await res.text()
-//     const domparser = new DOMParser()
-//     const doc = domparser.parseFromString(text, 'text/html')
-//     docParser(doc)
-//   }
-//   return assignments
 // }
 
 // // 非表示の課題リストを取得する。
