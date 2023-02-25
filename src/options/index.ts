@@ -46,6 +46,7 @@ const createSectionElement = (child: HTMLElement, title: string) => {
   child.appendChild(titleH1)
 }
 
+// Entry point.
 getOptions().then((options) => {
   // Get the holder to insert option sections and items to.
   const holder = document.querySelector('#options-holder')

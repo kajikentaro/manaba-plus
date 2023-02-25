@@ -4,6 +4,7 @@ import arrange from './arrange'
 import hide from './hide'
 import getAssignments from './scrape'
 
+// Entry point.
 getOptions().then(async (options) => {
   if (!options.home['allow-changing'].value) {
     return
