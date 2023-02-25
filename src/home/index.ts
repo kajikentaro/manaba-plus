@@ -1,6 +1,7 @@
 import getOptions from '../options/models'
 
 import arrange from './arrange'
+import hide from './hide'
 
 getOptions().then((options) => {
   if (!options.home['allow-changing'].value) {
@@ -8,6 +9,7 @@ getOptions().then((options) => {
   }
 
   arrange()
+  hide()
 })
 
 // import Assignment from '../module/Assignment'
@@ -70,65 +72,7 @@ getOptions().then((options) => {
 
 // // 要素を非表示にする。
 // const hideElements = async () => {
-//   const hide = (className: string) => {
-//     const target = document.getElementsByClassName(className)[0] as HTMLElement
-//     target.setAttribute('hidden', '')
-//   }
-
-//   const stylePermission = await Storage.getBoolean(STORAGE_KEY_STYLE_PERMISSION)
-//   const searchSyllabus = await Storage.getBoolean(STORAGE_KEY_SEARCH_SYLLABUS)
-//   const assignmentHistory = await Storage.getBoolean(
-//     STORAGE_KEY_ASSIGNMENT_HISTORY
-//   )
-//   const smartphone = await Storage.getBoolean(STORAGE_KEY_SMARTPHONE)
-//   const kikuzou = await Storage.getBoolean(STORAGE_KEY_KIKUZOU)
-
-//   if (searchSyllabus) {
-//     hide('my-infolist-searchall')
-//   }
-
-//   if (assignmentHistory) {
-//     hide('my-infolist-event')
-//   }
-
-//   if (smartphone) {
-//     const elements = document.getElementsByClassName(
-//       'my-infolist-tips'
-//     ) as HTMLCollectionOf<HTMLElement>
-//     const target = Array.from(elements).find(
-//       (element) => !element.classList.contains('my-infolist-kikuzou')
-//     )
-//     target.setAttribute('hidden', '')
-//   }
-
-//   if (kikuzou) {
-//     hide('my-infolist-kikuzou')
-//   }
-
-//   if (
-//     stylePermission &&
-//     [searchSyllabus, assignmentHistory, smartphone, kikuzou].every((x) => x)
-//   ) {
-//     const contentbodyLeft = document.getElementsByClassName(
-//       'contentbody-left'
-//     )[0] as HTMLElement
-//     contentbodyLeft.style.width = '916px'
-
-//     const myInfolistMycourses = document.getElementsByClassName(
-//       'my-infolist-mycourses'
-//     )[0] as HTMLElement
-//     const myInfolistHeader = myInfolistMycourses.getElementsByClassName(
-//       'my-infolist-header'
-//     )[0] as HTMLElement
-//     myInfolistHeader.style.paddingLeft = '10px'
-
-//     const elements = document.getElementsByClassName(
-//       'course'
-//     ) as HTMLCollectionOf<HTMLElement>
-//     Array.from(elements).forEach((element) => {
-//       element.style.height = '60px'
-//     })
-//   }
+//   
 // }
 
 // // 未提出課題一覧を表示する。
