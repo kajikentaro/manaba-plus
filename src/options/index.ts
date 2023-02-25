@@ -120,7 +120,7 @@ getOptions().then((options) => {
   // Add constraint actions.
   document
     .querySelector('#allow-changing')
-    .addEventListener('input', (event) => {
+    ?.addEventListener('input', (event) => {
       const target = event.target as HTMLInputElement
       const allowChanging = target.checked
 
