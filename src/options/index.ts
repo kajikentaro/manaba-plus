@@ -1,10 +1,11 @@
+import consts from '../consts'
 import getOptions from './models'
 
 // Get option path from current URL query params.
 const url = new URL(location.href)
 const optionPath = url.searchParams.get('path')
 
-console.error('Not Implementation' + optionPath)
+console.error('Not Implementation: ' + optionPath)
 
 const createItemElement = (key: string, item, child: HTMLElement) => {
   child.className = 'item'
@@ -83,25 +84,29 @@ getOptions().then((options) => {
   // Add button actions.
   document
     .querySelector('#download-contents')
-    .addEventListener('click', (e) => {
+    ?.addEventListener('click', (e) => {
       window.open('../contents/index.html')
     })
 
   document
     .querySelector('#delete-history')
-    .addEventListener('click', async (e) => {
+    ?.addEventListener('click', async (e) => {
       if (!confirm(options.contents['delete-history'].description)) {
         return
       }
 
-      console.error('Not Implementation')
-      await chrome.storage.local.remove('contents-history')
+      console.error(
+        'Not Implementation: ' + consts['storage-key']['contents-history']
+      )
+      await chrome.storage.local.remove(
+        consts['storage-key']['contents-history']
+      )
       alert(options.contents['delete-history'].message)
     })
 
   document
     .querySelector('#reset-options')
-    .addEventListener('click', async (e) => {
+    ?.addEventListener('click', async (e) => {
       if (!confirm(options.other['reset-options'].description)) {
         return
       }
