@@ -8,11 +8,14 @@ while (groupQueue.length) {
     const item = group[key]
 
     if (typeof item === 'string') {
-      group[key] = key
+      if (item === '') {
+        group[key] = key
+      }
     } else {
       groupQueue.push(item)
     }
   }
 }
 
+console.log(consts)
 export default consts

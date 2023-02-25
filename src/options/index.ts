@@ -77,7 +77,7 @@ getOptions().then((options) => {
         sectionQueue.push([item, child])
       }
 
-      (parent as Element).appendChild(child)
+      ;(parent as Element).appendChild(child)
     }
   }
 
@@ -115,4 +115,21 @@ getOptions().then((options) => {
       location.reload()
       alert(options.other['reset-options'].message)
     })
+
+  // Add constraint actions.
+  document.querySelector('#allow-changing').addEventListener('input', (e) => {
+    const target = e.target as HTMLInputElement
+    const allowChanging = target.checked
+
+    target
+      .closest('.section')
+      .querySelectorAll<HTMLElement>('[id|="show"]')
+      .forEach((element) => {
+        if (allowChanging) {
+          element.removeAttribute('disabled')
+        } else {
+          element.setAttribute('disabled', '')
+        }
+      })
+  })
 })

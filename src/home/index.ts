@@ -4,13 +4,17 @@ import arrange from './arrange'
 import hide from './hide'
 import getAssignments from './scrape'
 
-getOptions().then((options) => {
+getOptions().then(async (options) => {
   if (!options.home['allow-changing'].value) {
     return
   }
 
   arrange()
-  hide()
+  hide(options)
+
+  for await (const assignment of getAssignments()) {
+    console.log(assignment)
+  }
 })
 
 // import Assignment from '../module/Assignment'
@@ -73,7 +77,7 @@ getOptions().then((options) => {
 
 // // 要素を非表示にする。
 // const hideElements = async () => {
-//   
+//
 // }
 
 // // 未提出課題一覧を表示する。
