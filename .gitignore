@@ -10,3 +10,6 @@ build.zip
 
 # log
 npm-debug.log*
+
+# dummy
+dumm*
