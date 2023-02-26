@@ -1,4 +1,5 @@
 import consts from '../consts'
+import { fetchDOM } from '../fetch'
 
 const dateTimeRegex = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})/
 const parseDateTime = (str: string) => {
@@ -47,13 +48,9 @@ const urls = [
   consts['home-url'] + '_summary_report',
 ]
 
-const domParser = new DOMParser()
-
 export default async function* () {
   for (const url of urls) {
-    const response = await fetch(url)
-    const text = await response.text()
-    const doc = domParser.parseFromString(text, 'text/html')
+    const doc = await fetchDOM(url)
     yield* getAssignments(doc)
   }
 }
