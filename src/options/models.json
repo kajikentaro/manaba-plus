@@ -53,6 +53,12 @@
       "description": "チェックを入れると、ホーム画面に朝日新聞の広告が表示されます。",
       "type": "checkbox",
       "value": false
+    },
+    "hidden-assignments": {
+      "hint": "隠された未提出課題一覧",
+      "description": "未提出課題一覧で「隠す」ボタンを押した課題の一覧です。",
+      "type": "collection",
+      "value": []
     }
   },
   "other": {

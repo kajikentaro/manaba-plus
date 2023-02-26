@@ -1,4 +1,14 @@
 export default () => {
+  const orgheader = document.querySelector<HTMLElement>('#orgheader')
+  if (orgheader !== null) {
+    orgheader.style.backgroundColor = 'transparent'
+  }
+
+  const pagebody = document.querySelector<HTMLElement>('.pagebody')
+  if (pagebody !== null) {
+    pagebody.style.borderStyle = 'none'
+  }
+
   const contentbodyLeft =
     document.querySelector<HTMLElement>('.contentbody-left')
   if (contentbodyLeft !== null) {
@@ -25,4 +35,6 @@ export default () => {
       tableHeaders[i].setAttribute('width', widths[i])
     }
   })
+
+  console.log('Arranged!')
 }

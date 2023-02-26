@@ -7,19 +7,22 @@
     <button id="download-content" class="button">コンテンツをDL</button>
     <button id="open-option" class="button">オプション画面を表示</button>
   </div>
-  <div id="toggles" style="display: none">
-    <label for="toggle-hide" id="toggle-hide-label" class="toggle-label">
-      <input type="checkbox" id="toggle-hide" />
-      <p>非表示も表示</p>
+  <details id="assignment-list-container" open>
+    <summary>未提出課題一覧</summary>
+    <label>
+      <input type="checkbox" id="assignments-visibility-input">
+      非表示にした課題も表示する
     </label>
-    <label
-      for="toggle-extra-ass-hide"
-      id="toggle-extra-ass-hide-label"
-      class="toggle-label"
-    >
-      <input type="checkbox" id="toggle-extra-ass-hide" />
-      <p>時間割以外のコース表示</p>
-    </label>
-  </div>
-  <table id="mp-table"></table>
+    <table id="assignment-list-holder">
+      <thead>
+        <tr>
+          <th>コース</th>
+          <th>タイトル</th>
+          <th>表示</th>
+          <th>期限</th>
+          <th>残り時間</th>
+        </tr>
+      </thead>
+    </table>
+  </details>
 </div>

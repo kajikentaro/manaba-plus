@@ -1,8 +1,13 @@
 import getOptions from '../options/models'
-
 import arrange from './arrange'
 import hide from './hide'
+import { insertHomePanel, appendAssignment } from './insert'
 import getAssignments from './scrape'
+import { sha256 } from '../hash'
+import addEventListeners from './event'
+import Assignment from './assignment'
+
+import dummies from './dummies.json'
 
 // Entry point.
 getOptions().then(async (options) => {
@@ -12,10 +17,57 @@ getOptions().then(async (options) => {
 
   arrange()
   hide(options)
+  await insertHomePanel()
+
+  const assignmentSet = new Set<string>()
+  const hiddenAssignmentSet = new Set<string>(
+    options.home['hidden-assignments'].value
+  )
 
   for await (const assignment of getAssignments()) {
-    console.log(assignment)
+    const hash = await sha256(assignment.url)
+    const isShown = !hiddenAssignmentSet.has(hash)
+
+    assignmentSet.add(hash)
+
+    Object.defineProperty(assignment, 'isShown', {
+      get(): boolean {
+        return isShown
+      },
+      set(value: boolean) {
+        if (value) {
+          hiddenAssignmentSet.delete(hash)
+        } else {
+          hiddenAssignmentSet.add(hash)
+        }
+        options.home['hidden-assignments'].value =
+          Array.from(hiddenAssignmentSet)
+      },
+    })
+
+    appendAssignment(assignment)
   }
+
+  for (const hash of hiddenAssignmentSet) {
+    if (!assignmentSet.has(hash)) {
+      hiddenAssignmentSet.delete(hash)
+    }
+  }
+
+  options.home['hidden-assignments'].value = Array.from(hiddenAssignmentSet)
+
+  for (const dummy of dummies) {
+    const assignment = new Assignment(
+      dummy.url,
+      dummy.title,
+      dummy.course,
+      new Date(dummy.deadline)
+    )
+
+    appendAssignment(assignment)
+  }
+
+  addEventListeners()
 })
 
 // import Assignment from '../module/Assignment'
@@ -51,11 +103,7 @@ getOptions().then(async (options) => {
 //   const enableInsertMp = await Storage.getBoolean(STORAGE_KEY_TOP_MENU)
 //   if (enableInsertMp === false) return
 
-//   const mark = document.getElementsByClassName('contentbody-left')[0]
-//   mark.insertAdjacentHTML(
-//     'afterbegin',
-//     await (await fetch(chrome.runtime.getURL('index.html'))).text()
-//   )
+//
 //   document.getElementById('show-assignment').onclick = () => {
 //     displayAssignments()
 //   }

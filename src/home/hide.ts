@@ -1,6 +1,10 @@
+import '../extension/htmlElement'
+
 const hide = (selectors: string) => {
   document.querySelectorAll<HTMLElement>(selectors).forEach((element) => {
-    element.style.display = 'none'
+    if ('isShown' in element) {
+      element.isShown = false
+    }
   })
 }
 
@@ -49,4 +53,6 @@ export default (options) => {
         element.style.height = '60px'
       })
   }
+
+  console.log('Hid!')
 }

@@ -1,5 +1,6 @@
 import consts from '../consts'
 import { fetchDOM } from '../fetch'
+import Assignment from './assignment'
 
 const dateTimeRegex = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})/
 const parseDateTime = (str: string) => {
@@ -14,12 +15,12 @@ const parseDateTime = (str: string) => {
   }
 }
 
-const getAssignments = function* (doc: Document) {
+const getAssignmentsFromDoc = function* (doc: Document) {
   const rows = doc.querySelectorAll<HTMLTableRowElement>(
     'table.stdlist tr:not(.title)'
   )
   for (const row of Array.from(rows)) {
-    const elements = row.children as HTMLCollectionOf<HTMLElement>
+    const elements = row.children
     if (elements.length < 3) {
       return
     }
@@ -29,16 +30,11 @@ const getAssignments = function* (doc: Document) {
       continue
     }
 
-    const texts = Array.from(elements).map((element) =>
+    const texts = Array.from(elements).map((element: HTMLElement) =>
       element.innerText.trim()
     )
 
-    yield {
-      url: url,
-      name: texts[0],
-      course: texts[1],
-      deadline: parseDateTime(texts[2]),
-    }
+    yield new Assignment(url, texts[0], texts[1], parseDateTime(texts[2]))
   }
 }
 
@@ -51,6 +47,6 @@ const urls = [
 export default async function* () {
   for (const url of urls) {
     const doc = await fetchDOM(url)
-    yield* getAssignments(doc)
+    yield* getAssignmentsFromDoc(doc)
   }
 }
