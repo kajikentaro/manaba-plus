@@ -67,6 +67,12 @@ getOptions().then(async (options) => {
     appendAssignment(assignment)
   }
 
+  document
+    .querySelector(
+      '#assignment-list-container table.sortable th[sort-key="assignment/deadline"]'
+    )
+    ?.dispatchEvent(new Event('click'))
+
   addEventListeners()
 })
 

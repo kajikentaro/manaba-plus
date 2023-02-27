@@ -11,6 +11,7 @@ export const insertHomePanel = async () => {
     const homePanelText = await fetchText(homePanelURL)
 
     contentbodyLeft.insertAdjacentHTML('afterbegin', homePanelText)
+    require('sortable-decoration')
   }
 
   holder = document.querySelector<HTMLElement>('#assignment-list-holder')
@@ -61,10 +62,10 @@ export const appendAssignment = (assignment: Assignment) => {
   }
   Object.defineProperty(row, '_isShown', { value: undefined, writable: true })
 
-  const courceAnchor = document.createElement('a')
-  courceAnchor.href = getCourseURL(assignment.url)
-  courceAnchor.innerHTML = assignment.course
-  row.insertCell().appendChild(courceAnchor)
+  const courseAnchor = document.createElement('a')
+  courseAnchor.href = getCourseURL(assignment.url)
+  courseAnchor.innerHTML = assignment.course
+  row.insertCell().appendChild(courseAnchor)
 
   const titleAnchor = document.createElement('a')
   titleAnchor.href = assignment.url

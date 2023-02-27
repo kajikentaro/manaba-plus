@@ -13,16 +13,17 @@
       <input type="checkbox" id="assignments-visibility-input">
       非表示にした課題も表示する
     </label>
-    <table id="assignment-list-holder">
+    <table class="sortable">
       <thead>
         <tr>
-          <th>コース</th>
-          <th>タイトル</th>
+          <th sort-key="assignment/course">コース</th>
+          <th sort-key="assignment/title">タイトル</th>
           <th>表示</th>
-          <th>期限</th>
+          <th sort-key="assignment/deadline" sort-type="Date">期限</th>
           <th>残り時間</th>
         </tr>
       </thead>
+      <tbody id="assignment-list-holder" class="sortable-body"></tbody>
     </table>
   </details>
 </div>

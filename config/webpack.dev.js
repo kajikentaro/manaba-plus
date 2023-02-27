@@ -7,6 +7,8 @@ const common = require('./webpack.common.js')
 
 module.exports = merge(common, {
   mode: 'development',
+  // Expand source code into the compiled file.
+  devtool: 'source-map',
   plugins: [
     // Copy static debug assets from `public/dev` folder to `build` folder
     new CopyWebpackPlugin({
