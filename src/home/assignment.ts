@@ -1,5 +1,7 @@
+import { sha256 } from '../hash'
+
 export default class Assignment {
-  public isShown: boolean
+  public readonly hash: Promise<string>
 
   constructor(
     public readonly url: string,
@@ -7,6 +9,26 @@ export default class Assignment {
     public readonly course: string,
     public readonly deadline: Date
   ) {
-    this.isShown = true
+    this.hash = sha256(url)
   }
+
+  // #region isShown
+  private _isShown: boolean = true
+
+  public onIsShownChanged: ((value: boolean) => void)[] = []
+
+  public get isShown(): boolean {
+    return this._isShown
+  }
+
+  public set isShown(value: boolean) {
+    if (this._isShown !== value) {
+      this._isShown = value
+
+      for (const handler of this.onIsShownChanged) {
+        handler(value)
+      }
+    }
+  }
+  // #endregion
 }

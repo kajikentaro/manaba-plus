@@ -9,6 +9,10 @@ const hide = (selectors: string) => {
 }
 
 export default (options) => {
+  if (!options.home['show-alert'].value) {
+    hide('.alertlist')
+  }
+
   const showSyllabus = options.home['show-syllabus'].value
   const showAssignment = options.home['show-assignment'].value
   const showFormerLink = options.home['show-former-link'].value

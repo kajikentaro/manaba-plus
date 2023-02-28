@@ -30,6 +30,18 @@
       "type": "checkbox",
       "value": true
     },
+    "show-assignment-list-open": {
+      "hint": "未提出課題を表示しておく",
+      "description": "チェックを入れると、ホーム画面を開いたとき、未提出課題一覧が開いた状態で表示されます。",
+      "type": "checkbox",
+      "value": false
+    },
+    "show-alert": {
+      "hint": "アラートを表示する",
+      "description": "チェックを入れると、ホーム画面に「ポートフォリオにコレクションが追加されました。」「コレクションが更新されています。」「ポートフォリオのコレクションにコメントが追加されました。」などのアラートが表示されます。",
+      "type": "checkbox",
+      "value": false
+    },
     "show-syllabus": {
       "hint": "「シラバス検索」を表示する",
       "description": "チェックを入れると、ホーム画面にシラバス検索ボックスが表示されます。",
@@ -59,6 +71,12 @@
       "description": "未提出課題一覧で「隠す」ボタンを押した課題の一覧です。",
       "type": "collection",
       "value": []
+    },
+    "move-centernews": {
+      "hint": "「お知らせ」を移動させる",
+      "description": "チェックを入れると、ホーム画面の「お知らせ」をページ下部に移動させます。",
+      "type": "checkbox",
+      "value": true
     }
   },
   "other": {

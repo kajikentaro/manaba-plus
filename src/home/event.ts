@@ -29,39 +29,20 @@ const setRemainingTime = (deadline: Date, node: Node) => {
   }
 }
 
-export default () => {
-  // let isAssignmentListOpen = false
-  // document.querySelector('#assignment-list-container')?.addEventListener("toggle", (event) => {
-  //     const element = event.target as HTMLDetailsElement
-  //     isAssignmentListOpen = element.open
-  // })
-
-  const holder = document.querySelector<HTMLElement>('#assignment-list-holder')
-  const rows = document.querySelectorAll<Row>('#assignment-list-holder>tr')
-
-  document.querySelectorAll('#assignment-list-holder th').forEach((element) => {
-    element.addEventListener('click', (event) => {
-      Array.from(rows)
-        .sort((a, b) => {
-          if (
-            'assignment' in a &&
-            a.assignment instanceof Assignment &&
-            'assignment' in b &&
-            b.assignment instanceof Assignment
-          ) {
-            return (
-              a.assignment.deadline.getTime() - b.assignment.deadline.getTime()
-            )
-          }
-
-          return 0
-        })
-        .forEach((row) => {
-          holder.appendChild(row)
-        })
-      console.info('Not Implementation')
+export default (options) => {
+  const assignmentListContainer = document.querySelector<HTMLDetailsElement>(
+    '#assignment-list-container'
+  )
+  if (assignmentListContainer !== null) {
+    assignmentListContainer.open =
+      options.home['show-assignment-list-open'].value
+    assignmentListContainer.addEventListener('toggle', () => {
+      options.home['show-assignment-list-open'].value =
+        assignmentListContainer.open
     })
-  })
+  }
+
+  const rows = document.querySelectorAll<Row>('#assignment-list-holder > tr')
 
   document
     .querySelector('#assignments-visibility-input')

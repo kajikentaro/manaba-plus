@@ -1,5 +1,5 @@
-<div id="manaba-plus-parent" class="my-infolist-centernews">
-  <div id="manaba-plus-title" class="my-infolist-header">
+<div id="manaba-plus-parent" class="">
+  <div id="manaba-plus-title" class="">
     <h2>Manaba Plus</h2>
   </div>
   <div class="mp-buttons">
@@ -7,7 +7,7 @@
     <button id="download-content" class="button">コンテンツをDL</button>
     <button id="open-option" class="button">オプション画面を表示</button>
   </div>
-  <details id="assignment-list-container" open>
+  <details id="assignment-list-container">
     <summary>未提出課題一覧</summary>
     <label>
       <input type="checkbox" id="assignments-visibility-input">
@@ -18,8 +18,8 @@
         <tr>
           <th sort-key="assignment/course">コース</th>
           <th sort-key="assignment/title">タイトル</th>
-          <th>表示</th>
-          <th sort-key="assignment/deadline" sort-type="Date">期限</th>
+          <th sort-key="assignment/isShown">表示</th>
+          <th sort-key="assignment/deadline" sort-type="Date" id="assignment-list-deadline-header">期限</th>
           <th>残り時間</th>
         </tr>
       </thead>
