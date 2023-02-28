@@ -1,4 +1,8 @@
-export default (options) => {
+import getOptions from '../options/models'
+
+export default async () => {
+  const options = await getOptions()
+
   if (options.home['move-centernews'].value) {
     const contentbodyLeft = document.querySelector('.contentbody-left')
     const myInfolistCenternews = document.querySelector(

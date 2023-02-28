@@ -1,5 +1,8 @@
 import Assignment from './assignment'
 
+import getOptions from '../options/models'
+import '../extension/htmlElement'
+
 interface Row extends HTMLElement {
   assignment: Assignment
 }
@@ -29,7 +32,9 @@ const setRemainingTime = (deadline: Date, node: Node) => {
   }
 }
 
-export default (options) => {
+export default async () => {
+  const options = await getOptions()
+
   const assignmentListContainer = document.querySelector<HTMLDetailsElement>(
     '#assignment-list-container'
   )
@@ -44,23 +49,20 @@ export default (options) => {
 
   const rows = document.querySelectorAll<Row>('#assignment-list-holder > tr')
 
+  let isAssignmentsVisibilityInputChecked = false
   document
     .querySelector('#assignments-visibility-input')
     ?.addEventListener('input', (event) => {
       const element = event.target as HTMLInputElement
-      if (element.checked) {
+      isAssignmentsVisibilityInputChecked = element.checked
+
+      if (isAssignmentsVisibilityInputChecked) {
         for (const row of rows) {
-          if ('isShown' in row && '_isShown' in row) {
-            row._isShown = row.isShown
-            row.isShown = true
-          }
+          row.isShown = true
         }
       } else {
         for (const row of rows) {
-          if ('isShown' in row && '_isShown' in row) {
-            row.isShown = row._isShown
-            row._isShown = undefined
-          }
+          row.isShown = row.assignment.isShown
         }
       }
     })
@@ -70,12 +72,8 @@ export default (options) => {
       const element = event.target as HTMLInputElement
       row.assignment.isShown = element.checked
 
-      if ('isShown' in row && '_isShown' in row) {
-        if (row._isShown === undefined) {
-          row.isShown = element.checked
-        } else {
-          row._isShown = element.checked
-        }
+      if (!isAssignmentsVisibilityInputChecked) {
+        row.isShown = element.checked
       }
     })
 

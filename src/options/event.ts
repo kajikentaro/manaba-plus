@@ -1,16 +1,19 @@
+import getOptions from '../options/models'
 import consts from '../consts'
 
-export default (options) => {
+export default async () => {
+  const options = await getOptions()
+
   // Add button actions.
   document
     .querySelector('#download-contents')
-    ?.addEventListener('click', (_) => {
+    ?.addEventListener('click', () => {
       window.open('../contents/index.html')
     })
 
   document
     .querySelector('#delete-history')
-    ?.addEventListener('click', async (_) => {
+    ?.addEventListener('click', async () => {
       if (!confirm(options.contents['delete-history'].description)) {
         return
       }
@@ -26,7 +29,7 @@ export default (options) => {
 
   document
     .querySelector('#reset-options')
-    ?.addEventListener('click', async (_) => {
+    ?.addEventListener('click', async () => {
       if (!confirm(options.other['reset-options'].description)) {
         return
       }

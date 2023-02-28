@@ -1,52 +1,68 @@
 import options from './models.json'
+import './models.type'
 
-export default async () => {
+// Indicate if the options are initialized and available.
+let isInitialized = false
+
+const initialize = async () => {
   // Flatten option items.
-  const items = {}
+  const items = new Map<string, OptionItem>()
 
-  const sectionQueue = [options]
+  const sectionQueue: [OptionSection] = [options]
   while (sectionQueue.length) {
     const section = sectionQueue.pop()
 
     const keys = Object.keys(section).slice(1)
 
     for (const key of keys) {
-      const item = section[key]
+      const item: OptionSection | OptionItem = section[key]
 
       // If `item` is a section...
       if ('title' in item) {
         sectionQueue.push(item)
       } else {
-        items[key] = item
+        if ('value' in item) {
+          item._value = item.value
+        }
+
+        items.set(key, item)
       }
     }
   }
 
   // Get stored values.
-  const pairs = await chrome.storage.sync.get(Object.keys(items))
+  const pairs = await chrome.storage.sync.get([...items.keys()])
 
   for (const key in pairs) {
-    items[key].value = pairs[key]
+    items.get(key)._value = pairs[key]
   }
 
   // Add setter in items.
-  for (const key in items) {
-    const item = items[key]
-
-    item._value = item.value
+  for (const [key, item] of items) {
     Object.defineProperty(item, 'value', {
       get() {
-        return this._value
+        const _item: OptionItem = this
+        return _item._value
       },
       set(value) {
-        if (this._value !== value) {
-          this._value = value
+        const _item: OptionItem = this
+        if (_item._value !== value) {
+          _item._value = value
           chrome.storage.sync.set({ [key]: value })
         }
       },
     })
   }
 
+  isInitialized = true
+
   console.log(options)
+}
+
+export default async () => {
+  if (!isInitialized) {
+    await initialize()
+  }
+
   return options
 }

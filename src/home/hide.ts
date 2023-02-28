@@ -1,14 +1,15 @@
+import getOptions from '../options/models'
 import '../extension/htmlElement'
 
 const hide = (selectors: string) => {
   document.querySelectorAll<HTMLElement>(selectors).forEach((element) => {
-    if ('isShown' in element) {
-      element.isShown = false
-    }
+    element.isShown = false
   })
 }
 
-export default (options) => {
+export default async () => {
+  const options = await getOptions()
+
   if (!options.home['show-alert'].value) {
     hide('.alertlist')
   }

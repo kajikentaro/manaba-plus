@@ -3,6 +3,10 @@ $color-background: #dffabd;
 $color-hover: orange;
 $color-font: #2e7c40;
 
+.imselectable {
+  user-select: none;
+}
+
 #manaba-plus-parent {
   margin: 0 0 15px;
   display: flex;

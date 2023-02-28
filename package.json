@@ -2,14 +2,17 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
+
     "lint": "npm run lint:prettier && npm run lint:es && npm run lint:style ",
     "lint:prettier": "prettier --check --loglevel=warn \"**/*.{ts,js,scss,md}\"",
     "lint:es": "eslint --max-warnings=0 \"**/*.{ts,js}\"",
     "lint:style": "stylelint \"**/*.{css,scss}\"",
+
     "format": "npm run format:prettier && npm run format:es && npm run format:style",
     "format:prettier": "prettier --check --write --loglevel=warn \"**/*.{ts,js,scss,md}\"",
     "format:es": "eslint --max-warnings=0 --fix \"**/*.{ts,js}\"",
     "format:style": "stylelint --fix \"**/*.{css,scss}\"",
+    
     "watch": "webpack --watch --config config/webpack.dev.js",
     "build": "eslint . && rm -rf build/* && webpack --config config/webpack.prod.js",
     "version": "auto-changelog -p && git add CHANGELOG.md"
@@ -28,7 +31,7 @@
     "prettier": "^2.8.4",
     "sass": "^1.58.3",
     "sass-loader": "^13.2.0",
-    "sortable-decoration": "^1.0.0",
+    "sortable-decoration": "^1.0.1",
     "stylelint": "^14.16.1",
     "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-standard-scss": "^6.1.0",

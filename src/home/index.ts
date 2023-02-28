@@ -18,8 +18,8 @@ getOptions().then(async (options) => {
   }
 
   arrange()
-  hide(options)
-  move(options)
+  await hide()
+  await move()
   await insertHomePanel()
 
   const assignmentSet = new Set<string>()
@@ -68,7 +68,7 @@ getOptions().then(async (options) => {
     .querySelector('#assignment-list-deadline-header')
     ?.dispatchEvent(new Event('click'))
 
-  addEventListeners(options)
+  await addEventListeners()
 })
 
 // // manaba上部にManaba Plusのコンテンツを挿入する。

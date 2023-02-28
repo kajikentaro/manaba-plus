@@ -6,13 +6,17 @@ let holder: HTMLElement = null
 
 export const insertHomePanel = async () => {
   const contentbodyLeft = document.querySelector('.contentbody-left')
-  if (contentbodyLeft !== null) {
-    const homePanelURL = chrome.runtime.getURL('home/index.html')
-    const homePanelText = await fetchText(homePanelURL)
-
-    contentbodyLeft.insertAdjacentHTML('afterbegin', homePanelText)
-    require('sortable-decoration')
+  if (contentbodyLeft === null) {
+    return
   }
+
+  const homePanelURL = chrome.runtime.getURL('home/index.html')
+  const homePanelText = await fetchText(homePanelURL)
+
+  contentbodyLeft.insertAdjacentHTML('afterbegin', homePanelText)
+
+  // Make assignment-list sortable
+  require('sortable-decoration')
 
   holder = document.querySelector<HTMLElement>('#assignment-list-holder')
 
@@ -57,10 +61,7 @@ export const appendAssignment = (assignment: Assignment) => {
   const row = document.createElement('tr')
   row.className = getDEFCON(assignment.deadline)
   Object.defineProperty(row, 'assignment', { value: assignment })
-  if ('isShown' in row) {
-    row.isShown = assignment.isShown
-  }
-  Object.defineProperty(row, '_isShown', { value: undefined, writable: true })
+  row.isShown = assignment.isShown
 
   const courseAnchor = document.createElement('a')
   courseAnchor.href = getCourseURL(assignment.url)
