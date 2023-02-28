@@ -53,6 +53,7 @@ getOptions().then(async (options) => {
 
   options.home['hidden-assignments'].value = Array.from(hiddenAssignmentSet)
 
+  // #region Dummy
   for (const dummy of dummies) {
     const assignment = new Assignment(
       dummy.url,
@@ -63,47 +64,16 @@ getOptions().then(async (options) => {
 
     appendAssignment(assignment)
   }
+  // #endregion
 
   document
     .querySelector('#assignment-list-deadline-header')
     ?.dispatchEvent(new Event('click'))
 
   await addEventListeners()
+
+  const progressBar = document.querySelector('#assignment-list-progress-bar')
+  if (progressBar !== null) {
+    progressBar.classList.remove('in-progress')
+  }
 })
-
-// // manaba上部にManaba Plusのコンテンツを挿入する。
-// const insertMpButton = async () => {
-//   const enableInsertMp = await Storage.getBoolean(STORAGE_KEY_TOP_MENU)
-//   if (enableInsertMp === false) return
-
-//
-//   document.getElementById('show-assignment').onclick = () => {
-//     displayAssignments()
-//   }
-//   document.getElementById('download-content').onclick = () => {
-//     if (
-//       confirm(
-//         'コースコンテンツをPCにまとめてダウンロードします。続行しますか？'
-//       )
-//     ) {
-//       window.open(chrome.runtime.getURL('download-progress.html'))
-//     }
-//   }
-//   document.getElementById('open-option').onclick = () => {
-//     window.open(chrome.runtime.getURL('options.html'))
-//   }
-// }
-
-// // 各コースのURLを取得する。
-// const getCourseURLs = () => {
-//   const manabaCourseDOMs = document.querySelectorAll<HTMLAnchorElement>(
-//     '.course-cell a:first-child'
-//   )
-//   const courseURLs = [] as string[]
-//   manabaCourseDOMs.forEach((manabaCourseDOM) => {
-//     courseURLs.push(manabaCourseDOM.href)
-//   })
-//   return courseURLs
-// }
-
-// init()

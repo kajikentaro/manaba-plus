@@ -35,6 +35,17 @@ const setRemainingTime = (deadline: Date, node: Node) => {
 export default async () => {
   const options = await getOptions()
 
+  // #region Add top buttons actions
+  document.querySelector('#contents-button')?.addEventListener('click', () => {
+    window.open(chrome.runtime.getURL('../contents/index.html'))
+  })
+
+  document.querySelector('#options-button')?.addEventListener('click', () => {
+    window.open(chrome.runtime.getURL('../options/index.html'))
+  })
+  // #endregion
+
+  // #region
   const assignmentListContainer = document.querySelector<HTMLDetailsElement>(
     '#assignment-list-container'
   )
@@ -46,7 +57,9 @@ export default async () => {
         assignmentListContainer.open
     })
   }
+  // #endregion
 
+  // #region
   const rows = document.querySelectorAll<Row>('#assignment-list-holder > tr')
 
   let isAssignmentsVisibilityInputChecked = false
@@ -87,4 +100,5 @@ export default async () => {
       }
     }
   }
+  // #endregion
 }
