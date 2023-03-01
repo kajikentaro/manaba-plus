@@ -3,24 +3,25 @@ export {}
 declare global {
   interface HTMLElement {
     /**
-     * Indicates if the element is shown or hidden.
+     * Return true if the element is shown, or false if hidden, when called with no params.
+     * Give a value as a param to set it.
      * The style `display` of the element will be `none` if false.
      */
-    isShown: boolean
+    shown: (value?: boolean) => boolean | void
   }
 }
 
-Object.defineProperty(HTMLElement.prototype, 'isShown', {
-  get(): boolean {
+Object.defineProperty(HTMLElement.prototype, 'shown', {
+  value: function (value?: boolean) {
     const element: HTMLElement = this
-    return element.style.display !== 'none'
-  },
-  set(value: boolean) {
-    const element: HTMLElement = this
-    if (value) {
-      element.style.display = ''
+    if (typeof value === 'undefined') {
+      return element.style.display !== 'none'
     } else {
-      element.style.display = 'none'
+      if (value) {
+        element.style.display = ''
+      } else {
+        element.style.display = 'none'
+      }
     }
   },
 })

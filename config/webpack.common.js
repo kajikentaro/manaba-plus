@@ -16,7 +16,7 @@ const entries = Object.fromEntries(
     .sync('{*.scss,**/index.{ts,js}}', {
       cwd: PATHS.src,
     })
-    .map((entryPath) => {
+    .map(function (entryPath) {
       const parsedEntryPath = path.parse(entryPath)
       return [
         path.join(parsedEntryPath.dir, parsedEntryPath.name),

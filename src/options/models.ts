@@ -4,13 +4,13 @@ import './models.type'
 // Indicate if the options are initialized and available.
 let isInitialized = false
 
-const initialize = async () => {
+const initialize = async function () {
   // Flatten option items.
   const items = new Map<string, OptionItem>()
 
-  const sectionQueue: [OptionSection] = [options]
-  while (sectionQueue.length) {
-    const section = sectionQueue.pop()
+  const sectionStack: [OptionSection] = [options]
+  while (sectionStack.length) {
+    const section = sectionStack.pop()
 
     const keys = Object.keys(section).slice(1)
 
@@ -19,7 +19,7 @@ const initialize = async () => {
 
       // If `item` is a section...
       if ('title' in item) {
-        sectionQueue.push(item)
+        sectionStack.push(item)
       } else {
         if ('value' in item) {
           item._value = item.value
@@ -59,7 +59,7 @@ const initialize = async () => {
   console.log(options)
 }
 
-export default async () => {
+export default async function () {
   if (!isInitialized) {
     await initialize()
   }

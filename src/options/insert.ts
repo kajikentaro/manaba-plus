@@ -1,10 +1,10 @@
 import getOptions from '../options/models'
 
-const createItemElement = (
+const createItemElement = function (
   key: string,
   item: OptionItem,
   frame: HTMLElement
-) => {
+) {
   frame.classList.add('item')
 
   const itemLabel = document.createElement('label')
@@ -22,16 +22,12 @@ const createItemElement = (
     case 'button': {
       const buttonItem = item as OptionButtonItem
       itemInput.value = buttonItem.value
-      itemInput.addEventListener('input', (event) => {
-        const element = event.target as HTMLInputElement
-        buttonItem.value = element.value
-      })
       break
     }
     case 'checkbox': {
       const checkboxItem = item as OptionCheckboxItem
       itemInput.checked = checkboxItem.value
-      itemInput.addEventListener('input', (event) => {
+      itemInput.addEventListener('input', function (event) {
         const element = event.target as HTMLInputElement
         checkboxItem.value = element.checked
       })
@@ -39,7 +35,30 @@ const createItemElement = (
     }
     case 'collection': {
       const collectionItem = item as OptionCollectionItem
+
+      const tempDiv = document.createElement('div')
+      tempDiv.innerHTML = collectionItem.value.join('<br>')
+      frame.appendChild(tempDiv)
+
       console.info('Not Implementation: ', collectionItem)
+      break
+    }
+    case 'number': {
+      const numberItem = item as OptionNumberItem
+      itemInput.value = numberItem.value.toString()
+      itemInput.addEventListener('input', function (event) {
+        const element = event.target as HTMLInputElement
+        numberItem.value = parseFloat(element.value)
+      })
+      break
+    }
+    case 'text': {
+      const textItem = item as OptionTextItem
+      itemInput.value = textItem.value
+      itemInput.addEventListener('input', function (event) {
+        const element = event.target as HTMLInputElement
+        textItem.value = element.value
+      })
       break
     }
   }
@@ -52,7 +71,7 @@ const createItemElement = (
   frame.appendChild(descriptionDiv)
 }
 
-const createSectionElement = (title: string, frame: HTMLElement) => {
+const createSectionElement = function (title: string, frame: HTMLElement) {
   frame.classList.add('section')
 
   const titleH2 = document.createElement('h2')
@@ -61,7 +80,7 @@ const createSectionElement = (title: string, frame: HTMLElement) => {
 }
 
 // Entry point
-export default async () => {
+export default async function () {
   const options = await getOptions()
 
   // Get the holder to insert option sections and items to.
@@ -72,9 +91,9 @@ export default async () => {
   holder.appendChild(rootTitleH1)
 
   // Add option sections.
-  const sectionQueue: [OptionSection, Element][] = [[options, holder]]
-  while (sectionQueue.length) {
-    const [section, parent] = sectionQueue.pop()
+  const sectionStack: [OptionSection, Element][] = [[options, holder]]
+  while (sectionStack.length) {
+    const [section, parent] = sectionStack.pop()
 
     const keys = Object.keys(section).slice(1)
 
@@ -86,7 +105,7 @@ export default async () => {
       if ('title' in item) {
         // If `item` is a section, add section element.
         createSectionElement(item.title, child)
-        sectionQueue.push([item, child])
+        sectionStack.push([item, child])
       } else {
         // If `item` is a item, add item element.
         createItemElement(key, item, child)

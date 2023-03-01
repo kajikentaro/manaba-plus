@@ -10,6 +10,11 @@
     "prettier",
     "eslint-config-prettier"
   ],
+  "rules": {
+    "no-undefined": "error",
+    "no-undef-init": "error",
+    "arrow-body-style": ["error", "never"]
+  },
   "overrides": [
     {
       "files": [

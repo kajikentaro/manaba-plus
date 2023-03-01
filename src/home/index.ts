@@ -12,7 +12,7 @@ import Assignment from './assignment'
 import dummies from './dummies.json'
 
 // Entry point.
-getOptions().then(async (options) => {
+getOptions().then(async function (options) {
   if (!options.home['allow-changing'].value) {
     return
   }
@@ -33,7 +33,7 @@ getOptions().then(async (options) => {
     assignmentSet.add(hash)
 
     assignment.isShown = !hiddenAssignmentSet.has(hash)
-    assignment.onIsShownChanged.push((value) => {
+    assignment.onIsShownChanged.push(function (value) {
       if (value) {
         hiddenAssignmentSet.delete(hash)
       } else {

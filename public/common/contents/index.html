@@ -1,26 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Downloading Contents</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body class="download-body">
-    <p id="message">準備中</p>
-    <progress id="progress" value="0" max="100">0%</progress>
-    <p id="number-counter">0/0</p>
-    <div class="button-parent">
-      <button class="button" id="stop-dl">ダウンロードを中止</button>
-    </div>
-    <div class="discription">
-      <p>
-        ダウンロード時に確認ウィンドウが表示される場合、ブラウザの設定から変更することもできます。
-      </p>
-      <img src="./images/chrome.png" width="500px" />
-      <p class="screenshot-caption">Chromeの場合</p>
-      <img src="./images/edge.png" width="500px" />
-      <p class="screenshot-caption">Edgeの場合</p>
-    </div>
-  </body>
-  <script src="index.js"></script>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Downloading Contents</title>
+  <link rel="stylesheet" href="../style.css" />
+  <script defer src="./index.js"></script>
+</head>
+
+<body class="download-body">
+  <div>
+    <button id="start-button">ダウンロードを開始する</button>
+    <button id="cancel-button" disabled>ダウンロードをキャンセルする</button>
+  </div>
+  <div id="progress-bars-holder"></div>
+
+  <style>
+    .horizontal-panel{
+      display: flex;
+    }
+    .content-row .tokens {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+  </style>
+  <div class="horizontal-panel">
+    <div id="interrupted-contents-holder"></div>
+    <div id="completed-contents-holder"></div>
+  </div>
+
+  <div id="completed-message" style="display: none;">
+    ダウンロードは完了しました。
+  </div>
+  <div id="canceled-message" style="display: none;">
+    ダウンロードはキャンセルされました。
+  </div>
+
+  
+  <div class="tips">
+    <p>
+      ダウンロード時に確認ウィンドウが表示される場合、ブラウザの設定から変更することもできます。
+    </p>
+    <img src="../img/contents/image-chrome.png" width="500px" />
+    <p class="screenshot-caption">Chromeの場合</p>
+    <img src="../img/contents/image-edge.png" width="500px" />
+    <p class="screenshot-caption">Edgeの場合</p>
+  </div>
+</body>
+
 </html>

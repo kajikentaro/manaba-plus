@@ -1,4 +1,4 @@
-export default () => {
+export default function () {
   const orgheader = document.querySelector<HTMLElement>('#orgheader')
   if (orgheader !== null) {
     orgheader.style.backgroundColor = 'transparent'
@@ -23,18 +23,20 @@ export default () => {
   }
   document
     .querySelectorAll<HTMLElement>('.my-infolist-header')
-    .forEach((element) => {
+    .forEach(function (element) {
       element.style.backgroundSize = '100% 100%'
     })
 
-  document.querySelectorAll<HTMLElement>('.courselist').forEach((element) => {
-    const tableHeaders = element.querySelectorAll('th')
+  document
+    .querySelectorAll<HTMLElement>('.courselist')
+    .forEach(function (element) {
+      const tableHeaders = element.querySelectorAll('th')
 
-    const widths = ['auto', '50px', '50px', '20%']
-    for (let i = 0; i < 4; i++) {
-      tableHeaders[i].setAttribute('width', widths[i])
-    }
-  })
+      const widths = ['auto', '50px', '50px', '20%']
+      for (let i = 0; i < 4; i++) {
+        tableHeaders[i].setAttribute('width', widths[i])
+      }
+    })
 
   console.log('Arranged!')
 }

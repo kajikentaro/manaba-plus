@@ -8,7 +8,7 @@ declare global {
   interface OptionItem {
     hint: string
     description: string
-    type: 'button' | 'checkbox' | 'collection'
+    type: 'button' | 'checkbox' | 'collection' | 'number' | 'text'
     _value: unknown
   }
 
@@ -23,5 +23,13 @@ declare global {
 
   interface OptionCollectionItem extends OptionItem {
     value: string[]
+  }
+
+  interface OptionNumberItem extends OptionItem {
+    value: number
+  }
+
+  interface OptionTextItem extends OptionItem {
+    value: string
   }
 }

@@ -4,14 +4,14 @@ import '../extension/htmlElement'
 
 let holder: HTMLElement = null
 
-export const insertHomePanel = async () => {
+export const insertHomePanel = async function () {
   const contentbodyLeft = document.querySelector('.contentbody-left')
   if (contentbodyLeft === null) {
     return
   }
 
-  const homePanelURL = chrome.runtime.getURL('home/index.html')
-  const homePanelText = await fetchText(homePanelURL)
+  const homePanelUrl = chrome.runtime.getURL('/home/index.html')
+  const homePanelText = await fetchText(homePanelUrl)
 
   contentbodyLeft.insertAdjacentHTML('afterbegin', homePanelText)
 
@@ -26,8 +26,8 @@ export const insertHomePanel = async () => {
 const now = Date.now()
 
 // DEFCON is the condition that indicates the urgency of an assignment.
-const getDEFCON = (dateTime: Date) => {
-  if (dateTime === undefined) {
+const getDEFCON = function (dateTime: Date) {
+  if (dateTime === null) {
     return 'DEFCON-1'
   }
 
@@ -48,12 +48,13 @@ const getDEFCON = (dateTime: Date) => {
   }
 }
 
-const courseURLRegex = /.+course_\d+/
+const courseUrlRegex = /.+course_\d+/
 
-const getCourseURL = (assignmentURL: string) =>
-  courseURLRegex.exec(assignmentURL)[0]
+const getCourseUrl = function (assignmentUrl: string) {
+  return courseUrlRegex.exec(assignmentUrl)[0]
+}
 
-export const appendAssignment = (assignment: Assignment) => {
+export const appendAssignment = function (assignment: Assignment) {
   if (holder === null) {
     return
   }
@@ -61,10 +62,10 @@ export const appendAssignment = (assignment: Assignment) => {
   const row = document.createElement('tr')
   row.className = getDEFCON(assignment.deadline)
   Object.defineProperty(row, 'assignment', { value: assignment })
-  row.isShown = assignment.isShown
+  row.shown(assignment.isShown)
 
   const courseAnchor = document.createElement('a')
-  courseAnchor.href = getCourseURL(assignment.url)
+  courseAnchor.href = getCourseUrl(assignment.url)
   courseAnchor.innerHTML = assignment.course
   row.insertCell().appendChild(courseAnchor)
 

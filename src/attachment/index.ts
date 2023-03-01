@@ -27,14 +27,14 @@ function insertDropMessage() {
 }
 
 function addListener() {
-  form.addEventListener('dragover', () => {
+  form.addEventListener('dragover', function () {
     event.preventDefault()
     form.parentElement.style.backgroundColor = '#d7e2fc'
   })
-  form.addEventListener('dragleave', () => {
+  form.addEventListener('dragleave', function () {
     form.parentElement.style.backgroundColor = ''
   })
-  form.addEventListener('drop', (event) => {
+  form.addEventListener('drop', function (event) {
     event.preventDefault()
     input.files = event.dataTransfer.files
     submit()

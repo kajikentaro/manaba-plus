@@ -7,7 +7,7 @@ interface Row extends HTMLElement {
   assignment: Assignment
 }
 
-const setRemainingTime = (deadline: Date, node: Node) => {
+const setRemainingTime = function (deadline: Date, node: Node) {
   const delta = deadline.getTime() - Date.now()
   const dayCount = delta / (24 * 60 * 60 * 1000)
 
@@ -18,7 +18,7 @@ const setRemainingTime = (deadline: Date, node: Node) => {
 
     node.textContent = [hours, minutes, seconds]
       .filter((value) => value > 1)
-      .map((value, index) => {
+      .map(function (value, index) {
         const chars = Math.floor(value).toString()
         if (index === 0) {
           return chars
@@ -32,17 +32,25 @@ const setRemainingTime = (deadline: Date, node: Node) => {
   }
 }
 
-export default async () => {
+export default async function () {
   const options = await getOptions()
 
   // #region Add top buttons actions
-  document.querySelector('#contents-button')?.addEventListener('click', () => {
-    window.open(chrome.runtime.getURL('../contents/index.html'))
-  })
+  const contentsButton = document.querySelector('#contents-button')
+  contentsButton.removeAttribute('disabled')
+  if (contentsButton !== null) {
+    contentsButton.addEventListener('click', function () {
+      window.open(chrome.runtime.getURL('/contents/index.html'))
+    })
+  }
 
-  document.querySelector('#options-button')?.addEventListener('click', () => {
-    window.open(chrome.runtime.getURL('../options/index.html'))
-  })
+  const optionsButton = document.querySelector('#options-button')
+  if (optionsButton !== null) {
+    optionsButton.removeAttribute('disabled')
+    optionsButton.addEventListener('click', function () {
+      window.open(chrome.runtime.getURL('/options/index.html'))
+    })
+  }
   // #endregion
 
   // #region
@@ -52,7 +60,7 @@ export default async () => {
   if (assignmentListContainer !== null) {
     assignmentListContainer.open =
       options.home['show-assignment-list-open'].value
-    assignmentListContainer.addEventListener('toggle', () => {
+    assignmentListContainer.addEventListener('toggle', function () {
       options.home['show-assignment-list-open'].value =
         assignmentListContainer.open
     })
@@ -65,28 +73,28 @@ export default async () => {
   let isAssignmentsVisibilityInputChecked = false
   document
     .querySelector('#assignments-visibility-input')
-    ?.addEventListener('input', (event) => {
+    ?.addEventListener('input', function (event) {
       const element = event.target as HTMLInputElement
       isAssignmentsVisibilityInputChecked = element.checked
 
       if (isAssignmentsVisibilityInputChecked) {
         for (const row of rows) {
-          row.isShown = true
+          row.shown(true)
         }
       } else {
         for (const row of rows) {
-          row.isShown = row.assignment.isShown
+          row.shown(row.assignment.isShown)
         }
       }
     })
 
   for (const row of rows) {
-    row.querySelector('input')?.addEventListener('input', (event) => {
+    row.querySelector('input')?.addEventListener('input', function (event) {
       const element = event.target as HTMLInputElement
       row.assignment.isShown = element.checked
 
       if (!isAssignmentsVisibilityInputChecked) {
-        row.isShown = element.checked
+        row.shown(element.checked)
       }
     })
 
@@ -94,7 +102,7 @@ export default async () => {
     const remainingTimeSpan = row.querySelector('.remaining-time')
     if (remainingTimeSpan !== null) {
       const deadline = row.assignment.deadline
-      if (deadline !== undefined) {
+      if (deadline !== null) {
         setRemainingTime(deadline, remainingTimeSpan)
         setInterval(setRemainingTime, 1000, deadline, remainingTimeSpan)
       }

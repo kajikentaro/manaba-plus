@@ -1,9 +1,9 @@
 import consts from './consts.json'
 
 // Replace string items with their own keys.
-const groupQueue = [consts]
-while (groupQueue.length) {
-  const group = groupQueue.pop()
+const groupStack = [consts]
+while (groupStack.length) {
+  const group = groupStack.pop()
   for (const key in group) {
     const item = group[key]
 
@@ -12,7 +12,7 @@ while (groupQueue.length) {
         group[key] = key
       }
     } else {
-      groupQueue.push(item)
+      groupStack.push(item)
     }
   }
 }

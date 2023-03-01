@@ -1,6 +1,6 @@
 import getOptions from '../options/models'
 
-export default async () => {
+export default async function () {
   const options = await getOptions()
 
   if (options.home['move-centernews'].value) {

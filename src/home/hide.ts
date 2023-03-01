@@ -1,13 +1,13 @@
 import getOptions from '../options/models'
 import '../extension/htmlElement'
 
-const hide = (selectors: string) => {
-  document.querySelectorAll<HTMLElement>(selectors).forEach((element) => {
-    element.isShown = false
+const hide = function (selectors: string) {
+  document.querySelectorAll<HTMLElement>(selectors).forEach(function (element) {
+    element.shown(false)
   })
 }
 
-export default async () => {
+export default async function () {
   const options = await getOptions()
 
   if (!options.home['show-alert'].value) {
@@ -54,7 +54,7 @@ export default async () => {
 
     document
       .querySelectorAll<HTMLAnchorElement>('.course')
-      .forEach((element) => {
+      .forEach(function (element) {
         element.style.height = '60px'
       })
   }

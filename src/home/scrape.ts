@@ -3,10 +3,10 @@ import { fetchDOM } from '../fetch'
 import Assignment from './assignment'
 
 const dateTimeRegex = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})/
-const parseDateTime = (str: string) => {
+const parseDateTime = function (str: string) {
   const match = dateTimeRegex.exec(str)
   if (match === null) {
-    return undefined
+    return null
   } else {
     const [year, monthIndex, date, hours, minutes] = match
       .slice(1)
@@ -26,7 +26,7 @@ const getAssignmentsFromDoc = function* (doc: Document) {
     }
 
     const url = elements[0].querySelector('a')?.href
-    if (url === undefined) {
+    if (typeof url === 'undefined') {
       continue
     }
 

@@ -1,0 +1,37 @@
+{
+    "selectors": ".course-cell a:first-child, .courselist-title a, .course-card-title a",
+    "children": [
+        {
+            "prefix": "_report",
+            "selectors": ".report-title a",
+            "children": [
+                {
+                    "selectors": ".attachments a"
+                }
+            ]
+        },
+        {
+            "prefix": "_page",
+            "selectors": ".about-contents a",
+            "children": [
+                {
+                    "selectors": ".contentslist a",
+                    "children": [
+                        {
+                            "selectors": ".file + .inlineaf-description a"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "prefix": "_news",
+            "selectors": ".newstext a",
+            "children": [
+                {
+                    "selectors": ".file + .inlineaf-description a"
+                }
+            ]
+        }
+    ]
+}
