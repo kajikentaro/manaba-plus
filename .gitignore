@@ -11,5 +11,8 @@ build.zip
 # log
 npm-debug.log*
 
+#vscode
+.vscode
+
 # dummy
 dumm*
