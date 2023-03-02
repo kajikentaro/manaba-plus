@@ -1,5 +1,26 @@
 {
   "title": "Manaba Plus オプション",
+  "common": {
+    "title": "一般",
+    "allow-changing": {
+      "hint": "変更を許可する",
+      "description": "チェックを入れると、Manaba Plusに画面の変更を許可することになります。画面の読み込みが遅いと感じたら、チェックを外してください。",
+      "type": "checkbox",
+      "value": true
+    },
+    "show-notes": {
+      "hint": "「メモ」を表示する",
+      "description": "チェックを入れると、ホーム画面の上部やその他の画面の下部にある「メモ」を表示します。",
+      "type": "checkbox",
+      "value": true
+    },
+    "transition-directly": {
+      "hint": "リンクを直接開く",
+      "description": "チェックを入れると、外部リンクをクリックしたとき、確認ダイアログを表示せずにリンクを開きます。",
+      "type": "checkbox",
+      "value": true
+    }
+  },
   "contents": {
     "title": "コンテンツ",
     "directory-name": {
@@ -30,12 +51,6 @@
   },
   "home": {
     "title": "ホーム画面",
-    "allow-changing": {
-      "hint": "変更を許可する",
-      "description": "チェックを入れると、Manaba Plusにホーム画面の変更を許可することになります。ホーム画面の読み込みが遅いと感じたら、チェックを外してください。",
-      "type": "checkbox",
-      "value": true
-    },
     "show-home-panel": {
       "hint": "ホームパネルを表示する",
       "description": "チェックを入れると、ホーム画面にManaba Plusのボタンが表示されます。チェックが入っていないときにこのページを訪れるには、拡張機能アイコンをクリックします。",

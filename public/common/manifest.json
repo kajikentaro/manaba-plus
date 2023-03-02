@@ -19,8 +19,13 @@
   "permissions": ["storage", "downloads"],
   "content_scripts": [
     {
-      "matches": ["https://gakunin-idp.c.chuo-u.ac.jp/sso/timeout.cgi*"],
-      "js": ["sso/index.js"],
+      "matches": ["https://room.chuo-u.ac.jp/ct/*"],
+      "js": ["common/index.js"],
+      "css": ["style.css"]
+    },
+    {
+      "matches": ["https://room.chuo-u.ac.jp/ct/home*"],
+      "js": ["home/index.js"],
       "css": ["style.css"]
     },
     {
@@ -29,8 +34,8 @@
       "css": ["style.css"]
     },
     {
-      "matches": ["https://room.chuo-u.ac.jp/ct/home*"],
-      "js": ["home/index.js"],
+      "matches": ["https://gakunin-idp.c.chuo-u.ac.jp/sso/timeout.cgi*"],
+      "js": ["sso/index.js"],
       "css": ["style.css"]
     }
   ],

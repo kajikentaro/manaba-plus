@@ -12,6 +12,7 @@ declare global {
 }
 
 Object.defineProperty(HTMLElement.prototype, 'shown', {
+  configurable: true,
   value: function (value?: boolean) {
     const element: HTMLElement = this
     if (typeof value === 'undefined') {

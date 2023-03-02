@@ -1,11 +1,5 @@
 import getOptions from '../options/models'
-import '../extension/htmlElement'
-
-const hide = function (selectors: string) {
-  document.querySelectorAll<HTMLElement>(selectors).forEach(function (element) {
-    element.shown(false)
-  })
-}
+import hide from '../hide'
 
 export default async function () {
   const options = await getOptions()

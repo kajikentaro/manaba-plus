@@ -13,7 +13,7 @@ import dummies from './dummies.json'
 
 // Entry point.
 getOptions().then(async function (options) {
-  if (!options.home['allow-changing'].value) {
+  if (!options.common['allow-changing'].value) {
     return
   }
 
@@ -71,9 +71,4 @@ getOptions().then(async function (options) {
     ?.dispatchEvent(new Event('click'))
 
   await addEventListeners()
-
-  const progressBar = document.querySelector('#assignment-list-progress-bar')
-  if (progressBar !== null) {
-    progressBar.classList.remove('in-progress')
-  }
 })
