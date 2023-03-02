@@ -39,21 +39,35 @@ export default async function () {
     })
 
   // Add constraint actions.
-  document
-    .querySelector('#allow-changing')
-    ?.addEventListener('input', function (event) {
-      const target = event.target as HTMLInputElement
-      const allowChanging = target.checked
+  // const showElements = document.querySelectorAll('#home [id|="show"]')
+  // document
+  //   .querySelector('#allow-changing')
+  //   ?.addEventListener('input', function (event) {
+  //     const element = event.target as HTMLInputElement
 
-      target
-        .closest('.section')
-        .querySelectorAll<HTMLElement>('[id|="show"]')
-        .forEach(function (element) {
-          if (allowChanging) {
-            element.removeAttribute('disabled')
-          } else {
-            element.setAttribute('disabled', '')
-          }
-        })
-    })
+  //     if (element.checked) {
+  //       for (const showElement of showElements) {
+  //         showElement.removeAttribute('disabled')
+  //       }
+  //     }
+  //     else {
+  //       for (const showElement of showElements) {
+  //         showElement.setAttribute('disabled', '')
+  //       }
+  //     }
+  //   })
+
+  // const timeoutButtonLabel = document.querySelector('#timeout-button-label')
+  // document
+  //   .querySelector('#transition-automatically')
+  //   ?.addEventListener('input', function (event) {
+  //     const element = event.target as HTMLInputElement
+
+  //     if (element.checked) {
+  //       timeoutButtonLabel.setAttribute('disabled', '')
+  //     }
+  //     else {
+  //       timeoutButtonLabel.removeAttribute('disabled')
+  //     }
+  //   })
 }

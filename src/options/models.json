@@ -91,6 +91,27 @@
       "value": true
     }
   },
+  "timeout": {
+    "title": "タイムアウト画面",
+    "destination-on-timeout": {
+      "hint": "リンク先",
+      "description": "タイムアウト画面からリンクするページのURLです。空欄の場合はホーム画面にリンクします。",
+      "type": "text",
+      "value": ""
+    },
+    "transition-automatically": {
+      "hint": "自動的に移動する",
+      "description": "チェックを入れると、タイムアウト画面から自動的にリンク先へ移動します。",
+      "type": "checkbox",
+      "value": true
+    },
+    "timeout-button-label": {
+      "hint": "ボタンのラベル",
+      "description": "タイムアウト画面に追加されるボタンのラベルです。",
+      "type": "text",
+      "value": "manabaのホーム画面に移動する"
+    }
+  },
   "other": {
     "title": "その他",
     "reset-options": {
