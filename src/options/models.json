@@ -43,7 +43,7 @@
       "value": true
     },
     "show-assignment-list-open": {
-      "hint": "未提出課題を表示しておく",
+      "hint": "未提出課題一覧を開く",
       "description": "チェックを入れると、ホーム画面を開いたとき、未提出課題一覧が開いた状態で表示されます。",
       "type": "checkbox",
       "value": false
