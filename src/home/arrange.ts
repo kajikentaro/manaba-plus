@@ -1,4 +1,5 @@
 export default function () {
+  // #region To show background image.
   const orgheader = document.querySelector<HTMLElement>('#orgheader')
   if (orgheader !== null) {
     orgheader.style.backgroundColor = 'transparent'
@@ -8,7 +9,9 @@ export default function () {
   if (pagebody !== null) {
     pagebody.style.borderStyle = 'none'
   }
+  // #endregion
 
+  // #region Make responsible.
   const contentbodyLeft =
     document.querySelector<HTMLElement>('.contentbody-left')
   if (contentbodyLeft !== null) {
@@ -37,4 +40,5 @@ export default function () {
         tableHeaders[i].setAttribute('width', widths[i])
       }
     })
+  // #endregion
 }
