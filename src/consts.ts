@@ -17,5 +17,4 @@ while (groupStack.length) {
   }
 }
 
-console.log(consts)
 export default consts

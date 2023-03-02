@@ -37,6 +37,4 @@ export default function () {
         tableHeaders[i].setAttribute('width', widths[i])
       }
     })
-
-  console.log('Arranged!')
 }

@@ -58,6 +58,4 @@ export default async function () {
         element.style.height = '60px'
       })
   }
-
-  console.log('Hid!')
 }

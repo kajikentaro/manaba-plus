@@ -7,9 +7,6 @@ import { takeFinished, reserveDownload } from './download'
 
 const startButton = document.querySelector('#start-button')
 const cancelButton = document.querySelector('#cancel-button')
-if (startButton === null || cancelButton === null) {
-  console.error('Undefined')
-}
 
 let isDownloadStopped = true
 
@@ -25,8 +22,6 @@ const startDownload = async function () {
 
   notify.hideMessages()
 
-  console.log('Contents: Downloading...')
-
   const exclusionList = await history.getHistory()
   const addExclusion = function (context: DownloadContext) {
     if ('hash' in context && typeof context.hash === 'string') {
@@ -36,7 +31,6 @@ const startDownload = async function () {
 
   const progressTimer = setInterval(function () {
     insert.updateProgress(currentTraces)
-    console.log('Progress: Updated!')
   }, 500)
 
   const downloadTimer = setInterval(function () {
@@ -53,8 +47,6 @@ const startDownload = async function () {
     // If completely finished downloading...
 
     startButton.removeAttribute('disabled')
-
-    console.log('Contents: Downloaded!')
 
     history.setHistory(exclusionList)
 
@@ -87,12 +79,8 @@ const startDownload = async function () {
   clearInterval(progressTimer)
 
   if (isDownloadStopped) {
-    console.log('Contents: Canceled!')
-
     notify.showCanceledMessage()
   } else {
-    console.log('Contents: Collected!')
-
     insert.clearProgress()
     notify.showCompletedMessage()
   }

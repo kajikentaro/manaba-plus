@@ -19,8 +19,6 @@ export const insertHomePanel = async function () {
   require('sortable-decoration')
 
   holder = document.querySelector<HTMLElement>('#assignment-list-holder')
-
-  console.log('Inserted!')
 }
 
 const now = Date.now()
@@ -33,7 +31,6 @@ const getDEFCON = function (dateTime: Date) {
 
   const delta = dateTime.getTime() - now
   if (delta < 0) {
-    console.log('The delta time became minus: ' + delta)
     return 'DEFCON-0'
   }
 

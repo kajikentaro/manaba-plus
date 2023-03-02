@@ -55,8 +55,6 @@ const initialize = async function () {
   }
 
   isInitialized = true
-
-  console.log(options)
 }
 
 export default async function () {

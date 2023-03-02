@@ -1,7 +1,4 @@
 const progressBarHolder = document.querySelector('#progress-bars-holder')
-if (progressBarHolder === null) {
-  console.error('Undefined')
-}
 
 const createProgress = function (trace: ScrapingTrace, child?: Element) {
   const container = document.createElement('div')
@@ -50,9 +47,6 @@ const interruptedContentsHolder = document.querySelector(
 const completedContentsHolder = document.querySelector(
   '#completed-contents-holder'
 )
-if (interruptedContentsHolder === null || completedContentsHolder === null) {
-  console.error('Undefined')
-}
 
 const createCompleted = function (context: DownloadContext) {
   const row = document.createElement('div')

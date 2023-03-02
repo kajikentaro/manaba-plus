@@ -1,5 +1,4 @@
 import getOptions from '../options/models'
-import consts from '../consts'
 import { clearHistory } from 'contents/history'
 
 export default async function () {
@@ -19,9 +18,6 @@ export default async function () {
         return
       }
 
-      console.error(
-        'Not Implementation: ' + consts['storage-key']['contents-history']
-      )
       await clearHistory()
       alert(options.contents['delete-history'].message)
     })
