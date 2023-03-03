@@ -15,5 +15,8 @@ export const popMessages = async function () {
 }
 
 export const pushMessages = async function (...messages: string[]) {
-  await chrome.storage.local.set({ [storageKey]: messages })
+  const currentMessages = await popMessages()
+  await chrome.storage.local.set({
+    [storageKey]: currentMessages.concat(messages),
+  })
 }
