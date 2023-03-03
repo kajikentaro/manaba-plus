@@ -4,7 +4,7 @@ import arrange from './arrange'
 import hide from './hide'
 import move from './move'
 import replace from './replace'
-import { insertHomePanel, appendAssignment } from './insert'
+import * as insert from './insert'
 
 import getAssignments from './scrape'
 import addEventListeners from './event'
@@ -22,7 +22,8 @@ getOptions().then(async function (options) {
   await hide()
   await move()
   replace()
-  await insertHomePanel()
+  await insert.insertHomePanel()
+  await insert.insertMessages()
 
   const assignmentSet = new Set<string>()
   const hiddenAssignmentSet = new Set<string>(
@@ -44,7 +45,7 @@ getOptions().then(async function (options) {
       options.home['hidden-assignments'].value = Array.from(hiddenAssignmentSet)
     })
 
-    appendAssignment(assignment)
+    insert.appendAssignment(assignment)
   }
 
   for (const hash of hiddenAssignmentSet) {
@@ -64,7 +65,7 @@ getOptions().then(async function (options) {
       new Date(dummy.deadline)
     )
 
-    appendAssignment(assignment)
+    insert.appendAssignment(assignment)
   }
   // #endregion
 

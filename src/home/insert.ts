@@ -3,7 +3,7 @@ import { popMessages } from 'messages'
 import Assignment from './assignment'
 import '../extension/htmlElement'
 
-let holder: HTMLElement = null
+let assignmentListHolder: HTMLElement
 
 export const insertHomePanel = async function () {
   const contentbodyLeft = document.querySelector('.contentbody-left')
@@ -19,12 +19,20 @@ export const insertHomePanel = async function () {
   // Make assignment-list sortable
   require('sortable-decoration')
 
-  holder = document.querySelector<HTMLElement>('#assignment-list-holder')
+  assignmentListHolder = document.querySelector<HTMLElement>(
+    '#assignment-list-holder'
+  )
 }
 
-export const appendMessages = async function () {
+export const insertMessages = async function () {
+  const messageHolder = document.querySelector('#messages-holder')
+
   const messages = await popMessages()
-  messages.forEach(function () {})
+  for (const message of messages) {
+    const messageDiv = document.createElement('div')
+    messageDiv.innerText = message
+    messageHolder.appendChild(messageDiv)
+  }
 }
 
 const now = Date.now()
@@ -58,10 +66,6 @@ const getCourseUrl = function (assignmentUrl: string) {
 }
 
 export const appendAssignment = function (assignment: Assignment) {
-  if (holder === null) {
-    return
-  }
-
   const row = document.createElement('tr')
   row.className = getDEFCON(assignment.deadline)
   Object.defineProperty(row, 'assignment', { value: assignment })
@@ -97,5 +101,5 @@ export const appendAssignment = function (assignment: Assignment) {
   remainingTimeSpan.className = 'remaining-time'
   row.insertCell().appendChild(remainingTimeSpan)
 
-  holder.appendChild(row)
+  assignmentListHolder.appendChild(row)
 }
