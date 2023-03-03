@@ -13,7 +13,7 @@ const PATHS = require('./paths')
 // Search entry files.
 const entries = Object.fromEntries(
   glob
-    .sync('{*.scss,**/index.{ts,js}}', {
+    .sync('{**/style.scss,**/index.{ts,js}}', {
       cwd: PATHS.src,
     })
     .map(function (entryPath) {
@@ -64,15 +64,12 @@ module.exports = {
       // Check for images imported in .js files and
       {
         test: /\.(png|jpe?g|gif)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              outputPath: 'images',
-              name: '[name].[ext]',
-            },
+        type: 'asset',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 50 * 1024,
           },
-        ],
+        },
       },
     ],
   },

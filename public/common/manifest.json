@@ -21,22 +21,22 @@
     {
       "matches": ["https://room.chuo-u.ac.jp/ct/*"],
       "js": ["common/index.js"],
-      "css": ["style.css"]
+      "css": ["common/style.css"]
     },
     {
       "matches": ["https://room.chuo-u.ac.jp/ct/home*"],
       "js": ["home/index.js"],
-      "css": ["style.css"]
+      "css": ["home/style.css"]
     },
     {
       "matches": ["https://room.chuo-u.ac.jp/ct/course*_report_*"],
       "js": ["attachment/index.js"],
-      "css": ["style.css"]
+      "css": ["attachment/style.css"]
     },
     {
       "matches": ["https://gakunin-idp.c.chuo-u.ac.jp/sso/timeout.cgi*"],
       "js": ["sso/index.js"],
-      "css": ["style.css"]
+      "css": ["sso/style.css"]
     }
   ],
   "web_accessible_resources": [

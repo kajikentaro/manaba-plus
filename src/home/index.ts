@@ -3,6 +3,7 @@ import getOptions from '../options/models'
 import arrange from './arrange'
 import hide from './hide'
 import move from './move'
+import replace from './replace'
 import { insertHomePanel, appendAssignment } from './insert'
 
 import getAssignments from './scrape'
@@ -20,6 +21,7 @@ getOptions().then(async function (options) {
   arrange()
   await hide()
   await move()
+  replace()
   await insertHomePanel()
 
   const assignmentSet = new Set<string>()

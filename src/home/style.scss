@@ -1,0 +1,21 @@
+@import '../base';
+
+.course-star {
+  &:not([stared]) {
+    filter: saturate(0%);
+  }
+
+  &:hover,
+  &[in-progress] {
+    filter: saturate(50%);
+  }
+}
+
+.status {
+  img {
+    display: inline-block;
+    margin: 2px;
+    width: 16px;
+    height: 16px;
+  }
+}

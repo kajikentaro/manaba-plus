@@ -1,4 +1,5 @@
 import { fetchText } from '../fetch'
+import { popMessages } from 'messages'
 import Assignment from './assignment'
 import '../extension/htmlElement'
 
@@ -19,6 +20,11 @@ export const insertHomePanel = async function () {
   require('sortable-decoration')
 
   holder = document.querySelector<HTMLElement>('#assignment-list-holder')
+}
+
+export const appendMessages = async function () {
+  const messages = await popMessages()
+  messages.forEach(function () {})
 }
 
 const now = Date.now()
