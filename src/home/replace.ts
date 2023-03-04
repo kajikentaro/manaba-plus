@@ -42,6 +42,12 @@ const replaceStatus = function (element: Element, courseUrl: string) {
   element.className = 'status'
 
   const children = Array.from(element.children)
+
+  let registrationState: Element
+  if (children[0].className === 'registration-state') {
+    registrationState = children.shift()
+  }
+
   const newChildren: HTMLAnchorElement[] = []
 
   for (let index = 0; index < children.length; index++) {
@@ -52,6 +58,10 @@ const replaceStatus = function (element: Element, courseUrl: string) {
   }
 
   element.replaceChildren(...newChildren)
+
+  if (typeof registrationState !== 'undefined') {
+    element.appendChild(registrationState)
+  }
 
   // Set assignment link.
   const img = children[1] as HTMLImageElement
