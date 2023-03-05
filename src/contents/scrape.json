@@ -7,6 +7,19 @@
             "children": [
                 {
                     "selectors": ".attachments a"
+                },
+                {
+                    "selectors": "a[href*=\"collectiondetail\"]",
+                    "children": [
+                        {
+                            "selectors": ".contentslist a",
+                            "children": [
+                                {
+                                    "selectors": ".report-submit-list a:not(.zoom-off)"
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },

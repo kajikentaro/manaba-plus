@@ -1,14 +1,20 @@
-import { currentTraces, getContents } from './scrape'
+import * as scrape from './scrape'
 import * as insert from './insert'
 import * as notify from './notify'
 import * as history from './history'
 import { sha256 } from 'hash'
-import { takeFinished, reserveDownload } from './download'
+import * as download from './download'
 
 const startButton = document.querySelector('#start-button')
 const cancelButton = document.querySelector('#cancel-button')
 
 let isDownloadStopped = true
+
+const preventClosing = function (event: Event) {
+  event.preventDefault()
+  event.returnValue = false
+  return false
+}
 
 const startDownload = async function () {
   if (!isDownloadStopped) {
@@ -29,12 +35,17 @@ const startDownload = async function () {
     }
   }
 
-  const progressTimer = setInterval(function () {
-    insert.updateProgress(currentTraces)
-  }, 500)
+  window.addEventListener('beforeunload', preventClosing, false)
 
-  const downloadTimer = setInterval(function () {
-    const { interrupted, completed, isEmpty } = takeFinished()
+  const progressTimer = setInterval(
+    insert.updateProgress,
+    500,
+    scrape.currentTraces
+  )
+
+  const downloadTimer = setInterval(async function () {
+    await download.requestDownload()
+    const { interrupted, completed, isEmpty } = download.takeFinished()
 
     completed.forEach(addExclusion)
 
@@ -50,29 +61,22 @@ const startDownload = async function () {
 
     history.setHistory(exclusionList)
 
+    window.removeEventListener('beforeunload', preventClosing, false)
+
     clearInterval(downloadTimer)
-  }, 500)
+  }, 1000)
 
-  for await (const content of getContents()) {
-    if (isDownloadStopped) {
-      break
-    }
-
-    // Skip dummy data.
-    if (content === null) {
-      continue
-    }
-
+  await scrape.startScraping(async function (content) {
     const { url, tokens } = content
     const hash = await sha256(url)
 
     if (exclusionList.has(hash)) {
-      continue
+      return
     }
 
     const context = { url, tokens, hash }
-    reserveDownload(context)
-  }
+    download.reserveDownload(context)
+  })
 
   cancelButton.setAttribute('disabled', '')
 
@@ -89,6 +93,8 @@ const startDownload = async function () {
 }
 
 const cancelDownload = async function () {
+  scrape.stopScraping()
+
   cancelButton.setAttribute('disabled', '')
 
   isDownloadStopped = true
@@ -98,4 +104,19 @@ const cancelDownload = async function () {
 export default function () {
   startButton.addEventListener('click', startDownload)
   cancelButton.addEventListener('click', cancelDownload)
+
+  document
+    .querySelector('#test-button')
+    .addEventListener('click', async function () {
+      console.info('TODO: speed up')
+      const last = performance.now()
+      const cs = []
+      await scrape.startScraping(function (c) {
+        cs.push(c)
+        console.log(c)
+      })
+      console.warn(cs)
+      const now = performance.now()
+      console.warn(now - last, 'ms')
+    })
 }

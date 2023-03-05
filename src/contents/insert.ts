@@ -24,8 +24,8 @@ const createProgress = function (trace: ScrapingTrace, child?: Element) {
   return container
 }
 
-export const updateProgress = function (traces?: ScrapingTrace[]) {
-  if (typeof traces === 'undefined' || traces.length === 0) {
+export const updateProgress = function (traces: ScrapingTrace[]) {
+  if (traces === null || traces.length === 0) {
     return
   }
 
@@ -83,18 +83,23 @@ export const appendFinished = function (
   interrupted: [DownloadContext, string][],
   completed: DownloadContext[]
 ) {
-  const interruptedFragment = document.createDocumentFragment()
-  for (const [context, message] of interrupted) {
-    const element = createInterrupted(context, message)
-    interruptedFragment.appendChild(element)
+  if (interrupted.length > 0) {
+    const interruptedFragment = document.createDocumentFragment()
+    for (const [context, message] of interrupted) {
+      const element = createInterrupted(context, message)
+      interruptedFragment.appendChild(element)
+    }
+
+    interruptedContentsHolder.appendChild(interruptedFragment)
   }
 
-  const completedFragment = document.createDocumentFragment()
-  for (const context of completed) {
-    const element = createCompleted(context)
-    completedFragment.appendChild(element)
-  }
+  if (completed.length > 0) {
+    const completedFragment = document.createDocumentFragment()
+    for (const context of completed) {
+      const element = createCompleted(context)
+      completedFragment.appendChild(element)
+    }
 
-  interruptedContentsHolder.appendChild(interruptedFragment)
-  completedContentsHolder.appendChild(completedFragment)
+    completedContentsHolder.appendChild(completedFragment)
+  }
 }

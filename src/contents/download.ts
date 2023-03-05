@@ -10,7 +10,7 @@ const inProgressStack: Map<number, DownloadContext> = new Map()
 const interruptedStack: [DownloadContext, string][] = []
 const completedStack: DownloadContext[] = []
 
-const requestDownload = async function () {
+export const requestDownload = async function () {
   if (inProgressStack.size >= limit) {
     return
   }
@@ -106,7 +106,7 @@ getOptions().then(function (options) {
 
   limit = options.contents['download-limit'].value
 
-  setInterval(requestDownload, 1000)
+  // setInterval(requestDownload, 1000)
   chrome.downloads.onChanged.addListener(downloadCallback)
 })
 

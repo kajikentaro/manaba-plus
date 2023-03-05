@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Manaba Plus",
   "version": "1.5.4",
-  "description": "Automatically download contents on Chuo University Manaba",
+  "description": "Add awesome modifications to Chuo University Manaba",
   "action": {
     "default_title": "Manaba Plusを開く"
   },
@@ -29,9 +29,19 @@
       "css": ["home/style.css"]
     },
     {
+      "matches": ["https://room.chuo-u.ac.jp/ct/course*_report"],
+      "js": ["report/index.js"],
+      "css": ["report/style.css"]
+    },
+    {
       "matches": ["https://room.chuo-u.ac.jp/ct/course*_report_*"],
       "js": ["attachment/index.js"],
       "css": ["attachment/style.css"]
+    },
+    {
+      "matches": ["https://room.chuo-u.ac.jp/ct/course*_grade"],
+      "js": ["grade/index.js"],
+      "css": ["grade/style.css"]
     },
     {
       "matches": ["https://gakunin-idp.c.chuo-u.ac.jp/sso/timeout.cgi*"],
