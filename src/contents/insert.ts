@@ -62,6 +62,7 @@ const createContentBody = function (context: ContentContext) {
   const parentAnchor = document.createElement('a')
   parentAnchor.className = 'parent'
   parentAnchor.href = context.parentUrl
+  parentAnchor.target = '_blank'
   body.appendChild(parentAnchor)
 
   const statusDiv = document.createElement('div')
