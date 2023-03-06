@@ -51,7 +51,6 @@ export const clearProgress = function () {
 const contentsHolder = document.querySelector('#contents-holder')
 
 const createContentBody = function (context: ContentContext) {
-  const node = document.createElement('li')
   const body = document.createElement('div')
   body.className = 'body'
 
@@ -75,21 +74,20 @@ const createContentBody = function (context: ContentContext) {
   }
   body.appendChild(statusDiv)
 
-  node.appendChild(body)
-  return node
+  return body
 }
 
 const createContentNode = function (token: string, child?: Element) {
-  const node = document.createElement('li')
+  const node = document.createElement('details')
+  node.setAttribute('open', '')
   node.setAttribute('token', token)
-  node.innerText = token
+
+  const summary = document.createElement('summary')
+  summary.innerText = token
+  node.appendChild(summary)
 
   if (typeof child !== 'undefined') {
-    const subHolder = document.createElement('ul')
-    subHolder.className = 'sub-holder'
-    subHolder.appendChild(child)
-
-    node.appendChild(subHolder)
+    node.appendChild(child)
   }
 
   return node
@@ -98,25 +96,25 @@ const createContentNode = function (token: string, child?: Element) {
 export const appendContent = function (context: ContentContext) {
   const tokens = [...context.tokens]
 
-  let existingHolder = contentsHolder
+  let existingNode = contentsHolder
   while (tokens.length > 0) {
     const token = tokens.pop()
+    const node = existingNode.querySelector(`:scope > [token="${token}"]`)
 
-    const node = existingHolder.querySelector(`:scope > [token="${token}"]`)
     if (node === null) {
       tokens.push(token)
       break
     } else {
-      existingHolder = node.querySelector('.sub-holder')
+      existingNode = node
     }
   }
 
-  let lastNode = createContentBody(context)
+  let lastNode: Element = createContentBody(context)
   for (const token of tokens.slice(1)) {
     lastNode = createContentNode(token, lastNode)
   }
 
-  existingHolder.appendChild(lastNode)
+  existingNode.appendChild(lastNode)
 }
 
 export const updateContents = function (stacks: {

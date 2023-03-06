@@ -17,6 +17,9 @@
   <div id="progress-bars-holder"></div>
 
   <style>
+    details > *:not(summary) {
+      margin-inline-start: 20px;
+    }
     .body {
       display: flex;
     }
@@ -37,7 +40,7 @@
       height: 20px;
     }
   </style>
-  <ul id="contents-holder"></ul>
+  <div id="contents-holder"></div>
 
   <div id="completed-message" style="display: none;">
     ダウンロードは完了しました。
@@ -46,16 +49,14 @@
     ダウンロードはキャンセルされました。
   </div>
 
-  
-  <div class="tips">
-    <p>
-      ダウンロード時に確認ウィンドウが表示される場合、ブラウザの設定から変更することもできます。
-    </p>
+  <details>
+    <summary>ダウンロード時に確認ウィンドウが表示される場合</summary>
+    ブラウザの設定から表示しないようにできます。
     <img src="../img/contents/image-chrome.png" width="500px" />
     <p class="screenshot-caption">Chromeの場合</p>
     <img src="../img/contents/image-edge.png" width="500px" />
     <p class="screenshot-caption">Edgeの場合</p>
-  </div>
+  </details>
 </body>
 
 </html>

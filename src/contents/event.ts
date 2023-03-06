@@ -7,6 +7,7 @@ import * as download from './download'
 
 const startButton = document.querySelector('#start-button')
 const cancelButton = document.querySelector('#cancel-button')
+const testButton = document.querySelector('#test-button')
 
 let isDownloadStopped = true
 
@@ -104,6 +105,8 @@ const cancelDownload = async function () {
 }
 
 const testScraping = async function () {
+  testButton.setAttribute('disabled', '')
+
   console.info('TODO: speed up')
   const last = performance.now()
   await scrape.startScraping(function (context: ContentContext) {
@@ -111,12 +114,13 @@ const testScraping = async function () {
   })
   const now = performance.now()
   console.warn(now - last, 'ms')
+
+  testButton.removeAttribute('disabled')
 }
 
 // Entry point
 export default function () {
   startButton.addEventListener('click', startDownload)
   cancelButton.addEventListener('click', cancelDownload)
-
-  document.querySelector('#test-button').addEventListener('click', testScraping)
+  testButton.addEventListener('click', testScraping)
 }
