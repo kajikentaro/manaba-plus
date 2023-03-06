@@ -1,10 +1,10 @@
 import { fetchDOM } from 'fetch'
 
-const starRegex = /(.+)_(set|unset)___$/
+const starRegex = /(.+_)(set|unset)(_.+)$/
 
 const replaceStar = function (anchor: HTMLAnchorElement) {
   const match = starRegex.exec(anchor.href)
-  const urlBase = match[1]
+  const components = match.slice(1)
   let isStared = match[2] === 'unset'
 
   const child = document.createElement('img')
@@ -18,7 +18,8 @@ const replaceStar = function (anchor: HTMLAnchorElement) {
 
     child.setAttribute('in-progress', '')
 
-    const url = `${urlBase}_${isStared ? 'unset' : 'set'}___`
+    components[1] = isStared ? 'unset' : 'set'
+    const url = components.join()
     const response = await fetch(url)
 
     if (response.ok) {
