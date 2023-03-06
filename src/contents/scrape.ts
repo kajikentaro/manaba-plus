@@ -5,8 +5,11 @@ import { fetchDOM } from '../fetch'
 import consts from '../consts'
 
 let isScraping = false
-let returnContent: (content: DownloadContext) => void = null
+let returnContext: (context: DownloadContext) => void = null
 
+/**
+ * for createProgress
+ */
 export let currentTraces: ScrapingTrace[] = null
 
 const scrape = async function (
@@ -27,11 +30,16 @@ const scrape = async function (
   ])
 
   if (typeof node.children === 'undefined') {
+    const parentUrl = doc.baseURI
+
     for (const [url, token] of items) {
-      returnContent({
+      const context = {
+        parentUrl,
         url,
         tokens: [token, ...traces.map((trace) => trace.token)],
-      })
+      }
+
+      returnContext(context)
     }
   } else {
     const promises: Promise<void>[] = []
@@ -68,14 +76,14 @@ const scrape = async function (
 }
 
 export const startScraping = async function (
-  callback: (DownloadContext) => void
+  callback: (context: DownloadContext) => void
 ) {
   if (isScraping) {
     return
   }
 
   isScraping = true
-  returnContent = callback
+  returnContext = callback
 
   currentTraces = null
 

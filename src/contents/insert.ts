@@ -1,3 +1,7 @@
+import './content.type'
+import errors from './errors.json'
+
+// #region Progress
 const progressBarHolder = document.querySelector('#progress-bars-holder')
 
 const createProgress = function (trace: ScrapingTrace, child?: Element) {
@@ -14,12 +18,13 @@ const createProgress = function (trace: ScrapingTrace, child?: Element) {
   progress.value = trace.index
   container.appendChild(progress)
 
-  const subHolder = document.createElement('div')
-  subHolder.className = 'sub-holder'
   if (typeof child !== 'undefined') {
+    const subHolder = document.createElement('div')
+    subHolder.className = 'sub-holder'
     subHolder.appendChild(child)
+
+    container.appendChild(subHolder)
   }
-  container.appendChild(subHolder)
 
   return container
 }
@@ -40,66 +45,111 @@ export const updateProgress = function (traces: ScrapingTrace[]) {
 export const clearProgress = function () {
   progressBarHolder.replaceChildren()
 }
+// #endregion
 
-const interruptedContentsHolder = document.querySelector(
-  '#interrupted-contents-holder'
-)
-const completedContentsHolder = document.querySelector(
-  '#completed-contents-holder'
-)
+// #region Contents
+const contentsHolder = document.querySelector('#contents-holder')
 
-const createCompleted = function (context: DownloadContext) {
-  const row = document.createElement('div')
-  row.className = 'content-row'
+const createContentBody = function (context: ContentContext) {
+  const node = document.createElement('li')
+  const body = document.createElement('div')
+  body.className = 'body'
 
-  const tokensDiv = document.createElement('div')
-  tokensDiv.className = 'tokens'
+  const titleDiv = document.createElement('div')
+  titleDiv.className = 'title'
+  titleDiv.innerText = context.tokens[0]
+  body.appendChild(titleDiv)
 
-  const tokensFragment = document.createDocumentFragment()
-  for (const token of context.tokens) {
-    const tokenDiv = document.createElement('div')
-    tokenDiv.innerText = token
-    tokensFragment.appendChild(tokenDiv)
+  const parentAnchor = document.createElement('a')
+  parentAnchor.className = 'parent'
+  parentAnchor.href = context.parentUrl
+  body.appendChild(parentAnchor)
+
+  const statusDiv = document.createElement('div')
+  statusDiv.id = context.hash
+  statusDiv.className = 'status'
+  if (context.excluded) {
+    statusDiv.classList.add('excluded')
+  } else {
+    statusDiv.classList.add('pending')
   }
-  tokensDiv.appendChild(tokensFragment)
+  body.appendChild(statusDiv)
 
-  row.appendChild(tokensDiv)
-
-  return row
+  node.appendChild(body)
+  return node
 }
 
-const createInterrupted = function (context: DownloadContext, message: string) {
-  const row = createCompleted(context)
+const createContentNode = function (token: string, child?: Element) {
+  const node = document.createElement('li')
+  node.setAttribute('token', token)
+  node.innerText = token
 
-  const messageDiv = document.createElement('div')
-  messageDiv.className = 'message'
-  messageDiv.innerText = message
-  row.appendChild(messageDiv)
+  if (typeof child !== 'undefined') {
+    const subHolder = document.createElement('ul')
+    subHolder.className = 'sub-holder'
+    subHolder.appendChild(child)
 
-  return row
+    node.appendChild(subHolder)
+  }
+
+  return node
 }
 
-export const appendFinished = function (
-  interrupted: [DownloadContext, string][],
+export const appendContent = function (context: ContentContext) {
+  const tokens = [...context.tokens]
+
+  let existingHolder = contentsHolder
+  while (tokens.length > 0) {
+    const token = tokens.pop()
+
+    const node = existingHolder.querySelector(`:scope > [token="${token}"]`)
+    if (node === null) {
+      tokens.push(token)
+      break
+    } else {
+      existingHolder = node.querySelector('.sub-holder')
+    }
+  }
+
+  let lastNode = createContentBody(context)
+  for (const token of tokens.slice(1)) {
+    lastNode = createContentNode(token, lastNode)
+  }
+
+  existingHolder.appendChild(lastNode)
+}
+
+export const updateContents = function (stacks: {
+  downloading: DownloadContext[]
+  interrupted: [DownloadContext, string][]
   completed: DownloadContext[]
-) {
-  if (interrupted.length > 0) {
-    const interruptedFragment = document.createDocumentFragment()
-    for (const [context, message] of interrupted) {
-      const element = createInterrupted(context, message)
-      interruptedFragment.appendChild(element)
-    }
+}) {
+  stacks.downloading.forEach(function (context: ContentContext) {
+    const statusDiv = document.getElementById(context.hash)
+    statusDiv.classList.remove('pending')
+    statusDiv.classList.add('downloading')
+  })
 
-    interruptedContentsHolder.appendChild(interruptedFragment)
-  }
+  stacks.interrupted.forEach(function ([context, error]: [
+    ContentContext,
+    string
+  ]) {
+    const statusDiv = document.getElementById(context.hash)
+    statusDiv.classList.remove('downloading')
+    statusDiv.classList.add('interrupted')
 
-  if (completed.length > 0) {
-    const completedFragment = document.createDocumentFragment()
-    for (const context of completed) {
-      const element = createCompleted(context)
-      completedFragment.appendChild(element)
-    }
+    const message = errors[error] ?? error
+    statusDiv.innerText = message
+  })
 
-    completedContentsHolder.appendChild(completedFragment)
-  }
+  stacks.completed.forEach(function (context: ContentContext) {
+    const statusDiv = document.getElementById(context.hash)
+    statusDiv.classList.remove('downloading')
+    statusDiv.classList.add('completed')
+  })
 }
+
+export const clearContents = function () {
+  contentsHolder.replaceChildren()
+}
+// #endregion

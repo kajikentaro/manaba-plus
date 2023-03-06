@@ -12,23 +12,32 @@
   <div>
     <button id="start-button">ダウンロードを開始する</button>
     <button id="cancel-button" disabled>ダウンロードをキャンセルする</button>
-    <button id="test-button">テスト</button>
+    <button id="test-button">スクレイピングテスト</button>
   </div>
   <div id="progress-bars-holder"></div>
 
   <style>
-    .horizontal-panel{
+    .body {
       display: flex;
     }
-    .content-row .tokens {
-      display: flex;
-      flex-direction: column-reverse;
+    .excluded {
+      background-color: whitesmoke;
+    }
+    .interrupted {
+      background-color: red;
+    }
+    .completed {
+      background-color: greenyellow;
+    }
+    .parent::after {
+      content: "^_^";
+    }
+    .status {
+      width: 200px;
+      height: 20px;
     }
   </style>
-  <div class="horizontal-panel">
-    <div id="interrupted-contents-holder"></div>
-    <div id="completed-contents-holder"></div>
-  </div>
+  <ul id="contents-holder"></ul>
 
   <div id="completed-message" style="display: none;">
     ダウンロードは完了しました。

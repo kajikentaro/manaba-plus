@@ -6,12 +6,12 @@ let directoryName = 'manaba'
 let limit = 5
 
 const pendingStack: [chrome.downloads.DownloadOptions, DownloadContext][] = []
-const inProgressStack: Map<number, DownloadContext> = new Map()
+const downloadingStack: Map<number, DownloadContext> = new Map()
 const interruptedStack: [DownloadContext, string][] = []
 const completedStack: DownloadContext[] = []
 
 export const requestDownload = async function () {
-  if (inProgressStack.size >= limit) {
+  if (downloadingStack.size >= limit) {
     return
   }
 
@@ -30,13 +30,12 @@ export const requestDownload = async function () {
   }
 
   if (typeof downloadId === 'undefined') {
-    const message =
-      chrome.runtime.lastError.message ?? 'Could not start downloading...'
-    interruptedStack.push([context, message])
+    const error = chrome.runtime.lastError.message ?? 'COULD_NOT_START'
+    interruptedStack.push([context, error])
     return
   }
 
-  inProgressStack.set(downloadId, context)
+  downloadingStack.set(downloadId, context)
 }
 
 const downloadCallback = async function (
@@ -46,12 +45,12 @@ const downloadCallback = async function (
     return
   }
 
-  const context = inProgressStack.get(delta.id)
+  const context = downloadingStack.get(delta.id)
   if (typeof context === 'undefined') {
     return
   }
 
-  inProgressStack.delete(delta.id)
+  downloadingStack.delete(delta.id)
 
   switch (delta.state.current) {
     case 'interrupted': {
@@ -59,8 +58,8 @@ const downloadCallback = async function (
         id: delta.id,
       })
 
-      const message = items[0].error ?? 'Downloading failed for some reason...'
-      interruptedStack.push([context, message])
+      const error = items[0].error ?? 'FAILED'
+      interruptedStack.push([context, error])
       break
     }
     case 'complete': {
@@ -124,11 +123,19 @@ export const reserveDownload = async function (context: DownloadContext) {
   pendingStack.push([{ url: context.url, filename, saveAs: false }, context])
 }
 
-export const takeFinished = function () {
+export const takeStacks = function () {
   // Move items.
+  const downloading = Array.from(downloadingStack.values())
   const interrupted = interruptedStack.splice(0)
   const completed = completedStack.splice(0)
-  const isEmpty = pendingStack.length === 0 && inProgressStack.size === 0
+  const isEmpty = pendingStack.length === 0 && downloadingStack.size === 0
 
-  return { interrupted, completed, isEmpty }
+  return { downloading, interrupted, completed, isEmpty }
+}
+
+export const cancelDownload = async function () {
+  pendingStack.splice(0)
+  for (const downloadId of downloadingStack.keys()) {
+    await chrome.downloads.cancel(downloadId)
+  }
 }
