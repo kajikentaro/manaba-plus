@@ -123,6 +123,8 @@ export const updateContents = function (stacks: {
   interrupted: [DownloadContext, string][]
   completed: DownloadContext[]
 }) {
+  // Use getElementById because the hash can start with a number and it cannot adapt to the CSS3 selector.
+
   stacks.downloading.forEach(function (context: ContentContext) {
     const statusDiv = document.getElementById(context.hash)
     statusDiv.classList.remove('pending')
