@@ -124,6 +124,12 @@ const replaceYearAndRemarks = function (element: HTMLElement) {
   element.replaceWith(yearDiv, periodDiv)
 }
 
+const replaceBanners = function () {
+  const bannerList = document.querySelector('.banner-list')
+  const anchors = bannerList.querySelectorAll('a')
+  bannerList.replaceChildren(...anchors)
+}
+
 // Entry point
 export default function () {
   replaceContentBody()
@@ -152,4 +158,6 @@ export default function () {
   document
     .querySelectorAll('.courseitemdetail:first-of-type')
     .forEach(replaceYearAndRemarks)
+
+  replaceBanners()
 }

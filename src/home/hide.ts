@@ -1,31 +1,23 @@
 import getOptions from '../options/models'
-import hide from '../hide'
 
 export default async function () {
-  const options = await getOptions()
+  const { options } = await getOptions()
 
-  if (!options.home['show-alert'].value) {
-    hide('.alertlist')
-  }
+  const items = [
+    options.home['visibility-and-movement']['hide-or-move-alert'],
+    options.home['visibility-and-movement']['hide-or-move-centernews'],
+    options.home['visibility-and-movement']['hide-or-move-syllabus'],
+    options.home['visibility-and-movement']['hide-or-move-assignment'],
+    options.home['visibility-and-movement']['hide-or-move-former-link'],
+    options.home['visibility-and-movement']['hide-or-move-kikuzou'],
+    options.home['visibility-and-movement']['hide-or-move-banner-list'],
+  ]
+  for (const item of items) {
+    if (item.value !== 'hide') {
+      continue
+    }
 
-  const showSyllabus = options.home['show-syllabus'].value
-  const showAssignment = options.home['show-assignment'].value
-  const showFormerLink = options.home['show-former-link'].value
-  const showKikuzou = options.home['show-kikuzou'].value
-
-  if (!showSyllabus) {
-    hide('.my-infolist-searchall')
-  }
-
-  if (!showAssignment) {
-    hide('.my-infolist-event')
-  }
-
-  if (!showFormerLink) {
-    hide('.my-infolist-tips:not(.my-infolist-kikuzou)')
-  }
-
-  if (!showKikuzou) {
-    hide('.my-infolist-kikuzou')
+    const element = document.getElementById(item.id)
+    element.shown(false)
   }
 }

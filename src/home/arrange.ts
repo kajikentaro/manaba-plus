@@ -1,5 +1,44 @@
-export default function () {
-  // #region Class
+import getOptions from '../options/models'
+
+export default async function () {
+  const { options } = await getOptions()
+
+  // #region id
+  const setId = function (selectors: string, id: string) {
+    document.querySelector(selectors).id = id
+  }
+
+  setId(
+    '.alertlist',
+    options.home['visibility-and-movement']['hide-or-move-alert'].id
+  )
+  setId(
+    '.my-infolist-centernews',
+    options.home['visibility-and-movement']['hide-or-move-centernews'].id
+  )
+  setId(
+    '.my-infolist-searchall',
+    options.home['visibility-and-movement']['hide-or-move-syllabus'].id
+  )
+  setId(
+    '.my-infolist-event',
+    options.home['visibility-and-movement']['hide-or-move-assignment'].id
+  )
+  setId(
+    '.my-infolist-tips:not(.my-infolist-kikuzou)',
+    options.home['visibility-and-movement']['hide-or-move-former-link'].id
+  )
+  setId(
+    '.my-infolist-kikuzou',
+    options.home['visibility-and-movement']['hide-or-move-kikuzou'].id
+  )
+  setId(
+    '.banner-list',
+    options.home['visibility-and-movement']['hide-or-move-banner-list'].id
+  )
+  // #endregion
+
+  // #region class
   const addClass = function (selectors: string, name: string) {
     document.querySelectorAll(selectors).forEach(function (element) {
       element.classList.add(name)
@@ -10,6 +49,8 @@ export default function () {
       element.classList.remove(name)
     })
   }
+
+  addClass('#banner-list', 'wrap-box')
 
   removeClass('.course:not(.course-cell)', 'course')
   addClass('.courselist-c, .coursecard', 'course')

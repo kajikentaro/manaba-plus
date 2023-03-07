@@ -6,16 +6,48 @@
   column-gap: 15px;
 }
 
-.my-infolist-header {
-  background-size: 100% 100% !important;
+.wrap-box {
+  display: flex;
+  flex-wrap: wrap;
+}
 
-  h2 {
-    margin-left: 60px;
-  }
+.space-evenly {
+  justify-content: space-evenly;
 }
 
 .right-align {
   text-align: right;
+}
+
+#content-body {
+  .right {
+    max-width: 230px;
+  }
+}
+
+.my-infolist-header {
+  background-size: 100% 100% !important;
+  padding-inline-start: 60px !important;
+
+  h2 {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
+}
+
+.my-infolist-body {
+  height: unset !important;
+}
+
+#alert,
+#news {
+  flex-basis: 100%;
+}
+
+#syllabus,
+#former-link,
+#kikuzou {
+  width: 230px;
 }
 
 .remarks,
@@ -65,4 +97,8 @@
       height: 16px;
     }
   }
+}
+
+.course-cell {
+  height: 90px !important;
 }
