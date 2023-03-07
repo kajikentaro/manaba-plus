@@ -24,7 +24,15 @@
       "css": ["common/style.css"]
     },
     {
-      "matches": ["https://room.chuo-u.ac.jp/ct/home", "https://room.chuo-u.ac.jp/ct/home?*", "https://room.chuo-u.ac.jp/ct/home_course*"],
+      "matches": [
+        "https://room.chuo-u.ac.jp/ct/home",
+        "https://room.chuo-u.ac.jp/ct/home?*",
+        "https://room.chuo-u.ac.jp/ct/home_?*",
+        "https://room.chuo-u.ac.jp/ct/home__*",
+        "https://room.chuo-u.ac.jp/ct/home_course",
+        "https://room.chuo-u.ac.jp/ct/home_course_*",
+        "https://room.chuo-u.ac.jp/ct/home_course?*"
+      ],
       "js": ["home/index.js"],
       "css": ["home/style.css"]
     },
