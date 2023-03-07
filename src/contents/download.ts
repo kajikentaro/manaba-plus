@@ -99,7 +99,7 @@ const preprocessToken = function (token: string) {
 }
 
 // Entry point
-getOptions().then(function (options) {
+getOptions().then(function ({ options }) {
   directoryName = options.contents['directory-name'].value
   directoryName = preprocessToken(directoryName)
 

@@ -8,7 +8,7 @@ const transition = function () {
   window.location.href = url
 }
 
-getOptions().then(async function (options) {
+getOptions().then(async function ({ options }) {
   const customRrl = options.timeout['destination-on-timeout'].value.trim()
   if (customRrl) {
     url = customRrl

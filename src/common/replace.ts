@@ -15,7 +15,7 @@ const overwriteExternalUrl = function (element: HTMLAnchorElement) {
 }
 
 export default async function () {
-  const options = await getOptions()
+  const { options } = await getOptions()
 
   if (options.common['transition-directly'].value) {
     document

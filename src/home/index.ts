@@ -13,12 +13,12 @@ import Assignment from './assignment'
 import dummies from './dummies.json'
 
 // Entry point.
-getOptions().then(async function (options) {
+getOptions().then(async function ({ options }) {
   if (!options.common['allow-changing'].value) {
     return
   }
 
-  arrange()
+  await arrange()
   replace()
   await hide()
   await move()

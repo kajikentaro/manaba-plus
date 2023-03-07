@@ -33,7 +33,7 @@ const setRemainingTime = function (deadline: Date, node: Node) {
 }
 
 export default async function () {
-  const options = await getOptions()
+  const { options } = await getOptions()
 
   // #region Add top buttons actions
   const contentsButton = document.querySelector('#contents-button')

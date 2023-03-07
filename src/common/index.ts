@@ -5,7 +5,7 @@ import replace from './replace'
 import hide from './hide'
 
 // Entry point.
-getOptions().then(async function (options) {
+getOptions().then(async function ({ options }) {
   if (!options.common['allow-changing'].value) {
     return
   }
