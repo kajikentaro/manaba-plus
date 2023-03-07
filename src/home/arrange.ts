@@ -1,14 +1,28 @@
 export default function () {
-  // #region To show background image.
-  const orgheader = document.querySelector<HTMLElement>('#orgheader')
-  if (orgheader !== null) {
-    orgheader.style.backgroundColor = 'transparent'
+  // #region Class
+  const addClass = function (selectors: string, name: string) {
+    document.querySelectorAll(selectors).forEach(function (element) {
+      element.classList.add(name)
+    })
+  }
+  const removeClass = function (selectors: string, name: string) {
+    document.querySelectorAll(selectors).forEach(function (element) {
+      element.classList.remove(name)
+    })
   }
 
-  const pagebody = document.querySelector<HTMLElement>('.pagebody')
-  if (pagebody !== null) {
-    pagebody.style.borderStyle = 'none'
-  }
+  removeClass('.course:not(.course-cell)', 'course')
+  addClass('.courselist-c, .coursecard', 'course')
+  addClass(
+    '.course-cell a:first-of-type, .courselist-title a, .course-card-title a',
+    'title'
+  )
+  addClass('.courselist-c td:nth-child(2)', 'year')
+  addClass('.courselist-c td:nth-child(3)', 'remarks')
+  addClass(
+    '.courselist-c td:nth-child(4), .courseitemdetail:last-of-type',
+    'teachers'
+  )
   // #endregion
 
   // #region Make responsible.
@@ -19,11 +33,9 @@ export default function () {
     contentbodyLeft.style.paddingRight = '15px'
   }
 
-  const courselistweekly =
-    document.querySelector<HTMLElement>('#courselistweekly')
-  if (courselistweekly !== null) {
-    courselistweekly.style.paddingRight = '0px'
-  }
+  document
+    .querySelector<HTMLElement>('#courselistweekly')
+    ?.style?.removeProperty('padding-right')
   document
     .querySelectorAll<HTMLElement>('.my-infolist-header')
     .forEach(function (element) {
@@ -31,14 +43,10 @@ export default function () {
     })
 
   document
-    .querySelectorAll<HTMLElement>('.courselist')
-    .forEach(function (element) {
-      const tableHeaders = element.querySelectorAll('th')
-
-      const widths = ['auto', '50px', '50px', '20%']
-      for (let i = 0; i < 4; i++) {
-        tableHeaders[i].setAttribute('width', widths[i])
-      }
-    })
+    .querySelector<HTMLElement>('.courselist')
+    .style.removeProperty('width')
+  document.querySelectorAll('.courselist th').forEach(function (element) {
+    element.removeAttribute('width')
+  })
   // #endregion
 }

@@ -1,21 +1,50 @@
 @import '../base';
 
-.course-star {
-  &:not([stared]) {
-    filter: saturate(0%);
+.remarks,
+.teachers {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.courselist {
+  table-layout: fixed;
+
+  th:nth-of-type(2) {
+    width: 40px;
   }
 
-  &:hover,
-  &[in-progress] {
-    filter: saturate(50%);
+  th:nth-of-type(3) {
+    width: 80px;
+  }
+
+  th:nth-of-type(4) {
+    width: 160px;
   }
 }
 
-.status {
-  img {
-    display: inline-block;
-    margin: 2px;
-    width: 16px;
-    height: 16px;
+.course {
+  vertical-align: unset;
+  padding-right: unset;
+
+  .star {
+    &:not([stared]) {
+      filter: saturate(0%);
+    }
+
+    &:hover,
+    &[in-progress] {
+      filter: saturate(50%);
+    }
+  }
+
+  .status {
+    display: flex;
+
+    img {
+      margin: 2px;
+      width: 16px;
+      height: 16px;
+    }
   }
 }

@@ -8,7 +8,7 @@ const replaceStar = function (anchor: HTMLAnchorElement) {
   let isStared = match[2] === 'unset'
 
   const child = document.createElement('img')
-  child.classList.add('course-star')
+  child.className = 'star'
   child.src = '../icon_clip_on.png'
   if (isStared) {
     child.setAttribute('stared', '')
@@ -40,7 +40,8 @@ const statusSuffix = [
 ]
 
 const replaceStatus = function (element: Element, courseUrl: string) {
-  element.className = 'status'
+  const newElement = document.createElement('div')
+  newElement.className = 'status'
 
   const children = Array.from(element.children)
 
@@ -56,13 +57,14 @@ const replaceStatus = function (element: Element, courseUrl: string) {
     newChild.href = courseUrl + statusSuffix[index]
     newChild.appendChild(children[index])
     newChildren.push(newChild)
+    newElement.appendChild(newChild)
   }
-
-  element.replaceChildren(...newChildren)
 
   if (typeof registrationState !== 'undefined') {
-    element.appendChild(registrationState)
+    newElement.appendChild(registrationState)
   }
+
+  element.replaceWith(newElement)
 
   // Set assignment link.
   const img = children[1] as HTMLImageElement
@@ -87,29 +89,46 @@ const replaceStatus = function (element: Element, courseUrl: string) {
   })
 }
 
+const replaceYearAndRemarks = function (element: HTMLElement) {
+  // Extract year and remarks from `innerText`.
+  const match = /(\d{4})(.*)/.exec(element.innerText)
+  const year = match[1]
+  const remarks = match[2].trim()
+
+  const yearDiv = document.createElement('div')
+  yearDiv.className = 'year'
+  yearDiv.innerText = year
+
+  const periodDiv = document.createElement('div')
+  periodDiv.className = 'remarks'
+  periodDiv.innerText = remarks
+
+  element.replaceWith(yearDiv, periodDiv)
+}
+
 export default function () {
+  document.querySelectorAll('.course').forEach(function (element) {
+    const courseAnchor = element.querySelector<HTMLAnchorElement>('.title')
+    if (courseAnchor === null) {
+      return
+    }
+
+    const courseUrl = courseAnchor.href
+
+    const starAnchor = element.querySelector<HTMLAnchorElement>(
+      'a[href^="home_fav"]'
+    )
+    if (starAnchor !== null) {
+      replaceStar(starAnchor)
+    }
+
+    const status = element.querySelector('.coursestatus, .course-card-status')
+    if (status !== null) {
+      replaceStatus(status, courseUrl)
+    }
+  })
+
   document
-    .querySelectorAll('.course-cell, .courselist-c, .coursecard')
-    .forEach(function (element) {
-      const courseAnchor = element.querySelector<HTMLAnchorElement>(
-        'a:not([href^="home_fav"])'
-      )
-      if (courseAnchor === null) {
-        return
-      }
-
-      const courseUrl = courseAnchor.href
-
-      const starAnchor = element.querySelector<HTMLAnchorElement>(
-        'a[href^="home_fav"]'
-      )
-      if (starAnchor !== null) {
-        replaceStar(starAnchor)
-      }
-
-      const status = element.querySelector('.coursestatus, .course-card-status')
-      if (status !== null) {
-        replaceStatus(status, courseUrl)
-      }
-    })
+    .querySelectorAll('.courseitemdetail:first-of-type')
+    .forEach(replaceYearAndRemarks)
 }
