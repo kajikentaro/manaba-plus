@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Manaba Plus",
   "version": "1.5.4",
-  "description": "Add awesome modifications to Chuo University Manaba",
+  "description": "Add awesome modifications to Chuo University manaba",
   "action": {
     "default_title": "Manaba Plusを開く"
   },
