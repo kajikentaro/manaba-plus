@@ -1,10 +1,89 @@
 import getOptions from '../options/models'
 import { clearHistory } from 'contents/history'
 
-export default async function () {
-  const options = await getOptions()
+const addConstraint = function (element: HTMLElement, dependencyId?: string) {
+  if (element === null || !('disabled' in element)) {
+    return
+  }
 
-  // Add button actions.
+  if (typeof dependencyId === 'undefined') {
+    return
+  }
+
+  const isInverted = dependencyId.startsWith('!')
+  if (isInverted) {
+    dependencyId = dependencyId.slice(1)
+  }
+
+  const dependency = document.getElementById(dependencyId)
+  if (dependency === null || !('checked' in dependency)) {
+    return
+  }
+
+  document
+    .getElementById(dependencyId)
+    ?.addEventListener('input', function (event) {
+      const dependency = event.target as HTMLInputElement
+      element.disabled = !dependency.checked !== isInverted
+    })
+}
+
+const addBindings = async function () {
+  const { sections, items } = await getOptions()
+
+  for (const [key, section] of sections) {
+    const element = document.getElementById(key)
+    element?.querySelectorAll('input').forEach(function (element) {
+      addConstraint(element, section.dependency)
+    })
+  }
+  for (const [key, item] of items) {
+    const element = document.getElementById(key)
+    addConstraint(element, item.dependency)
+
+    if (element === null || !('value' in item)) {
+      continue
+    }
+
+    switch (item.type) {
+      case 'button': {
+        break
+      }
+      case 'checkbox': {
+        element.addEventListener('input', function (event) {
+          const input = event.target as HTMLInputElement
+          item.value = input.checked
+        })
+        break
+      }
+      case 'collection': {
+        break
+      }
+      case 'radio': {
+        element.querySelectorAll('input').forEach(function (input) {
+          input.addEventListener('input', function (event) {
+            const input = event.target as HTMLInputElement
+            if (input.checked) {
+              item.value = input.value
+            }
+          })
+        })
+        break
+      }
+      default: {
+        element.addEventListener('input', function (event) {
+          const input = event.target as HTMLInputElement
+          item.value = input.checked
+        })
+        break
+      }
+    }
+  }
+}
+
+const addButtonActions = async function () {
+  const { options } = await getOptions()
+
   document
     .querySelector('#download-contents')
     ?.addEventListener('click', function () {
@@ -19,7 +98,6 @@ export default async function () {
       }
 
       await clearHistory()
-      alert(options.contents['delete-history'].message)
     })
 
   document
@@ -31,39 +109,11 @@ export default async function () {
 
       await chrome.storage.sync.clear()
       location.reload()
-      alert(options.other['reset-options'].message)
     })
+}
 
-  // Add constraint actions.
-  // const showElements = document.querySelectorAll('#home [id|="show"]')
-  // document
-  //   .querySelector('#allow-changing')
-  //   ?.addEventListener('input', function (event) {
-  //     const element = event.target as HTMLInputElement
-
-  //     if (element.checked) {
-  //       for (const showElement of showElements) {
-  //         showElement.removeAttribute('disabled')
-  //       }
-  //     }
-  //     else {
-  //       for (const showElement of showElements) {
-  //         showElement.setAttribute('disabled', '')
-  //       }
-  //     }
-  //   })
-
-  // const timeoutButtonLabel = document.querySelector('#timeout-button-label')
-  // document
-  //   .querySelector('#transition-automatically')
-  //   ?.addEventListener('input', function (event) {
-  //     const element = event.target as HTMLInputElement
-
-  //     if (element.checked) {
-  //       timeoutButtonLabel.setAttribute('disabled', '')
-  //     }
-  //     else {
-  //       timeoutButtonLabel.removeAttribute('disabled')
-  //     }
-  //   })
+// Entry point
+export default async function () {
+  await addBindings()
+  await addButtonActions()
 }

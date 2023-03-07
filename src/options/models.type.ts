@@ -1,20 +1,25 @@
 export {}
 
 declare global {
-  interface OptionSection {
-    title: string
+  interface OptionNode {
+    isSection?: boolean
+    dependency?: string
   }
 
-  interface OptionItem {
+  interface OptionSection extends OptionNode {
+    title: string
+    children?: { key: string; node: OptionNode }[]
+  }
+
+  interface OptionItem extends OptionNode {
     hint: string
     description: string
-    type: 'button' | 'checkbox' | 'collection' | 'number' | 'text'
+    type: 'button' | 'checkbox' | 'collection' | 'number' | 'radio' | 'text'
     _value: unknown
   }
 
   interface OptionButtonItem extends OptionItem {
     value: string
-    message: string
   }
 
   interface OptionCheckboxItem extends OptionItem {
@@ -27,6 +32,17 @@ declare global {
 
   interface OptionNumberItem extends OptionItem {
     value: number
+    min?: number
+    max?: number
+  }
+
+  interface OptionRadioItem extends OptionItem {
+    value: string
+    choices: {
+      key: string
+      hint: string
+      description: string
+    }[]
   }
 
   interface OptionTextItem extends OptionItem {

@@ -12,13 +12,15 @@
       "hint": "「メモ」を表示する",
       "description": "チェックを入れると、ホーム画面の上部やその他の画面の下部にある「メモ」を表示します。",
       "type": "checkbox",
-      "value": true
+      "value": true,
+      "dependency": "allow-changing"
     },
     "transition-directly": {
       "hint": "リンクを直接開く",
       "description": "チェックを入れると、外部リンクをクリックしたとき、確認ダイアログを表示せずにリンクを開きます。",
       "type": "checkbox",
-      "value": true
+      "value": true,
+      "dependency": "allow-changing"
     }
   },
   "contents": {
@@ -33,7 +35,8 @@
       "hint": "同時ダウンロード数",
       "description": "同時にダウンロードされるファイル数の上限値です。",
       "type": "number",
-      "value": 5
+      "value": 5,
+      "min": 1
     },
     "download-contents": {
       "hint": "",
@@ -45,12 +48,12 @@
       "hint": "",
       "description": "コンテンツの重複ダウンロードを防ぐために内部に保存している履歴を消去します。",
       "type": "button",
-      "value": "ダウンロード履歴のリセット",
-      "message": "ダウンロード履歴を削除しました。"
+      "value": "ダウンロード履歴のリセット"
     }
   },
   "home": {
     "title": "ホーム画面",
+    "dependency": "allow-changing",
     "show-home-panel": {
       "hint": "ホームパネルを表示する",
       "description": "チェックを入れると、ホーム画面にManaba Plusのボタンが表示されます。チェックが入っていないときにこのページを訪れるには、拡張機能アイコンをクリックします。",
@@ -61,49 +64,185 @@
       "hint": "未提出課題一覧を開く",
       "description": "チェックを入れると、ホーム画面を開いたとき、未提出課題一覧が開いた状態で表示されます。",
       "type": "checkbox",
-      "value": false
-    },
-    "show-alert": {
-      "hint": "アラートを表示する",
-      "description": "チェックを入れると、ホーム画面に「ポートフォリオにコレクションが追加されました。」「コレクションが更新されています。」「ポートフォリオのコレクションにコメントが追加されました。」などのアラートが表示されます。",
-      "type": "checkbox",
-      "value": false
-    },
-    "show-syllabus": {
-      "hint": "「シラバス検索」を表示する",
-      "description": "チェックを入れると、ホーム画面にシラバス検索ボックスが表示されます。",
-      "type": "checkbox",
-      "value": true
-    },
-    "show-assignment": {
-      "hint": "「課題」を表示する",
-      "description": "チェックを入れると、ホーム画面に本家の未提出課題一覧と課題提出記録が表示されます。",
-      "type": "checkbox",
-      "value": true
-    },
-    "show-former-link": {
-      "hint": "「旧スマートフォン版について」を表示する",
-      "description": "チェックを入れると、ホーム画面に旧スマートフォン版へのリンクが表示されます。",
-      "type": "checkbox",
-      "value": false
-    },
-    "show-kikuzou": {
-      "hint": "朝日新聞の広告を表示する",
-      "description": "チェックを入れると、ホーム画面に朝日新聞の広告が表示されます。",
-      "type": "checkbox",
-      "value": false
+      "value": false,
+    "dependency": "show-home-panel"
     },
     "hidden-assignments": {
       "hint": "隠された未提出課題一覧",
-      "description": "未提出課題一覧で「隠す」ボタンを押した課題の一覧です。",
+      "description": "未提出課題一覧で表示のチェックを外した課題の一覧です。",
       "type": "collection",
       "value": []
     },
-    "move-centernews": {
-      "hint": "「お知らせ」を移動させる",
-      "description": "チェックを入れると、ホーム画面の「お知らせ」をページ下部に移動させます。",
-      "type": "checkbox",
-      "value": true
+    "visibility-and-movement": {
+      "title": "表示と移動",
+      "hide-or-move-alert": {
+        "hint": "アラート",
+        "description": "ホーム画面の「ポートフォリオにコレクションが追加されました。」「コレクションが更新されています。」「ポートフォリオのコレクションにコメントが追加されました。」などのアラートの表示方法を選んでください。",
+        "type": "radio",
+        "value": "hide",
+        "choices": [
+          {
+            "key": "ignore",
+            "hint": "上部に表示する",
+            "description": "選択すると、ホーム画面の上部に表示されます。"
+          },
+          {
+            "key": "move",
+            "hint": "下部に表示する",
+            "description": "選択すると、ホーム画面の下部に表示されます。"
+          },
+          {
+            "key": "hide",
+            "hint": "表示しない",
+            "description": "選択すると、表示されません。"
+          }
+        ],
+        "id": "alert"
+      },
+      "hide-or-move-centernews": {
+        "hint": "「お知らせ」",
+        "description": "ホーム画面のメンテナンス情報などのお知らせの表示方法を選んでください。",
+        "type": "radio",
+        "value": "move",
+        "choices": [
+          {
+            "key": "ignore",
+            "hint": "上部に表示する",
+            "description": "選択すると、ホーム画面の上部に表示されます。"
+          },
+          {
+            "key": "move",
+            "hint": "下部に表示する",
+            "description": "選択すると、ホーム画面の下部に表示されます。"
+          },
+          {
+            "key": "hide",
+            "hint": "表示しない",
+            "description": "選択すると、表示されません。"
+          }
+        ],
+        "id": "news"
+      },
+      "hide-or-move-syllabus": {
+        "hint": "「シラバス検索」",
+        "description": "ホーム画面のシラバス検索ボックスの表示方法を選んでください。",
+        "type": "radio",
+        "value": "move",
+        "choices": [
+          {
+            "key": "ignore",
+            "hint": "右側に表示する",
+            "description": "選択すると、ホーム画面の右側に表示されます。"
+          },
+          {
+            "key": "move",
+            "hint": "下部に表示する",
+            "description": "選択すると、ホーム画面の下部に表示されます。"
+          },
+          {
+            "key": "hide",
+            "hint": "表示しない",
+            "description": "選択すると、表示されません。"
+          }
+        ],
+        "id": "syllabus"
+      },
+      "hide-or-move-assignment": {
+        "hint": "「課題」",
+        "description": "ホーム画面の本家の未提出課題一覧と課題提出記録の表示方法を選んでください。",
+        "type": "radio",
+        "value": "hide",
+        "choices": [
+          {
+            "key": "ignore",
+            "hint": "右側に表示する",
+            "description": "選択すると、ホーム画面の右側に表示されます。"
+          },
+          {
+            "key": "move",
+            "hint": "下部に表示する",
+            "description": "選択すると、ホーム画面の下部に表示されます。"
+          },
+          {
+            "key": "hide",
+            "hint": "表示しない",
+            "description": "選択すると、表示されません。"
+          }
+        ],
+        "id": "assignment"
+      },
+      "hide-or-move-former-link": {
+        "hint": "「旧スマートフォン版について」",
+        "description": "ホーム画面の旧スマートフォン版へのリンクの表示方法を選んでください。",
+        "type": "radio",
+        "value": "hide",
+        "choices": [
+          {
+            "key": "ignore",
+            "hint": "右側に表示する",
+            "description": "選択すると、ホーム画面の右側に表示されます。"
+          },
+          {
+            "key": "move",
+            "hint": "下部に表示する",
+            "description": "選択すると、ホーム画面の下部に表示されます。"
+          },
+          {
+            "key": "hide",
+            "hint": "表示しない",
+            "description": "選択すると、表示されません。"
+          }
+        ],
+        "id": "former-link"
+      },
+      "hide-or-move-kikuzou": {
+        "hint": "朝日新聞の広告",
+        "description": "ホーム画面の朝日新聞の広告の表示方法を選んでください。",
+        "type": "radio",
+        "value": "hide",
+        "choices": [
+          {
+            "key": "ignore",
+            "hint": "右側に表示する",
+            "description": "選択すると、ホーム画面の右側に表示されます。"
+          },
+          {
+            "key": "move",
+            "hint": "下部に表示する",
+            "description": "選択すると、ホーム画面の下部に表示されます。"
+          },
+          {
+            "key": "hide",
+            "hint": "表示しない",
+            "description": "選択すると、表示されません。"
+          }
+        ],
+        "id": "kikuzou"
+      },
+      "hide-or-move-banner-list": {
+        "hint": "バナー",
+        "description": "ホーム画面のバナーの表示方法を選んでください。",
+        "type": "radio",
+        "value": "move",
+        "choices": [
+          {
+            "key": "ignore",
+            "hint": "右側に表示する",
+            "description": "選択すると、ホーム画面の右側に表示されます。"
+          },
+          {
+            "key": "move",
+            "hint": "下部に表示する",
+            "description": "選択すると、ホーム画面の下部に表示されます。"
+          },
+          {
+            "key": "hide",
+            "hint": "表示しない",
+            "description": "選択すると、表示されません。"
+          }
+        ],
+        "id": "banner-list"
+      }
     }
   },
   "timeout": {
@@ -124,7 +263,8 @@
       "hint": "ボタンのラベル",
       "description": "タイムアウト画面に追加されるボタンのラベルです。",
       "type": "text",
-      "value": "manabaのホーム画面に移動する"
+      "value": "manabaのホーム画面に移動する",
+      "dependency": "!transition-automatically"
     }
   },
   "other": {
@@ -133,8 +273,7 @@
       "hint": "",
       "description": "設定を初期値に戻します。",
       "type": "button",
-      "value": "設定のリセット",
-      "message": "設定をリセットしました。"
+      "value": "設定のリセット"
     }
   }
 }
