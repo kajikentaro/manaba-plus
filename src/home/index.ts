@@ -19,9 +19,9 @@ getOptions().then(async function (options) {
   }
 
   arrange()
+  replace()
   await hide()
   await move()
-  replace()
   await insert.insertHomePanel()
   await insert.insertMessages()
 

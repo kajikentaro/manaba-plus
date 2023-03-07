@@ -6,7 +6,7 @@ import '../extension/htmlElement'
 let assignmentListHolder: HTMLElement
 
 export const insertHomePanel = async function () {
-  const contentbodyLeft = document.querySelector('.contentbody-left')
+  const contentbodyLeft = document.querySelector('#content-body .left')
   if (contentbodyLeft === null) {
     return
   }
@@ -35,6 +35,7 @@ export const insertMessages = async function () {
   }
 }
 
+// #region Assignment list
 const now = Date.now()
 
 // DEFCON is the condition that indicates the urgency of an assignment.
@@ -103,3 +104,6 @@ export const appendAssignment = function (assignment: Assignment) {
 
   assignmentListHolder.appendChild(row)
 }
+// #endregion
+
+export const insertHideButton = function () {}

@@ -26,25 +26,14 @@ export default function () {
   // #endregion
 
   // #region Make responsible.
-  const contentbodyLeft =
-    document.querySelector<HTMLElement>('.contentbody-left')
-  if (contentbodyLeft !== null) {
-    contentbodyLeft.style.width = '671px'
-    contentbodyLeft.style.paddingRight = '15px'
-  }
 
   document
     .querySelector<HTMLElement>('#courselistweekly')
     ?.style?.removeProperty('padding-right')
-  document
-    .querySelectorAll<HTMLElement>('.my-infolist-header')
-    .forEach(function (element) {
-      element.style.backgroundSize = '100% 100%'
-    })
 
   document
     .querySelector<HTMLElement>('.courselist')
-    .style.removeProperty('width')
+    ?.style?.removeProperty('width')
   document.querySelectorAll('.courselist th').forEach(function (element) {
     element.removeAttribute('width')
   })

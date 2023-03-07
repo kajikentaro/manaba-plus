@@ -1,5 +1,23 @@
 import { fetchDOM } from 'fetch'
 
+const replaceContentBody = function () {
+  const mycourse = document.querySelector('.my-course')
+
+  const contentBody = document.createElement('div')
+  contentBody.id = 'content-body'
+  contentBody.className = 'two-columns'
+
+  const contentbodyLeft = document.querySelector('.contentbody-left')
+  contentbodyLeft.className = 'left'
+  contentBody.appendChild(contentbodyLeft)
+
+  const contentbodyRight = document.querySelector('.contentbody-right')
+  contentbodyRight.className = 'right'
+  contentBody.appendChild(contentbodyRight)
+
+  mycourse.appendChild(contentBody)
+}
+
 const starRegex = /(.+_)(set|unset)(_.+)$/
 
 const replaceStar = function (anchor: HTMLAnchorElement) {
@@ -106,7 +124,10 @@ const replaceYearAndRemarks = function (element: HTMLElement) {
   element.replaceWith(yearDiv, periodDiv)
 }
 
+// Entry point
 export default function () {
+  replaceContentBody()
+
   document.querySelectorAll('.course').forEach(function (element) {
     const courseAnchor = element.querySelector<HTMLAnchorElement>('.title')
     if (courseAnchor === null) {

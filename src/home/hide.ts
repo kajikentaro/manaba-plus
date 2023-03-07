@@ -28,28 +28,4 @@ export default async function () {
   if (!showKikuzou) {
     hide('.my-infolist-kikuzou')
   }
-
-  // If all elements on the right side were hidden, collapse them.
-  if (
-    ![showSyllabus, showAssignment, showFormerLink, showKikuzou].includes(true)
-  ) {
-    const contentbodyLeft =
-      document.querySelector<HTMLAnchorElement>('.contentbody-left')
-    if (contentbodyLeft !== null) {
-      contentbodyLeft.style.width = '916px'
-    }
-
-    const myInfolistHeader = document.querySelector<HTMLAnchorElement>(
-      '.my-infolist-mycourses .my-infolist-header'
-    )
-    if (myInfolistHeader !== null) {
-      myInfolistHeader.style.paddingLeft = '10px'
-    }
-
-    document
-      .querySelectorAll<HTMLAnchorElement>('.course')
-      .forEach(function (element) {
-        element.style.height = '60px'
-      })
-  }
 }
