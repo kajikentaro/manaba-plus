@@ -2,7 +2,7 @@ import consts from './consts.json'
 
 // Replace string items with their own keys.
 const groupStack = [consts]
-while (groupStack.length) {
+while (groupStack.length > 0) {
   const group = groupStack.pop()
   for (const key in group) {
     const item = group[key]
