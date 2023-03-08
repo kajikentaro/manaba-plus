@@ -48,10 +48,6 @@
   }
 }
 
-h3 {
-  margin-inline: unset !important;
-}
-
 .course {
   vertical-align: unset !important;
   padding-right: unset !important;
@@ -99,7 +95,7 @@ h3 {
       background-color: #f8f0e0;
     }
 
-    > * {
+    > div {
       grid-template-columns: 1fr auto;
       grid-template-rows: 1fr auto;
       height: 100%;
@@ -148,18 +144,20 @@ h3 {
   }
 }
 
-.pagebody {
-  padding: unset !important;
-}
-
 #content-body {
   display: grid;
   grid-template-columns: 1fr auto;
 
+  .left {
+    h3 {
+      margin-inline: unset !important;
+    }
+  }
+
   .right {
     max-width: 245px;
 
-    > * {
+    > div {
       margin-inline-start: 15px;
     }
   }
