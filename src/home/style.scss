@@ -52,41 +52,6 @@ h3 {
   margin-inline: unset !important;
 }
 
-#content-body {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  column-gap: 15px;
-
-  .right {
-    max-width: 230px;
-  }
-}
-
-.my-infolist-header {
-  background-size: 100% 100% !important;
-  padding-inline-start: 60px !important;
-
-  h2 {
-    margin-left: 0 !important;
-    padding-left: 0 !important;
-  }
-}
-
-.my-infolist-body {
-  height: unset !important;
-}
-
-#alert,
-#news {
-  flex-basis: 100%;
-}
-
-#syllabus,
-#former-link,
-#kikuzou {
-  width: 230px;
-}
-
 .course {
   vertical-align: unset !important;
   padding-right: unset !important;
@@ -140,8 +105,8 @@ h3 {
       height: 100%;
     }
 
-    .actions {
-      grid-row-start: span 2;
+    .status {
+      grid-column-start: span 2;
     }
   }
 
@@ -183,6 +148,23 @@ h3 {
   }
 }
 
+.pagebody {
+  padding: unset !important;
+}
+
+#content-body {
+  display: grid;
+  grid-template-columns: 1fr auto;
+
+  .right {
+    max-width: 245px;
+
+    > * {
+      margin-inline-start: 15px;
+    }
+  }
+}
+
 .courselist {
   th:nth-of-type(2) {
     width: 40px;
@@ -195,4 +177,29 @@ h3 {
   th:nth-of-type(4) {
     width: 160px;
   }
+}
+
+.my-infolist-header {
+  background-size: 100% 100% !important;
+  padding-inline-start: 60px !important;
+
+  h2 {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
+}
+
+.my-infolist-body {
+  height: unset !important;
+}
+
+#alert,
+#news {
+  flex-basis: 100%;
+}
+
+#syllabus,
+#former-link,
+#kikuzou {
+  width: 230px;
 }

@@ -17,6 +17,32 @@ const replaceContentBody = function () {
   mycourse.appendChild(contentBody)
 }
 
+const getContent = function (
+  source: Element | { parent: Element; selectors: string },
+  className: string,
+  tagName = 'div',
+  attributeName = 'innerText'
+) {
+  if (!(source instanceof Element)) {
+    const { parent, selectors } = source
+    source = parent.querySelector(selectors)
+  }
+
+  if (source === null) {
+    return null
+  }
+
+  const target = document.createElement(tagName)
+  target.className = className
+
+  if (attributeName in source && attributeName in target) {
+    const attribute = source[attributeName]
+    target[attributeName] = attribute
+  }
+
+  return target
+}
+
 const statusSuffix = [
   '_news',
   '',
@@ -47,7 +73,13 @@ const getTitleAndStatus = function (course: Element) {
 
   const children = Array.from(pastStatus.children)
 
-  let registrationState: Element = null
+  let registrationState: Element = getContent(
+    {
+      parent: course,
+      selectors: 'span[style]',
+    },
+    'registration-state'
+  )
   if (children[0].className === 'registration-state') {
     registrationState = children.shift()
   }
@@ -135,28 +167,6 @@ const getComponents = function (course: Element) {
   return { titleDiv, actions, status }
 }
 
-const getContent = function (
-  source: Element | { course: Element; selectors: string },
-  className: string,
-  tagName = 'div',
-  attributeName = 'innerText'
-) {
-  if (!(source instanceof Element)) {
-    const { course, selectors } = source
-    source = course.querySelector(selectors)
-  }
-
-  const target = document.createElement(tagName)
-  target.className = className
-
-  if (attributeName in source && attributeName in target) {
-    const attribute = source[attributeName]
-    target[attributeName] = attribute
-  }
-
-  return target
-}
-
 const getYearAndRemarks = function (course: Element) {
   const element = course.querySelector<HTMLElement>(
     '.courseitemdetail:first-of-type'
@@ -205,6 +215,7 @@ const replaceCourses = function () {
     .querySelectorAll('.courselist-c, .courselist-r')
     .forEach(function (pastCourse) {
       const { titleDiv, actions, status } = getComponents(pastCourse)
+      titleDiv.classList.add('omitted-text')
       actions.className = 'flex-box'
 
       const year = pastCourse.children[1]
@@ -215,7 +226,7 @@ const replaceCourses = function () {
 
       const icon = getContent(
         {
-          course: pastCourse,
+          parent: pastCourse,
           selectors: 'img.inline',
         },
         'icon',
@@ -240,7 +251,7 @@ const replaceCourses = function () {
       if (titleDiv.childElementCount === 0) {
         const title = getContent(
           {
-            course: pastCourse,
+            parent: pastCourse,
             selectors: '.courselist-title',
           },
           'title'
@@ -264,7 +275,7 @@ const replaceCourses = function () {
 
     const icon = getContent(
       {
-        course: pastCourse,
+        parent: pastCourse,
         selectors: '.course-card-img img',
       },
       'icon',
@@ -274,7 +285,7 @@ const replaceCourses = function () {
 
     const code = getContent(
       {
-        course: pastCourse,
+        parent: pastCourse,
         selectors: '.coursecode',
       },
       'code'
@@ -282,7 +293,7 @@ const replaceCourses = function () {
 
     const teachers = getContent(
       {
-        course: pastCourse,
+        parent: pastCourse,
         selectors: '.courseitemdetail:last-of-type',
       },
       'teachers'
@@ -331,7 +342,6 @@ const replaceBanners = function () {
 // Entry point
 export default function () {
   replaceContentBody()
-
-  replaceBanners()
   replaceCourses()
+  replaceBanners()
 }
