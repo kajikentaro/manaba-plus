@@ -32,8 +32,33 @@ const setRemainingTime = function (deadline: Date, node: Node) {
   }
 }
 
+const addStarAction = function (star: Element) {
+  star.addEventListener('click', async function (event) {
+    event.stopPropagation()
+
+    star.setAttribute('in-progress', '')
+
+    const urlPart1 = star.getAttribute('url-part-1')
+    const urlPart3 = star.getAttribute('url-part-3')
+
+    const isStared = star.hasAttribute('stared')
+    const urlPart2 = isStared ? 'unset' : 'set'
+
+    const url = urlPart1 + urlPart2 + urlPart3
+    const response = await fetch(url)
+
+    if (response.ok) {
+      star.toggleAttribute('stared')
+    }
+
+    star.removeAttribute('in-progress')
+  })
+}
+
 export default async function () {
   const { options } = await getOptions()
+
+  document.querySelectorAll('.star').forEach(addStarAction)
 
   // #region Add top buttons actions
   const contentsButton = document.querySelector('#contents-button')

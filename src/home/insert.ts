@@ -106,4 +106,6 @@ export const appendAssignment = function (assignment: Assignment) {
 }
 // #endregion
 
-export const insertHideButton = function () {}
+export const insertHideButtons = function () {
+  document.querySelectorAll('.course')
+}

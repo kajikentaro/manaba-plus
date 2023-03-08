@@ -18,6 +18,10 @@ export default async function () {
     }
 
     const element = document.getElementById(item.id)
+    if (element === null) {
+      continue
+    }
+
     element.shown(false)
   }
 }

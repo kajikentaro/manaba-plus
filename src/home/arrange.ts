@@ -1,11 +1,15 @@
 import getOptions from '../options/models'
 
-export default async function () {
+const arrangeIds = async function () {
   const { options } = await getOptions()
 
-  // #region id
   const setId = function (selectors: string, id: string) {
-    document.querySelector(selectors).id = id
+    const element = document.querySelector(selectors)
+    if (element === null) {
+      return
+    }
+
+    element.id = id
   }
 
   setId(
@@ -36,47 +40,44 @@ export default async function () {
     '.banner-list',
     options.home['visibility-and-movement']['hide-or-move-banner-list'].id
   )
-  // #endregion
+}
 
-  // #region class
-  const addClass = function (selectors: string, name: string) {
+const arrangeClasses = function () {
+  const addClass = function (selectors: string, ...names: string[]) {
     document.querySelectorAll(selectors).forEach(function (element) {
-      element.classList.add(name)
+      element.classList.add(...names)
     })
   }
-  const removeClass = function (selectors: string, name: string) {
+  const removeClass = function (selectors: string, ...names: string[]) {
     document.querySelectorAll(selectors).forEach(function (element) {
-      element.classList.remove(name)
+      element.classList.remove(...names)
     })
   }
 
   addClass('#banner-list', 'wrap-box')
 
   removeClass('.course:not(.course-cell)', 'course')
-  addClass('.courselist-c, .coursecard', 'course')
-  addClass(
-    '.course-cell a:first-of-type, .courselist-title a, .course-card-title a',
-    'title'
-  )
-  addClass('.courselist-c td:nth-child(2)', 'year')
-  addClass('.courselist-c td:nth-child(3)', 'remarks')
-  addClass(
-    '.courselist-c td:nth-child(4), .courseitemdetail:last-of-type',
-    'teachers'
-  )
-  // #endregion
+  addClass('.courselist', 'fixed-table', 'striped-table')
+  addClass('.section', 'wrap-box')
+}
 
-  // #region Make responsible.
-
+const makeResponsible = function () {
   document
     .querySelector<HTMLElement>('#courselistweekly')
     ?.style?.removeProperty('padding-right')
 
   document
-    .querySelector<HTMLElement>('.courselist')
-    ?.style?.removeProperty('width')
+    .querySelectorAll<HTMLElement>('.courselist')
+    .forEach(function (element) {
+      element.style.removeProperty('width')
+    })
   document.querySelectorAll('.courselist th').forEach(function (element) {
     element.removeAttribute('width')
   })
-  // #endregion
+}
+
+export default async function () {
+  await arrangeIds()
+  arrangeClasses()
+  makeResponsible()
 }
