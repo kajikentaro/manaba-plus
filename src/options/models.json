@@ -73,6 +73,12 @@
       "type": "collection",
       "value": []
     },
+    "removed-courses": {
+      "hint": "除外されたコース一覧",
+      "description": "ホーム画面から除外されたコースの一覧です。",
+      "type": "collection",
+      "value": []
+    },
     "visibility-and-movement": {
       "title": "表示と移動",
       "hide-or-move-alert": {

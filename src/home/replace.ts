@@ -1,4 +1,5 @@
 import { fetchDOM } from 'fetch'
+import '../extension/element'
 
 const replaceContentBody = function () {
   const mycourse = document.querySelector('.my-course')
@@ -21,7 +22,7 @@ const getContent = function (
   source: Element | { parent: Element; selectors: string },
   className: string,
   tagName = 'div',
-  attributeName = 'innerText'
+  attributeNames: string | string[] = 'innerText'
 ) {
   if (!(source instanceof Element)) {
     const { parent, selectors } = source
@@ -35,9 +36,15 @@ const getContent = function (
   const target = document.createElement(tagName)
   target.className = className
 
-  if (attributeName in source && attributeName in target) {
-    const attribute = source[attributeName]
-    target[attributeName] = attribute
+  if (typeof attributeNames === 'string') {
+    attributeNames = [attributeNames]
+  }
+
+  for (const attributeName of attributeNames) {
+    if (attributeName in source && attributeName in target) {
+      const attribute = source[attributeName]
+      target[attributeName] = attribute
+    }
   }
 
   return target
@@ -52,40 +59,48 @@ const statusSuffix = [
 ]
 
 const getTitleAndStatus = function (course: Element) {
-  const pastTitle = course.querySelector<HTMLAnchorElement>(
-    '.course-cell a:first-of-type, .courselist-title a, .course-card-title a'
-  )
-  if (pastTitle === null) {
-    return { title: null, status: null, registrationState: null }
+  const anchor = getContent(
+    {
+      parent: course,
+      selectors:
+        '.course-cell a:first-of-type, .courselist-title a, .course-card-title a',
+    },
+    '',
+    'a',
+    ['href', 'innerText']
+  ) as HTMLAnchorElement
+  if (anchor === null) {
+    return { title: null, status: null }
   }
 
-  const courseUrl = pastTitle.href
+  const courseUrl = anchor.href
 
-  const title = document.createElement('a')
+  const title = document.createElement('div')
   title.className = 'title'
-  title.href = courseUrl
-  title.innerText = pastTitle.innerText
+  title.appendChild(anchor)
 
   const pastStatus = course.querySelector('.coursestatus, .course-card-status')
   if (pastStatus === null) {
-    return { title, status: null, registrationState: null }
+    return { title, status: null }
   }
 
   const children = Array.from(pastStatus.children)
 
-  let registrationState: Element = getContent(
+  let linkState: Element = getContent(
     {
       parent: course,
       selectors: 'span[style]',
     },
-    'registration-state'
+    'link-state'
   )
   if (children[0].className === 'registration-state') {
-    registrationState = children.shift()
+    linkState = children.shift()
+    linkState.className = 'link-state'
   }
+  linkState?.joinIn(title)
 
   const status = document.createElement('div')
-  status.className = 'status flex-box'
+  status.className = 'status'
 
   const newChildren: HTMLAnchorElement[] = []
 
@@ -117,7 +132,7 @@ const getTitleAndStatus = function (course: Element) {
     })
   }
 
-  return { title, status, registrationState }
+  return { title, status }
 }
 
 const starRegex = /(.+_)(set|unset)(_.+)$/
@@ -130,9 +145,8 @@ const getStar = function (course: Element) {
     return null
   }
 
-  const star = document.createElement('img')
+  const star = document.createElement('div')
   star.className = 'star'
-  star.src = '../icon_clip_on.png'
 
   const match = starRegex.exec(starAnchor.href)
 
@@ -147,24 +161,14 @@ const getStar = function (course: Element) {
 }
 
 const getComponents = function (course: Element) {
-  const { title, status, registrationState } = getTitleAndStatus(course)
+  const { title, status } = getTitleAndStatus(course)
   const star = getStar(course)
-
-  const titleDiv = document.createElement('div')
-  if (title !== null) {
-    titleDiv.appendChild(title)
-  }
-  if (registrationState !== null) {
-    titleDiv.appendChild(registrationState)
-  }
 
   const actions = document.createElement('div')
   actions.className = 'actions'
-  if (star !== null) {
-    actions.appendChild(star)
-  }
+  star?.joinIn(actions)
 
-  return { titleDiv, actions, status }
+  return { title, actions, status }
 }
 
 const getYearAndRemarks = function (course: Element) {
@@ -191,18 +195,16 @@ const getYearAndRemarks = function (course: Element) {
 const replaceCourses = function () {
   // #region cell type
   document.querySelectorAll('.course-cell').forEach(function (pastCourse) {
-    const { titleDiv, actions, status } = getComponents(pastCourse)
+    const { title, actions, status } = getComponents(pastCourse)
 
     const course = document.createElement('td')
     course.className = 'course cell'
 
     const container = document.createElement('div')
-    container.className = 'grid-box'
-    container.appendChild(titleDiv)
+    container.className = 'container'
+    title?.joinIn(container)
     container.appendChild(actions)
-    if (status !== null) {
-      container.appendChild(status)
-    }
+    status?.joinIn(container)
 
     course.appendChild(container)
 
@@ -214,9 +216,7 @@ const replaceCourses = function () {
   document
     .querySelectorAll('.courselist-c, .courselist-r')
     .forEach(function (pastCourse) {
-      const { titleDiv, actions, status } = getComponents(pastCourse)
-      titleDiv.classList.add('omitted-text')
-      actions.className = 'flex-box'
+      const { title, actions, status } = getComponents(pastCourse)
 
       const year = pastCourse.children[1]
       year.classList.add('year')
@@ -240,15 +240,10 @@ const replaceCourses = function () {
       course.className = 'course row'
 
       const titleCell = course.insertCell()
-      titleCell.className = 'grid-box'
-      titleCell.appendChild(icon)
-      titleCell.appendChild(titleDiv)
-      if (status !== null) {
-        titleCell.appendChild(status)
-      }
-      titleCell.appendChild(actions)
-
-      if (titleDiv.childElementCount === 0) {
+      const container = document.createElement('div')
+      container.className = 'container'
+      icon?.joinIn(container)
+      if (title === null) {
         const title = getContent(
           {
             parent: pastCourse,
@@ -256,12 +251,23 @@ const replaceCourses = function () {
           },
           'title'
         )
-        titleDiv.appendChild(title)
+        title?.joinIn(container)
+      } else {
+        container.appendChild(title)
       }
+      if (status === null) {
+        const status = document.createElement('div')
+        status.className = 'status dummy'
+        container.appendChild(status)
+      } else {
+        container.appendChild(status)
+      }
+      container.appendChild(actions)
+      titleCell.appendChild(container)
 
-      course.appendChild(year)
-      course.appendChild(remarks)
-      course.appendChild(teachers)
+      year?.joinIn(course)
+      remarks?.joinIn(course)
+      teachers?.joinIn(course)
 
       pastCourse.replaceWith(course)
     })
@@ -269,9 +275,8 @@ const replaceCourses = function () {
 
   // #region card type
   document.querySelectorAll('.coursecard').forEach(function (pastCourse) {
-    const { titleDiv, actions, status } = getComponents(pastCourse)
+    const { title, actions, status } = getComponents(pastCourse)
     const { year, remarks } = getYearAndRemarks(pastCourse)
-    titleDiv.classList.add('omitted-text')
 
     const icon = getContent(
       {
@@ -291,6 +296,15 @@ const replaceCourses = function () {
       'code'
     )
 
+    const linkState = getContent(
+      {
+        parent: pastCourse,
+        selectors: '.courselink-state',
+      },
+      'link-state'
+    )
+    linkState?.joinIn(status)
+
     const teachers = getContent(
       {
         parent: pastCourse,
@@ -300,33 +314,29 @@ const replaceCourses = function () {
     )
 
     const course = document.createElement('div')
-    course.className = 'course card grid-box'
-    course.appendChild(icon)
+    course.className = 'course card'
+    icon?.joinIn(course)
 
-    const middleDiv = document.createElement('div')
-    middleDiv.className = 'middle flex-box'
-    middleDiv.appendChild(code)
-    middleDiv.appendChild(titleDiv)
-    middleDiv.appendChild(status)
+    const middle = document.createElement('div')
+    middle.className = 'middle'
+    code?.joinIn(middle)
+    title?.joinIn(middle)
+    status?.joinIn(middle)
 
-    const infoDiv = document.createElement('div')
-    infoDiv.className = 'info flex-box grid-box'
-    infoDiv.appendChild(year)
-    infoDiv.appendChild(remarks)
-    infoDiv.appendChild(teachers)
+    const info = document.createElement('div')
+    info.className = 'info'
+    year?.joinIn(info)
+    remarks?.joinIn(info)
+    teachers?.joinIn(info)
 
-    middleDiv.appendChild(infoDiv)
-    course.appendChild(middleDiv)
+    middle.appendChild(info)
+    course.appendChild(middle)
 
     course.appendChild(actions)
 
     pastCourse.replaceWith(course)
   })
   // #endregion
-
-  document.querySelectorAll('.remarks, .teachers').forEach(function (element) {
-    element.classList.add('omitted-text')
-  })
 }
 
 const replaceBanners = function () {

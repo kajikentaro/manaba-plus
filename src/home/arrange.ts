@@ -54,11 +54,8 @@ const arrangeClasses = function () {
     })
   }
 
-  addClass('#banner-list', 'wrap-box')
-
   removeClass('.course:not(.course-cell)', 'course')
   addClass('.courselist', 'fixed-table', 'striped-table')
-  addClass('.section', 'wrap-box')
 }
 
 const makeResponsible = function () {

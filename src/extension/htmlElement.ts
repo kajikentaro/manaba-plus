@@ -3,11 +3,16 @@ export {}
 declare global {
   interface HTMLElement {
     /**
-     * Return true if the element is shown, or false if hidden, when called with no params.
+     *
      * Give a value as a param to set it.
      * The style `display` of the element will be `none` if false.
      */
-    shown: (value?: boolean) => boolean | void
+    /**
+     * Get whether the element is shown or hidden with no params, or set the value.
+     * @param value the value to be set to
+     * @returns true if the element style `display` is not `none`, otherwise false or the element when `value` is undefined
+     */
+    shown: (value?: boolean) => boolean | HTMLElement
   }
 }
 
@@ -23,6 +28,7 @@ Object.defineProperty(HTMLElement.prototype, 'shown', {
       } else {
         element.style.display = 'none'
       }
+      return element
     }
   },
 })

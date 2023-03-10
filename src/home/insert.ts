@@ -1,7 +1,11 @@
+import getOptions from '../options/models'
 import { fetchText } from '../fetch'
 import { popMessages } from 'messages'
 import Assignment from './assignment'
 import '../extension/htmlElement'
+import getAssignments from './scrape'
+
+import dummies from './dummies.json'
 
 let assignmentListHolder: HTMLElement
 
@@ -36,15 +40,13 @@ export const insertMessages = async function () {
 }
 
 // #region Assignment list
-const now = Date.now()
-
 // DEFCON is the condition that indicates the urgency of an assignment.
 const getDEFCON = function (dateTime: Date) {
   if (dateTime === null) {
     return 'DEFCON-1'
   }
 
-  const delta = dateTime.getTime() - now
+  const delta = dateTime.getTime() - Date.now()
   if (delta < 0) {
     return 'DEFCON-0'
   }
@@ -60,10 +62,8 @@ const getDEFCON = function (dateTime: Date) {
   }
 }
 
-const courseUrlRegex = /.+course_\d+/
-
 const getCourseUrl = function (assignmentUrl: string) {
-  return courseUrlRegex.exec(assignmentUrl)[0]
+  return /.+course_\d+/.exec(assignmentUrl)[0]
 }
 
 export const appendAssignment = function (assignment: Assignment) {
@@ -104,8 +104,72 @@ export const appendAssignment = function (assignment: Assignment) {
 
   assignmentListHolder.appendChild(row)
 }
+
+const insertAssignmentList = async function () {
+  const { options } = await getOptions()
+
+  const assignmentSet = new Set<string>()
+  const hiddenAssignmentSet = new Set<string>(
+    options.home['hidden-assignments'].value
+  )
+
+  for await (const assignment of getAssignments()) {
+    const hash = await assignment.hash
+
+    assignmentSet.add(hash)
+
+    assignment.isShown = !hiddenAssignmentSet.has(hash)
+    assignment.onIsShownChanged.push(function (value) {
+      if (value) {
+        hiddenAssignmentSet.delete(hash)
+      } else {
+        hiddenAssignmentSet.add(hash)
+      }
+      options.home['hidden-assignments'].value = Array.from(hiddenAssignmentSet)
+    })
+
+    appendAssignment(assignment)
+  }
+
+  for (const hash of hiddenAssignmentSet) {
+    if (!assignmentSet.has(hash)) {
+      hiddenAssignmentSet.delete(hash)
+    }
+  }
+
+  options.home['hidden-assignments'].value = Array.from(hiddenAssignmentSet)
+
+  // #region Dummy
+  for (const dummy of dummies) {
+    const assignment = new Assignment(
+      dummy.url,
+      dummy.title,
+      dummy.course,
+      new Date(dummy.deadline)
+    )
+
+    appendAssignment(assignment)
+  }
+  // #endregion
+}
 // #endregion
 
-export const insertHideButtons = function () {
-  document.querySelectorAll('.course')
+export const insertRemoves = function () {
+  document.querySelectorAll('.course').forEach(function (course) {
+    const actions = course.querySelector('.actions')
+    if (actions === null) {
+      return
+    }
+
+    const remove = document.createElement('div')
+    remove.className = 'remove'
+    actions.appendChild(remove)
+  })
+}
+
+export default async function () {
+  insertRemoves()
+  await insertHomePanel()
+  await insertMessages()
+  await insertAssignmentList()
 }

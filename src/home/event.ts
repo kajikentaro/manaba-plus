@@ -2,9 +2,28 @@ import Assignment from './assignment'
 
 import getOptions from '../options/models'
 import '../extension/htmlElement'
+import { getHash } from './course'
 
 interface Row extends HTMLElement {
   assignment: Assignment
+}
+
+const AddTopButtonsActions = function () {
+  const contentsButton = document.querySelector('#contents-button')
+  contentsButton.removeAttribute('disabled')
+  if (contentsButton !== null) {
+    contentsButton.addEventListener('click', function () {
+      window.open(chrome.runtime.getURL('/contents/index.html'))
+    })
+  }
+
+  const optionsButton = document.querySelector('#options-button')
+  if (optionsButton !== null) {
+    optionsButton.removeAttribute('disabled')
+    optionsButton.addEventListener('click', function () {
+      window.open(chrome.runtime.getURL('/options/index.html'))
+    })
+  }
 }
 
 const setRemainingTime = function (deadline: Date, node: Node) {
@@ -32,51 +51,69 @@ const setRemainingTime = function (deadline: Date, node: Node) {
   }
 }
 
-const addStarAction = function (star: Element) {
-  star.addEventListener('click', async function (event) {
-    event.stopPropagation()
+const addStarsAction = function () {
+  document.querySelectorAll('.star').forEach(function (star) {
+    star.addEventListener('click', async function (event) {
+      event.stopPropagation()
 
-    star.setAttribute('in-progress', '')
+      star.setAttribute('in-progress', '')
 
-    const urlPart1 = star.getAttribute('url-part-1')
-    const urlPart3 = star.getAttribute('url-part-3')
+      const urlPart1 = star.getAttribute('url-part-1')
+      const urlPart3 = star.getAttribute('url-part-3')
 
-    const isStared = star.hasAttribute('stared')
-    const urlPart2 = isStared ? 'unset' : 'set'
+      const isStared = star.hasAttribute('stared')
+      const urlPart2 = isStared ? 'unset' : 'set'
 
-    const url = urlPart1 + urlPart2 + urlPart3
-    const response = await fetch(url)
+      const url = urlPart1 + urlPart2 + urlPart3
+      const response = await fetch(url)
 
-    if (response.ok) {
-      star.toggleAttribute('stared')
-    }
+      if (response.ok) {
+        star.toggleAttribute('stared')
+      }
 
-    star.removeAttribute('in-progress')
+      star.removeAttribute('in-progress')
+    })
+  })
+}
+
+const addRemovesAction = async function () {
+  const { options } = await getOptions()
+
+  const removedCourseSet = new Set<string>(
+    options.home['removed-courses'].value
+  )
+
+  document.querySelectorAll('.remove').forEach(function (remove) {
+    remove.addEventListener('click', async function (event) {
+      event.stopPropagation()
+
+      const course = remove.closest('.course')
+
+      const hash = await getHash(course)
+      if (hash === null) {
+        return
+      }
+
+      if (removedCourseSet.has(hash)) {
+        removedCourseSet.delete(hash)
+        course.classList.remove('removing')
+      } else {
+        removedCourseSet.add(hash)
+        course.classList.add('removing')
+      }
+
+      options.home['removed-courses'].value = Array.from(removedCourseSet)
+    })
   })
 }
 
 export default async function () {
   const { options } = await getOptions()
 
-  document.querySelectorAll('.star').forEach(addStarAction)
+  AddTopButtonsActions()
 
-  // #region Add top buttons actions
-  const contentsButton = document.querySelector('#contents-button')
-  contentsButton.removeAttribute('disabled')
-  if (contentsButton !== null) {
-    contentsButton.addEventListener('click', function () {
-      window.open(chrome.runtime.getURL('/contents/index.html'))
-    })
-  }
-
-  const optionsButton = document.querySelector('#options-button')
-  if (optionsButton !== null) {
-    optionsButton.removeAttribute('disabled')
-    optionsButton.addEventListener('click', function () {
-      window.open(chrome.runtime.getURL('/options/index.html'))
-    })
-  }
-  // #endregion
+  addStarsAction()
+  addRemovesAction()
 
   // #region
   const assignmentListContainer = document.querySelector<HTMLDetailsElement>(

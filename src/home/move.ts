@@ -3,10 +3,10 @@ import getOptions from '../options/models'
 export default async function () {
   const { options } = await getOptions()
 
-  const contentBodyLeft = document.querySelector('#content-body .left')
+  const contentBody = document.querySelector('#content-body')
 
-  const container = document.createElement('div')
-  container.className = 'wrap-box space-evenly'
+  const bottom = document.createElement('div')
+  bottom.className = 'bottom'
 
   const items = [
     options.home['visibility-and-movement']['hide-or-move-alert'],
@@ -27,10 +27,10 @@ export default async function () {
       continue
     }
 
-    container.appendChild(element)
+    bottom.appendChild(element)
   }
 
-  contentBodyLeft.appendChild(container)
+  contentBody.appendChild(bottom)
 
   // #region infolist-tab
   const infolistTab = document.querySelector('.infolist-tab')

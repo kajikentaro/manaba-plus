@@ -41,7 +41,7 @@ const createCollectionFragment = function (
 
   const tempDiv = document.createElement('div')
   tempDiv.id = key
-  tempDiv.innerHTML = item.value.join('<br>')
+  tempDiv.innerHTML = item.hint + '<br>' + item.value.join('<br>')
   fragment.appendChild(tempDiv)
 
   console.info('Not Implementation: ', item)
