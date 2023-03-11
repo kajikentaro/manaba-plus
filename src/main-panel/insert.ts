@@ -1,7 +1,7 @@
 import { popMessages } from 'messages'
 import Assignment from './assignment'
 import '../extension/htmlElement'
-import getOptions from '../options/models'
+import getOptions from '../options/model'
 import scrape from './scrape'
 
 import dummies from './dummies.json'

@@ -53,6 +53,11 @@ const contentsHolder = document.querySelector('#contents-holder')
 const createContentBody = function (context: ContentContext) {
   const body = document.createElement('div')
   body.className = 'body'
+  if (context.excluded) {
+    body.classList.add('excluded')
+  } else {
+    body.classList.add('pending')
+  }
 
   const titleDiv = document.createElement('div')
   titleDiv.className = 'title'
@@ -68,11 +73,6 @@ const createContentBody = function (context: ContentContext) {
   const statusDiv = document.createElement('div')
   statusDiv.id = context.hash
   statusDiv.className = 'status'
-  if (context.excluded) {
-    statusDiv.classList.add('excluded')
-  } else {
-    statusDiv.classList.add('pending')
-  }
   body.appendChild(statusDiv)
 
   return body
@@ -124,29 +124,34 @@ export const updateContents = function (stacks: {
   completed: DownloadContext[]
 }) {
   // Use getElementById because the hash can start with a number and it cannot adapt to the CSS3 selector.
+  const getBody = function (context: ContentContext) {
+    const statusDiv = document.getElementById(context.hash)
+    const body = statusDiv.closest('.body')
+    return { statusDiv, body }
+  }
 
   stacks.downloading.forEach(function (context: ContentContext) {
-    const statusDiv = document.getElementById(context.hash)
-    statusDiv.classList.remove('pending')
-    statusDiv.classList.add('downloading')
+    const { body } = getBody(context)
+    body.classList.remove('pending')
+    body.classList.add('downloading')
   })
 
   stacks.interrupted.forEach(function ([context, error]: [
     ContentContext,
     string
   ]) {
-    const statusDiv = document.getElementById(context.hash)
-    statusDiv.classList.remove('downloading')
-    statusDiv.classList.add('interrupted')
+    const { statusDiv, body } = getBody(context)
+    body.classList.remove('pending', 'downloading')
+    body.classList.add('interrupted')
 
     const message = errors[error] ?? error
     statusDiv.innerText = message
   })
 
   stacks.completed.forEach(function (context: ContentContext) {
-    const statusDiv = document.getElementById(context.hash)
-    statusDiv.classList.remove('downloading')
-    statusDiv.classList.add('completed')
+    const { body } = getBody(context)
+    body.classList.remove('pending', 'downloading')
+    body.classList.add('completed')
   })
 }
 

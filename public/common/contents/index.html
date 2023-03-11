@@ -1,38 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
-  <meta charset="UTF-8" />
-  <title>Downloading Contents</title>
+  <meta charset="utf-8" />
+  <title>コンテンツ | Manaba Plus</title>
   <link rel="stylesheet" href="./style.css" />
   <script defer src="./index.js"></script>
 </head>
 
-<body class="download-body">
-  <div>
+<body>
+  <div id="side-panel">
     <button id="start-button">ダウンロードを開始する</button>
     <button id="cancel-button" disabled>ダウンロードをキャンセルする</button>
     <button id="test-button">スクレイピングテスト</button>
+
+    <div id="progress-bars-holder"></div>
+
+    <div id="stats-container">
+      <div>フェッチ</div><div id="fetch-count"></div>
+      <div>待機中</div><div id="pending-count"></div>
+      <div>ダウンロード中</div><div id="downloading-count"></div>
+      <div>中断</div><div id="interrupted-count"></div>
+      <div>完了</div><div id="completed-count"></div>
+      <div>重複</div><div id="excluded-count"></div>
+      <div>コンテンツ合計</div><div id="contents-count"></div>
+      <div>経過時間</div><div id="elapsed-time"></div>
+    </div>
+
+    <div id="completed-message" style="display: none;">
+      ダウンロードは完了しました。
+    </div>
+    <div id="canceled-message" style="display: none;">
+      ダウンロードはキャンセルされました。
+    </div>
+
+    <a href="">ダウンロード時に確認ウィンドウが表示される場合</a>
   </div>
-  <div id="progress-bars-holder"></div>
 
   <div id="contents-holder"></div>
 
-  <div id="completed-message" style="display: none;">
-    ダウンロードは完了しました。
-  </div>
-  <div id="canceled-message" style="display: none;">
-    ダウンロードはキャンセルされました。
-  </div>
-
-  <details>
+  <!-- <details>
     <summary>ダウンロード時に確認ウィンドウが表示される場合</summary>
     ブラウザの設定から表示しないようにできます。
     <img src="../img/contents/image-chrome.png" width="500px" />
     <p class="screenshot-caption">Chromeの場合</p>
     <img src="../img/contents/image-edge.png" width="500px" />
     <p class="screenshot-caption">Edgeの場合</p>
-  </details>
+  </details> -->
 </body>
 
 </html>

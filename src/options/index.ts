@@ -1,4 +1,4 @@
-import getOptions from './models'
+import getOptions from './model'
 
 import insert from './insert'
 import event from './event'

@@ -1,4 +1,4 @@
-import getOptions from '../options/models'
+import getOptions from '../options/model'
 import { clearHistory } from 'contents/history'
 
 const addConstraint = function (element: HTMLElement, dependencyId?: string) {

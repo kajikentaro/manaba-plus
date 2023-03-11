@@ -1,9 +1,10 @@
 import Assignment from './assignment'
-import getOptions from '../options/models'
+import getOptions from '../options/model'
 import getHash from './get-hash'
 import * as insert from './insert'
 import revert from './revert'
 import remove from './remove'
+import * as time from 'time'
 
 interface Row extends HTMLElement {
   assignment: Assignment
@@ -29,25 +30,11 @@ const AddButtonsAction = function () {
 
 const setRemainingTime = function (deadline: Date, element: Element) {
   const delta = deadline.getTime() - Date.now()
-  const dayCount = delta / (24 * 60 * 60 * 1000)
+  const dayCount = delta / (1000 * 60 * 60 * 24)
 
   if (dayCount < 2) {
-    const hours = delta / (60 * 60 * 1000)
-    const minutes = (delta / (60 * 1000)) % 60
-    const seconds = (delta / 1000) % 60
-
     element.classList.add('time')
-    element.textContent = [hours, minutes, seconds]
-      .filter((value) => value > 1)
-      .map(function (value, index) {
-        const chars = Math.floor(value).toString()
-        if (index === 0) {
-          return chars
-        } else {
-          return chars.padStart(2, '0')
-        }
-      })
-      .join(':')
+    element.textContent = time.toString(delta, false)
   } else {
     element.classList.add('day-count')
     element.textContent = Math.floor(dayCount).toString()

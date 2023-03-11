@@ -5,6 +5,7 @@ declare global {
     prefix?: string
     selectors: string
     children?: ScrapingNode[]
+    filter?: (url: string) => Promise<boolean>
   }
 
   interface ScrapingTrace {

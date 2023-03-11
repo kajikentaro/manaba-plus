@@ -1,4 +1,4 @@
-import getOptions from '../options/models'
+import getOptions from '../options/model'
 
 const createInputFragment = function (
   key: string,

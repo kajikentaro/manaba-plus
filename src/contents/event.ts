@@ -4,10 +4,79 @@ import * as notify from './notify'
 import * as history from './history'
 import { sha256 } from 'hash'
 import * as download from './download'
+import * as time from 'time'
 
 const startButton = document.querySelector('#start-button')
 const cancelButton = document.querySelector('#cancel-button')
 const testButton = document.querySelector('#test-button')
+
+const stats = {
+  'fetch-count': 0,
+  'pending-count': 0,
+  'downloading-count': 0,
+  'interrupted-count': 0,
+  'completed-count': 0,
+  'excluded-count': 0,
+
+  'contents-count': 0,
+
+  lastTime: 0,
+  isMeasuring: false,
+}
+
+Object.defineProperty(stats, 'contents-count', {
+  get() {
+    const keys = Object.keys(stats).slice(1, -3)
+    const values = keys.map((key) => stats[key] as number)
+    return values.reduce((sum, value) => sum + value, 0)
+  },
+  set() {},
+})
+
+const startMeasuring = function () {
+  if (stats.isMeasuring) {
+    return
+  }
+
+  stats.isMeasuring = true
+
+  // Reset stats and get elements.
+  const keys = Object.keys(stats).slice(0, -2)
+  const elements: [string, Element][] = []
+
+  for (const key of keys) {
+    stats[key] = 0
+
+    const element = document.getElementById(key)
+    elements.push([key, element])
+  }
+
+  stats.lastTime = performance.now()
+  const elapsedTime = document.querySelector('#elapsed-time')
+
+  const timer = setInterval(function () {
+    stats['fetch-count'] = scrape.fetchCount
+
+    for (const [key, element] of elements) {
+      element.textContent = stats[key]
+    }
+
+    const totalMilliseconds = performance.now() - stats.lastTime
+    elapsedTime.textContent = time.toString(totalMilliseconds)
+
+    if (stats.isMeasuring) {
+      return
+    }
+
+    clearInterval(timer)
+
+    stats.isMeasuring = false
+  }, 500)
+}
+
+const stopMeasuring = function () {
+  stats.isMeasuring = false
+}
 
 let isDownloadStopped = true
 
@@ -24,6 +93,8 @@ const startDownload = async function () {
 
   isDownloadStopped = false
   let isCanceled = true
+
+  startMeasuring()
 
   startButton.setAttribute('disabled', '')
   cancelButton.removeAttribute('disabled')
@@ -51,6 +122,12 @@ const startDownload = async function () {
 
     insert.updateContents(stacks)
 
+    stats['pending-count'] -=
+      stacks.interrupted.length + stacks.completed.length
+    stats['downloading-count'] = stacks.downloading.length
+    stats['interrupted-count'] += stacks.interrupted.length
+    stats['completed-count'] += stacks.completed.length
+
     if (!isDownloadStopped || !stacks.isEmpty) {
       return
     }
@@ -70,6 +147,9 @@ const startDownload = async function () {
     }
 
     startButton.removeAttribute('disabled')
+    cancelButton.setAttribute('disabled', '')
+
+    stopMeasuring()
   }, 1000)
 
   await scrape.startScraping(async function (context: ContentContext) {
@@ -79,10 +159,12 @@ const startDownload = async function () {
     insert.appendContent(context)
 
     if (context.excluded) {
+      stats['excluded-count']++
       return
     }
 
     download.reserveDownload(context)
+    stats['pending-count']++
   })
 
   clearInterval(progressTimer)
@@ -105,17 +187,18 @@ const cancelDownload = async function () {
 }
 
 const testScraping = async function () {
+  startMeasuring()
+
   testButton.setAttribute('disabled', '')
 
-  console.info('TODO: speed up')
-  const last = performance.now()
   await scrape.startScraping(function (context: ContentContext) {
+    stats['pending-count']++
     insert.appendContent(context)
   })
-  const now = performance.now()
-  console.warn(now - last, 'ms')
 
   testButton.removeAttribute('disabled')
+
+  stopMeasuring()
 }
 
 // Entry point

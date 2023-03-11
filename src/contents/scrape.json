@@ -2,6 +2,15 @@
     "selectors": ".course-cell a:first-of-type, .courselist-title a, .course-card-title a",
     "children": [
         {
+            "prefix": "_news",
+            "selectors": ".newstext a",
+            "children": [
+                {
+                    "selectors": ".file + .inlineaf-description a"
+                }
+            ]
+        },
+        {
             "prefix": "_report",
             "selectors": ".report-title a",
             "children": [
@@ -34,15 +43,6 @@
                             "selectors": ".file + .inlineaf-description a"
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "prefix": "_news",
-            "selectors": ".newstext a",
-            "children": [
-                {
-                    "selectors": ".file + .inlineaf-description a"
                 }
             ]
         }

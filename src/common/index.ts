@@ -1,4 +1,4 @@
-import getOptions from '../options/models'
+import getOptions from '../options/model'
 
 import arrange from './arrange'
 import replace from './replace'

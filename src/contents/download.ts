@@ -1,5 +1,5 @@
 import './download.type'
-import getOptions from '../options/models'
+import getOptions from '../options/model'
 import * as path from 'path'
 
 let directoryName = 'manaba'

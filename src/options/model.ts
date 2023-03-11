@@ -1,5 +1,5 @@
-import options from './models.json'
-import './models.type'
+import options from './model.json'
+import './model.type'
 
 const sections = new Map<string, OptionSection>()
 const items = new Map<string, OptionItem>()

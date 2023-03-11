@@ -1,5 +1,5 @@
 import consts from '../consts'
-import getOptions from '../options/models'
+import getOptions from '../options/model'
 import { messages, pushMessages } from '../messages'
 
 let url = consts['home-url']
