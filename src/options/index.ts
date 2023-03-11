@@ -1,7 +1,7 @@
 import getOptions from './models'
 
-import insertOptions from './insert'
-import addEventListeners from './event'
+import insert from './insert'
+import event from './event'
 
 // Get option path from current url query params.
 const url = new URL(location.href)
@@ -11,6 +11,6 @@ console.info('Not Implementation: ' + optionPath)
 
 // Entry point.
 getOptions().then(async function () {
-  await insertOptions()
-  await addEventListeners()
+  await insert()
+  await event()
 })

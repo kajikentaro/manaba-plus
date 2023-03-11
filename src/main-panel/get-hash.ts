@@ -1,15 +1,15 @@
 import { sha256 } from 'hash'
 
-export const getHash = async function (course: Element) {
-  if (course === null) {
+export default async function (element: Element) {
+  if (element === null) {
     return null
   }
 
   let hash: string = null
 
-  const anchor = course.querySelector<HTMLAnchorElement>('.title a')
+  const anchor = element.querySelector<HTMLAnchorElement>('.title a')
   if (anchor === null) {
-    const title = course.querySelector<HTMLAnchorElement>('.title')
+    const title = element.querySelector<HTMLAnchorElement>('.title')
     if (title === null) {
       return
     }

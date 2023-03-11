@@ -1,0 +1,28 @@
+<div id="manaba-plus-container">
+    <div class="header">
+        <h2>Manaba Plus</h2>
+    </div>
+    <div class="buttons-container">
+        <button id="contents-button" class="button" disabled>コンテンツをDL</button>
+        <button id="options-button" class="button" disabled>オプション画面を表示</button>
+    </div>
+    <div id="messages-holder"></div>
+    <details id="assignment-list-container">
+        <summary class="unselectable">未提出課題一覧</summary>
+        <label class="unselectable">
+            <input type="checkbox" id="assignments-visibility-input">
+            除外された課題も表示する
+        </label>
+        <table class="sortable fixed-table">
+            <thead>
+                <tr>
+                    <th sort-key="assignment/course">コース</th>
+                    <th sort-key="assignment/title">タイトル</th>
+                    <th sort-key="assignment/deadline" sort-type="Date" id="assignment-list-deadline-header">期限</th>
+                    <th>残り時間</th>
+                </tr>
+            </thead>
+            <tbody id="assignment-list-holder" class="sortable-body"></tbody>
+        </table>
+    </details>
+</div>

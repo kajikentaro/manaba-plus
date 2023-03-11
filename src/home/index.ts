@@ -4,10 +4,9 @@ import arrange from './arrange'
 import replace from './replace'
 import hide from './hide'
 import move from './move'
-import remove from './remove'
 import insert from './insert'
-
-import addEventListeners from './event'
+import event from './event'
+import module from 'main-panel/module'
 
 // Entry point.
 getOptions().then(async function ({ options }) {
@@ -19,12 +18,7 @@ getOptions().then(async function ({ options }) {
   replace()
   await hide()
   await move()
-  await remove()
   await insert()
-
-  document
-    .querySelector('#assignment-list-deadline-header')
-    ?.dispatchEvent(new Event('click'))
-
-  await addEventListeners()
+  await event()
+  await module()
 })

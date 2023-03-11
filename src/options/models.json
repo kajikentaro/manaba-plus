@@ -23,32 +23,19 @@
       "dependency": "allow-changing"
     }
   },
-  "contents": {
-    "title": "コンテンツ",
-    "directory-name": {
-      "hint": "ダウンロード先",
-      "description": "ダウンロードされたファイルが保存されるフォルダの名前です。空白にすると既定のダウンロードフォルダに直接保存されます。",
-      "type": "text",
-      "value": "manaba"
+  "main-panel": {
+    "title": "メインパネル",
+    "show-assignment-list-open": {
+      "hint": "未提出課題一覧を開く",
+      "description": "チェックを入れると、メインパネルを開いたとき、未提出課題一覧が開いた状態で表示されます。",
+      "type": "checkbox",
+      "value": false
     },
-    "download-limit": {
-      "hint": "同時ダウンロード数",
-      "description": "同時にダウンロードされるファイル数の上限値です。",
-      "type": "number",
-      "value": 5,
-      "min": 1
-    },
-    "download-contents": {
-      "hint": "",
-      "description": "まだPCにダウンロードされていないコンテンツを、まとめてダウンロードします。自動でコース別にフォルダ分けされます。",
-      "type": "button",
-      "value": "コンテンツのダウンロード..."
-    },
-    "delete-history": {
-      "hint": "",
-      "description": "コンテンツの重複ダウンロードを防ぐために内部に保存している履歴を消去します。",
-      "type": "button",
-      "value": "ダウンロード履歴のリセット"
+    "removed-assignments": {
+      "hint": "除外された未提出課題一覧",
+      "description": "未提出課題一覧から除外された課題の一覧です。",
+      "type": "collection",
+      "value": []
     }
   },
   "home": {
@@ -56,22 +43,9 @@
     "dependency": "allow-changing",
     "show-home-panel": {
       "hint": "ホームパネルを表示する",
-      "description": "チェックを入れると、ホーム画面にManaba Plusのボタンが表示されます。チェックが入っていないときにこのページを訪れるには、拡張機能アイコンをクリックします。",
+      "description": "チェックを入れると、ホーム画面にManaba Plusのメインパネルが表示されます。チェックが入っていないときにメインパネルを表示するには、拡張機能アイコンをクリックします。",
       "type": "checkbox",
       "value": true
-    },
-    "show-assignment-list-open": {
-      "hint": "未提出課題一覧を開く",
-      "description": "チェックを入れると、ホーム画面を開いたとき、未提出課題一覧が開いた状態で表示されます。",
-      "type": "checkbox",
-      "value": false,
-    "dependency": "show-home-panel"
-    },
-    "hidden-assignments": {
-      "hint": "隠された未提出課題一覧",
-      "description": "未提出課題一覧で表示のチェックを外した課題の一覧です。",
-      "type": "collection",
-      "value": []
     },
     "removed-courses": {
       "hint": "除外されたコース一覧",
@@ -249,6 +223,34 @@
         ],
         "id": "banner-list"
       }
+    }
+  },
+  "contents": {
+    "title": "コンテンツ",
+    "directory-name": {
+      "hint": "ダウンロード先",
+      "description": "ダウンロードされたファイルが保存されるフォルダの名前です。空白にすると既定のダウンロードフォルダに直接保存されます。",
+      "type": "text",
+      "value": "manaba"
+    },
+    "download-limit": {
+      "hint": "同時ダウンロード数",
+      "description": "同時にダウンロードされるファイル数の上限値です。",
+      "type": "number",
+      "value": 5,
+      "min": 1
+    },
+    "download-contents": {
+      "hint": "",
+      "description": "まだPCにダウンロードされていないコンテンツを、まとめてダウンロードします。自動でコース別にフォルダ分けされます。",
+      "type": "button",
+      "value": "コンテンツのダウンロード..."
+    },
+    "delete-history": {
+      "hint": "",
+      "description": "コンテンツの重複ダウンロードを防ぐために内部に保存している履歴を消去します。",
+      "type": "button",
+      "value": "ダウンロード履歴のリセット"
     }
   },
   "timeout": {

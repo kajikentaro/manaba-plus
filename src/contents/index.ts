@@ -1,4 +1,4 @@
-import addEventListeners from './event'
+import event from './event'
 
 // Entry point.
-addEventListeners()
+event()

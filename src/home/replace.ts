@@ -197,18 +197,17 @@ const replaceCourses = function () {
   document.querySelectorAll('.course-cell').forEach(function (pastCourse) {
     const { title, actions, status } = getComponents(pastCourse)
 
-    const course = document.createElement('td')
+    const cell = document.createElement('td')
+
+    const course = document.createElement('div')
     course.className = 'course cell'
+    title?.joinIn(course)
+    course.appendChild(actions)
+    status?.joinIn(course)
 
-    const container = document.createElement('div')
-    container.className = 'container'
-    title?.joinIn(container)
-    container.appendChild(actions)
-    status?.joinIn(container)
+    cell.appendChild(course)
 
-    course.appendChild(container)
-
-    pastCourse.replaceWith(course)
+    pastCourse.replaceWith(cell)
   })
   // #endregion
 
