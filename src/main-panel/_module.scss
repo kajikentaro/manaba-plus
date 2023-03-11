@@ -95,14 +95,14 @@
   }
 
   .remaining-time {
-    &.time {
-      font-weight: bold;
-    }
-
     &.day-count {
       &::after {
         content: '日';
       }
+    }
+
+    &.time {
+      font-weight: bold;
     }
   }
 }

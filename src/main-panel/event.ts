@@ -32,12 +32,12 @@ const setRemainingTime = function (deadline: Date, element: Element) {
   const delta = deadline.getTime() - Date.now()
   const dayCount = delta / (1000 * 60 * 60 * 24)
 
-  if (dayCount < 2) {
-    element.classList.add('time')
-    element.textContent = time.toString(delta, false)
-  } else {
+  if (dayCount > 2) {
     element.classList.add('day-count')
     element.textContent = Math.floor(dayCount).toString()
+  } else if (dayCount > 0) {
+    element.classList.add('time')
+    element.textContent = time.toString(delta, false)
   }
 }
 
