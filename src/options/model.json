@@ -32,10 +32,16 @@
       "value": false
     },
     "removed-assignments": {
-      "hint": "除外された未提出課題一覧",
-      "description": "未提出課題一覧から除外された課題の一覧です。",
+      "hint": "除外された未提出課題",
+      "description": "未提出課題一覧から除外された課題は$length$個です。",
       "type": "collection",
       "value": []
+    },
+    "revert-removed-assignments": {
+      "hint": "",
+      "description": "除外された課題を識別するために保存しているデータを消去します。",
+      "type": "button",
+      "value": "除外された課題を元に戻す"
     }
   },
   "home": {
@@ -48,10 +54,16 @@
       "value": true
     },
     "removed-courses": {
-      "hint": "除外されたコース一覧",
-      "description": "ホーム画面から除外されたコースの一覧です。",
+      "hint": "除外されたコース",
+      "description": "ホーム画面から除外されたコースは$length$個です。",
       "type": "collection",
       "value": []
+    },
+    "revert-removed-courses": {
+      "hint": "",
+      "description": "除外されたコースを識別するために保存しているデータを消去します。",
+      "type": "button",
+      "value": "除外されたコースを元に戻す"
     },
     "visibility-and-movement": {
       "title": "表示と移動",

@@ -1,5 +1,12 @@
 import getOptions from '../options/model'
 
+const bindValue = function <T>(text: string, object: T) {
+  return text.replaceAll(
+    /\$(\w+)\$/g,
+    (...args: string[]) => object[args[1]] as string
+  )
+}
+
 const createInputFragment = function (
   key: string,
   item?: OptionItem,
@@ -39,12 +46,21 @@ const createCollectionFragment = function (
 ) {
   const fragment = document.createDocumentFragment()
 
-  const tempDiv = document.createElement('div')
-  tempDiv.id = key
-  tempDiv.innerHTML = item.hint + '<br>' + item.value.join('<br>')
-  fragment.appendChild(tempDiv)
+  const hintDiv = document.createElement('div')
+  hintDiv.className = 'hint'
+  hintDiv.innerHTML = bindValue(item.hint, item.value)
+  fragment.appendChild(hintDiv)
 
-  console.info('Not Implementation: ', item)
+  const details = document.createElement('details')
+  details.id = key
+  details.className = 'unselectable'
+  details.innerHTML = item.value.join('<br>')
+  fragment.appendChild(details)
+
+  const descriptionDiv = document.createElement('div')
+  descriptionDiv.className = 'description'
+  descriptionDiv.innerHTML = bindValue(item.description, item.value)
+  fragment.appendChild(descriptionDiv)
 
   return fragment
 }

@@ -67,13 +67,16 @@ const initialize = async function () {
   for (const [key, item] of items) {
     Object.defineProperty(item, 'value', {
       get() {
-        const _item: OptionItem = this
-        return _item._value
+        return item._value
       },
       set(value) {
-        const _item: OptionItem = this
-        if (_item._value !== value) {
-          _item._value = value
+        if (value === null) {
+          chrome.storage.sync.remove(key)
+          return
+        }
+
+        if (item._value !== value) {
+          item._value = value
           chrome.storage.sync.set({ [key]: value })
         }
       },

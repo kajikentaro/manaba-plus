@@ -84,32 +84,54 @@ const addBindings = async function () {
 const addButtonActions = async function () {
   const { options } = await getOptions()
 
-  document
-    .querySelector('#download-contents')
-    ?.addEventListener('click', function () {
-      window.open('../contents/index.html')
-    })
+  const actions = [
+    {
+      selectors: '#revert-removed-assignments',
+      message: options['main-panel']['revert-removed-assignments'].description,
+      action: async function () {
+        options['main-panel']['removed-assignments'].value = null
+        location.reload()
+      },
+    },
+    {
+      selectors: '#revert-removed-courses',
+      message: options.home['revert-removed-courses'].description,
+      action: async function () {
+        options.home['removed-courses'].value = null
+        location.reload()
+      },
+    },
+    {
+      selectors: '#download-contents',
+      message: null,
+      action: () => window.open('../contents/index.html'),
+    },
+    {
+      selectors: '#delete-history',
+      message: options.contents['delete-history'].description,
+      action: () => clearHistory(),
+    },
+    {
+      selectors: '#reset-options',
+      message: options.other['reset-options'].description,
+      action: async function () {
+        await chrome.storage.sync.clear()
+        location.reload()
+      },
+    },
+  ]
 
-  document
-    .querySelector('#delete-history')
-    ?.addEventListener('click', async function () {
-      if (!confirm(options.contents['delete-history'].description)) {
-        return
-      }
+  for (const { selectors, message, action } of actions) {
+    document
+      .querySelector(selectors)
+      ?.addEventListener('click', async function () {
+        if (message !== null && !confirm(message)) {
+          return
+        }
 
-      await clearHistory()
-    })
-
-  document
-    .querySelector('#reset-options')
-    ?.addEventListener('click', async function () {
-      if (!confirm(options.other['reset-options'].description)) {
-        return
-      }
-
-      await chrome.storage.sync.clear()
-      location.reload()
-    })
+        action()
+      })
+  }
 }
 
 // Entry point
