@@ -1,0 +1,108 @@
+@use '../base';
+
+%actions {
+  @include base.flex-box(column);
+
+  div {
+    width: 16px;
+    height: 16px;
+  }
+
+  .remove {
+    background-image: url('../img/icon-remove.png');
+    filter: saturate(0%);
+
+    &:hover {
+      filter: saturate(1000%);
+    }
+  }
+}
+
+%removed {
+  opacity: 0.3;
+}
+
+.fixed-table {
+  table-layout: fixed;
+}
+
+.striped-table {
+  tr:nth-of-type(odd) {
+    background-color: unset !important;
+  }
+
+  tr:nth-of-type(even) {
+    background-color: whitesmoke !important;
+  }
+}
+
+#assignment-list-container {
+  table {
+    width: 100%;
+
+    th {
+      &:nth-of-type(3) {
+        width: 100px;
+      }
+
+      &:nth-of-type(4) {
+        width: 70px;
+      }
+    }
+
+    td {
+      padding: base.$gap;
+
+      &:nth-of-type(3),
+      &:nth-of-type(4) {
+        text-align: center;
+      }
+    }
+  }
+}
+
+.assignment {
+  &.defcon-4 {
+    background-color: #ffe6e9;
+  }
+
+  &.defcon-3 {
+    background-color: #fff4d1;
+  }
+
+  &.defcon-2 {
+    background-color: #cce8cc;
+  }
+
+  &.defcon-1 {
+    background-color: #f8f8f8;
+  }
+
+  &[removed] {
+    @extend %removed;
+  }
+
+  a {
+    @extend %omitted-text;
+  }
+
+  .title {
+    @include base.grid-box(minmax(0, 1fr) auto);
+  }
+
+  .actions {
+    @extend %actions;
+  }
+
+  .remaining-time {
+    &.time {
+      font-weight: bold;
+    }
+
+    &.day-count {
+      &::after {
+        content: '日';
+      }
+    }
+  }
+}

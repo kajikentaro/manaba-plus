@@ -31,24 +31,24 @@ export const insertRemove = function (actions: Element) {
 // DEFCON is the condition that indicates the urgency of an assignment.
 const getDEFCON = function (dateTime: Date) {
   if (dateTime === null) {
-    return 'DEFCON-1'
+    return 'defcon-1'
   }
 
   const delta = dateTime.getTime() - Date.now()
   if (delta < 0) {
-    return 'DEFCON-0'
+    return 'defcon-0'
   }
 
   const dayCount = delta / (24 * 60 * 60 * 1000)
   switch (true) {
     case dayCount < 1:
-      return 'DEFCON-4'
+      return 'defcon-4'
     case dayCount < 3:
-      return 'DEFCON-3'
+      return 'defcon-3'
     case dayCount < 7:
-      return 'DEFCON-2'
+      return 'defcon-2'
     default:
-      return 'DEFCON-1'
+      return 'defcon-1'
   }
 }
 

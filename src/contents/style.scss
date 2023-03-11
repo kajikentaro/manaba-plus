@@ -1,1 +1,40 @@
-@import '../base';
+@use '../base';
+
+details > *:not(summary) {
+  margin-inline-start: 20px;
+}
+
+.body {
+  @include base.grid-box(1fr auto auto);
+
+  width: 100%;
+  height: 20px;
+
+  .excluded {
+    background-color: whitesmoke;
+
+    &::after {
+      content: '既にダウンロードされています';
+    }
+  }
+
+  .interrupted {
+    background-color: pink;
+  }
+
+  .completed {
+    background-color: greenyellow;
+
+    &::after {
+      content: '正常にダウンロードされました';
+    }
+  }
+
+  .parent {
+    background-image: url('../img/icon-reference.png');
+  }
+
+  .status {
+    width: 200px;
+  }
+}
