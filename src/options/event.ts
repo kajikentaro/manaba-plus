@@ -73,7 +73,7 @@ const addBindings = async function () {
       default: {
         element.addEventListener('input', function (event) {
           const input = event.target as HTMLInputElement
-          item.value = input.checked
+          item.value = input.value
         })
         break
       }
