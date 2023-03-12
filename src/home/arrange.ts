@@ -56,6 +56,7 @@ const arrangeClasses = function () {
 
   removeClass('.course:not(.course-cell)', 'course')
   addClass('.courselist', 'fixed-table', 'striped-table')
+  addClass('.period', 'center-align')
 }
 
 const makeResponsible = function () {
