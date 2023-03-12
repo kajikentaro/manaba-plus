@@ -1,5 +1,5 @@
 import { fetchDOM } from 'fetch'
-import getDistance from '../lib/editDistanceONP'
+import getDistance from '../lib/edit-distance-onp'
 
 export const insertLinkToReport = async function () {
   const reportsUrl = location.href.replace(/_grade$/, '_report')
