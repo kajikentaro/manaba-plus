@@ -4,6 +4,11 @@
   "version": "2.0.0",
   "description": "Add awesome modifications to Chuo University manaba",
   "permissions": ["storage", "downloads"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{77fcd6fa-22a1-498c-88a5-cee7bf16b989}"
+    }
+  },  
   "icons": {
     "16": "img/icon-mp-16.png",
     "32": "img/icon-mp-32.png",
@@ -15,6 +20,9 @@
     "default_popup": "main-panel/index.html"
   },
   "options_page": "options/index.html",
+  "options_ui": {
+    "page": "options/index.html"
+  },
   "content_scripts": [
     {
       "matches": ["https://room.chuo-u.ac.jp/ct/*"],
@@ -22,15 +30,8 @@
       "css": ["common/style.css"]
     },
     {
-      "matches": [
-        "https://room.chuo-u.ac.jp/ct/home",
-        "https://room.chuo-u.ac.jp/ct/home?*",
-        "https://room.chuo-u.ac.jp/ct/home_?*",
-        "https://room.chuo-u.ac.jp/ct/home__*",
-        "https://room.chuo-u.ac.jp/ct/home_course",
-        "https://room.chuo-u.ac.jp/ct/home_course_*",
-        "https://room.chuo-u.ac.jp/ct/home_course?*"
-      ],
+      "matches": ["https://room.chuo-u.ac.jp/ct/home*"],
+      "exclude_matches": ["https://room.chuo-u.ac.jp/ct/home_coursetable"],
       "js": ["home/index.js"],
       "css": ["home/style.css"]
     },
