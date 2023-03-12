@@ -30,7 +30,7 @@ const AddButtonsAction = function () {
 
 const setRemainingTime = function (deadline: Date, element: Element) {
   const delta = deadline.getTime() - Date.now()
-  const dayCount = delta / (1000 * 60 * 60 * 24)
+  const dayCount = time.dayCount(delta)
 
   if (dayCount > 2) {
     element.classList.add('day-count')

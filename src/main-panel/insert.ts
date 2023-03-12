@@ -7,6 +7,12 @@ import scrape from './scrape'
 import dummies from './dummies.json'
 
 const insertMessages = async function () {
+  const { options } = await getOptions()
+
+  if (!options['main-panel'].messages['show-messages'].value) {
+    return
+  }
+
   const messageHolder = document.querySelector('#messages-holder')
 
   const messages = await popMessages()

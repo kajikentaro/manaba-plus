@@ -15,7 +15,10 @@ getOptions().then(async function ({ options }) {
   }
 
   if (options.timeout['transition-automatically'].value) {
-    await pushMessages(messages.timeout)
+    if (options['main-panel'].messages['notify-timeout'].value) {
+      await pushMessages(messages.timeout)
+    }
+
     transition()
   } else {
     // Add a button.

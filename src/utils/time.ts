@@ -1,3 +1,7 @@
+export const dayCount = function (totalMilliseconds: number) {
+  return totalMilliseconds / (1000 * 60 * 60 * 24)
+}
+
 export const toString = function (
   totalMilliseconds: number,
   includeMilliseconds = true

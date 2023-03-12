@@ -5,6 +5,7 @@ import * as history from './history'
 import { sha256 } from '../utils/hash'
 import * as download from './download'
 import * as time from '../utils/time'
+import { updateDate } from '../notification/download'
 
 const startButton = document.querySelector('#start-button')
 const cancelButton = document.querySelector('#cancel-button')
@@ -150,6 +151,8 @@ const startDownload = async function () {
     cancelButton.setAttribute('disabled', '')
 
     stopMeasuring()
+
+    await updateDate()
   }, 1000)
 
   await scrape.startScraping(async function (context: ContentContext) {

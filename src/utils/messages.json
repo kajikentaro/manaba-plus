@@ -1,4 +1,5 @@
 {
     "timeout": "タイムアウトしていたので、ホーム画面に戻りました。",
-    "version": "Manaba Plusがバージョン$version$にアップデートされました！！"
+    "version": "Manaba Plusがバージョン$version$にアップデートされました！！",
+    "download": "最後にコンテンツをダウンロードしたのは$dayCount$日前です。"
 }

@@ -25,6 +25,37 @@
   },
   "main-panel": {
     "title": "メインパネル",
+    "messages": {
+      "title": "メッセージ",
+      "show-messages": {
+        "hint": "メッセージを表示する",
+        "description": "チェックを入れると、メインパネルにメッセージが表示されます。",
+        "type": "checkbox",
+        "value": true
+      },
+      "notify-timeout": {
+        "hint": "タイムアウトを通知する",
+        "description": "チェックを入れると、タイムアウト画面から自動的にホーム画面に戻ったときに通知されます。",
+        "type": "checkbox",
+        "value": true,
+        "dependency": "show-messages"
+      },
+      "notify-version": {
+        "hint": "アップデートを通知する",
+        "description": "チェックを入れると、Manaba Plusがバージョンアップしたときに通知されます",
+        "type": "checkbox",
+        "value": true,
+        "dependency": "show-messages"
+      },
+      "download-interval": {
+        "hint": "ダウンロード通知日数",
+        "description": "最後にコンテンツをダウンロードしてからこの日数が経過すると通知されます。空欄にすると通知されません。",
+        "type": "number",
+        "value": 7,
+        "min": 1,
+        "dependency": "show-messages"
+      }
+    },
     "show-assignment-list-open": {
       "hint": "未提出課題一覧を開く",
       "description": "チェックを入れると、メインパネルを開いたとき、未提出課題一覧が開いた状態で表示されます。",
