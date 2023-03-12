@@ -65,8 +65,8 @@ const scrape = async function (
   ])
 
   if (typeof node.filter !== 'undefined') {
-    for (let index = 0; index < items.length; index++) {
-      const item = items.shift()
+    const temp = items.splice(0)
+    for (const item of temp) {
       const [url] = item
       if (await node.filter(url)) {
         items.push(item)

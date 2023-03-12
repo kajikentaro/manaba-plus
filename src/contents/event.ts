@@ -194,6 +194,8 @@ const testScraping = async function () {
 
   testButton.setAttribute('disabled', '')
 
+  insert.clearContents()
+
   await scrape.startScraping(function (context: ContentContext) {
     stats['pending-count']++
     insert.appendContent(context)
