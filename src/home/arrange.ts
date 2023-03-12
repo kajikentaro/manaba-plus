@@ -60,6 +60,10 @@ const arrangeClasses = function () {
 
 const makeResponsible = function () {
   document
+    .querySelector<HTMLElement>('.infolist-tab')
+    ?.style?.removeProperty('margin-bottom')
+
+  document
     .querySelector<HTMLElement>('#courselistweekly')
     ?.style?.removeProperty('padding-right')
 

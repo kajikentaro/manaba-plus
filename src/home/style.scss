@@ -31,6 +31,23 @@
   }
 }
 
+#manaba-plus-container {
+  margin-block-end: 20px;
+}
+
+.mycourses-body {
+  > label {
+    display: block;
+    margin-block: 10px;
+  }
+}
+
+.section {
+  @include base.flex-box($wrap: true);
+
+  gap: 20px;
+}
+
 table[class='stdlist'] {
   td {
     padding: 0 !important;
@@ -49,12 +66,6 @@ table[class='stdlist'] {
   th:nth-of-type(4) {
     width: 160px;
   }
-}
-
-.section {
-  @include base.flex-box($wrap: true);
-
-  gap: 20px;
 }
 
 .course {

@@ -1,7 +1,10 @@
 import getOptions from '../options/model'
+import '../extension/htmlElement'
 
 export default async function () {
   const { options } = await getOptions()
+
+  document.querySelector<HTMLElement>('.view-menu')?.shown(false)
 
   const items = [
     options.home['visibility-and-movement']['hide-or-move-alert'],

@@ -24,8 +24,8 @@ export default async function () {
     '/main-panel/module.html'
   )
   await insertModule(
-    document.querySelector('#manaba-plus-container'),
-    'beforeend',
+    document.querySelector('.mycourses-body'),
+    'afterbegin',
     '/home/module.html'
   )
 }
