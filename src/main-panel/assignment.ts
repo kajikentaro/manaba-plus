@@ -1,4 +1,4 @@
-import { sha256 } from '../hash'
+import { sha256 } from '../utils/hash'
 
 export default class Assignment {
   public readonly hash: Promise<string>

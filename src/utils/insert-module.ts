@@ -1,4 +1,4 @@
-import { fetchText } from 'fetch'
+import { fetchText } from '../utils/fetch'
 
 export default async function (
   parent: Element,

@@ -1,4 +1,4 @@
-import insertModule from 'insert-module'
+import insertModule from '../utils/insert-module'
 import * as insert from '../main-panel/insert'
 
 const insertStyle = function () {

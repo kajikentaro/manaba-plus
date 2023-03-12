@@ -1,4 +1,4 @@
-import { fetchDOM } from 'fetch'
+import { fetchDOM } from 'utils/fetch'
 import getDistance from '../lib/edit-distance-onp'
 
 export const insertLinkToReport = async function () {

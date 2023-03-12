@@ -1,4 +1,4 @@
-import { fetchDOM } from 'fetch'
+import { fetchDOM } from '../utils/fetch'
 import '../extension/element'
 
 const replaceContentBody = function () {

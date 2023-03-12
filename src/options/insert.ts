@@ -1,11 +1,5 @@
+import bindValue from '../utils/bind-value'
 import getOptions from '../options/model'
-
-const bindValue = function <T>(text: string, object: T) {
-  return text.replaceAll(
-    /\$(\w+)\$/g,
-    (...args: string[]) => object[args[1]] as string
-  )
-}
 
 const createInputFragment = function (
   key: string,

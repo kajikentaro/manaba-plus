@@ -1,10 +1,10 @@
 import model from './scrape.json'
 import './scrape.type'
 
-import { fetchDOM } from '../fetch'
+import { fetchDOM } from '../utils/fetch'
 import consts from '../consts'
 import getOptions from '../options/model'
-import { sha256 } from 'hash'
+import { sha256 } from '../utils/hash'
 
 let isScraping = false
 let returnContext: (context: DownloadContext) => void = null

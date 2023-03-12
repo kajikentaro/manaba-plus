@@ -1,4 +1,4 @@
-import { sha256 } from 'hash'
+import { sha256 } from '../utils/hash'
 
 export default async function (element: Element) {
   if (element === null) {

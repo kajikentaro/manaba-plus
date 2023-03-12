@@ -4,7 +4,7 @@ import getHash from './get-hash'
 import * as insert from './insert'
 import revert from './revert'
 import remove from './remove'
-import * as time from 'time'
+import * as time from '../utils/time'
 
 interface Row extends HTMLElement {
   assignment: Assignment

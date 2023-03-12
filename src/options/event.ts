@@ -1,5 +1,5 @@
 import getOptions from '../options/model'
-import { clearHistory } from 'contents/history'
+import { clearHistory } from '../contents/history'
 
 const addConstraint = function (element: HTMLElement, dependencyId?: string) {
   if (element === null || !('disabled' in element)) {

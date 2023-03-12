@@ -1,4 +1,4 @@
-import { popMessages } from 'messages'
+import { popMessages } from '../utils/messages'
 import Assignment from './assignment'
 import '../extension/htmlElement'
 import getOptions from '../options/model'

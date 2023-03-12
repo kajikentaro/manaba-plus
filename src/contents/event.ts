@@ -2,9 +2,9 @@ import * as scrape from './scrape'
 import * as insert from './insert'
 import * as notify from './notify'
 import * as history from './history'
-import { sha256 } from 'hash'
+import { sha256 } from '../utils/hash'
 import * as download from './download'
-import * as time from 'time'
+import * as time from '../utils/time'
 
 const startButton = document.querySelector('#start-button')
 const cancelButton = document.querySelector('#cancel-button')

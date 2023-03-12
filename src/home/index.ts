@@ -6,7 +6,7 @@ import hide from './hide'
 import move from './move'
 import insert from './insert'
 import event from './event'
-import module from 'main-panel/module'
+import module from '../main-panel/module'
 
 // Entry point.
 getOptions().then(async function ({ options }) {
