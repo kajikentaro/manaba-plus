@@ -1,4 +1,4 @@
-import consts from '../consts'
+import getOptions from '../options/model'
 import { fetchDOM } from '../utils/fetch'
 import Assignment from './assignment'
 
@@ -38,13 +38,17 @@ const getAssignmentsFromDoc = function* (doc: Document) {
   }
 }
 
-const urls = [
-  consts['home-url'] + '_summary_query',
-  consts['home-url'] + '_summary_survey',
-  consts['home-url'] + '_summary_report',
-]
-
 export default async function* () {
+  const { options } = await getOptions()
+
+  const rootUrl = options.common['root-url'].value
+
+  const urls = [
+    rootUrl + 'home_summary_query',
+    rootUrl + 'home_summary_survey',
+    rootUrl + 'home_summary_report',
+  ]
+
   for (const url of urls) {
     const doc = await fetchDOM(url)
     yield* getAssignmentsFromDoc(doc)

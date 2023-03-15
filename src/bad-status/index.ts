@@ -1,8 +1,7 @@
-import consts from '../consts'
 import getOptions from '../options/model'
 import { messages, pushMessages } from '../utils/messages'
 
-let url = consts['home-url']
+let url: string
 
 const transition = function () {
   window.location.href = url
@@ -10,7 +9,9 @@ const transition = function () {
 
 getOptions().then(async function ({ options }) {
   const customRrl = options.timeout['destination-on-timeout'].value.trim()
-  if (customRrl) {
+  if (customRrl === '') {
+    url = options.common['root-url'].value + 'home'
+  } else {
     url = customRrl
   }
 

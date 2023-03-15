@@ -1,7 +1,7 @@
-import consts from './consts.json'
+import constants from './constants.json'
 
 // Replace string items with their own keys.
-const groupStack = [consts]
+const groupStack = [constants]
 while (groupStack.length > 0) {
   const group = groupStack.pop()
   for (const key in group) {
@@ -17,4 +17,4 @@ while (groupStack.length > 0) {
   }
 }
 
-export default consts
+export default constants

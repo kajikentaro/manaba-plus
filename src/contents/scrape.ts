@@ -1,7 +1,7 @@
 import { fetchDOM } from '../utils/fetch'
-import consts from '../consts'
 import getModel from './model'
 import './model.type'
+import getOptions from '../options/model'
 
 let isScraping = false
 let returnContext: (context: DownloadContext) => void = null
@@ -94,6 +94,8 @@ export const startScraping = async function (
     return
   }
 
+  const { options } = await getOptions()
+
   isScraping = true
   returnContext = callback
 
@@ -102,7 +104,7 @@ export const startScraping = async function (
 
   const model = await getModel()
 
-  const homeUrl = consts['home-url']
+  const homeUrl = options.common['root-url'].value + 'home'
   const homeDoc = await fetchDOM(homeUrl)
 
   await scrape(model, homeDoc, [])

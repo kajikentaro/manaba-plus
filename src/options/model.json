@@ -2,6 +2,12 @@
   "title": "Manaba Plus オプション",
   "common": {
     "title": "一般",
+    "root-url": {
+      "hint": "manabaのURL",
+      "description": "manabaのルートのURLです。ホーム画面にアクセスしたときに自動的に設定されますが、ここで変更することもできます。",
+      "type": "text",
+      "value": ""
+    },
     "allow-changing": {
       "hint": "変更を許可する",
       "description": "チェックを入れると、Manaba Plusに画面の変更を許可することになります。画面の読み込みが遅いと感じたら、チェックを外してください。",
