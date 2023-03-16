@@ -176,7 +176,7 @@ export const insertAssignmentList = async function () {
   options['main-panel']['removed-assignments'].value =
     Array.from(removedAssignmentSet)
 
-  // #region Dummy
+  // #region DEBUG Dummy
   for (const dummy of dummies) {
     const assignment = new Assignment(
       dummy.url,

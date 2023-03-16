@@ -2,8 +2,8 @@
 /node_modules
 
 # production
-/build
-build.zip
+dst
+build
 
 # misc
 .DS_Store

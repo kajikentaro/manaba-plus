@@ -4,23 +4,23 @@ const path = require('path')
 const glob = require('glob')
 
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
-
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const PATHS = require('./paths')
+const srcPath = path.resolve('src')
+const dstPath = path.resolve('dst')
 
 // Search entry files.
 const entries = Object.fromEntries(
   glob
     .sync('{**/style.scss,**/index.{ts,js}}', {
-      cwd: PATHS.src,
+      cwd: srcPath,
     })
     .map(function (entryPath) {
       const parsedEntryPath = path.parse(entryPath)
       return [
         path.join(parsedEntryPath.dir, parsedEntryPath.name),
-        path.join(PATHS.src, entryPath),
+        path.join(srcPath, entryPath),
       ]
     })
 )
@@ -34,10 +34,10 @@ console.log(entries)
 module.exports = {
   entry: entries,
   output: {
-    // to clean up build folder
+    // to clean up dst folder
     clean: true,
-    // the build folder to output bundles and assets in.
-    path: PATHS.build,
+    // the dst folder to output bundles and assets in.
+    path: dstPath,
     // the filename template for entry chunks
     filename: '[name].js',
   },
@@ -49,10 +49,6 @@ module.exports = {
   module: {
     rules: [
       // Help webpack in understanding CSS files imported in .js files
-      {
-        test: /\.ts$/,
-        use: 'ts-loader',
-      },
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
@@ -81,12 +77,16 @@ module.exports = {
     plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],
   },
   plugins: [
-    // Copy static common assets from `public/common` folder to `build` folder
+    // Copy static common assets from `public/common` folder to `dst` folder
     new CopyWebpackPlugin({
       patterns: [
         {
           from: '**/*',
           context: 'public/common',
+        },
+        {
+          from: 'manifest.json',
+          context: 'src',
         },
       ],
     }),
