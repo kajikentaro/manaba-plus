@@ -3,6 +3,7 @@ import Assignment from './assignment'
 import '../extension/htmlElement'
 import getOptions from '../options/model'
 import scrape from './scrape'
+import * as time from '../utils/time'
 
 import dummies from './dummies.json'
 
@@ -61,9 +62,11 @@ const getDEFCON = function (dateTime: Date) {
 let assignmentListHolder: Element
 
 const appendAssignment = function (assignment: Assignment) {
+  const deadline = assignment.deadline
+
   const row = document.createElement('tr')
   row.className = 'assignment'
-  row.classList.add(getDEFCON(assignment.deadline))
+  row.classList.add(getDEFCON(deadline))
   Object.defineProperty(row, 'assignment', { value: assignment })
   row.shown(assignment.isShown)
 
@@ -90,7 +93,7 @@ const appendAssignment = function (assignment: Assignment) {
   row.insertCell().appendChild(title)
 
   const deadlineText = document.createTextNode(
-    assignment.deadline?.toLocaleString('ja-JP', {
+    deadline?.toLocaleString('ja-JP', {
       month: 'short',
       day: '2-digit',
       weekday: 'short',
@@ -104,7 +107,25 @@ const appendAssignment = function (assignment: Assignment) {
   remainingTimeSpan.className = 'remaining-time'
   row.insertCell().appendChild(remainingTimeSpan)
 
+  if (deadline !== null) {
+    setRemainingTime(deadline, remainingTimeSpan)
+    setInterval(setRemainingTime, 1000, deadline, remainingTimeSpan)
+  }
+
   assignmentListHolder.appendChild(row)
+}
+
+const setRemainingTime = function (deadline: Date, element: Element) {
+  const delta = deadline.getTime() - Date.now()
+  const dayCount = time.dayCount(delta)
+
+  if (dayCount > 2) {
+    element.classList.add('day-count')
+    element.textContent = Math.floor(dayCount).toString()
+  } else if (dayCount > 0) {
+    element.classList.add('time')
+    element.textContent = time.toString(delta, false)
+  }
 }
 
 let isAssignmentListInserted = false
@@ -167,6 +188,10 @@ export const insertAssignmentList = async function () {
     appendAssignment(assignment)
   }
   // #endregion
+
+  document
+    .querySelector('#assignment-list-deadline-header')
+    ?.dispatchEvent(new Event('click'))
 }
 // #endregion
 

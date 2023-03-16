@@ -1,14 +1,8 @@
-import Assignment from './assignment'
 import getOptions from '../options/model'
 import getHash from './get-hash'
 import * as insert from './insert'
 import revert from './revert'
 import remove from './remove'
-import * as time from '../utils/time'
-
-interface Row extends HTMLElement {
-  assignment: Assignment
-}
 
 const AddButtonsAction = function () {
   const contentsButton = document.querySelector('#contents-button')
@@ -25,19 +19,6 @@ const AddButtonsAction = function () {
     optionsButton.addEventListener('click', function () {
       window.open(chrome.runtime.getURL('/options/index.html'))
     })
-  }
-}
-
-const setRemainingTime = function (deadline: Date, element: Element) {
-  const delta = deadline.getTime() - Date.now()
-  const dayCount = time.dayCount(delta)
-
-  if (dayCount > 2) {
-    element.classList.add('day-count')
-    element.textContent = Math.floor(dayCount).toString()
-  } else if (dayCount > 0) {
-    element.classList.add('time')
-    element.textContent = time.toString(delta, false)
   }
 }
 
@@ -111,20 +92,6 @@ export const addMainActions = async function () {
     })
   }
   // #endregion
-
-  document
-    .querySelectorAll<Row>('#assignment-list-holder > tr')
-    .forEach(function (row) {
-      // Update remaining time per 1000 ms.
-      const remainingTimeSpan = row.querySelector('.remaining-time')
-      if (remainingTimeSpan !== null) {
-        const deadline = row.assignment.deadline
-        if (deadline !== null) {
-          setRemainingTime(deadline, remainingTimeSpan)
-          setInterval(setRemainingTime, 1000, deadline, remainingTimeSpan)
-        }
-      }
-    })
 
   const removedCollectionItem = options['main-panel'][
     'removed-assignments'
