@@ -36,6 +36,12 @@
   }
 }
 
+#manaba-plus-container {
+  .buttons-container {
+    @include base.flex-box;
+  }
+}
+
 #messages-holder {
   margin: 10px;
 }

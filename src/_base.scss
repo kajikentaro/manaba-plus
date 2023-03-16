@@ -1,4 +1,5 @@
 $primary-color-light: #f4fde8;
+$primary-color: #dbf6be;
 $primary-color-dark: #9ecf4c;
 $error-color: rgb(255 187 187);
 $success-color: rgb(220 255 187);
@@ -25,4 +26,16 @@ $gap: 4px;
 
 .unselectable {
   user-select: none;
+}
+
+button,
+input[type='button'] {
+  width: 100%;
+  min-height: 50px;
+  background-color: $primary-color;
+  border-color: $primary-color-dark;
+
+  &:hover {
+    background-color: $primary-color-light;
+  }
 }

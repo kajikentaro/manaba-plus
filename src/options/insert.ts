@@ -12,7 +12,11 @@ const createInputFragment = function (
 
   const label = document.createElement('label')
   label.className = 'unselectable'
-  label.innerHTML = hint
+
+  const hintSpan = document.createElement('span')
+  hintSpan.className = 'hint'
+  hintSpan.textContent = hint
+  label.appendChild(hintSpan)
 
   const input = document.createElement('input')
   input.id = key
@@ -74,6 +78,7 @@ const createRadioFragment = function (key: string, item: OptionRadioItem) {
 
   const buttonsDiv = document.createElement('div')
   buttonsDiv.id = key
+  buttonsDiv.className = 'choices'
 
   for (const choice of item.choices) {
     const subFragment = createInputFragment(

@@ -9,36 +9,6 @@
   text-align: right;
 }
 
-#content-body {
-  @include base.grid-box(1fr auto);
-
-  gap: 0;
-
-  .left {
-    h3 {
-      margin-inline: unset !important;
-    }
-  }
-
-  .right {
-    max-width: 245px;
-
-    > div {
-      margin-inline-start: 15px;
-    }
-  }
-
-  .bottom {
-    @include base.flex-box($wrap: true);
-
-    gap: 10px;
-  }
-}
-
-#manaba-plus-container {
-  margin-block-end: 20px;
-}
-
 .mycourses-body {
   > label {
     display: block;
@@ -204,6 +174,41 @@ table[class='stdlist'] {
 
 .my-infolist-body {
   height: unset !important;
+}
+
+#content-body {
+  @include base.grid-box(1fr auto);
+
+  gap: 0;
+
+  .left {
+    h3 {
+      margin-inline: unset !important;
+    }
+  }
+
+  .right {
+    max-width: 245px;
+
+    > div {
+      margin-inline-start: 15px;
+    }
+  }
+
+  .bottom {
+    @include base.flex-box($wrap: true);
+
+    gap: 10px;
+  }
+}
+
+#manaba-plus-container {
+  margin-block-end: 20px;
+
+  h2 {
+    margin-block: 15px !important;
+    font-size: 1.5em !important;
+  }
 }
 
 #alert,
