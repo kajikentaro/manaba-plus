@@ -10,8 +10,8 @@
     "format:prettier": "prettier --check --write --loglevel=warn \"**/*.{ts,js,scss,md}\"",
     "format:es": "eslint --max-warnings=0 --fix \"**/*.{ts,js}\"",
     "format:style": "stylelint --fix \"**/*.{css,scss}\"",
-    "watch": "webpack --watch --config config/webpack.dev.js",
-    "build": "eslint . && rm -rf build/* && webpack --config config/webpack.prod.js",
+    "watch": "webpack --watch --config .webpack/webpack.dev.js",
+    "build": "eslint . && rm -rf build/* && webpack --config .webpack/webpack.prod.js",
     "version": "auto-changelog -p && git add CHANGELOG.md"
   },
   "devDependencies": {
@@ -21,6 +21,7 @@
     "css-loader": "^6.7.3",
     "eslint-config-prettier": "^8.6.0",
     "eslint-config-standard-typescript": "^1.0.3",
+    "glob": "^9.3.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.2",
     "mini-css-extract-plugin": "^2.7.2",

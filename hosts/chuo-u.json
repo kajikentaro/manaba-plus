@@ -1,3 +1,6 @@
 {
-    "manaba-url": "https://room.chuo-u.ac.jp/ct/"
+    "manaba-url": "https://room.chuo-u.ac.jp/ct/",
+    "bad-status": [
+        "https://gakunin-idp.c.chuo-u.ac.jp/sso/timeout.cgi*"
+    ]
 }

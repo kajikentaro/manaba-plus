@@ -3,12 +3,15 @@
   "name": "Manaba Plus",
   "version": "2.0.0",
   "description": "Add awesome modifications to Chuo University manaba",
-  "permissions": ["storage", "downloads"],
+  "permissions": [
+    "storage",
+    "downloads"
+  ],
   "browser_specific_settings": {
     "gecko": {
       "id": "{77fcd6fa-22a1-498c-88a5-cee7bf16b989}"
     }
-  },  
+  },
   "icons": {
     "16": "img/icon-mp-16.png",
     "32": "img/icon-mp-32.png",
@@ -25,35 +28,73 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://room.chuo-u.ac.jp/ct/*"],
-      "js": ["common/index.js"],
-      "css": ["common/style.css"]
+      "matches": [
+        "$manaba-url$*"
+      ],
+      "js": [
+        "common/index.js"
+      ],
+      "css": [
+        "common/style.css"
+      ]
     },
     {
-      "matches": ["https://room.chuo-u.ac.jp/ct/home*"],
-      "exclude_matches": ["https://room.chuo-u.ac.jp/ct/home_coursetable"],
-      "js": ["home/index.js"],
-      "css": ["home/style.css"]
+      "matches": [
+        "$manaba-url$home*"
+      ],
+      "exclude_matches": [
+        "$manaba-url$home_coursetable"
+      ],
+      "js": [
+        "home/index.js"
+      ],
+      "css": [
+        "home/style.css"
+      ]
     },
     {
-      "matches": ["https://room.chuo-u.ac.jp/ct/course*_report"],
-      "js": ["report/index.js"],
-      "css": ["report/style.css"]
+      "matches": [
+        "$manaba-url$course*_report"
+      ],
+      "js": [
+        "report/index.js"
+      ],
+      "css": [
+        "report/style.css"
+      ]
     },
     {
-      "matches": ["https://room.chuo-u.ac.jp/ct/course*_report_*"],
-      "js": ["attachment/index.js"],
-      "css": ["attachment/style.css"]
+      "matches": [
+        "$manaba-url$course*_report_*"
+      ],
+      "js": [
+        "attachment/index.js"
+      ],
+      "css": [
+        "attachment/style.css"
+      ]
     },
     {
-      "matches": ["https://room.chuo-u.ac.jp/ct/course*_grade"],
-      "js": ["grade/index.js"],
-      "css": ["grade/style.css"]
+      "matches": [
+        "$manaba-url$course*_grade"
+      ],
+      "js": [
+        "grade/index.js"
+      ],
+      "css": [
+        "grade/style.css"
+      ]
     },
     {
-      "matches": ["https://gakunin-idp.c.chuo-u.ac.jp/sso/timeout.cgi*"],
-      "js": ["bad-status/index.js"],
-      "css": ["bad-status/style.css"]
+      "matches": [
+        "$bad-status$"
+      ],
+      "js": [
+        "bad-status/index.js"
+      ],
+      "css": [
+        "bad-status/style.css"
+      ]
     }
   ],
   "web_accessible_resources": [
@@ -64,7 +105,9 @@
         "main-panel/module.html",
         "options/index.html"
       ],
-      "matches": ["https://room.chuo-u.ac.jp/*"]
+      "matches": [
+        "$manaba-url$"
+      ]
     }
   ]
 }

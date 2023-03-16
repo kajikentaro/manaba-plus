@@ -1,7 +1,7 @@
 'use strict'
 
-const path = require('path')
 const glob = require('glob')
+const path = require('path')
 
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -26,6 +26,7 @@ const entries = Object.fromEntries(
 )
 console.log('Entries:')
 console.log(entries)
+console.log()
 
 // To re-use webpack configuration across templates,
 // CLI maintains a common webpack configuration file - `webpack.common.js`.
@@ -87,6 +88,7 @@ module.exports = {
         {
           from: 'manifest.json',
           context: 'src',
+          transform: require('./manifest.js'),
         },
       ],
     }),
