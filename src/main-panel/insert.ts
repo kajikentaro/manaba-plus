@@ -19,7 +19,7 @@ const insertMessages = async function () {
   const messages = await popMessages()
   for (const message of messages) {
     const messageDiv = document.createElement('div')
-    messageDiv.innerText = message
+    messageDiv.textContent = message
     messageHolder.appendChild(messageDiv)
   }
 }
@@ -74,7 +74,7 @@ const appendAssignment = function (assignment: Assignment) {
 
   const courseAnchor = document.createElement('a')
   courseAnchor.href = courseUrl
-  courseAnchor.innerHTML = assignment.course
+  courseAnchor.textContent = assignment.course
   row.insertCell().appendChild(courseAnchor)
 
   const title = document.createElement('div')
@@ -82,7 +82,7 @@ const appendAssignment = function (assignment: Assignment) {
 
   const titleAnchor = document.createElement('a')
   titleAnchor.href = assignment.url
-  titleAnchor.innerHTML = assignment.title
+  titleAnchor.textContent = assignment.title
   title.appendChild(titleAnchor)
 
   const actions = document.createElement('div')

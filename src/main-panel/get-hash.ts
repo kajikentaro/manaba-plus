@@ -14,7 +14,7 @@ export default async function (element: Element) {
       return
     }
 
-    hash = await sha256(title.innerText)
+    hash = await sha256(title.textContent)
   } else {
     hash = await sha256(anchor.href)
   }

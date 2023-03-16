@@ -9,7 +9,7 @@ export const insertLinkToReport = async function () {
     reportsDom.querySelectorAll<HTMLAnchorElement>('.report-title a')
   const reportItems = Array.from(reportAnchors).map(function (anchor) {
     const reportUrl = anchor.href
-    const reportTitle = anchor.innerText
+    const reportTitle = anchor.textContent
     return { reportUrl, reportTitle }
   })
 
@@ -34,7 +34,7 @@ export const insertLinkToReport = async function () {
 
   for (const ownRow of ownRows) {
     const gradeTitle =
-      ownRow.querySelector<HTMLElement>('.grade-title')?.innerText
+      ownRow.querySelector<HTMLElement>('.grade-title')?.textContent
     if (typeof gradeTitle === 'undefined') {
       continue
     }
@@ -49,7 +49,8 @@ export const insertLinkToReport = async function () {
       continue
     }
 
-    grade.innerHTML += '<br>'
+    const br = document.createElement('br')
+    grade.appendChild(br)
 
     const gradeAnchor = document.createElement('a')
     gradeAnchor.className = 'grade-anchor'

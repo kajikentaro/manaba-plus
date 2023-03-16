@@ -32,7 +32,7 @@ const createInputFragment = function (
 
   const descriptionDiv = document.createElement('div')
   descriptionDiv.className = 'description'
-  descriptionDiv.innerHTML = description
+  descriptionDiv.textContent = description
   fragment.appendChild(descriptionDiv)
 
   return fragment
@@ -46,18 +46,24 @@ const createCollectionFragment = function (
 
   const hintDiv = document.createElement('div')
   hintDiv.className = 'hint'
-  hintDiv.innerHTML = bindValue(item.hint, item.value)
+  hintDiv.textContent = bindValue(item.hint, item.value)
   fragment.appendChild(hintDiv)
 
+  // #region DEBUG Collection Items
   const details = document.createElement('details')
   details.id = key
   details.className = 'unselectable'
-  details.innerHTML = item.value.join('<br>')
+  for (const v of item.value) {
+    const vDiv = document.createElement('div')
+    vDiv.textContent = v
+    details.appendChild(vDiv)
+  }
   fragment.appendChild(details)
+  // #endregion
 
   const descriptionDiv = document.createElement('div')
   descriptionDiv.className = 'description'
-  descriptionDiv.innerHTML = bindValue(item.description, item.value)
+  descriptionDiv.textContent = bindValue(item.description, item.value)
   fragment.appendChild(descriptionDiv)
 
   return fragment
@@ -68,12 +74,12 @@ const createRadioFragment = function (key: string, item: OptionRadioItem) {
 
   const hintDiv = document.createElement('div')
   hintDiv.className = 'hint'
-  hintDiv.innerHTML = item.hint
+  hintDiv.textContent = item.hint
   fragment.appendChild(hintDiv)
 
   const descriptionDiv = document.createElement('div')
   descriptionDiv.className = 'description'
-  descriptionDiv.innerHTML = item.description
+  descriptionDiv.textContent = item.description
   fragment.appendChild(descriptionDiv)
 
   const buttonsDiv = document.createElement('div')
@@ -151,7 +157,7 @@ const createSectionElement = function (key: string, title: string) {
   container.className = 'section'
 
   const titleH2 = document.createElement('h2')
-  titleH2.innerHTML = title
+  titleH2.textContent = title
   container.appendChild(titleH2)
 
   return container
@@ -190,7 +196,7 @@ export default async function () {
   const holder = document.querySelector('#options-holder')
 
   const rootTitleH1 = document.createElement('h1')
-  rootTitleH1.innerHTML = options.title
+  rootTitleH1.textContent = options.title
   holder.appendChild(rootTitleH1)
 
   // Add option sections.

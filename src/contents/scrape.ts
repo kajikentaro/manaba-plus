@@ -26,7 +26,7 @@ const scrape = async function (
   const anchors = doc.querySelectorAll<HTMLAnchorElement>(node.selectors)
   const items = Array.from(anchors).map((anchor) => [
     anchor.href,
-    anchor.innerText.trim(),
+    anchor.textContent.trim(),
   ])
 
   if (typeof node.filter !== 'undefined') {

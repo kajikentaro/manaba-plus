@@ -10,7 +10,7 @@ const overwriteExternalUrl = function (element: HTMLAnchorElement) {
 
   const anchor = document.createElement('a')
   anchor.href = decodeURIComponent(match[1])
-  anchor.innerHTML = element.innerHTML
+  anchor.textContent = element.textContent
   element.replaceWith(anchor)
 }
 

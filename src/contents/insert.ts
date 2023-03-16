@@ -10,7 +10,7 @@ const createProgress = function (trace: ScrapingTrace, child?: Element) {
 
   const itemNameDiv = document.createElement('div')
   itemNameDiv.className = 'item-name'
-  itemNameDiv.innerText = trace.token
+  itemNameDiv.textContent = trace.token
   container.appendChild(itemNameDiv)
 
   const progress = document.createElement('progress')
@@ -61,7 +61,7 @@ const createContentBody = function (context: ContentContext) {
 
   const titleDiv = document.createElement('div')
   titleDiv.className = 'title'
-  titleDiv.innerText = context.tokens[0]
+  titleDiv.textContent = context.tokens[0]
   body.appendChild(titleDiv)
 
   const parentAnchor = document.createElement('a')
@@ -84,7 +84,7 @@ const createContentNode = function (token: string, child?: Element) {
   node.setAttribute('token', token)
 
   const summary = document.createElement('summary')
-  summary.innerText = token
+  summary.textContent = token
   node.appendChild(summary)
 
   if (typeof child !== 'undefined') {
@@ -145,7 +145,7 @@ export const updateContents = function (stacks: {
     body.classList.add('interrupted')
 
     const message = errors[error] ?? error
-    statusDiv.innerText = message
+    statusDiv.textContent = message
   })
 
   stacks.completed.forEach(function (context: ContentContext) {

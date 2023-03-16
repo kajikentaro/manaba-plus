@@ -22,7 +22,7 @@ const getContent = function (
   source: Element | { parent: Element; selectors: string },
   className: string,
   tagName = 'div',
-  attributeNames: string | string[] = 'innerText'
+  attributeNames: string | string[] = 'textContent'
 ) {
   if (!(source instanceof Element)) {
     const { parent, selectors } = source
@@ -67,7 +67,7 @@ const getTitleAndStatus = function (course: Element) {
     },
     '',
     'a',
-    ['href', 'innerText']
+    ['href', 'textContent']
   ) as HTMLAnchorElement
   if (anchor === null) {
     return { title: null, status: null }
@@ -176,18 +176,18 @@ const getYearAndRemarks = function (course: Element) {
     '.courseitemdetail:first-of-type'
   )
 
-  // Extract year and remarks from `innerText`.
-  const match = /(\d{4})(.*)/.exec(element.innerText)
+  // Extract year and remarks from `textContent`.
+  const match = /(\d{4})(.*)/.exec(element.textContent)
   const yearStr = match[1]
   const remarksStr = match[2].trim()
 
   const year = document.createElement('div')
   year.className = 'year'
-  year.innerText = yearStr
+  year.textContent = yearStr
 
   const remarks = document.createElement('div')
   remarks.className = 'remarks'
-  remarks.innerText = remarksStr
+  remarks.textContent = remarksStr
 
   return { year, remarks }
 }

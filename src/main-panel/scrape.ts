@@ -31,7 +31,7 @@ const getAssignmentsFromDoc = function* (doc: Document) {
     }
 
     const texts = Array.from(elements).map((element: HTMLElement) =>
-      element.innerText.trim()
+      element.textContent.trim()
     )
 
     yield new Assignment(url, texts[0], texts[1], parseDateTime(texts[2]))
