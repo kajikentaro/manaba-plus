@@ -36,41 +36,6 @@
   }
 }
 
-#manaba-plus-container {
-  .buttons-container {
-    @include base.flex-box;
-  }
-}
-
-#messages-holder {
-  margin: 10px;
-}
-
-#assignment-list-container {
-  table {
-    width: 100%;
-
-    th {
-      &:nth-of-type(3) {
-        width: 100px;
-      }
-
-      &:nth-of-type(4) {
-        width: 70px;
-      }
-    }
-
-    td {
-      padding: base.$gap;
-
-      &:nth-of-type(3),
-      &:nth-of-type(4) {
-        text-align: center;
-      }
-    }
-  }
-}
-
 .assignment {
   &.defcon-4 {
     background-color: #ffe6e9;
@@ -86,6 +51,10 @@
 
   &.defcon-1 {
     background-color: #f8f8f8;
+  }
+
+  &:hover {
+    background-color: transparent;
   }
 
   &[removed] {
@@ -113,6 +82,42 @@
 
     &.time {
       font-weight: bold;
+    }
+  }
+}
+
+#manaba-plus-container {
+  .buttons-container {
+    @include base.flex-box;
+  }
+}
+
+#messages-holder {
+  margin: 10px;
+}
+
+#assignment-list-container {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+      &:nth-of-type(3) {
+        width: 100px;
+      }
+
+      &:nth-of-type(4) {
+        width: 70px;
+      }
+    }
+
+    td {
+      padding: base.$gap;
+
+      &:nth-of-type(3),
+      &:nth-of-type(4) {
+        text-align: center;
+      }
     }
   }
 }

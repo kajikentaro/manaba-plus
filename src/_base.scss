@@ -35,7 +35,8 @@ input[type='button'] {
   background-color: $primary-color;
   border-color: $primary-color-dark;
 
-  &:hover {
+  &:hover,
+  &:disabled {
     background-color: $primary-color-light;
   }
 }
