@@ -3,16 +3,13 @@ import * as insert from '../main-panel/insert'
 
 const insertStyle = function () {
   const head = document.querySelector('head')
-  head.insertAdjacentHTML(
-    'beforeend',
-    `
-    <style>
+  const style = document.createElement('style')
+  style.textContent = `
       .course .star {
         background-image: url(../icon_clip_on.png);
       }
-    </style>
   `
-  )
+  head.appendChild(style)
 }
 
 export default async function () {
