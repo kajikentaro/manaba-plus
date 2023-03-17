@@ -97,6 +97,10 @@
 }
 
 #assignment-list-container {
+  .bar {
+    @include base.flex-box;
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;
