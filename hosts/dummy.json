@@ -1,8 +1,0 @@
-{
-    "manaba-url": "https://dummy.ac.jp/ct/",
-    "bad-status": [
-        "https://dummy.ac.jp/timeout-1",
-        "https://dummy.ac.jp/timeout-2",
-        "https://dummy.ac.jp/timeout-3"
-    ]
-}

@@ -1,43 +1,4 @@
-const glob = require('glob')
-const path = require('path')
-
-const valueLists = []
-
-glob('hosts/*.json').then(function (hostFiles) {
-  const pairs = new Map()
-
-  for (const hostFile of hostFiles) {
-    const hostFilepath = path.resolve(hostFile)
-    const properties = require(hostFilepath)
-
-    for (const key in properties) {
-      const valueList = pairs.get(key) ?? []
-      const value = properties[key]
-
-      if (typeof value === 'string') {
-        valueList.push(value)
-      } else {
-        valueList.push(...value)
-      }
-
-      pairs.set(key, valueList)
-    }
-  }
-
-  const chars = /(?:[^"]|\\["])/.source
-
-  for (const [key, valueList] of pairs) {
-    const regex = new RegExp(
-      `(\\s*?"${chars}*?)\\$${key}\\$(${chars}*?")(\\s*?)`,
-      'g'
-    )
-    valueLists.push([regex, valueList])
-  }
-
-  console.log('Hosts:')
-  console.log(pairs)
-  console.log()
-})
+const hosts = require('./hosts')
 
 const fixWebAccessibleResources = function (content) {
   const obj = JSON.parse(content)
@@ -62,6 +23,10 @@ const fixWebAccessibleResources = function (content) {
 
 module.exports = async function (buffer) {
   let content = buffer.toString()
+
+  const valueLists = []
+
+  valueLists.push(...(await hosts.getValueLists()))
 
   for (const [regex, valueList] of valueLists) {
     const replacer = function (...args) {

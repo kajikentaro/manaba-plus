@@ -28,6 +28,8 @@ console.log('Entries:')
 console.log(entries)
 console.log()
 
+require('../pre/index')()
+
 // To re-use webpack configuration across templates,
 // CLI maintains a common webpack configuration file - `webpack.common.js`.
 // Whenever user creates an extension, CLI adds `webpack.common.js` file
@@ -88,7 +90,7 @@ module.exports = {
         {
           from: 'manifest.json',
           context: 'src',
-          transform: require('./manifest.js'),
+          transform: require('../pre/manifest'),
         },
       ],
     }),
