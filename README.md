@@ -1,4 +1,4 @@
-# <img src="./public/icons/manabaPlusIcon_128.png" width="45" align="left"> Manaba Plus
+# <img src="./public/prod/img/icon-mp-128.png" width="45" align="left"> Manaba Plus
 
 中央大学 Manaba をもっと便利に使うための Chrome 拡張機能です。
 
