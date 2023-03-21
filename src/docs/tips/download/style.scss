@@ -1,7 +1,13 @@
-@use '../../base';
+@use '../../../base';
 
 .description {
   margin-block: 10px;
+}
+
+.screenshot-container {
+  @include base.flex-box(column);
+
+  gap: 20px;
 }
 
 .screenshot {
@@ -10,10 +16,4 @@
     margin: 10px;
     box-shadow: 0 0 10px 1px gray;
   }
-}
-
-#screenshot-container {
-  @include base.flex-box(column);
-
-  gap: 20px;
 }
