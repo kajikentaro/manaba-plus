@@ -11,7 +11,9 @@
     "format:es": "eslint --max-warnings=0 --fix \"**/*.{ts,js}\"",
     "format:style": "stylelint --fix \"**/*.{css,scss}\"",
     "watch": "webpack --watch --config config/webpack.dev.js",
-    "build": "eslint . && rm -rf build/* && webpack --config config/webpack.prod.js && mv -r build/docs docs",
+    "prebuild": "eslint . && rm -rf dst/*",
+    "build": "webpack --config config/webpack.prod.js",
+    "postbuild": "sh ./scripts/sync.sh dst/docs/ docs/",
     "version": "auto-changelog -p && git add CHANGELOG.md"
   },
   "devDependencies": {
