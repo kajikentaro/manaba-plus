@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
   "scripts": {
     "prepare": "husky install",
@@ -16,8 +16,8 @@
     "build": "webpack --config config/webpack.prod.js",
     "postbuild": "sh ./scripts/sync.sh dst/docs/ docs/",
     "major": "npm version major",
-    "version": "auto-changelog -v",
-    "n": "cross-var echo $npm_package_version"
+    "version_": "auto-changelog -v",
+    "version": "cross-var echo $npm_package_version"
   },
   "devDependencies": {
     "@prettier/plugin-pug": "^2.4.1",
