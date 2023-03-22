@@ -1,1 +1,10 @@
 @use '../base';
+
+#transition-button {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%);
+  width: fit-content;
+  padding-inline: 10px;
+}

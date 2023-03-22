@@ -23,18 +23,11 @@ getOptions().then(async function ({ options }) {
     transition()
   } else {
     // Add a button.
-    const containerDiv = document.createElement('div')
-    containerDiv.className = 'container'
-
     const transitionInput = document.createElement('input')
+    transitionInput.id = 'transition-button'
     transitionInput.type = 'button'
     transitionInput.value = options.timeout['timeout-button-label'].value
     transitionInput.addEventListener('click', transition)
-    containerDiv.appendChild(transitionInput)
-
-    containerDiv.appendChild(transitionInput)
-
-    const content = document.querySelector('#content')
-    content.appendChild(containerDiv)
+    document.body.appendChild(transitionInput)
   }
 })
