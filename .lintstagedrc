@@ -1,5 +1,5 @@
 {
   "*.{js,ts,scss,md,pug}": "prettier --check --loglevel=warn",
-  "*.{js,ts}": "eslint --max-warnings=0 --no-error-on-unmatched-pattern",
+  "*.{js,ts}": "eslint --max-warnings=0 --no-error-on-unmatched-pattern --no-ignore",
   "*.{css,scss}": "stylelint --allow-empty-input"
 }
