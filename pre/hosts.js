@@ -11,14 +11,15 @@ const hosts = glob('hosts/*.json', {
   })
 })
 
-const getValueLists = async function () {
+const valueLists = hosts.then(function (hosts) {
   const pairs = new Map()
 
-  for (const host of await hosts) {
-    delete host.name
-    delete host.source
-
+  for (const host of hosts) {
     for (const key in host) {
+      if (['name', 'source'].includes(key)) {
+        continue
+      }
+
       const valueList = pairs.get(key) ?? []
       const value = host[key]
 
@@ -48,7 +49,7 @@ const getValueLists = async function () {
   console.log()
 
   return valueLists
-}
+})
 
 const exportHostList = async function () {
   const filePath = path.resolve('host-list.md')
@@ -62,9 +63,11 @@ const exportHostList = async function () {
   for (const host of await hosts) {
     const name = host.name
     const source = host.source
-    if (!name) {
+
+    if (!name || !source) {
       console.log(host)
     }
+
     stream.write(`- ${name} [->](${source})\n`)
   }
 
@@ -72,6 +75,6 @@ const exportHostList = async function () {
 }
 
 module.exports = {
-  getValueLists,
+  valueLists,
   exportHostList,
 }

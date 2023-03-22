@@ -26,7 +26,7 @@ module.exports = async function (buffer) {
 
   const valueLists = []
 
-  valueLists.push(...(await hosts.getValueLists()))
+  valueLists.push(...(await hosts.valueLists))
 
   for (const [regex, valueList] of valueLists) {
     const replacer = function (...args) {

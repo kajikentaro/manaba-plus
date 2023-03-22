@@ -3,11 +3,11 @@
   "scripts": {
     "prepare": "husky install",
     "lint": "npm run lint:prettier && npm run lint:es && npm run lint:style ",
-    "lint:prettier": "prettier --check --loglevel=warn \"**/*.{ts,js,scss,md}\"",
+    "lint:prettier": "prettier --check --loglevel=warn \"**/*.{ts,js,scss,md,pug}\"",
     "lint:es": "eslint --max-warnings=0 \"**/*.{ts,js}\"",
     "lint:style": "stylelint \"**/*.{css,scss}\"",
     "format": "npm run format:prettier && npm run format:es && npm run format:style",
-    "format:prettier": "prettier --check --write --loglevel=warn \"**/*.{ts,js,scss,md}\"",
+    "format:prettier": "prettier --check --write --loglevel=warn \"**/*.{ts,js,scss,md,pug}\"",
     "format:es": "eslint --max-warnings=0 --fix \"**/*.{ts,js}\"",
     "format:style": "stylelint --fix \"**/*.{css,scss}\"",
     "watch": "webpack --watch --config config/webpack.dev.js",
@@ -17,7 +17,9 @@
     "version": "auto-changelog -p && git add CHANGELOG.md"
   },
   "devDependencies": {
+    "@prettier/plugin-pug": "^2.4.1",
     "@types/chrome": "^0.0.217",
+    "@types/pug": "^2.0.6",
     "auto-changelog": "^2.4.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",

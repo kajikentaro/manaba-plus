@@ -1,4 +1,4 @@
-import insertModule from '../utils/insert-module'
+import { compileTemplate } from 'pug'
 import * as insert from '../main-panel/insert'
 
 const insertStyle = function () {
@@ -15,14 +15,8 @@ const insertStyle = function () {
 export default async function () {
   insertStyle()
   document.querySelectorAll('.course .actions').forEach(insert.insertRemove)
-  await insertModule(
-    document.querySelector('#content-body .left'),
-    'afterbegin',
-    '/main-panel/module.html'
-  )
-  await insertModule(
-    document.querySelector('.mycourses-body'),
-    'afterbegin',
-    '/home/module.html'
-  )
+
+  const parent = document.querySelector('.mycourses-body')
+  const module: compileTemplate = require('./module.pug')
+  parent.insertAdjacentHTML('afterbegin', module())
 }

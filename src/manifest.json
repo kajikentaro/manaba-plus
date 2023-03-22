@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Manaba Plus",
   "version": "2.0.0",
-  "description": "Add awesome modifications to Chuo University manaba",
+  "description": "Add awesome modifications to manaba",
   "permissions": [
     "storage",
     "downloads"
@@ -20,7 +20,7 @@
   },
   "action": {
     "default_title": "Manaba Plusを開く",
-    "default_popup": "main-panel/index.html"
+    "default_popup": "popup/index.html"
   },
   "options_page": "options/index.html",
   "options_ui": {
@@ -101,8 +101,6 @@
     {
       "resources": [
         "contents/index.html",
-        "home/module.html",
-        "main-panel/module.html",
         "options/index.html"
       ],
       "matches": [

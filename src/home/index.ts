@@ -6,7 +6,7 @@ import hide from './hide'
 import move from './move'
 import insert from './insert'
 import event from './event'
-import module from '../main-panel/module'
+import initMainPanel from '../main-panel/module'
 
 // Entry point.
 getOptions().then(async function ({ options }) {
@@ -25,5 +25,7 @@ getOptions().then(async function ({ options }) {
   await move()
   await insert()
   await event()
-  await module()
+
+  const contentBodyLeft = document.querySelector('#content-body .left')
+  await initMainPanel(contentBodyLeft)
 })
