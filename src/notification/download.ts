@@ -5,11 +5,11 @@ import { messages, pushMessages } from '../utils/messages'
 const storageKey = 'last-download-date'
 
 export const updateDate = async function () {
-  await chrome.storage.sync.set({ [storageKey]: Date.now() })
+  await chrome.storage.local.set({ [storageKey]: Date.now() })
 }
 
-const getLastDate = async function () {
-  const pairs = await chrome.storage.sync.get({ [storageKey]: null })
+export const getLastDate = async function () {
+  const pairs = await chrome.storage.local.get({ [storageKey]: null })
   return pairs[storageKey] as number
 }
 
