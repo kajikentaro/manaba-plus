@@ -1,20 +1,18 @@
-doctype html
-html(lang="ja")
-  head
-    meta(charset="UTF-8")
-    title ダウンロードTips | Manaba Plus
-    link(rel="stylesheet", href="style.css")
+extends ../../../layout
 
-  body
-    .description ブラウザの設定からダウンロード時の確認ウィンドウを表示しないようにできます。
+block prepend head
+  - var title = 'ダウンロードTips'
 
-    .screenshot-container
-      .screenshot
-        .caption Chromeの場合
-        img(src="image-Chrome.png")
-      .screenshot
-        .caption Edgeの場合
-        img(src="image-Edge.png")
-      .screenshot
-        .caption Firefoxの場合
-        img(src="image-Firefox.png")
+block content
+  .description ブラウザの設定からダウンロード時の確認ウィンドウを表示しないようにできます。
+
+  .screenshot-container
+    .screenshot
+      .caption Chromeの場合
+      img(src="img/image-Chrome.png")
+    .screenshot
+      .caption Edgeの場合
+      img(src="img/image-Edge.png")
+    .screenshot
+      .caption Firefoxの場合
+      img(src="img/image-Firefox.png")

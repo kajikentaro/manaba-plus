@@ -7,7 +7,7 @@ do
     d=$2$f
 
     # If the source entry is directory, make it.
-    [ -d "$s" ] && ( [ ! -d "$d" ] && mkdir "$d" ) && continue
+    [ -d "$s" ] && mkdir -p "$d" && continue
 
     cp -u "$s" "$d"
 done
