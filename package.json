@@ -1,4 +1,5 @@
 {
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "prepare": "husky install",
@@ -14,7 +15,9 @@
     "prebuild": "eslint . && rm -rf dst/*",
     "build": "webpack --config config/webpack.prod.js",
     "postbuild": "sh ./scripts/sync.sh dst/docs/ docs/",
-    "version": "auto-changelog -p && git add CHANGELOG.md"
+    "major": "npm version major",
+    "version": "auto-changelog -v",
+    "n": "cross-var echo $npm_package_version"
   },
   "devDependencies": {
     "@prettier/plugin-pug": "^2.4.1",
@@ -22,6 +25,7 @@
     "@types/pug": "^2.0.6",
     "auto-changelog": "^2.4.0",
     "copy-webpack-plugin": "^11.0.0",
+    "cross-var": "^1.1.0",
     "css-loader": "^6.7.3",
     "eslint-config-prettier": "^8.6.0",
     "eslint-config-standard-typescript": "^1.0.3",

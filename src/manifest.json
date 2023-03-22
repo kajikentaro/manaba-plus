@@ -1,7 +1,6 @@
 {
   "manifest_version": 3,
   "name": "Manaba Plus",
-  "version": "2.0.0",
   "description": "Add awesome modifications to manaba",
   "permissions": [
     "storage",
