@@ -43,7 +43,7 @@ module.exports = merge(common, {
     // Zip `dst` folder into zip file.
     new ZipWebpackPlugin({
       path: buildPath,
-      filename: `${manifest.name}_${manifest.version}.zip`,
+      filename: `${manifest.name}_${process.env.npm_package_version}.zip`,
       exclude: 'docs',
     }),
   ],
