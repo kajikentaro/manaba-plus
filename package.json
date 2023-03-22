@@ -1,5 +1,5 @@
 {
-  "version": "4.0.0",
+  "version": "3.0.0",
   "private": true,
   "scripts": {
     "prepare": "husky install",
@@ -17,7 +17,7 @@
     "postbuild": "sh ./scripts/sync.sh dst/docs/ docs/",
     "major": "npm version major",
     "version_": "auto-changelog -v",
-    "version": "cross-var echo $npm_package_version"
+    "_version": "cross-var echo $npm_package_version"
   },
   "devDependencies": {
     "@prettier/plugin-pug": "^2.4.1",
