@@ -1,5 +1,25 @@
 const hosts = require('./hosts')
 
+const replaceValues = function (content, valueLists) {
+  const chars = /(?:[^"]|\\["])/.source
+
+  for (const [key, valueList] of valueLists) {
+    const regex = new RegExp(
+      `(\\s*?"${chars}*?)\\$${key}\\$(${chars}*?")(\\s*?)`,
+      'g'
+    )
+
+    const replacer = function (...args) {
+      const results = valueList.map((value) => args[1] + value + args[2])
+      return results.join(',' + args[3])
+    }
+
+    content = content.replaceAll(regex, replacer)
+  }
+
+  return content
+}
+
 const fixWebAccessibleResources = function (content) {
   const obj = JSON.parse(content)
 
@@ -26,16 +46,12 @@ module.exports = async function (buffer) {
 
   const valueLists = []
 
+  const version = process.env.npm_package_version
+  valueLists.push(['version', [version]])
+
   valueLists.push(...(await hosts.valueLists))
 
-  for (const [regex, valueList] of valueLists) {
-    const replacer = function (...args) {
-      const results = valueList.map((value) => args[1] + value + args[2])
-      return results.join(',' + args[3])
-    }
-
-    content = content.replaceAll(regex, replacer)
-  }
+  content = replaceValues(content, valueLists)
 
   content = fixWebAccessibleResources(content)
 

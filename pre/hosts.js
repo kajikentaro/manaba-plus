@@ -33,22 +33,11 @@ const valueLists = hosts.then(function (hosts) {
     }
   }
 
-  const chars = /(?:[^"]|\\["])/.source
-  const valueLists = []
-
-  for (const [key, valueList] of pairs) {
-    const regex = new RegExp(
-      `(\\s*?"${chars}*?)\\$${key}\\$(${chars}*?")(\\s*?)`,
-      'g'
-    )
-    valueLists.push([regex, valueList])
-  }
-
   console.log('Hosts:')
   console.log(pairs)
   console.log()
 
-  return valueLists
+  return Array.from(pairs.entries())
 })
 
 const exportHostList = async function () {
