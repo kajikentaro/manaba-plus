@@ -20,7 +20,7 @@ getOptions().then(async function ({ options }) {
       await pushMessages(messages.timeout)
     }
 
-    transition()
+    setTimeout(transition, 500)
   } else {
     // Add a button.
     const transitionInput = document.createElement('input')
