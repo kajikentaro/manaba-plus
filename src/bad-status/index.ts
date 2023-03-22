@@ -20,6 +20,7 @@ getOptions().then(async function ({ options }) {
       await pushMessages(messages.timeout)
     }
 
+    // To avoid looping in login sessions.
     setTimeout(transition, 500)
   } else {
     // Add a button.
