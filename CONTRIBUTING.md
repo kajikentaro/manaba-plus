@@ -1,12 +1,11 @@
-<div style="font-size: 3em;">Manaba Plus contributing guide</div>
-<br>
+# Manaba Plus contributing guide
 
 [日本語](CONTRIBUTING.ja.md)
 
 Thank you for contributing to `Manaba Plus` very much.
 This guide explains some overviews about contributing.
 
-# Report an issue
+## Report an issue
 
 The flow of reporting an issue is below.
 
@@ -14,12 +13,12 @@ The flow of reporting an issue is below.
 2. Search if the issue has already been reported
 3. Create a new issue if it is unknown
 
-# Solve an issue
+## Solve an issue
 
 First, find an issue interesting to you in the Issue tab.
 Answer if it is just needed, or open PR and fix it if changes are in need.
 
-# Make a change
+## Make a change
 
 The flow of making a change is below.
 Refer [Development Guide](docs/development) for more details.
@@ -30,7 +29,7 @@ Refer [Development Guide](docs/development) for more details.
 4. Push to the branch (git push origin feat/my-new-feature)
 5. Create a new Pull Request
 
-# Pull Request
+## Pull Request
 
 Explain changes easy to understand in PR.
 Changes are applied after review and merge.
