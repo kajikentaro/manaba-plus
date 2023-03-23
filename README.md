@@ -87,6 +87,12 @@ Adapt to [Many schools](host-list.md).
 
 Your school should be adapted.
 
+### Only Chrome, right?
+
+Adapt to not only Chrome but also Edge and Firefox.
+
+Just a moment, Safari users!!
+
 ## Promo Video
 
 | <a href="https://www.youtube.com/watch?v=BmCXfWZzhks" rel="some text"><img src="http://img.youtube.com/vi/BmCXfWZzhks/mqdefault.jpg"></a> |

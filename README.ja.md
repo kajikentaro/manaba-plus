@@ -87,6 +87,12 @@
 
 きっとあなたの学校の manaba でも使えるでしょう。
 
+### Chrome だけなんかい
+
+Chrome だけでなく Edge、Firefox にも対応しています。
+
+Safari はもう少し待ってね！！
+
 ## 紹介動画
 
 | <a href="https://www.youtube.com/watch?v=BmCXfWZzhks" rel="some text"><img src="http://img.youtube.com/vi/BmCXfWZzhks/mqdefault.jpg"></a> |
