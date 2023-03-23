@@ -1,0 +1,6 @@
+{
+    "COULD_NOT_START": "開始できませんでした",
+    "FAILED": "失敗しました",
+    "SERVER_BAD_CONTENT": "ファイルにアクセスできませんでした",
+    "USER_CANCELED": "キャンセルされました"
+}

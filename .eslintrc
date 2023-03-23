@@ -1,0 +1,43 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "webextensions": true
+  },
+  "extends": [
+    "standard",
+    "prettier",
+    "eslint-config-prettier"
+  ],
+  "rules": {
+    "no-undefined": "error",
+    "no-undef-init": "error",
+    "arrow-body-style": ["error", "never"]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.ts"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "plugins": [
+        "@typescript-eslint"
+      ],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/no-unsafe-call": "error",
+        "@typescript-eslint/no-unsafe-member-access": "error",
+        "@typescript-eslint/no-unsafe-return": "error",
+        
+        // Not to report incorrect errors.
+        "no-undef": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "error"
+      }
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+$primary-color-light: #f4fde8;
+$primary-color: #dbf6be;
+$primary-color-dark: #9ecf4c;
+$error-color: rgb(255 187 187);
+$success-color: rgb(220 255 187);
+$gap: 4px;
+
+%omitted-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@mixin flex-box($direction: row, $wrap: false) {
+  display: flex;
+  flex-flow: $direction if($wrap, wrap, nowrap);
+  gap: $gap;
+}
+
+@mixin grid-box($columns, $rows: unset) {
+  display: grid;
+  grid-template-columns: $columns;
+  grid-template-rows: $rows;
+  gap: $gap;
+}
+
+.unselectable {
+  user-select: none;
+}
+
+button,
+input[type='button'] {
+  width: 100%;
+  min-height: 50px;
+  background-color: $primary-color;
+  border-color: $primary-color-dark;
+
+  &:hover,
+  &:disabled {
+    background-color: $primary-color-light;
+  }
+}
+
+.screenshot {
+  img {
+    width: 500px;
+    margin: 10px;
+    box-shadow: 0 0 10px 1px gray;
+  }
+}
