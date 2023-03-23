@@ -1,3 +1,6 @@
+# Copy and update files.
+# Usage: sh /path/to/sync.sh 'src-dir' 'dst-dir'
+
 for s in `find $1`
 do
     # Relative path
