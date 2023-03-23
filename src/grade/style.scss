@@ -1,0 +1,5 @@
+.grade-anchor {
+  &::after {
+    content: '回答の確認';
+  }
+}

@@ -1,0 +1,52 @@
+@use '../base';
+
+h2 {
+  margin: 0;
+}
+
+.section {
+  @include base.flex-box(column);
+
+  gap: 20px;
+  margin-inline-start: 50px;
+  width: 500px;
+}
+
+.item {
+  @include base.flex-box(column);
+}
+
+.hint {
+  font-size: 1.3em;
+}
+
+.description {
+  color: rgb(136 136 136);
+}
+
+label {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+input {
+  &[type='checkbox'],
+  &[type='radio'] {
+    transform: scale(1.5);
+  }
+
+  &[type='number'] {
+    width: 100px;
+  }
+
+  &[type='text'] {
+    width: 300px;
+  }
+}
+
+.choices {
+  @include base.flex-box(column);
+
+  margin-inline-start: 20px;
+}

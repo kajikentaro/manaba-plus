@@ -1,0 +1,223 @@
+@use '../base';
+@use '../main-panel/module';
+
+.center-align {
+  text-align: center;
+}
+
+.right-align {
+  text-align: right;
+}
+
+.mycourses-body {
+  > label {
+    display: block;
+    margin-block: 10px;
+  }
+}
+
+.section {
+  @include base.flex-box($wrap: true);
+
+  gap: 20px;
+}
+
+table[class='stdlist'] {
+  td {
+    padding: 0 !important;
+  }
+}
+
+.courselist {
+  th:nth-of-type(2) {
+    width: 40px;
+  }
+
+  th:nth-of-type(3) {
+    width: 80px;
+  }
+
+  th:nth-of-type(4) {
+    width: 160px;
+  }
+}
+
+.course {
+  &[removed] {
+    @extend %removed;
+  }
+
+  .code {
+    color: lightgrey;
+    font-size: 0.8em;
+  }
+
+  .link-state {
+    display: inline;
+    color: orange;
+    font-size: 0.8em;
+    font-weight: bold;
+  }
+
+  .status {
+    @include base.flex-box;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+
+    &.dummy {
+      &::after {
+        content: '使わないコース';
+      }
+    }
+  }
+
+  .actions {
+    @extend %actions;
+  }
+
+  .star {
+    &:not([stared]) {
+      filter: saturate(0%);
+    }
+
+    &:hover,
+    &[in-progress] {
+      filter: saturate(50%);
+    }
+  }
+
+  .remarks,
+  .teachers {
+    @extend %omitted-text;
+  }
+
+  &.cell {
+    @include base.grid-box(1fr auto, 1fr auto);
+
+    background-color: base.$primary-color-light;
+    border: 1px solid base.$primary-color-dark;
+    height: 60px;
+    padding: 4px;
+
+    .pastcourselist & {
+      background-color: #f8f0e0;
+    }
+
+    .status {
+      grid-column-start: span 2;
+    }
+  }
+
+  &.row {
+    td {
+      height: unset !important;
+    }
+
+    .container {
+      @include base.grid-box(auto 1fr auto auto);
+
+      align-items: center;
+    }
+
+    .icon {
+      width: 25px;
+      height: 25px;
+    }
+
+    .title {
+      @extend %omitted-text;
+    }
+
+    .actions {
+      flex-direction: row;
+    }
+  }
+
+  &.card {
+    @include base.grid-box(auto minmax(0, 1fr) auto);
+
+    padding: 4px !important;
+    width: 290px;
+    border: 1px dotted base.$primary-color-dark;
+    border-left: 4px solid base.$primary-color-dark;
+
+    .middle {
+      @include base.flex-box(column);
+    }
+
+    .title {
+      @extend %omitted-text;
+
+      font-size: 1.3em;
+    }
+
+    .info {
+      @include base.grid-box(auto 1fr 1fr);
+
+      align-items: baseline;
+    }
+  }
+}
+
+.my-infolist-header {
+  background-size: 100% 100% !important;
+  padding-inline-start: 60px !important;
+
+  h2 {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
+}
+
+.my-infolist-body {
+  height: unset !important;
+}
+
+#content-body {
+  @include base.grid-box(1fr auto);
+
+  gap: 0;
+
+  .left {
+    h3 {
+      margin-inline: unset !important;
+    }
+  }
+
+  .right {
+    max-width: 245px;
+
+    > div {
+      margin-inline-start: 15px;
+    }
+  }
+
+  .bottom {
+    @include base.flex-box($wrap: true);
+
+    gap: 10px;
+  }
+}
+
+#manaba-plus-container {
+  margin-block-end: 20px;
+
+  h2 {
+    margin-block: 15px !important;
+    font-size: 1.5em !important;
+  }
+}
+
+#alert,
+#news {
+  flex-basis: 100%;
+}
+
+#syllabus,
+#former-link,
+#kikuzou {
+  width: 230px;
+}

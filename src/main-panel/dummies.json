@@ -1,0 +1,20 @@
+[
+    {
+        "url": "https://room.chuo-u.ac.jp/ct/course_1234567_query_9876543",
+        "course": "何らかのコース",
+        "title": "めっちゃやばい課題",
+        "deadline": "2023-03-18 23:55 GMT+0900"
+    },
+    {
+        "url": "https://room.chuo-u.ac.jp/ct/course_1234567_query_9876543",
+        "course": "あるコース",
+        "title": "ちょっと焦る課題",
+        "deadline": "2023-03-20 23:55 GMT+0900"
+    },
+    {
+        "url": "https://room.chuo-u.ac.jp/ct/course_1234567_query_9876543",
+        "course": "どうでもいいコース",
+        "title": "まだ余裕がある課題",
+        "deadline": "2023-03-23 23:55 GMT+0900"
+    }
+]

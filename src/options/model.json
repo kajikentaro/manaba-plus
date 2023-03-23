@@ -1,0 +1,363 @@
+{
+  "title": "Manaba Plus オプション",
+  "common": {
+    "title": "一般",
+    "root-url": {
+      "hint": "manabaのURL",
+      "description": "manabaのルートのURLです。ホーム画面にアクセスしたときに自動的に設定されますが、ここで変更することもできます。",
+      "type": "text",
+      "value": ""
+    },
+    "allow-changing": {
+      "hint": "変更を許可する",
+      "description": "チェックを入れると、Manaba Plusに画面の変更を許可することになります。画面の読み込みが遅いと感じたら、チェックを外してください。",
+      "type": "checkbox",
+      "value": true
+    },
+    "show-notes": {
+      "hint": "「メモ」を表示する",
+      "description": "チェックを入れると、ホーム画面の上部やその他の画面の下部にある「メモ」を表示します。",
+      "type": "checkbox",
+      "value": true,
+      "dependency": "allow-changing"
+    },
+    "transition-directly": {
+      "hint": "リンクを直接開く",
+      "description": "チェックを入れると、外部リンクをクリックしたとき、確認ダイアログを表示せずにリンクを開きます。",
+      "type": "checkbox",
+      "value": true,
+      "dependency": "allow-changing"
+    }
+  },
+  "main-panel": {
+    "title": "メインパネル",
+    "messages": {
+      "title": "メッセージ",
+      "show-messages": {
+        "hint": "メッセージを表示する",
+        "description": "チェックを入れると、メインパネルにメッセージが表示されます。",
+        "type": "checkbox",
+        "value": true
+      },
+      "notify-timeout": {
+        "hint": "タイムアウトを通知する",
+        "description": "チェックを入れると、タイムアウト画面から自動的にホーム画面に戻ったときに通知されます。",
+        "type": "checkbox",
+        "value": true,
+        "dependency": "show-messages"
+      },
+      "notify-version": {
+        "hint": "アップデートを通知する",
+        "description": "チェックを入れると、Manaba Plusがバージョンアップしたときに通知されます",
+        "type": "checkbox",
+        "value": true,
+        "dependency": "show-messages"
+      },
+      "download-interval": {
+        "hint": "ダウンロード通知日数",
+        "description": "最後にコンテンツをダウンロードしてからこの日数が経過すると通知されます。空欄にすると通知されません。",
+        "type": "number",
+        "value": 7,
+        "min": 1,
+        "dependency": "show-messages"
+      }
+    },
+    "show-assignment-list-open": {
+      "hint": "未提出課題一覧を開く",
+      "description": "チェックを入れると、メインパネルを開いたとき、未提出課題一覧が開いた状態で表示されます。",
+      "type": "checkbox",
+      "value": false
+    },
+    "removed-assignments": {
+      "hint": "除外された未提出課題",
+      "description": "未提出課題一覧から除外された課題は$length$個です。",
+      "type": "collection",
+      "value": []
+    },
+    "revert-removed-assignments": {
+      "hint": "",
+      "description": "除外された課題を識別するために保存しているデータを消去します。",
+      "type": "button",
+      "value": "除外された課題を元に戻す"
+    }
+  },
+  "home": {
+    "title": "ホーム画面",
+    "dependency": "allow-changing",
+    "show-home-panel": {
+      "hint": "ホームパネルを表示する",
+      "description": "チェックを入れると、ホーム画面にManaba Plusのメインパネルが表示されます。チェックが入っていないときにメインパネルを表示するには、拡張機能アイコンをクリックします。",
+      "type": "checkbox",
+      "value": true
+    },
+    "removed-courses": {
+      "hint": "除外されたコース",
+      "description": "ホーム画面から除外されたコースは$length$個です。",
+      "type": "collection",
+      "value": []
+    },
+    "revert-removed-courses": {
+      "hint": "",
+      "description": "除外されたコースを識別するために保存しているデータを消去します。",
+      "type": "button",
+      "value": "除外されたコースを元に戻す"
+    },
+    "visibility-and-movement": {
+      "title": "表示と移動",
+      "hide-or-move-alert": {
+        "hint": "アラート",
+        "description": "ホーム画面の「ポートフォリオにコレクションが追加されました。」「コレクションが更新されています。」「ポートフォリオのコレクションにコメントが追加されました。」などのアラートの表示方法を選んでください。",
+        "type": "radio",
+        "value": "hide",
+        "choices": [
+          {
+            "key": "ignore",
+            "hint": "上部に表示する",
+            "description": "選択すると、ホーム画面の上部に表示されます。"
+          },
+          {
+            "key": "move",
+            "hint": "下部に表示する",
+            "description": "選択すると、ホーム画面の下部に表示されます。"
+          },
+          {
+            "key": "hide",
+            "hint": "表示しない",
+            "description": "選択すると、表示されません。"
+          }
+        ],
+        "id": "alert"
+      },
+      "hide-or-move-centernews": {
+        "hint": "「お知らせ」",
+        "description": "ホーム画面のメンテナンス情報などのお知らせの表示方法を選んでください。",
+        "type": "radio",
+        "value": "move",
+        "choices": [
+          {
+            "key": "ignore",
+            "hint": "上部に表示する",
+            "description": "選択すると、ホーム画面の上部に表示されます。"
+          },
+          {
+            "key": "move",
+            "hint": "下部に表示する",
+            "description": "選択すると、ホーム画面の下部に表示されます。"
+          },
+          {
+            "key": "hide",
+            "hint": "表示しない",
+            "description": "選択すると、表示されません。"
+          }
+        ],
+        "id": "news"
+      },
+      "hide-or-move-syllabus": {
+        "hint": "「シラバス検索」",
+        "description": "ホーム画面のシラバス検索ボックスの表示方法を選んでください。",
+        "type": "radio",
+        "value": "move",
+        "choices": [
+          {
+            "key": "ignore",
+            "hint": "右側に表示する",
+            "description": "選択すると、ホーム画面の右側に表示されます。"
+          },
+          {
+            "key": "move",
+            "hint": "下部に表示する",
+            "description": "選択すると、ホーム画面の下部に表示されます。"
+          },
+          {
+            "key": "hide",
+            "hint": "表示しない",
+            "description": "選択すると、表示されません。"
+          }
+        ],
+        "id": "syllabus"
+      },
+      "hide-or-move-assignment": {
+        "hint": "「課題」",
+        "description": "ホーム画面の本家の未提出課題一覧と課題提出記録の表示方法を選んでください。",
+        "type": "radio",
+        "value": "hide",
+        "choices": [
+          {
+            "key": "ignore",
+            "hint": "右側に表示する",
+            "description": "選択すると、ホーム画面の右側に表示されます。"
+          },
+          {
+            "key": "move",
+            "hint": "下部に表示する",
+            "description": "選択すると、ホーム画面の下部に表示されます。"
+          },
+          {
+            "key": "hide",
+            "hint": "表示しない",
+            "description": "選択すると、表示されません。"
+          }
+        ],
+        "id": "assignment"
+      },
+      "hide-or-move-former-link": {
+        "hint": "「旧スマートフォン版について」",
+        "description": "ホーム画面の旧スマートフォン版へのリンクの表示方法を選んでください。",
+        "type": "radio",
+        "value": "hide",
+        "choices": [
+          {
+            "key": "ignore",
+            "hint": "右側に表示する",
+            "description": "選択すると、ホーム画面の右側に表示されます。"
+          },
+          {
+            "key": "move",
+            "hint": "下部に表示する",
+            "description": "選択すると、ホーム画面の下部に表示されます。"
+          },
+          {
+            "key": "hide",
+            "hint": "表示しない",
+            "description": "選択すると、表示されません。"
+          }
+        ],
+        "id": "former-link"
+      },
+      "hide-or-move-kikuzou": {
+        "hint": "朝日新聞の広告",
+        "description": "ホーム画面の朝日新聞の広告の表示方法を選んでください。",
+        "type": "radio",
+        "value": "hide",
+        "choices": [
+          {
+            "key": "ignore",
+            "hint": "右側に表示する",
+            "description": "選択すると、ホーム画面の右側に表示されます。"
+          },
+          {
+            "key": "move",
+            "hint": "下部に表示する",
+            "description": "選択すると、ホーム画面の下部に表示されます。"
+          },
+          {
+            "key": "hide",
+            "hint": "表示しない",
+            "description": "選択すると、表示されません。"
+          }
+        ],
+        "id": "kikuzou"
+      },
+      "hide-or-move-banner-list": {
+        "hint": "バナー",
+        "description": "ホーム画面のバナーの表示方法を選んでください。",
+        "type": "radio",
+        "value": "move",
+        "choices": [
+          {
+            "key": "ignore",
+            "hint": "右側に表示する",
+            "description": "選択すると、ホーム画面の右側に表示されます。"
+          },
+          {
+            "key": "move",
+            "hint": "下部に表示する",
+            "description": "選択すると、ホーム画面の下部に表示されます。"
+          },
+          {
+            "key": "hide",
+            "hint": "表示しない",
+            "description": "選択すると、表示されません。"
+          }
+        ],
+        "id": "banner-list"
+      }
+    }
+  },
+  "contents": {
+    "title": "コンテンツ",
+    "download-contents": {
+      "hint": "",
+      "description": "まだPCにダウンロードされていないコンテンツを、まとめてダウンロードします。自動でコース別にフォルダ分けされます。",
+      "type": "button",
+      "value": "コンテンツ画面を開く"
+    },
+    "contents-limit": {
+      "title": "コンテンツの制限",
+      "download-removed": {
+        "hint": "除外されているコースをダウンロードする",
+        "description": "チェックを入れると、除外されているコースのコンテンツもダウンロードします。チェックを外すと除外されているコースのコンテンツはダウンロードされません。",
+        "type": "checkbox",
+        "value": false
+      },
+      "download-news": {
+        "hint": "コースニュースをダウンロードする",
+        "description": "チェックを入れると、コースニュースにあるコンテンツをダウンロードします。",
+        "type": "checkbox",
+        "value": true
+      },
+      "download-report": {
+        "hint": "レポートをダウンロードする",
+        "description": "チェックを入れると、レポートにあるコンテンツをダウンロードします。",
+        "type": "checkbox",
+        "value": true
+      },
+      "download-course-contents": {
+        "hint": "コースコンテンツをダウンロードする",
+        "description": "チェックを入れると、コースコンテンツにあるコンテンツをダウンロードします。",
+        "type": "checkbox",
+        "value": true
+      }
+    },
+    "directory-name": {
+      "hint": "ダウンロード先",
+      "description": "ダウンロードされたコンテンツが保存されるフォルダの名前です。空白にすると既定のダウンロードフォルダに直接保存されます。",
+      "type": "text",
+      "value": "manaba"
+    },
+    "download-limit": {
+      "hint": "同時ダウンロード数",
+      "description": "同時にダウンロードされるコンテンツ数の上限値です。",
+      "type": "number",
+      "value": 5,
+      "min": 1
+    },
+    "delete-history": {
+      "hint": "",
+      "description": "コンテンツの重複ダウンロードを防ぐために内部に保存している履歴を消去します。",
+      "type": "button",
+      "value": "ダウンロード履歴のリセット"
+    }
+  },
+  "timeout": {
+    "title": "タイムアウト画面",
+    "destination-on-timeout": {
+      "hint": "リンク先",
+      "description": "タイムアウト画面からリンクするページのURLです。空欄の場合はホーム画面にリンクします。",
+      "type": "text",
+      "value": ""
+    },
+    "transition-automatically": {
+      "hint": "自動的に移動する",
+      "description": "チェックを入れると、タイムアウト画面から自動的にリンク先へ移動します。",
+      "type": "checkbox",
+      "value": true
+    },
+    "timeout-button-label": {
+      "hint": "ボタンのラベル",
+      "description": "タイムアウト画面に追加されるボタンのラベルです。",
+      "type": "text",
+      "value": "manabaのホーム画面に移動する",
+      "dependency": "!transition-automatically"
+    }
+  },
+  "other": {
+    "title": "その他",
+    "reset-options": {
+      "hint": "",
+      "description": "設定を初期値に戻します。",
+      "type": "button",
+      "value": "設定のリセット"
+    }
+  }
+}
