@@ -15,7 +15,7 @@
     "prebuild": "eslint . && rm -rf dst/*",
     "build": "webpack --config config/webpack.prod.js",
     "postbuild": "sh ./scripts/sync.sh dst/docs/ docs/",
-    "version": "auto-changelog -p && git add CHANGELOG.md"
+    "version": "auto-changelog -p && npm run format:prettier && git add CHANGELOG.md"
   },
   "devDependencies": {
     "@prettier/plugin-pug": "^2.4.1",
