@@ -1,0 +1,42 @@
+extends ../layout
+
+block prepend head
+  - var title = 'コンテンツ'
+
+block content
+  #side-panel
+    button#start-button ダウンロードを開始する
+    button#cancel-button(disabled) ダウンロードをキャンセルする
+    button#test-button スクレイピングテスト
+
+    #progress-bars-holder
+
+    #stats-container
+      div フェッチ
+      #fetch-count
+      div 待機中
+      #pending-count
+      div ダウンロード中
+      #downloading-count
+      div 中断
+      #interrupted-count
+      div 完了
+      #completed-count
+      div 重複
+      #excluded-count
+      div コンテンツ合計
+      #contents-count
+      div 経過時間
+      #elapsed-time
+      div 最終日時
+      #last-download-date
+
+    #completed-message(style={ display: 'none' }) ダウンロードは完了しました！！
+    #canceled-message(style={ display: 'none' }) ダウンロードはキャンセルされました。
+
+    a(
+      href='https://github.com/kajikentaro/manaba-plus/tree/ref/all/docs/tips/download',
+      target='_blank'
+    ) ダウンロード時に確認ウィンドウが表示される場合
+
+  #contents-holder

@@ -1,0 +1,107 @@
+@use '../base';
+
+body {
+  @include base.grid-box(auto 1fr);
+
+  height: 100vh;
+  margin: 0;
+
+  > details {
+    grid-column-start: 2 span;
+  }
+}
+
+#side-panel {
+  @include base.flex-box(column);
+
+  padding: 10px;
+
+  // box-shadow: 10px 0 5px grey;
+}
+
+#progress-bars-holder {
+  width: 300px;
+  height: 300px;
+
+  progress {
+    width: 100%;
+  }
+}
+
+#stats-container {
+  @include base.grid-box(1fr 1fr);
+}
+
+#contents-holder {
+  height: calc(100% - 10px * 2);
+  padding: 10px;
+  overflow-y: auto;
+}
+
+details > *:not(summary) {
+  margin-inline-start: 20px;
+}
+
+.body {
+  @include base.grid-box(1fr auto auto);
+
+  align-items: center;
+  width: calc(100% - 10px);
+  height: 20px;
+
+  .status {
+    width: 300px;
+  }
+
+  &.pending {
+    .status {
+      &::after {
+        content: 'ダウンロードの待機中です';
+      }
+    }
+  }
+
+  &.downloading {
+    background-color: rgb(206 222 255);
+
+    .status {
+      &::after {
+        content: 'ダウンロード中です';
+      }
+    }
+  }
+
+  &.interrupted {
+    background-color: base.$error-color;
+  }
+
+  &.completed {
+    background-color: base.$success-color;
+
+    .status {
+      &::after {
+        content: '正常にダウンロードされました';
+      }
+    }
+  }
+
+  &.excluded {
+    background-color: rgb(250 250 250);
+
+    .status {
+      &::after {
+        content: '既にダウンロードされています';
+      }
+    }
+  }
+
+  .title {
+    @extend %omitted-text;
+  }
+
+  .parent {
+    background-image: url('../img/icon-reference.png');
+    width: 16px;
+    height: 16px;
+  }
+}

@@ -1,0 +1,51 @@
+extends ../../../layout
+
+block prepend head
+  - var title = 'テスト'
+
+block content
+  h1 ストアで公開されていない拡張機能を読み込む方法
+
+  | あらかじめダウンロードした拡張機能のファイルを展開しておきます。
+  
+  details
+    summary Chromeの場合
+    ol
+      li
+        .screenshot
+          .caption chrome://extensions/にアクセスする
+          img(src="img/image-Chrome-1.png")
+      li
+        .screenshot
+          .caption manifest.jsonが含まれるディレクトリを指定して読み込む
+          img(src="img/image-Chrome-2.png")
+        
+  details
+    summary Edgeの場合
+    ol
+      li
+        .screenshot
+          .caption edge://extensions/にアクセスする
+          img(src="img/image-Edge-1.png")
+          img(src="img/image-Edge-2.png")
+      li
+        .screenshot
+          .caption manifest.jsonが含まれるディレクトリを指定して読み込む
+          img(src="img/image-Edge-3.png")
+        
+  details
+    summary Firefoxの場合
+    ol
+      li
+        .screenshot
+          .caption about:addonsにアクセスする
+          img(src="img/image-Firefox-1.png")
+      li
+        .screenshot
+          .caption about:debugging#/runtime/this-firefoxにアクセスする
+          img(src="img/image-Firefox-2.png")
+      li
+        .screenshot
+          .caption manifest.jsonを指定して読み込む
+          img(src="img/image-Firefox-3.png")
+        

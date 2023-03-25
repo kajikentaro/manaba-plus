@@ -1,0 +1,31 @@
+#manaba-plus-container
+  .header
+    h2 Manaba Plus
+
+  .buttons-container
+    button#contents-button(disabled) コンテンツ画面を開く
+    button#options-button(disabled) オプション画面を開く
+
+  #messages-holder
+
+  details#assignment-list-container
+    summary.unselectable 未提出課題一覧
+    .bar
+      label.unselectable
+        input#assignments-visibility-input(type='checkbox')
+        | 除外された課題も表示する
+
+      a(onclick='alert(\'すみません！今はまだ未実装です🙇‍♂️\')') Googleカレンダーに追加する
+
+    table.sortable.fixed-table
+      thead
+        tr
+          th(sort-key='assignment/course') コース
+          th(sort-key='assignment/title') タイトル
+          th#assignment-list-deadline-header(
+            sort-key='assignment/deadline',
+            sort-type='Date'
+          ) 期限
+          th 残り時間
+
+      tbody#assignment-list-holder.sortable-body

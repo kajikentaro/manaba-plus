@@ -1,0 +1,11 @@
+@use '../../../base';
+
+.description {
+  margin-block: 10px;
+}
+
+.screenshot-container {
+  @include base.flex-box(column);
+
+  gap: 20px;
+}

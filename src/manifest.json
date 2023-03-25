@@ -1,0 +1,111 @@
+{
+  "manifest_version": 3,
+  "name": "Manaba Plus",
+  "version": "$version$",
+  "description": "Add awesome modifications to manaba",
+  "permissions": [
+    "storage",
+    "downloads"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{77fcd6fa-22a1-498c-88a5-cee7bf16b989}"
+    }
+  },
+  "icons": {
+    "16": "img/icon-mp-16.png",
+    "32": "img/icon-mp-32.png",
+    "48": "img/icon-mp-48.png",
+    "128": "img/icon-mp-128.png"
+  },
+  "action": {
+    "default_title": "Manaba Plusを開く",
+    "default_popup": "popup/index.html"
+  },
+  "options_page": "options/index.html",
+  "options_ui": {
+    "page": "options/index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "$manaba-url$*"
+      ],
+      "js": [
+        "common/index.js"
+      ],
+      "css": [
+        "common/style.css"
+      ]
+    },
+    {
+      "matches": [
+        "$manaba-url$home*"
+      ],
+      "exclude_matches": [
+        "$manaba-url$home_coursetable"
+      ],
+      "js": [
+        "home/index.js"
+      ],
+      "css": [
+        "home/style.css"
+      ]
+    },
+    {
+      "matches": [
+        "$manaba-url$course*_report"
+      ],
+      "js": [
+        "report/index.js"
+      ],
+      "css": [
+        "report/style.css"
+      ]
+    },
+    {
+      "matches": [
+        "$manaba-url$course*_report_*"
+      ],
+      "js": [
+        "attachment/index.js"
+      ],
+      "css": [
+        "attachment/style.css"
+      ]
+    },
+    {
+      "matches": [
+        "$manaba-url$course*_grade"
+      ],
+      "js": [
+        "grade/index.js"
+      ],
+      "css": [
+        "grade/style.css"
+      ]
+    },
+    {
+      "matches": [
+        "$bad-status$"
+      ],
+      "js": [
+        "bad-status/index.js"
+      ],
+      "css": [
+        "bad-status/style.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "contents/index.html",
+        "options/index.html"
+      ],
+      "matches": [
+        "$manaba-url$"
+      ]
+    }
+  ]
+}
