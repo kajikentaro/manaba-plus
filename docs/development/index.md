@@ -18,7 +18,7 @@
 ターミナルでリポジトリを保存したい場所にcdコマンドで移動し、以下のコマンドを実行するか、URLをVS Codeに入力してクローンしてください。
 
 ```
-$ git clone https://github.com/kajikentaro/manaba-plus
+$ git clone https://github.com/HotariTobu/manaba-plus
 ```
 
 ### パッケージのインストール
