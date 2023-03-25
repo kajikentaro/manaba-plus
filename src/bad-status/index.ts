@@ -26,7 +26,7 @@ getOptions().then(async function ({ options }) {
     }
 
     // To avoid looping in login sessions.
-    setTimeout(transition, 500)
+    setTimeout(transition, 1000)
   } else {
     // Add a button.
     const transitionInput = document.createElement('input')
