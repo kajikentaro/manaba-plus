@@ -2,7 +2,16 @@ import getOptions from '../options/model'
 import { fetchDOM } from '../utils/fetch'
 import Assignment from './assignment'
 
+/**
+ * A regex to extract date-time from a string.
+ */
 const dateTimeRegex = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})/
+
+/**
+ * Get a Date object from string.
+ * @param str The string that includes date-time
+ * @returns The Date object
+ */
 const parseDateTime = function (str: string) {
   const match = dateTimeRegex.exec(str)
   if (match === null) {
@@ -15,6 +24,11 @@ const parseDateTime = function (str: string) {
   }
 }
 
+/**
+ * Extract assignments from a document.
+ * @param doc The DOM document
+ * @returns Assignment objects
+ */
 const getAssignmentsFromDoc = function* (doc: Document) {
   const rows = doc.querySelectorAll<HTMLTableRowElement>(
     'table.stdlist tr:not(.title)'
@@ -38,6 +52,9 @@ const getAssignmentsFromDoc = function* (doc: Document) {
   }
 }
 
+/**
+ * Scrape pages and get assignments.
+ */
 export default async function* () {
   const { options } = await getOptions()
 

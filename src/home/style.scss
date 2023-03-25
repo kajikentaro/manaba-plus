@@ -79,7 +79,7 @@ table[class='stdlist'] {
   }
 
   .star {
-    &:not([stared]) {
+    &:not([on]) {
       filter: saturate(0%);
     }
 

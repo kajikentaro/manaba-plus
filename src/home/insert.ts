@@ -1,6 +1,9 @@
 import { compileTemplate } from 'pug'
 import * as insert from '../main-panel/insert'
 
+/**
+ * Apply some styles that cannot be in `style.scss` because of Webpack resolving paths.
+ */
 const insertStyle = function () {
   const head = document.querySelector('head')
   const style = document.createElement('style')
@@ -12,6 +15,7 @@ const insertStyle = function () {
   head.appendChild(style)
 }
 
+// Entry point
 export default async function () {
   insertStyle()
   document.querySelectorAll('.course .actions').forEach(insert.insertRemove)

@@ -1,6 +1,10 @@
 import { fetchDOM } from 'utils/fetch'
 import getDistance from '../lib/edit-distance-onp'
 
+/**
+ * Insert a link from a grade to the assignment.
+ * Determine if the grade is related to the assignment with the string distance.
+ */
 export const insertLinkToReport = async function () {
   const reportsUrl = location.href.replace(/_grade$/, '_report')
   const reportsDom = await fetchDOM(reportsUrl)
@@ -13,6 +17,11 @@ export const insertLinkToReport = async function () {
     return { reportUrl, reportTitle }
   })
 
+  /**
+   * Find the report item related to the specific grade item.
+   * @param gradeTitle The title of the grade item
+   * @returns The closest report item from the title
+   */
   const getReportUrl = async function (gradeTitle: string) {
     const sortedItems = reportItems
       .map(function ({ reportUrl, reportTitle }) {

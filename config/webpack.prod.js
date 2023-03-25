@@ -19,6 +19,15 @@ module.exports = merge(common, {
         test: /\.ts$/,
         use: [
           'ts-loader',
+          /**
+           * Remove debugging code like:
+           *
+           * ```
+           * // #region DEBUG recording a log
+           * console.log('Hello_World!')
+           * // #endregion
+           * ```
+           */
           {
             loader: 'string-replace-loader',
             options: {
@@ -31,7 +40,7 @@ module.exports = merge(common, {
     ],
   },
   plugins: [
-    // Copy static production assets from `public/prod` folder to `dst` folder
+    // Copy static production assets from `public/prod` folder to `dst` folder.
     new CopyWebpackPlugin({
       patterns: [
         {

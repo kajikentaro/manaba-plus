@@ -18,7 +18,7 @@ module.exports = merge(common, {
     ],
   },
   plugins: [
-    // Copy static debug assets from `public/dev` folder to `dst` folder
+    // Copy static debug assets from `public/dev` folder to `dst` folder.
     new CopyWebpackPlugin({
       patterns: [
         {

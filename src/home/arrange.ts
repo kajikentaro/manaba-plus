@@ -1,5 +1,8 @@
 import getOptions from '../options/model'
 
+/**
+ * Add ids to some elements.
+ */
 const arrangeIds = async function () {
   const { options } = await getOptions()
 
@@ -42,6 +45,9 @@ const arrangeIds = async function () {
   )
 }
 
+/**
+ * Update some elements' class attributes.
+ */
 const arrangeClasses = function () {
   const addClass = function (selectors: string, ...names: string[]) {
     document.querySelectorAll(selectors).forEach(function (element) {
@@ -59,6 +65,9 @@ const arrangeClasses = function () {
   addClass('.period', 'center-align')
 }
 
+/**
+ * Remove some styles and attributes that bother the flexibility of the view.
+ */
 const makeResponsible = function () {
   document
     .querySelector<HTMLElement>('.infolist-tab')
@@ -78,6 +87,7 @@ const makeResponsible = function () {
   })
 }
 
+// Entry point
 export default async function () {
   await arrangeIds()
   arrangeClasses()

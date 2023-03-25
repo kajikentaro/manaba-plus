@@ -1,8 +1,18 @@
 import { sha256 } from '../utils/hash'
 
 export default class Assignment {
+  /**
+   * The hash string that identify the assignment
+   */
   public readonly hash: Promise<string>
 
+  /**
+   * Construct an assignment and set `hash`.
+   * @param url The URL to the assignment page
+   * @param title The title of the assignment
+   * @param course The name of the parent course
+   * @param deadline The deadline of the assignment
+   */
   constructor(
     public readonly url: string,
     public readonly title: string,
@@ -15,6 +25,9 @@ export default class Assignment {
   // #region isShown
   private _isShown: boolean = true
 
+  /**
+   * An event handler called when `isShown` is changed
+   */
   public onIsShownChanged: ((value: boolean) => void)[] = []
 
   public get isShown(): boolean {

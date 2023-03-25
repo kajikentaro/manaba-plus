@@ -1,6 +1,7 @@
 import getOptions from '../options/model'
 import '../extension/htmlElement'
 
+// Entry point
 export default async function () {
   const { options } = await getOptions()
 

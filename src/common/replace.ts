@@ -1,19 +1,23 @@
 import getOptions from '../options/model'
 
-const externalUrlRegex = /url=(.+)/
-
-const overwriteExternalUrl = function (element: HTMLAnchorElement) {
-  const match = externalUrlRegex.exec(element.href)
+/**
+ * Extract the external URL and replace an anchor element with a new one.
+ * @param pastAnchor The anchor element replaced with
+ */
+const overwriteExternalUrl = function (pastAnchor: HTMLAnchorElement) {
+  // Extract the external URL.
+  const match = /url=(.+)/.exec(pastAnchor.href)
   if (match === null) {
     return
   }
 
   const anchor = document.createElement('a')
   anchor.href = decodeURIComponent(match[1])
-  anchor.textContent = element.textContent
-  element.replaceWith(anchor)
+  anchor.textContent = pastAnchor.textContent
+  pastAnchor.replaceWith(anchor)
 }
 
+// Entry point
 export default async function () {
   const { options } = await getOptions()
 

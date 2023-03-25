@@ -4,14 +4,25 @@ import './model.type'
 import getOptions from '../options/model'
 
 let isScraping = false
+
+/**
+ * A callback called when returning items.
+ */
 let returnContext: (context: DownloadContext) => void = null
 
 /**
- * for createProgress
+ * Traces to create and show progress.
  */
 export let currentTraces: ScrapingTrace[] = null
 export let fetchCount = 0
 
+/**
+ * Search URLs in a document and fetch the next pages in accordance with a scraping node.
+ * Return items through the callback `returnContext` if the node has no children.
+ * @param node The scraping node navigating the next pages
+ * @param doc The DOM document that URLs are found
+ * @param traces Traces passed from the parent scraping
+ */
 const scrape = async function (
   node: ScrapingNode,
   doc: Document,
@@ -87,6 +98,11 @@ const scrape = async function (
   }
 }
 
+/**
+ * Start scraping with the scraping model.
+ * Result items are sent with a callback.
+ * @param callback The callback to get items
+ */
 export const startScraping = async function (
   callback: (context: DownloadContext) => void
 ) {

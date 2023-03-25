@@ -4,6 +4,9 @@ import * as insert from './insert'
 import revert from './revert'
 import remove from './remove'
 
+/**
+ * Add event listeners to buttons on the main panel.
+ */
 const AddButtonsAction = function () {
   const contentsButton = document.querySelector('#contents-button')
   contentsButton.removeAttribute('disabled')
@@ -22,6 +25,13 @@ const AddButtonsAction = function () {
   }
 }
 
+/**
+ * Make elements removable.
+ * @param removedCollectionItem An option collection item of ids
+ * @param inputSelectors Query selectors to get the container of removable elements
+ * @param revertSelectors Query selectors to get removable elements when revert them
+ * @param removeSelectors Query selectors to get removable elements when remove them
+ */
 export const addVisibilityAction = function (context: {
   removedCollectionItem: OptionCollectionItem
   inputSelectors: string
@@ -42,6 +52,11 @@ export const addVisibilityAction = function (context: {
     })
 }
 
+/**
+ * Add event listeners to remove buttons.
+ * @param removedCollectionItem An option collection item of ids
+ * @param selectors Query Selectors to get remove buttons
+ */
 export const addRemovesAction = function (
   removedCollectionItem: OptionCollectionItem,
   selectors: string
@@ -72,6 +87,7 @@ export const addRemovesAction = function (
   })
 }
 
+// Entry point
 export const addMainActions = async function () {
   const { options } = await getOptions()
 

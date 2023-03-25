@@ -31,6 +31,7 @@ console.log('Entries:')
 console.log(entries)
 console.log()
 
+// Search .bug files.
 console.log('Pugs:')
 const pugs = glob
   .sync('**/index.pug', {
@@ -51,13 +52,13 @@ console.log()
 // To re-use webpack configuration across templates,
 // CLI maintains a common webpack configuration file - `webpack.common.js`.
 // Whenever user creates an extension, CLI adds `webpack.common.js` file
-// in template's `config` folder
+// in template's `config` folder.
 module.exports = {
   entry: entries,
   output: {
     // to clean up dst folder
     clean: true,
-    // the dst folder to output bundles and assets in.
+    // the dst folder to output bundles and assets in
     path: dstPath,
     // the filename template for entry chunks
     filename: '[name].js',
@@ -69,7 +70,7 @@ module.exports = {
   },
   module: {
     rules: [
-      // Help webpack in understanding CSS files imported in .js files
+      // Help webpack in understanding CSS files imported in .js files.
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
@@ -78,15 +79,15 @@ module.exports = {
         test: /\.scss$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
+      // Load .pug files with pug-loader.
       {
         test: /\.pug$/,
         loader: 'pug-loader',
         options: {
           pretty: true,
-          // root: path.resolve(__dirname, "src", "pug")
         },
       },
-      // Check for images imported in .js files and
+      // Check for images imported in .js files.
       {
         test: /\.(png|jpe?g|gif)$/i,
         type: 'asset',
@@ -106,7 +107,7 @@ module.exports = {
     plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],
   },
   plugins: [
-    // Copy static common assets from `public/common` folder to `dst` folder
+    // Copy static common assets from `public/common` folder to `dst` folder.
     new CopyWebpackPlugin({
       patterns: [
         {
@@ -120,10 +121,11 @@ module.exports = {
         },
       ],
     }),
-    // Extract CSS into separate files
+    // Extract CSS into separate files.
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
+    // Register .pug files for converting them into HTML.
     ...pugs,
   ],
 }

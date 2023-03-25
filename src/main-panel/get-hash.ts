@@ -1,5 +1,10 @@
 import { sha256 } from '../utils/hash'
 
+/**
+ * Get hash from an element' the URL or the title.
+ * @param element The element
+ * @returns The hash string of element
+ */
 export default async function (element: Element) {
   if (element === null) {
     return null

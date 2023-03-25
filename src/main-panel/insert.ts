@@ -7,6 +7,9 @@ import * as time from '../utils/time'
 
 import dummies from './dummies.json'
 
+/**
+ * Insert messages on the main panel.
+ */
 const insertMessages = async function () {
   const { options } = await getOptions()
 
@@ -24,6 +27,10 @@ const insertMessages = async function () {
   }
 }
 
+/**
+ * Insert a remove button.
+ * @param actions The container element
+ */
 export const insertRemove = function (actions: Element) {
   if (actions === null) {
     return
@@ -35,7 +42,12 @@ export const insertRemove = function (actions: Element) {
 }
 
 // #region Assignment list
-// DEFCON is the condition that indicates the urgency of an assignment.
+/**
+ * Get DEFCON from an assignment's deadline.
+ * DEFCON is the condition that indicates the urgency of the assignment.
+ * @param dateTime The deadline of the assignment
+ * @returns The DEFCON value
+ */
 const getDEFCON = function (dateTime: Date) {
   if (dateTime === null) {
     return 'defcon-1'
@@ -61,6 +73,10 @@ const getDEFCON = function (dateTime: Date) {
 
 let assignmentListHolder: Element
 
+/**
+ * Create an element from an assignment object and append it to the holder.
+ * @param assignment The assignment object
+ */
 const appendAssignment = function (assignment: Assignment) {
   const deadline = assignment.deadline
 
@@ -115,6 +131,11 @@ const appendAssignment = function (assignment: Assignment) {
   assignmentListHolder.appendChild(row)
 }
 
+/**
+ * Set remaining time of an assignment.
+ * @param deadline The deadline of the assignment
+ * @param element The remaining time element
+ */
 const setRemainingTime = function (deadline: Date, element: Element) {
   const delta = deadline.getTime() - Date.now()
   const dayCount = time.dayCount(delta)
@@ -177,6 +198,7 @@ export const insertAssignmentList = async function () {
     Array.from(removedAssignmentSet)
 
   // #region DEBUG Dummy
+  // Insert dummy assignments.
   for (const dummy of dummies) {
     const assignment = new Assignment(
       dummy.url,
@@ -195,6 +217,9 @@ export const insertAssignmentList = async function () {
 }
 // #endregion
 
+/**
+ * Insert some components into the main panel.
+ */
 export const insertMainComponents = async function () {
   // Make assignment-list sortable.
   require('sortable-decoration')

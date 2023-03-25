@@ -1,6 +1,13 @@
 import getOptions from '../options/model'
 import { clearHistory } from '../contents/history'
 
+/**
+ * Bind an element to a dependent element.
+ * The dependent element is `input`, and toggle the bound element disabled if `input.checked` is changed.
+ * The checked value is inverted if `dependencyId` starts with `!`.
+ * @param element The disabled element
+ * @param dependencyId The element id bound to `element`
+ */
 const addConstraint = function (element: HTMLElement, dependencyId?: string) {
   if (element === null || !('disabled' in element)) {
     return
@@ -28,6 +35,9 @@ const addConstraint = function (element: HTMLElement, dependencyId?: string) {
     })
 }
 
+/**
+ * Add data bindings between option items and input elements.
+ */
 const addBindings = async function () {
   const { sections, items } = await getOptions()
 
@@ -37,6 +47,7 @@ const addBindings = async function () {
       addConstraint(element, section.dependency)
     })
   }
+
   for (const [key, item] of items) {
     const element = document.getElementById(key)
     addConstraint(element, item.dependency)

@@ -1,5 +1,8 @@
 import getOptions from '../options/model'
 
+/**
+ * Move some elements.
+ */
 export default async function () {
   const { options } = await getOptions()
 

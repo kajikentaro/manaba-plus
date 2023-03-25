@@ -18,6 +18,14 @@ const replaceContentBody = function () {
   mycourse.appendChild(contentBody)
 }
 
+/**
+ * Extract attribute value from an element and create an element.
+ * @param source The source element or the parent element and query selectors
+ * @param className The class attribute value of the new element
+ * @param tagName The tag name of the new element
+ * @param attributeNames The name of the attribute copied
+ * @returns The new element
+ */
 const getContent = function (
   source: Element | { parent: Element; selectors: string },
   className: string,
@@ -50,6 +58,9 @@ const getContent = function (
   return target
 }
 
+/**
+ * Suffixes of URLs related to status icons.
+ */
 const statusSuffix = [
   '_news',
   '',
@@ -58,6 +69,12 @@ const statusSuffix = [
   '_coursecollection_user',
 ]
 
+/**
+ * Extract the title and status icons from a course item.
+ * @param course The course item
+ * @returns title: The element that has the course title
+ * @returns status: The container of the status icons
+ */
 const getTitleAndStatus = function (course: Element) {
   const anchor = getContent(
     {
@@ -86,6 +103,7 @@ const getTitleAndStatus = function (course: Element) {
 
   const children = Array.from(pastStatus.children)
 
+  // If a link state of the course exists, append it to the title element.
   let linkState: Element = getContent(
     {
       parent: course,
@@ -135,8 +153,6 @@ const getTitleAndStatus = function (course: Element) {
   return { title, status }
 }
 
-const starRegex = /(.+_)(set|unset)(_.+)$/
-
 const getStar = function (course: Element) {
   const starAnchor = course.querySelector<HTMLAnchorElement>(
     'a[href^="home_fav"]'
@@ -148,18 +164,24 @@ const getStar = function (course: Element) {
   const star = document.createElement('div')
   star.className = 'star'
 
-  const match = starRegex.exec(starAnchor.href)
+  // Extract whether the course star is on.
+  const match = /(.+_)(set|unset)(_.+)$/.exec(starAnchor.href)
 
   star.setAttribute('url-part-1', match[1])
   star.setAttribute('url-part-3', match[3])
 
   if (match[2] === 'unset') {
-    star.setAttribute('stared', '')
+    star.setAttribute('on', '')
   }
 
   return star
 }
 
+/**
+ * Get the course components from an element.
+ * @param course The course element that new elements are made from
+ * @returns An object that has the new elements in
+ */
 const getComponents = function (course: Element) {
   const { title, status } = getTitleAndStatus(course)
   const star = getStar(course)
@@ -171,6 +193,11 @@ const getComponents = function (course: Element) {
   return { title, actions, status }
 }
 
+/**
+ * Get a year and a remarks element from a course element.
+ * @param course The course element that can have the year and the remarks info
+ * @returns An object that has the new elements in
+ */
 const getYearAndRemarks = function (course: Element) {
   const element = course.querySelector<HTMLElement>(
     '.courseitemdetail:first-of-type'
@@ -192,6 +219,9 @@ const getYearAndRemarks = function (course: Element) {
   return { year, remarks }
 }
 
+/**
+ * Replace the course elements with new components.
+ */
 const replaceCourses = function () {
   // #region cell type
   document.querySelectorAll('.course-cell').forEach(function (pastCourse) {
@@ -338,6 +368,9 @@ const replaceCourses = function () {
   // #endregion
 }
 
+/**
+ * Replace banners on the right side.
+ */
 const replaceBanners = function () {
   const bannerList = document.querySelector('.banner-list')
   if (bannerList === null) {

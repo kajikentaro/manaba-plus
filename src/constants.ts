@@ -1,6 +1,6 @@
 import constants from './constants.json'
 
-// Replace string items with their own keys.
+// Replace string items with their own keys if they are empty strings.
 const groupStack = [constants]
 while (groupStack.length > 0) {
   const group = groupStack.pop()

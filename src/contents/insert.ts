@@ -94,9 +94,15 @@ const createContentNode = function (token: string, child?: Element) {
   return node
 }
 
+/**
+ * Append an item to the view.
+ * Create nodes if they do not exist, or insert the item into them.
+ * @param context The item shown in the view
+ */
 export const appendContent = function (context: ContentContext) {
   const tokens = [...context.tokens]
 
+  // Get the deepest node of existing ones.
   let existingNode = contentsHolder
   while (tokens.length > 0) {
     const token = tokens.pop()
@@ -110,6 +116,7 @@ export const appendContent = function (context: ContentContext) {
     }
   }
 
+  // Make up nodes.
   let lastNode: Element = createContentBody(context)
   for (const token of tokens.slice(1)) {
     lastNode = createContentNode(token, lastNode)

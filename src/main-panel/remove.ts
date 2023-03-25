@@ -1,6 +1,11 @@
 import '../extension/htmlElement'
 import getHash from './get-hash'
 
+/**
+ * Remove removable elements.
+ * @param removedCollectionItem The option collection item of ids
+ * @param selectors Query selectors to get removable elements
+ */
 export default function (
   removedCollectionItem: OptionCollectionItem,
   selectors: string

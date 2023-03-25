@@ -1,5 +1,35 @@
 const hosts = require('./hosts')
 
+/**
+ * Replace placeholders with values.
+ * The placeholders must be between `"`.
+ * Multiple values of one key are joined with `,`.
+ *
+ * sample:
+ * ```
+ * replaceValues(`
+ *   [
+ *     "$fruit$"
+ *   ]
+ * `, [
+ *   [
+ *     'fruit',
+ *     ['apple', 'orange', 'pear', 'grape']
+ *   ]
+ * ])
+ * // Return `
+ * //   [
+ * //     "apple",
+ * //     "orange",
+ * //     "pear",
+ * //     "grape"
+ * //   ]
+ * // `
+ * ```
+ * @param {string} content The string including placeholders
+ * @param {[string, string[]][]} valueLists The key-value pairs
+ * @returns The replaced string
+ */
 const replaceValues = function (content, valueLists) {
   const chars = /(?:[^"]|\\["])/.source
 
@@ -20,6 +50,16 @@ const replaceValues = function (content, valueLists) {
   return content
 }
 
+/**
+ * Fix `web_accessible_resources.matches` into the below style.
+ *
+ * `<scheme>://<host>/*`
+ *
+ * sample:
+ * https://example.org/foo/bar -> https://example.org/*
+ * @param {string} content The manifest JSON string
+ * @returns The replaced manifest JSON string
+ */
 const fixWebAccessibleResources = function (content) {
   const obj = JSON.parse(content)
 
@@ -41,6 +81,11 @@ const fixWebAccessibleResources = function (content) {
   return JSON.stringify(obj, null, '  ')
 }
 
+/**
+ * Transform manifest JSON.
+ * @param {Buffer} buffer The source buffer of manifest JSON
+ * @returns The transformed manifest JSON string
+ */
 module.exports = async function (buffer) {
   let content = buffer.toString()
 

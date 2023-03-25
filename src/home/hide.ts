@@ -1,6 +1,9 @@
 import getOptions from '../options/model'
 import '../extension/htmlElement'
 
+/**
+ * Hide some elements.
+ */
 export default async function () {
   const { options } = await getOptions()
 

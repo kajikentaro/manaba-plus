@@ -3,13 +3,18 @@ import { messages, pushMessages } from '../utils/messages'
 
 let url: string
 
+/**
+ * Transition to another page.
+ */
 const transition = function () {
   window.location.href = url
 }
 
+// Entry point
 getOptions().then(async function ({ options }) {
   const customRrl = options.timeout['destination-on-timeout'].value.trim()
   if (customRrl === '') {
+    // Set the home page URL.
     url = options.common['root-url'].value + 'home'
   } else {
     url = customRrl

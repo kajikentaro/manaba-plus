@@ -11,6 +11,9 @@ const startButton = document.querySelector('#start-button')
 const cancelButton = document.querySelector('#cancel-button')
 const testButton = document.querySelector('#test-button')
 
+/**
+ * An object that downloading stats is in
+ */
 const stats = {
   'fetch-count': 0,
   'pending-count': 0,
@@ -21,12 +24,21 @@ const stats = {
 
   'contents-count': 0,
 
+  /**
+   * Begin time for elapsed time
+   */
   lastTime: 0,
+
+  /**
+   * False if the measuring is stopped, otherwise true
+   */
   isMeasuring: false,
 }
 
+// Make `contents-count` a getter that returns the sum of item counts.
 Object.defineProperty(stats, 'contents-count', {
   get() {
+    // Ignore `fetch-count`, `contents-count`, `lastTime`, and `isMeasuring`.
     const keys = Object.keys(stats).slice(1, -3)
     const values = keys.map((key) => stats[key] as number)
     return values.reduce((sum, value) => sum + value, 0)
@@ -55,6 +67,7 @@ const startMeasuring = function () {
   stats.lastTime = performance.now()
   const elapsedTime = document.querySelector('#elapsed-time')
 
+  // Refresh the stats in the view per 500ms.
   const timer = setInterval(function () {
     stats['fetch-count'] = scrape.fetchCount
 
@@ -81,6 +94,9 @@ const stopMeasuring = function () {
 
 let isDownloadStopped = true
 
+/**
+ * The callback to prevent closing the tab while downloading
+ */
 const preventClosing = function (event: Event) {
   event.preventDefault()
   event.returnValue = false

@@ -1,7 +1,18 @@
+/**
+ * Calculate the day count from milliseconds.
+ * @param totalMilliseconds The total milliseconds
+ * @returns The day count
+ */
 export const dayCount = function (totalMilliseconds: number) {
   return totalMilliseconds / (1000 * 60 * 60 * 24)
 }
 
+/**
+ * Convert milliseconds to a string.
+ * @param totalMilliseconds The total milliseconds
+ * @param includeMilliseconds True if the result should include under seconds, otherwise false
+ * @returns The string expression of the time
+ */
 export const toString = function (
   totalMilliseconds: number,
   includeMilliseconds = true

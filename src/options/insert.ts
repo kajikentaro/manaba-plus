@@ -163,6 +163,9 @@ const createSectionElement = function (key: string, title: string) {
   return container
 }
 
+/**
+ * Refer to `event.ts/addConstraint`.
+ */
 const initializeConstraint = function (
   element: HTMLElement,
   dependencyId?: string

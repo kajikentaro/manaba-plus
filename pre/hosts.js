@@ -2,6 +2,9 @@ const fs = require('fs')
 const glob = require('glob')
 const path = require('path')
 
+/**
+ * JSON objects in `./hosts`
+ */
 const hosts = glob('hosts/*.json', {
   ignore: '*/_.json',
 }).then(function (hostFiles) {
@@ -11,11 +14,17 @@ const hosts = glob('hosts/*.json', {
   })
 })
 
+/**
+ * Coordinated key-value pairs from `./hosts/*.json`.
+ * Multiple values belong to one key.
+ */
+// This is not a function because it is called every time Webpack compiles.
 const valueLists = hosts.then(function (hosts) {
   const pairs = new Map()
 
   for (const host of hosts) {
     for (const key in host) {
+      // Skip some properties.
       if (['name', 'source'].includes(key)) {
         continue
       }
@@ -40,6 +49,9 @@ const valueLists = hosts.then(function (hosts) {
   return Array.from(pairs.entries())
 })
 
+/**
+ * Export the host list to `./host-list.md`.
+ */
 const exportHostList = async function () {
   const filePath = path.resolve('host-list.md')
 

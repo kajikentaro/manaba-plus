@@ -86,6 +86,12 @@ const initialize = async function () {
   isInitialized = true
 }
 
+/**
+ * Get initialized options.
+ * @returns options: the root option section
+ * @returns sections: the map of option sections
+ * @returns items: the map of option items
+ */
 export default async function () {
   if (!isInitialized) {
     await initialize()

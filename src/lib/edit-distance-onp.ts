@@ -67,6 +67,12 @@ const editDistanceONP = function (str1: string, str2: string) {
   return delta + (c - 1) * 2
 }
 
+/**
+ * Calculate how long 2 strings differ from each other.
+ * @param str1 string 1
+ * @param str2 string 2
+ * @returns The number from 0 to 1 meaning the distance between the 2 strings
+ */
 export default function (str1: string, str2: string) {
   const m = Math.max(str1.length, str2.length)
   const d = editDistanceONP(str1, str2)
