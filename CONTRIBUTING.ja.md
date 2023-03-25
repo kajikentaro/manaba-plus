@@ -5,6 +5,13 @@
 `Manaba Plus`の発展へのご協力に感謝いたします。
 こちらでは貢献に関するいくつかの概要について説明しています。
 
+## プレリリースをテストする
+
+プレリリースをテストする流れは以下の通りです。
+
+1. [プレリリースをダウンロードする](https://github.com/HotariTobu/manaba-plus/releases)
+2. [ブラウザにインストールする](https://hotaritobu.github.io/manaba-plus/tips/test/)
+
 ## 問題を報告する
 
 問題を報告する流れは以下の通りです。

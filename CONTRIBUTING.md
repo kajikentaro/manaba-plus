@@ -5,6 +5,13 @@
 Thank you for contributing to `Manaba Plus` very much.
 This guide explains some overviews about contributing.
 
+## Test a prerelease
+
+The flow of testing a prerelease is below.
+
+1. [Download a prerelease](https://github.com/HotariTobu/manaba-plus/releases)
+2. [Install it](https://hotaritobu.github.io/manaba-plus/tips/test/)
+
 ## Report an issue
 
 The flow of reporting an issue is below.
