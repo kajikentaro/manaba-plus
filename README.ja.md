@@ -8,7 +8,8 @@
 
 ## インストール
 
-[Chrome Web Store](https://chrome.google.com/webstore/detail/manaba-downloader/aeidkdokanbhoefbgaadaicdmggdeegf?hl=ja)
+- [Chrome Web Store](https://chrome.google.com/webstore/detail/manaba-downloader/aeidkdokanbhoefbgaadaicdmggdeegf?hl=ja)
+- [Firefox Browser ADD-ONS](https://addons.mozilla.org/ja/firefox/addon/manaba-plus/)
 
 ## 特徴
 
