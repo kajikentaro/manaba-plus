@@ -2,6 +2,7 @@
     "selectors": ".course-cell a:first-of-type, .courselist-title a, .course-card-title a",
     "children": [
         {
+            "key": "news",
             "prefix": "_news",
             "selectors": ".newstext a",
             "children": [
@@ -11,6 +12,7 @@
             ]
         },
         {
+            "key": "report",
             "prefix": "_report",
             "selectors": ".report-title a",
             "children": [
@@ -18,6 +20,7 @@
                     "selectors": ".attachments a"
                 },
                 {
+                    "key": "assignments",
                     "selectors": "a[href*=\"collectiondetail\"]",
                     "children": [
                         {
@@ -33,6 +36,7 @@
             ]
         },
         {
+            "key": "page",
             "prefix": "_page",
             "selectors": ".about-contents a",
             "children": [
