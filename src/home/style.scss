@@ -79,12 +79,11 @@ table[class='stdlist'] {
   }
 
   .star {
-    &:not([on]) {
+    &:not([starred]) {
       filter: saturate(0%);
     }
 
-    &:hover,
-    &[in-progress] {
+    &:hover {
       filter: saturate(50%);
     }
   }

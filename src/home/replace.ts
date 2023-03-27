@@ -153,30 +153,6 @@ const getTitleAndStatus = function (course: Element) {
   return { title, status }
 }
 
-const getStar = function (course: Element) {
-  const starAnchor = course.querySelector<HTMLAnchorElement>(
-    'a[href^="home_fav"]'
-  )
-  if (starAnchor === null) {
-    return null
-  }
-
-  const star = document.createElement('div')
-  star.className = 'star'
-
-  // Extract whether the course star is on.
-  const match = /(.+_)(set|unset)(_.+)$/.exec(starAnchor.href)
-
-  star.setAttribute('url-part-1', match[1])
-  star.setAttribute('url-part-3', match[3])
-
-  if (match[2] === 'unset') {
-    star.setAttribute('on', '')
-  }
-
-  return star
-}
-
 /**
  * Get the course components from an element.
  * @param course The course element that new elements are made from
@@ -184,7 +160,9 @@ const getStar = function (course: Element) {
  */
 const getComponents = function (course: Element) {
   const { title, status } = getTitleAndStatus(course)
-  const star = getStar(course)
+
+  const star = document.createElement('div')
+  star.className = 'star'
 
   const actions = document.createElement('div')
   actions.className = 'actions'
