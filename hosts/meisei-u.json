@@ -1,6 +1,10 @@
 {
     "name": "明星大学",
     "source": "https://manaba.meisei-u.ac.jp/ct/login",
+    "tags": [
+        "#春から明星",
+        "#春から明星大学"
+    ],
     
     "manaba-url": "https://manaba.meisei-u.ac.jp/ct/",
     "bad-status": []

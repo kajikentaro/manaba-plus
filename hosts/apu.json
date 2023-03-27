@@ -1,6 +1,10 @@
 {
     "name": "立命館アジア太平洋大学",
     "source": "https://manaba.apu.ac.jp/local/login",
+    "tags": [
+        "#春からAPU",
+        "#春から立命館アジア太平洋大学"
+    ],
     
     "manaba-url": "https://manaba.apu.ac.jp/ct/",
     "bad-status": []

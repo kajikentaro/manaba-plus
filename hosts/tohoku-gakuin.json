@@ -1,6 +1,11 @@
 {
     "name": "東北学院大学",
     "source": "https://www.tohoku-gakuin.ac.jp/faculty/manaba/guide.html",
+    "tags": [
+        "#春からTGU",
+        "#春から東北学院",
+        "#春から東北学院大学"
+    ],
     
     "manaba-url": "https://tohoku-gakuin.manaba.jp/ct/",
     "bad-status": []

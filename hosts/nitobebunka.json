@@ -1,6 +1,11 @@
 {
     "name": "新渡戸文化短期大学",
     "source": "https://manaba.nitobebunka.ac.jp/ct/login",
+    "tags": [
+        "#春からNTB",
+        "#春から新渡戸",
+        "#春から新渡戸文化短期大学"
+    ],
     
     "manaba-url": "https://manaba.nitobebunka.ac.jp/ct/",
     "bad-status": []

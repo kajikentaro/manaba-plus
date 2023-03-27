@@ -1,6 +1,11 @@
 {
     "name": "亜細亜大学",
     "source": "https://asia-u.manaba.jp/ct/login",
+    "tags": [
+        "#春からAU",
+        "#春から亜細亜",
+        "#春から亜細亜大学"
+    ],
     
     "manaba-url": "https://asia-u.manaba.jp/ct/",
     "bad-status": []

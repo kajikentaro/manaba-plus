@@ -1,6 +1,11 @@
 {
     "name": "一橋大学",
     "source": "https://manaba.hit-u.ac.jp/ct/",
+    "tags": [
+        "#春から一橋",
+        "#春から一橋大",
+        "#春から一橋大学"
+    ],
     
     "manaba-url": "https://manaba.hit-u.ac.jp/ct/",
     "bad-status": []

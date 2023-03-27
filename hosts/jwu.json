@@ -1,6 +1,12 @@
 {
     "name": "日本女子大学",
     "source": "https://manaba.jwu.ac.jp/ct/login",
+    "tags": [
+        "#春からJWU",
+        "#春から本女",
+        "#春から日本女子",
+        "#春から日本女子大学"
+    ],
 
     "manaba-url": "https://manaba.jwu.ac.jp/ct/",
     "bad-status": []

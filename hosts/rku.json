@@ -1,6 +1,12 @@
 {
     "name": "流通経済大学",
     "source": "https://www2.rku.ac.jp/ipc/system/manaba.html",
+    "tags": [
+        "#春からRKU",
+        "#春から流経",
+        "#春から流通経済",
+        "#春から流通経済大学"
+    ],
     
     "manaba-url": "https://manaba.rku.ac.jp/ct/",
     "bad-status": []

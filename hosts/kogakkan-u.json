@@ -1,6 +1,10 @@
 {
     "name": "皇學館大学",
     "source": "https://lms-manaba.kogakkan-u.ac.jp/ct/home?chglistformat=timetable",
+    "tags": [
+        "#春から皇學館",
+        "#春から皇學館大学"
+    ],
     
     "manaba-url": "https://lms-manaba.kogakkan-u.ac.jp/ct/",
     "bad-status": []

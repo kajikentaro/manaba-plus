@@ -1,6 +1,11 @@
 {
     "name": "関東学院大学",
     "source": "https://univ.kanto-gakuin.ac.jp/students.html",
+    "tags": [
+        "#春からKGU",
+        "#春から関東学院",
+        "#春から関東学院大学"
+    ],
     
     "manaba-url": "https://kanto-gakuin.manaba.jp/ct/",
     "bad-status": []

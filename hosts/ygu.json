@@ -1,6 +1,11 @@
 {
     "name": "山梨学院大学",
     "source": "https://manaba.ygu.ac.jp/ct/login",
+    "tags": [
+        "#春からYGU",
+        "#春から山梨学院",
+        "#春から山梨学院大学"
+    ],
     
     "manaba-url": "https://manaba.ygu.ac.jp/ct/",
     "bad-status": []

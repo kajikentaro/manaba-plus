@@ -1,6 +1,10 @@
 {
     "name": "獨協大学",
     "source": "https://www.dokkyo.ac.jp/research/ict/manaba.html",
+    "tags": [
+        "#春から獨協",
+        "#春から獨協大学"
+    ],
     
     "manaba-url": "https://manaba.dokkyo.ac.jp/ct/",
     "bad-status": []

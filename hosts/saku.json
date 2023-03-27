@@ -1,6 +1,9 @@
 {
     "name": "佐久大学",
     "source": "https://manaba.saku.ac.jp/ct/login",
+    "tags": [
+        "#春から佐久大学"
+    ],
     
     "manaba-url": "https://manaba.saku.ac.jp/ct/",
     "bad-status": []

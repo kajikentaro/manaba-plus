@@ -1,6 +1,11 @@
 {
     "name": "明治学院大学",
     "source": "https://mgu.manaba.jp/local/login",
+    "tags": [
+        "#春からMGU",
+        "#春から明治学院",
+        "#春から明治学院大学"
+    ],
     
     "manaba-url": "https://mgu.manaba.jp/ct/",
     "bad-status": []

@@ -1,6 +1,11 @@
 {
     "name": "龍谷大学",
     "source": "https://manaba.ryukoku.ac.jp/local/home",
+    "tags": [
+        "#春から龍大",
+        "#春から龍谷",
+        "#春から龍谷大学"
+    ],
     
     "manaba-url": "https://manaba.ryukoku.ac.jp/ct/",
     "bad-status": []

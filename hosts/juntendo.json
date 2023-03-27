@@ -1,6 +1,11 @@
 {
     "name": "順天堂大学",
     "source": "https://med-lms.juntendo.ac.jp/ct/login?lang=ja",
+    "tags": [
+        "#春から順大",
+        "#春から順天堂",
+        "#春から順天堂大学"
+    ],
     
     "manaba-url": "https://med-lms.juntendo.ac.jp/ct/",
     "bad-status": []

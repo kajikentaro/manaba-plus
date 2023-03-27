@@ -1,6 +1,12 @@
 {
     "name": "鶴見大学・鶴見大学短期大学部",
     "source": "https://www.tsurumi-u.ac.jp/site/campus/manaba.html",
+    "tags": [
+        "#春から鶴短",
+        "#春から鶴見",
+        "#春から鶴見大学",
+        "#春から鶴見短期大学"
+    ],
     
     "manaba-url": "https://tsurumi-u.manaba.jp/ct/",
     "bad-status": []

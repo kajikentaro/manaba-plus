@@ -1,7 +1,11 @@
 {
     "name": "藍野大学",
     "source": "https://aino.manaba.jp/ct/login",
-    
+    "tags": [
+        "#春から藍野",
+        "#春から藍野大学"
+    ],
+
     "manaba-url": "https://aino.manaba.jp/ct/",
     "bad-status": []
 }

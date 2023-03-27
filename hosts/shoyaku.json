@@ -1,6 +1,11 @@
 {
     "name": "昭和薬科大学",
     "source": "https://manaba.shoyaku.ac.jp/ct/login",
+    "tags": [
+        "#春から昭薬",
+        "#春から昭和薬科",
+        "#春から昭和薬科大学"
+    ],
     
     "manaba-url": "https://manaba.shoyaku.ac.jp/ct/",
     "bad-status": []

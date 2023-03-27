@@ -1,6 +1,11 @@
 {
     "name": "大妻女子大学",
     "source": "https://otsuma.manaba.jp/ct/login",
+    "tags": [
+        "#春からOWU",
+        "#春から大妻",
+        "#春から大妻女子"
+    ],
     
     "manaba-url": "https://otsuma.manaba.jp/ct/",
     "bad-status": []

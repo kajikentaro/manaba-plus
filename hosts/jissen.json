@@ -1,6 +1,11 @@
 {
     "name": "実践女子学園",
     "source": "https://manaba.jissen.ac.jp/ct/home",
+    "tags": [
+        "#春からJJ",
+        "#春から実践",
+        "#春から実践女子"
+    ],
     
     "manaba-url": "https://manaba.jissen.ac.jp/ct/",
     "bad-status": []

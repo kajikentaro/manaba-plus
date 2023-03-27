@@ -1,6 +1,10 @@
 {
     "name": "国士舘大学",
     "source": "https://www.kokushikan.ac.jp/campus_life/learning_support/manaba.html",
+    "tags": [
+        "#春から国士舘",
+        "#春から国士舘大学"
+    ],
     
     "manaba-url": "https://kokushikan.manaba.jp/ct/",
     "bad-status": []

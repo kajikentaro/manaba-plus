@@ -1,6 +1,7 @@
 {
     "name": "阿南工業高等専門学校",
     "source": "https://lms.anan-nct.ac.jp/ct/login",
+    "tags": [],
     
     "manaba-url": "https://lms.anan-nct.ac.jp/ct/",
     "bad-status": []

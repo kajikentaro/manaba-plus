@@ -1,6 +1,11 @@
 {
     "name": "聖泉大学",
     "source": "https://manaba.seisen.ac.jp/ct/login",
+    "tags": [
+        "#春から聖泉",
+        "#春から聖泉大",
+        "#春から聖泉大学"
+    ],
     
     "manaba-url": "https://manaba.seisen.ac.jp/ct/",
     "bad-status": []

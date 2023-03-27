@@ -1,6 +1,11 @@
 {
     "name": "大東文化大学",
     "source": "https://www.daito.ac.jp/itc/other/details_25451.html",
+    "tags": [
+        "#春からDBU",
+        "#春から大東文化",
+        "#春から大東文化大学"
+    ],
     
     "manaba-url": "https://daito.manaba.jp/ct/",
     "bad-status": []

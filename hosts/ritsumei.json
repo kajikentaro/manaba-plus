@@ -1,6 +1,13 @@
 {
     "name": "立命館大学",
     "source": "https://www.ritsumei.ac.jp/ct/",
+    "tags": [
+        "#春からBKC",
+        "#春からOIC",
+        "#春から立命",
+        "#春から立命館",
+        "#春から立命館大学"
+    ],
     
     "manaba-url": "https://ct.ritsumei.ac.jp/ct/",
     "bad-status": []

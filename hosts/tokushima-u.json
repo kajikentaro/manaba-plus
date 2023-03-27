@@ -1,6 +1,11 @@
 {
     "name": "徳島大学",
     "source": "https://manaba.lms.tokushima-u.ac.jp/local/login",
+    "tags": [
+        "#春から徳大",
+        "#春から徳島",
+        "#春から徳島大学"
+    ],
     
     "manaba-url": "https://manaba.lms.tokushima-u.ac.jp/ct/",
     "bad-status": []

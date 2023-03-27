@@ -1,6 +1,11 @@
 {
     "name": "中央大学",
     "source": "https://itc.r.chuo-u.ac.jp/com/manaba/",
+    "tags": [
+        "#春から中央",
+        "#春から中大",
+        "#春から中央大学"
+    ],
     
     "manaba-url": "https://room.chuo-u.ac.jp/ct/",
     "bad-status": [

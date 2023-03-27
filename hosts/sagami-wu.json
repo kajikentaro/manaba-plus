@@ -1,6 +1,11 @@
 {
     "name": "相模女子大学",
     "source": "https://www.sagami-wu.ac.jp/media/02_manaba_manual.pdf",
+    "tags": [
+        "#春から相女",
+        "#春から相模女子",
+        "#春から相模女子大学"
+    ],
     
     "manaba-url": "https://sagami-wu.manaba.jp/ct/",
     "bad-status": []

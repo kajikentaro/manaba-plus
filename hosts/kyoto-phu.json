@@ -1,6 +1,10 @@
 {
     "name": "京都薬科大学",
     "source": "https://www.kyoto-phu.ac.jp/other/bulletin_board.html",
+    "tags": [
+        "#春から京薬",
+        "#春から京都薬科大学"
+    ],
     
     "manaba-url": "https://kyoto-phu.manaba.jp/ct/",
     "bad-status": []

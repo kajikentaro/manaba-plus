@@ -1,6 +1,11 @@
 {
     "name": "城西国際大学",
     "source": "https://www.jiu.ac.jp/johocenter/20/4_manaba.htm",
+    "tags": [
+        "#春からJIU",
+        "#春から城西国際",
+        "#春から城西国際大学"
+    ],
     
     "manaba-url": "https://jiuns.manaba.jp/ct/",
     "bad-status": []

@@ -1,6 +1,11 @@
 {
     "name": "茨城大学",
     "source": "https://manaba.ibaraki.ac.jp/local/login",
+    "tags": [
+        "#春からIU",
+        "#春から茨大",
+        "#春から茨城大学"
+    ],
     
     "manaba-url": "https://manaba.ibaraki.ac.jp/ct/",
     "bad-status": []

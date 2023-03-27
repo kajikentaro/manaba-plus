@@ -1,6 +1,10 @@
 {
     "name": "大阪商業大学",
     "source": "https://daishodai.manaba.jp/ct/login?lang=ja",
+    "tags": [
+        "#春から大商大",
+        "#春から大阪商業大学"
+    ],
     
     "manaba-url": "https://daishodai.manaba.jp/ct/",
     "bad-status": []

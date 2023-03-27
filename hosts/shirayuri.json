@@ -1,6 +1,11 @@
 {
     "name": "白百合女子大学",
     "source": "https://www.shirayuri.ac.jp/imc/manabacourse.html",
+    "tags": [
+        "#春からSWU",
+        "#春から白百合",
+        "#春から白百合女子"
+    ],
     
     "manaba-url": "https://shirayuri.manaba.jp/ct/",
     "bad-status": []

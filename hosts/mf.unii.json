@@ -1,6 +1,11 @@
 {
     "name": "新潟県立大学",
     "source": "https://mf.unii.ac.jp/ct/login",
+    "tags": [
+        "#春からUNP",
+        "#春から新潟県立",
+        "#春から新潟県立大学"
+    ],
     
     "manaba-url": "https://mf.unii.ac.jp/ct/",
     "bad-status": []

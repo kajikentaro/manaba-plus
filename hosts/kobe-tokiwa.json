@@ -1,6 +1,10 @@
 {
     "name": "神戸常盤大学",
     "source": "https://kobe-tokiwa.manaba.jp/ct/login?lang=ja",
+    "tags": [
+        "#春から神戸常盤",
+        "#春から神戸常盤大学"
+    ],
     
     "manaba-url": "https://kobe-tokiwa.manaba.jp/ct/",
     "bad-status": []

@@ -1,6 +1,9 @@
 {
     "name": "北陸大学",
     "source": "https://manaba.hokuriku-u.ac.jp/ct/login?lang=ja",
+    "tags": [
+        "#春から北陸大学"
+    ],
     
     "manaba-url": "https://manaba.hokuriku-u.ac.jp/ct/",
     "bad-status": []

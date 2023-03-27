@@ -1,6 +1,11 @@
 {
     "name": "鹿児島大学",
     "source": "https://www.kagoshima-u.ac.jp/manaba/manaba.html",
+    "tags": [
+        "#春から鹿大",
+        "#春から鹿児島大",
+        "#春から鹿児島大学"
+    ],
     
     "manaba-url": "https://manaba.kic.kagoshima-u.ac.jp/",
     "bad-status": []

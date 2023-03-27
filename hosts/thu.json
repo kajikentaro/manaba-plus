@@ -1,6 +1,11 @@
 {
     "name": "帝京平成大学",
     "source": "https://manaba.thu.ac.jp/ct/login",
+    "tags": [
+        "#春からTHU",
+        "#春から帝京平成",
+        "#春から帝京平成大学"
+    ],
     
     "manaba-url": "https://manaba.thu.ac.jp/ct/",
     "bad-status": []

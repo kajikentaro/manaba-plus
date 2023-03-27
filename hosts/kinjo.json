@@ -1,6 +1,11 @@
 {
     "name": "金城学院大学",
     "source": "https://kinjo.manaba.jp/ct/home_course",
+    "tags": [
+        "#春から金城",
+        "#春から金城学院",
+        "#春から金城学院大学"
+    ],
     
     "manaba-url": "https://kinjo.manaba.jp/ct/",
     "bad-status": []

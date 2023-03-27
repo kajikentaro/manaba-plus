@@ -1,6 +1,11 @@
 {
     "name": "東京家政大学",
     "source": "https://tokyo-kasei.manaba.jp/ct/login",
+    "tags": [
+        "#春からTKU",
+        "#春から東京家政",
+        "#春から東京家政大学"
+    ],
     
     "manaba-url": "https://tokyo-kasei.manaba.jp/ct/",
     "bad-status": []

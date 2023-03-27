@@ -1,6 +1,11 @@
 {
     "name": "旭川医科大学",
     "source": "https://www.asahikawa-med.ac.jp/index.php?f=student+index",
+    "tags": [
+        "#春から旭医",
+        "#春から旭川医大",
+        "#春から旭川医科大学"
+    ],
     
     "manaba-url": "https://manaba.asahikawa-med.ac.jp/ct/",
     "bad-status": []

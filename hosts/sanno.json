@@ -1,6 +1,12 @@
 {
     "name": "産業能率大学",
     "source": "https://sls.hj.sanno.ac.jp/ct/login",
+    "tags": [
+        "#春から産能",
+        "#春から産能大",
+        "#春から産業能率",
+        "#春から産業能率大学"
+    ],
     
     "manaba-url": "https://sls.hj.sanno.ac.jp/ct/",
     "bad-status": []

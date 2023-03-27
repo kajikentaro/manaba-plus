@@ -1,6 +1,11 @@
 {
     "name": "神戸学院大学",
     "source": "https://css-manaba2.kobegakuin.ac.jp/ct/login",
+    "tags": [
+        "#春から神学",
+        "#春から神戸学院",
+        "#春から神戸学院大学"
+    ],
     
     "manaba-url": "https://css-manaba2.kobegakuin.ac.jp/ct/",
     "bad-status": []

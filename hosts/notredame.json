@@ -1,6 +1,12 @@
 {
     "name": "京都ノートルダム女子大学",
     "source": "https://manaba.notredame.ac.jp/ct/login",
+    "tags": [
+        "#春からKNDU",
+        "#春からダム女",
+        "#春からノートルダム",
+        "#春から京都ノートルダム女子"
+    ],
     
     "manaba-url": "https://manaba.notredame.ac.jp/ct/",
     "bad-status": []
