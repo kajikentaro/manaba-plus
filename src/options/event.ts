@@ -105,6 +105,14 @@ const addButtonActions = async function () {
       },
     },
     {
+      selectors: '#revert-starred-courses',
+      message: options.home['revert-starred-courses'].description,
+      action: async function () {
+        options.home['starred-courses'].value = null
+        location.reload()
+      },
+    },
+    {
       selectors: '#revert-removed-courses',
       message: options.home['revert-removed-courses'].description,
       action: async function () {

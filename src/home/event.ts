@@ -1,31 +1,38 @@
 import getOptions from '../options/model'
 import * as event from '../main-panel/event'
+import getHash from 'main-panel/get-hash'
 
 /**
  * Add event listeners to stars.
  */
-const addStarsAction = function () {
-  document.querySelectorAll('.star').forEach(function (star) {
+const addStarsAction = async function () {
+  const { options } = await getOptions()
+
+  const starredSet = new Set<string>(options.home['starred-courses'].value)
+
+  document.querySelectorAll('.course').forEach(async function (course) {
+    const star = course.querySelector('.star')
+    if (star === null) {
+      return
+    }
+
+    const hash = await getHash(course)
+    if (starredSet.has(hash)) {
+      star.setAttribute('starred', '')
+    }
+
     star.addEventListener('click', async function (event) {
       event.stopPropagation()
 
-      star.setAttribute('in-progress', '')
-
-      const urlPart1 = star.getAttribute('url-part-1')
-      const urlPart3 = star.getAttribute('url-part-3')
-
-      const isOn = star.hasAttribute('on')
-      const urlPart2 = isOn ? 'unset' : 'set'
-
-      const url = urlPart1 + urlPart2 + urlPart3
-      const response = await fetch(url)
-
-      // If changing the state of the star succeeded...
-      if (response.ok) {
-        star.toggleAttribute('on')
+      if (starredSet.has(hash)) {
+        starredSet.delete(hash)
+        star.removeAttribute('starred')
+      } else {
+        starredSet.add(hash)
+        star.setAttribute('starred', '')
       }
 
-      star.removeAttribute('in-progress')
+      options.home['starred-courses'].value = Array.from(starredSet)
     })
   })
 }
@@ -46,5 +53,5 @@ export default async function () {
   })
   event.addRemovesAction(removedCollectionItem, '.course')
 
-  addStarsAction()
+  await addStarsAction()
 }

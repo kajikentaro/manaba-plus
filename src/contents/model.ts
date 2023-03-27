@@ -4,12 +4,39 @@ import getOptions from '../options/model'
 import { sha256 } from '../utils/hash'
 
 /**
+ * Set a filter of a scraping root node along options.
+ * @param root The root node of the scraping model
+ */
+const setRootFilter = async function (root: ScrapingNode) {
+  const { options } = await getOptions()
+
+  const filters: ((hash: string) => boolean)[] = []
+
+  // Add a filter to limit to only starred courses.
+  if (options.contents['contents-limit']['download-only-starred'].value) {
+    const starredSet = new Set<string>(options.home['starred-courses'].value)
+    filters.push((hash) => starredSet.has(hash))
+  }
+
+  // Add a filter to repel removed courses.
+  if (!options.contents['contents-limit']['download-removed'].value) {
+    const removedSet = new Set<string>(options.home['removed-courses'].value)
+    filters.push((hash) => !removedSet.has(hash))
+  }
+
+  root.filter = async function (url) {
+    const hash = await sha256(url)
+    return filters.every((filter) => filter(hash))
+  }
+}
+
+/**
  * Remove a specific node from the ancestor.
- * @param root The root node that has the removed descendant node
+ * @param node The node node that has the removed descendant node
  * @param path The path to the removed node
  */
-const removeNode = function (root: ScrapingNode, ...path: string[]) {
-  let lastNode: ScrapingNode = root
+const removeNode = function (node: ScrapingNode, ...path: string[]) {
+  let lastNode: ScrapingNode = node
 
   let parentNode: ScrapingNode = null
   let childIndex: number = null
@@ -34,25 +61,12 @@ const removeNode = function (root: ScrapingNode, ...path: string[]) {
 }
 
 /**
- * Return the preprocessed scraping model.
- * The scraping model expresses how to scrape pages.
- * @returns The preprocessed scraping model
+ * Remove some nodes from a scraping root node along options.
+ * @param root The root node of the scraping model
  */
-export default async function () {
+const removeNodesFromRoot = async function (root: ScrapingNode) {
   const { options } = await getOptions()
 
-  const clone: ScrapingNode = JSON.parse(JSON.stringify(model))
-
-  // Set a filter that repels removed courses.
-  if (!options.contents['contents-limit']['download-removed'].value) {
-    const removedCourseSet = new Set(options.home['removed-courses'].value)
-    clone.filter = async function (url) {
-      const hash = await sha256(url)
-      return !removedCourseSet.has(hash)
-    }
-  }
-
-  // #region Remove nodes
   ;[
     [options.contents['contents-limit']['download-news'].value, ['news']],
     [options.contents['contents-limit']['download-report'].value, ['report']],
@@ -69,9 +83,20 @@ export default async function () {
       return
     }
 
-    removeNode(clone, ...path)
+    removeNode(root, ...path)
   })
-  // #endregion
+}
+
+/**
+ * Return the preprocessed scraping model.
+ * The scraping model expresses how to scrape pages.
+ * @returns The preprocessed scraping model
+ */
+export default async function () {
+  const clone: ScrapingNode = JSON.parse(JSON.stringify(model))
+
+  setRootFilter(clone)
+  removeNodesFromRoot(clone)
 
   return clone
 }

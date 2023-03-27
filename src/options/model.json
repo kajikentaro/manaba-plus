@@ -90,6 +90,18 @@
       "type": "checkbox",
       "value": true
     },
+    "starred-courses": {
+      "hint": "⭐がついたコース",
+      "description": "ホーム画面の⭐がついたコースは$length$個です。",
+      "type": "collection",
+      "value": []
+    },
+    "revert-starred-courses": {
+      "hint": "",
+      "description": "⭐がついたコースを識別するために保存しているデータを消去します。",
+      "type": "button",
+      "value": "⭐がついたコースを元に戻す"
+    },
     "removed-courses": {
       "hint": "除外されたコース",
       "description": "ホーム画面から除外されたコースは$length$個です。",
@@ -286,7 +298,7 @@
       "title": "コンテンツの制限",
       "download-only-starred": {
         "hint": "⭐がついたコースのみダウンロードする",
-        "description": "🔥すみません！今はまだ未実装です🙇‍♂️🔥チェックを入れると、⭐がついたコースのコンテンツのみをダウンロードします。チェックを外すと⭐がついていないコースのコンテンツもダウンロードされます。",
+        "description": "チェックを入れると、⭐がついたコースのコンテンツのみをダウンロードします。チェックを外すと⭐がついていないコースのコンテンツもダウンロードされます。",
         "type": "checkbox",
         "value": false
       },
