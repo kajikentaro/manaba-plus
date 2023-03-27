@@ -228,7 +228,7 @@
         "hint": "朝日新聞の広告",
         "description": "ホーム画面の朝日新聞の広告の表示方法を選んでください。",
         "type": "radio",
-        "value": "hide",
+        "value": "move",
         "choices": [
           {
             "key": "ignore",
@@ -284,6 +284,12 @@
     },
     "contents-limit": {
       "title": "コンテンツの制限",
+      "download-only-starred": {
+        "hint": "⭐がついたコースのみダウンロードする",
+        "description": "🔥すみません！今はまだ未実装です🙇‍♂️🔥チェックを入れると、⭐がついたコースのコンテンツのみをダウンロードします。チェックを外すと⭐がついていないコースのコンテンツもダウンロードされます。",
+        "type": "checkbox",
+        "value": false
+      },
       "download-removed": {
         "hint": "除外されているコースをダウンロードする",
         "description": "チェックを入れると、除外されているコースのコンテンツもダウンロードします。チェックを外すと除外されているコースのコンテンツはダウンロードされません。",
@@ -307,6 +313,12 @@
         "description": "チェックを入れると、コースコンテンツにあるコンテンツをダウンロードします。",
         "type": "checkbox",
         "value": true
+      },
+      "download-report-assignments": {
+        "hint": "提出物をダウンロードする",
+        "description": "チェックを入れると、レポートの相互閲覧画面にある提出物をダウンロードします。",
+        "type": "checkbox",
+        "value": false
       }
     },
     "directory-name": {

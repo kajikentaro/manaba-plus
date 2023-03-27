@@ -6,6 +6,11 @@ declare global {
    */
   interface ScrapingNode {
     /**
+     * A string to identify from brother nodes.
+     */
+    key?: string
+
+    /**
      * A string connected to the tail of the parent scraping URL
      */
     prefix?: string
