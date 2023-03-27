@@ -25,7 +25,7 @@ const valueLists = hosts.then(function (hosts) {
   for (const host of hosts) {
     for (const key in host) {
       // Skip some properties.
-      if (['name', 'source'].includes(key)) {
+      if (['name', 'source', 'tags'].includes(key)) {
         continue
       }
 
