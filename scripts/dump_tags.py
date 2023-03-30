@@ -9,7 +9,7 @@ from pathlib import Path
 parser = argparse.ArgumentParser(description='Dump hosts info')
 
 parser.add_argument('-d', '--directory', default='hosts', type=str, help='hosts directory path')
-parser.add_argument('-m', '--mode', action='store', default='url', type=str, choices=['print', 'url', 'tweet'], help='specify the dump mode')
+parser.add_argument('-m', '--mode', action='store', default='print', type=str, choices=['print', 'url', 'tweet'], help='specify the dump mode')
 parser.add_argument('-r', '--range', action='store', type=str, help='date range for url mode like YYYY-MM-DD_YYYY-MM-DD')
 parser.add_argument('-t', '--template', action='store', default='template', type=str, help='template for tweet mode')
 
