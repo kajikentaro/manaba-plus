@@ -58,7 +58,7 @@
 - 大阪商業大学 [->](https://daishodai.manaba.jp/ct/login?lang=ja)
 - 千葉工業大学 [->](https://cit.manaba.jp/ct/login)
 - 中央大学 [->](https://itc.r.chuo-u.ac.jp/com/manaba/)
-- 立教大学 [->](https://campus.bunkyo.ac.jp/entrance/manaba.html)
+- 文教大学 [->](https://campus.bunkyo.ac.jp/entrance/manaba.html)
 - 亜細亜大学 [->](https://asia-u.manaba.jp/ct/login)
 - 旭川医科大学 [->](https://www.asahikawa-med.ac.jp/index.php?f=student+index)
 - 立命館アジア太平洋大学 [->](https://manaba.apu.ac.jp/local/login)
