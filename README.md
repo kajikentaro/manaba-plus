@@ -84,7 +84,7 @@ You will not forget to download them.
 
 ### Only Tsukuba, right?
 
-Adapt to [Many schools](host-list.md).
+Adapt to [many schools](host-list.md).
 
 Your school should be adapted.
 
