@@ -69,6 +69,12 @@ You can add and remove courses ⭐ without reloading the page.
 
 You no longer need to reload every time pressing ⭐!!
 
+### Red pencils disappear for some days so you don't have to care for them.
+
+You can go to Course News, Tests, Surveys, Assignments, Grades, Forum, and Tutoring Collections by pushing course icons.
+
+You no longer need to go to the pages through the top pages of courses.
+
 ### Every time and everywhere ♪
 
 You can open the main panel from the toolbar icon.
