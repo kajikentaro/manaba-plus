@@ -43,7 +43,8 @@
         "$manaba-url$home*"
       ],
       "exclude_matches": [
-        "$manaba-url$home_coursetable"
+        "$manaba-url$home_coursetable",
+        "$manaba-url$home_selfregistration_*"
       ],
       "js": [
         "home/index.js"
@@ -83,6 +84,17 @@
       ],
       "css": [
         "grade/style.css"
+      ]
+    },
+    {
+      "matches": [
+        "$manaba-url$syllabus_*"
+      ],
+      "js": [
+        "syllabus/index.js"
+      ],
+      "css": [
+        "syllabus/style.css"
       ]
     },
     {

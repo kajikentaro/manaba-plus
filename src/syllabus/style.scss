@@ -1,0 +1,10 @@
+@use '../base';
+
+a.self-registration {
+  display: block;
+  margin: 10px;
+
+  &::after {
+    content: '自己登録画面へ';
+  }
+}
