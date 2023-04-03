@@ -62,6 +62,12 @@ Manaba Plusはmanabaの未提出課題一覧をブラウザの拡張機能アイ
 
 Manaba Plusは最後のコンテンツのダウンロードから一定時間が経過すると通知を行います！！
 
+## シラバスから直接自己登録を行いたいそこのあなた！！
+
+Manaba Plusはmanabaのシラバスの詳細画面にそのコースの自己登録画面へのリンクを貼ります！！
+
+![](img/self-registration.gif)
+
 ## 筑波だけではありません！！
 
 Manaba Plusは筑波大学のmanabaだけでなく、[多くの大学](https://github.com/HotariTobu/manaba-plus/blob/master/host-list.md)に対応しています！！

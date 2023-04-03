@@ -90,6 +90,12 @@ Show a message when some time has passed since the last downloading content.
 
 You will not forget to download them.
 
+### The dead eeeend?
+
+You can transition to the Self-Registration pages by pressing links in the Syllabus.
+
+You no longer need to go and come between Syllabus and Self-Registration!!
+
 ### Only Tsukuba, right?
 
 Adapt to [many schools](host-list.md).
