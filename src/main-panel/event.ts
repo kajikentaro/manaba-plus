@@ -108,16 +108,4 @@ export const addMainActions = async function () {
     })
   }
   // #endregion
-
-  const removedCollectionItem = options['main-panel'][
-    'removed-assignments'
-  ] as OptionCollectionItem
-
-  addVisibilityAction({
-    removedCollectionItem,
-    inputSelectors: '#assignments-visibility-input',
-    revertSelectors: '.assignment[removed]',
-    removeSelectors: '.assignment',
-  })
-  addRemovesAction(removedCollectionItem, '.assignment')
 }

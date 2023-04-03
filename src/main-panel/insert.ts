@@ -4,8 +4,11 @@ import '../extension/htmlElement'
 import getOptions from '../options/model'
 import scrape from './scrape'
 import * as time from '../utils/time'
+import * as event from './event'
 
+// #region DEBUG Dummy
 import dummies from './dummies.json'
+// #endregion
 
 /**
  * Insert messages on the main panel.
@@ -214,6 +217,21 @@ export const insertAssignmentList = async function () {
   document
     .querySelector('#assignment-list-deadline-header')
     ?.dispatchEvent(new Event('click'))
+
+  // #region Add actions
+  const removedCollectionItem = options['main-panel'][
+    'removed-assignments'
+  ] as OptionCollectionItem
+
+  event.addVisibilityAction({
+    removedCollectionItem,
+    inputSelectors: '#assignments-visibility-input',
+    revertSelectors: '.assignment[removed]',
+    removeSelectors: '.assignment',
+  })
+
+  event.addRemovesAction(removedCollectionItem, '.assignment')
+  // #endregion
 }
 // #endregion
 
