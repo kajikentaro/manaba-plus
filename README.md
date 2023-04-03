@@ -13,7 +13,7 @@
 
 ## Feature
 
-[With Images](docs/feature)
+[With Images](docs/feature/index.md)
 
 ### Let me submit it right now!!
 

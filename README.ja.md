@@ -13,7 +13,7 @@
 
 ## 特徴
 
-[画像付き](docs/feature)
+[画像付き](docs/feature/index.md)
 
 ### 早く提出させてくれよぉ！！
 
