@@ -85,7 +85,7 @@
     "title": "ホーム画面",
     "dependency": "allow-changing",
     "show-home-panel": {
-      "hint": "ホームパネルを表示する",
+      "hint": "メインパネルを表示する",
       "description": "チェックを入れると、ホーム画面にManaba Plusのメインパネルが表示されます。チェックが入っていないときにメインパネルを表示するには、拡張機能アイコンをクリックします。",
       "type": "checkbox",
       "value": true
