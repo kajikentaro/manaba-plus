@@ -12,7 +12,8 @@
 
 ## インストール
 
-- [Chrome Web Store](https://chrome.google.com/webstore/detail/manaba-downloader/aeidkdokanbhoefbgaadaicdmggdeegf?hl=ja)
+- [Google Chrome Web Store](https://chrome.google.com/webstore/detail/manaba-downloader/aeidkdokanbhoefbgaadaicdmggdeegf?hl=ja)
+- [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/manaba-plus/jjlchhpmgikpgmackjmellpfdalobodb)
 - [Firefox Browser ADD-ONS](https://addons.mozilla.org/ja/firefox/addon/manaba-plus/)
 
 <!-- store-info-begin -->
