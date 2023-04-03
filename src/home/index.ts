@@ -20,7 +20,7 @@ getOptions().then(async function ({ options }) {
   }
 
   await arrange()
-  replace()
+  await replace()
   await hide()
   await move()
   await insert()

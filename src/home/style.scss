@@ -210,13 +210,12 @@ table[class='stdlist'] {
   }
 }
 
-#alert,
-#news {
-  flex-basis: 100%;
-}
+.side-item {
+  &.big {
+    flex-basis: 100%;
+  }
 
-#syllabus,
-#former-link,
-#kikuzou {
-  width: 230px;
+  &.small {
+    width: 230px;
+  }
 }

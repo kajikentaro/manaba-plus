@@ -1,3 +1,4 @@
+import getOptions from '../options/model'
 import { fetchDOM } from '../utils/fetch'
 import '../extension/element'
 
@@ -16,6 +17,33 @@ const replaceContentBody = function () {
   contentBody.appendChild(contentbodyRight)
 
   mycourse.appendChild(contentBody)
+}
+
+const replaceFormerLink = async function () {
+  const { options } = await getOptions()
+
+  const id =
+    options.home['visibility-and-movement']['hide-or-move-former-link'].id
+  const container = document.getElementById(id)
+
+  const selfRegistrationItem = container.querySelector(
+    '#h3-self-registration'
+  )?.parentElement
+  if (selfRegistrationItem === null) {
+    return
+  }
+
+  selfRegistrationItem.remove()
+
+  const sidePanel = container.parentElement
+
+  const clone = container.cloneNode(true) as HTMLElement
+  clone.id =
+    options.home['visibility-and-movement']['hide-or-move-self-registration'].id
+
+  sidePanel.insertBefore(clone, container)
+
+  clone.querySelector('.tips-list')?.replaceChildren(selfRegistrationItem)
 }
 
 /**
@@ -360,8 +388,9 @@ const replaceBanners = function () {
 }
 
 // Entry point
-export default function () {
+export default async function () {
   replaceContentBody()
+  await replaceFormerLink()
   replaceCourses()
   replaceBanners()
 }

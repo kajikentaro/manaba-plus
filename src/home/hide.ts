@@ -14,6 +14,7 @@ export default async function () {
     options.home['visibility-and-movement']['hide-or-move-centernews'],
     options.home['visibility-and-movement']['hide-or-move-syllabus'],
     options.home['visibility-and-movement']['hide-or-move-assignment'],
+    options.home['visibility-and-movement']['hide-or-move-self-registration'],
     options.home['visibility-and-movement']['hide-or-move-former-link'],
     options.home['visibility-and-movement']['hide-or-move-kikuzou'],
     options.home['visibility-and-movement']['hide-or-move-banner-list'],

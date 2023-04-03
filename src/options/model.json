@@ -212,6 +212,30 @@
         ],
         "id": "assignment"
       },
+      "hide-or-move-self-registration": {
+        "hint": "「自己登録について」",
+        "description": "ホーム画面の「自己登録について」の表示方法を選んでください。",
+        "type": "radio",
+        "value": "ignore",
+        "choices": [
+          {
+            "key": "ignore",
+            "hint": "右側に表示する",
+            "description": "選択すると、ホーム画面の右側に表示されます。"
+          },
+          {
+            "key": "move",
+            "hint": "下部に表示する",
+            "description": "選択すると、ホーム画面の下部に表示されます。"
+          },
+          {
+            "key": "hide",
+            "hint": "表示しない",
+            "description": "選択すると、表示されません。"
+          }
+        ],
+        "id": "self-registration"
+      },
       "hide-or-move-former-link": {
         "hint": "「旧スマートフォン版について」",
         "description": "ホーム画面の旧スマートフォン版へのリンクの表示方法を選んでください。",

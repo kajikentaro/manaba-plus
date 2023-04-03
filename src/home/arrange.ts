@@ -63,6 +63,9 @@ const arrangeClasses = function () {
   removeClass('.course:not(.course-cell)', 'course')
   addClass('.courselist', 'fixed-table', 'striped-table')
   addClass('.period', 'center-align')
+
+  addClass('#alert, #news', 'side-item', 'big')
+  addClass('#syllabus, #former-link, #kikuzou', 'side-item', 'small')
 }
 
 /**
