@@ -64,7 +64,7 @@ Manaba Plusは最後のコンテンツのダウンロードから一定時間が
 
 ## 筑波だけではありません！！
 
-Manaba Plusは筑波大学のmanabaだけでなく、[多くの大学](../../host-list.md)に対応しています！！
+Manaba Plusは筑波大学のmanabaだけでなく、[多くの大学](https://github.com/HotariTobu/manaba-plus/blob/master/host-list.md)に対応しています！！
 
 ## Chromeだけではありません！！
 
