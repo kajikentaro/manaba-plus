@@ -13,3 +13,6 @@ npm-debug.log*
 
 # VS Code
 .vscode
+
+# env
+env
