@@ -26,6 +26,8 @@ getOptions().then(async function ({ options }) {
   await insert()
   await event()
 
-  const contentBodyLeft = document.querySelector('#content-body .left')
-  await initMainPanel(contentBodyLeft)
+  if (options.home['show-home-panel'].value) {
+    const contentBodyLeft = document.querySelector('#content-body .left')
+    await initMainPanel(contentBodyLeft)
+  }
 })
