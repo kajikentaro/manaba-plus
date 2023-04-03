@@ -2,7 +2,11 @@
 
 [日本語](README.ja.md)
 
+<!-- store-info-begin -->
+
 `Manaba Plus` is a browser extension that makes [manaba](https://manaba.jp/) a little more useful.
+
+<!-- store-info-end -->
 
 [Twitter](https://twitter.com/manaba_plus)
 
@@ -11,9 +15,15 @@
 - [Chrome Web Store](https://chrome.google.com/webstore/detail/manaba-downloader/aeidkdokanbhoefbgaadaicdmggdeegf?hl=ja)
 - [Firefox Browser ADD-ONS](https://addons.mozilla.org/ja/firefox/addon/manaba-plus/)
 
+<!-- store-info-begin -->
+
 ## Feature
 
+<!-- store-info-end -->
+
 [With Images](docs/feature/index.md)
+
+<!-- store-info-begin -->
 
 ### Let me submit it right now!!
 
@@ -102,6 +112,8 @@ Adapt to [many schools](host-list.md).
 
 Your school should be adapted.
 
+<!-- store-info-end -->
+
 ### Only Chrome, right?
 
 Adapt to not only Chrome but also Edge and Firefox.
@@ -127,6 +139,8 @@ Just a moment, Safari users!!
 | [ShodaiManabaHighlight](https://chrome.google.com/webstore/detail/shodaimanabahighlight/dbiedhjfponkhcehojameaacnpkfebff?hl=ja)     |                                                                                                                                                | Highlight courses that have not submitted assignments<br>Highlight that day's courses                                                                                                                                                                                                                           |
 | [Tsukuba-Manaba2TwinC](https://github.com/Mimori256/Manaba2TwinC)                                                                   |                                                                                                                                                | Generate an ics file from courses                                                                                                                                                                                                                                                                               |
 
+<!-- store-info-begin -->
+
 ## Permissions
 
 `Manaba Plus` needs the below permissions for functions.
@@ -135,14 +149,20 @@ Just a moment, Safari users!!
 
 To download and save content.
 
+<!-- store-info-end -->
+
 ## License
 
 [Unlicense](LICENSE)
+
+<!-- store-info-begin -->
 
 ## Disclaimer
 
 `Manaba Plus` is not official of schools and has nothing to do with the vender of manaba, Asahi Net, Inc.
 Developers are not responsible for any damages when using `Manaba Plus`.
+
+<!-- store-info-end -->
 
 ## Acknowledgments
 

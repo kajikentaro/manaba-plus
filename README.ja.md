@@ -2,7 +2,11 @@
 
 [English](README.md)
 
+<!-- store-info-begin -->
+
 `Manaba Plus`は、[manaba](https://manaba.jp/)をちょこっと便利にする、ブラウザの拡張機能です。
+
+<!-- store-info-end -->
 
 [Twitter](https://twitter.com/manaba_plus)
 
@@ -11,9 +15,15 @@
 - [Chrome Web Store](https://chrome.google.com/webstore/detail/manaba-downloader/aeidkdokanbhoefbgaadaicdmggdeegf?hl=ja)
 - [Firefox Browser ADD-ONS](https://addons.mozilla.org/ja/firefox/addon/manaba-plus/)
 
+<!-- store-info-begin -->
+
 ## 特徴
 
+<!-- store-info-end -->
+
 [画像付き](docs/feature/index.md)
+
+<!-- store-info-begin -->
 
 ### 早く提出させてくれよぉ！！
 
@@ -102,6 +112,8 @@
 
 きっとあなたの学校の manaba でも使えるでしょう。
 
+<!-- store-info-end -->
+
 ### Chrome だけなんかい
 
 Chrome だけでなく Edge、Firefox にも対応しています。
@@ -127,6 +139,8 @@ Safari はもう少し待ってね！！
 | [ShodaiManabaHighlight](https://chrome.google.com/webstore/detail/shodaimanabahighlight/dbiedhjfponkhcehojameaacnpkfebff?hl=ja)     |                                                                                                                                        | 未提出課題をがある講義をハイライト<br>今日の講義を強調                                                                                                                                                                                                    |
 | [Tsukuba-Manaba2TwinC](https://github.com/Mimori256/Manaba2TwinC)                                                                   |                                                                                                                                        | コースデータから授業スケジュールの ics ファイルを生成する                                                                                                                                                                                                 |
 
+<!-- store-info-begin -->
+
 ## 権限
 
 `Manaba Plus`は機能の実現のために以下の権限を必要とします。
@@ -135,14 +149,20 @@ Safari はもう少し待ってね！！
 
 コンテンツをダウンロードし、保存するために必要です。
 
+<!-- store-info-end -->
+
 ## ライセンス
 
 [Unlicense](LICENSE)
+
+<!-- store-info-begin -->
 
 ## 免責事項
 
 `Manaba Plus`は大学非公式であり、manaba のベンダーである株式会社朝日ネットとも一切関係がありません。
 `Manaba Plus`を使用して被ったいかなる損害について開発者は責任を負わないものとします。
+
+<!-- store-info-end -->
 
 ## 謝辞
 
