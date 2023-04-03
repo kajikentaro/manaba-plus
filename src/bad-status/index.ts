@@ -27,7 +27,7 @@ getOptions().then(async function ({ options }) {
 
     // To avoid looping in login sessions.
     setTimeout(transition, 1000)
-  } else {
+  } else if (options.common['allow-changing'].value) {
     // Add a button.
     const transitionInput = document.createElement('input')
     transitionInput.id = 'transition-button'
