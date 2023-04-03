@@ -28,7 +28,7 @@
 ## 変更を加える
 
 変更を加える流れは以下の通りです。
-詳しくは[開発ガイド](docs/development)を参照してください。
+詳しくは[開発ガイド](https://github.com/HotariTobu/manaba-plus/blob/master/docs/development/index.md)を参照してください。
 
 1. リポジトリをフォークする
 2. ブランチを切る (git checkout -b feat/my-new-feature)

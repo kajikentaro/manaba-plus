@@ -28,7 +28,7 @@ Answer if it is just needed, or open PR and fix it if changes are in need.
 ## Make a change
 
 The flow of making a change is below.
-Refer [Development Guide](docs/development) for more details.
+Refer [Development Guide](https://github.com/HotariTobu/manaba-plus/blob/master/docs/development/index.md) for more details.
 
 1. Fork the repository
 2. Create your feature branch (git checkout -b feat/my-new-feature)
