@@ -30,6 +30,21 @@ label {
   width: 100%;
 }
 
+.item[type='collection'] {
+  .container {
+    display: grid;
+    grid-template-columns: auto 200px;
+
+    button {
+      grid-row: span 2;
+
+      &::after {
+        content: 'リセットする';
+      }
+    }
+  }
+}
+
 input {
   &[type='checkbox'],
   &[type='radio'] {

@@ -97,35 +97,6 @@ const addButtonActions = async function () {
 
   const actions = [
     {
-      selectors: '#revert-removed-assignments',
-      message: options['main-panel']['revert-removed-assignments'].description,
-      action: async function () {
-        options['main-panel']['removed-assignments'].value = null
-        location.reload()
-      },
-    },
-    {
-      selectors: '#revert-starred-courses',
-      message: options.home['revert-starred-courses'].description,
-      action: async function () {
-        options.home['starred-courses'].value = null
-        location.reload()
-      },
-    },
-    {
-      selectors: '#revert-removed-courses',
-      message: options.home['revert-removed-courses'].description,
-      action: async function () {
-        options.home['removed-courses'].value = null
-        location.reload()
-      },
-    },
-    {
-      selectors: '#download-contents',
-      message: null,
-      action: () => window.open('../contents/index.html'),
-    },
-    {
       selectors: '#delete-history',
       message: options.contents['delete-history'].description,
       action: () => clearHistory(),

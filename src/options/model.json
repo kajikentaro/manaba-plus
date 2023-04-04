@@ -73,12 +73,6 @@
       "description": "未提出課題一覧から除外された課題は$length$個です。",
       "type": "collection",
       "value": []
-    },
-    "revert-removed-assignments": {
-      "hint": "",
-      "description": "除外された課題を識別するために保存しているデータを消去します。",
-      "type": "button",
-      "value": "除外された課題を元に戻す"
     }
   },
   "home": {
@@ -96,23 +90,11 @@
       "type": "collection",
       "value": []
     },
-    "revert-starred-courses": {
-      "hint": "",
-      "description": "⭐がついたコースを識別するために保存しているデータを消去します。",
-      "type": "button",
-      "value": "⭐がついたコースを元に戻す"
-    },
     "removed-courses": {
       "hint": "除外されたコース",
       "description": "ホーム画面から除外されたコースは$length$個です。",
       "type": "collection",
       "value": []
-    },
-    "revert-removed-courses": {
-      "hint": "",
-      "description": "除外されたコースを識別するために保存しているデータを消去します。",
-      "type": "button",
-      "value": "除外されたコースを元に戻す"
     },
     "visibility-and-movement": {
       "title": "表示と移動",
@@ -312,11 +294,18 @@
   },
   "contents": {
     "title": "コンテンツ",
-    "download-contents": {
-      "hint": "",
-      "description": "まだPCにダウンロードされていないコンテンツを、まとめてダウンロードします。自動でコース別にフォルダ分けされます。",
-      "type": "button",
-      "value": "コンテンツ画面を開く"
+    "directory-name": {
+      "hint": "ダウンロード先",
+      "description": "ダウンロードされたコンテンツが保存されるフォルダの名前です。空白にすると既定のダウンロードフォルダに直接保存されます。",
+      "type": "text",
+      "value": "manaba"
+    },
+    "download-limit": {
+      "hint": "同時ダウンロード数",
+      "description": "同時にダウンロードされるコンテンツ数の上限値です。ブラウザの制限により、この数で同時にダウンロードできないことがあります。",
+      "type": "number",
+      "value": 5,
+      "min": 1
     },
     "contents-limit": {
       "title": "コンテンツの制限",
@@ -357,24 +346,23 @@
         "value": false
       }
     },
-    "directory-name": {
-      "hint": "ダウンロード先",
-      "description": "ダウンロードされたコンテンツが保存されるフォルダの名前です。空白にすると既定のダウンロードフォルダに直接保存されます。",
-      "type": "text",
-      "value": "manaba"
-    },
-    "download-limit": {
-      "hint": "同時ダウンロード数",
-      "description": "同時にダウンロードされるコンテンツ数の上限値です。ブラウザの制限により、この数で同時にダウンロードできないことがあります。",
-      "type": "number",
-      "value": 5,
-      "min": 1
-    },
     "delete-history": {
       "hint": "",
       "description": "コンテンツの重複ダウンロードを防ぐために内部に保存している履歴を消去します。",
       "type": "button",
       "value": "ダウンロード履歴のリセット"
+    }
+  },
+  "reminders": {
+    "title": "リマインダー",
+    "google-calendar": {
+      "title": "Googleカレンダー",
+      "registered-assignments-gc": {
+        "hint": "登録された課題",
+        "description": "Googleカレンダーに登録された課題は$length$個です。",
+        "type": "collection",
+        "value": []
+      }
     }
   },
   "timeout": {
