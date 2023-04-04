@@ -22,6 +22,41 @@ export default class Assignment {
     this.hash = sha256(url)
   }
 
+  /**
+   * Encode the assignment object into a string.
+   * @returns The encoded string
+   */
+  public toString() {
+    return JSON.stringify({
+      url: this.url,
+      title: this.title,
+      course: this.course,
+      deadline: this.deadline?.getTime() ?? 0,
+    })
+  }
+
+  /**
+   * Decode a string into an assignment object.
+   * @param str The string to be decoded
+   * @returns The assignment object
+   */
+  public static from(str: string) {
+    const obj: {
+      url: string
+      title: string
+      course: string
+      deadline: number
+    } = JSON.parse(str)
+
+    let deadline = null
+
+    if (obj.deadline > 0) {
+      deadline = new Date(obj.deadline)
+    }
+
+    return new Assignment(obj.url, obj.title, obj.course, deadline)
+  }
+
   // #region isShown
   private _isShown: boolean = true
 

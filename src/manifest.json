@@ -107,6 +107,14 @@
       "css": [
         "bad-status/style.css"
       ]
+    },
+    {
+      "matches": [
+        "https://hotaritobu.github.io/manaba-plus/reminders/google-calendar/"
+      ],
+      "js": [
+        "reminders/google-calendar/index.js"
+      ]
     }
   ],
   "web_accessible_resources": [

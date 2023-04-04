@@ -2,8 +2,8 @@ extends ../../../layout
 
 block prepend head
   - var title = 'Googleカレンダー'
-  script(defer src="https://apis.google.com/js/api.js")
-  script(defer src="https://accounts.google.com/gsi/client")
+  script(sync src="https://apis.google.com/js/api.js")
+  script(sync src="https://accounts.google.com/gsi/client")
 
 block content
   .container

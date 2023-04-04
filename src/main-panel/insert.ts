@@ -5,6 +5,8 @@ import getOptions from '../options/model'
 import * as assignments from './assignments'
 import * as time from '../utils/time'
 import * as event from './event'
+import * as storage from '../utils/storage'
+import constants from '../constants'
 
 // #region DEBUG Dummy
 import dummies from './dummies.json'
@@ -167,8 +169,11 @@ export const insertAssignmentList = async function () {
 
   const { options } = await getOptions()
 
+  const assignmentsData: string[] = []
+
   for await (const assignment of assignments.list()) {
     appendAssignment(assignment)
+    assignmentsData.push(assignment.toString())
   }
 
   // #region DEBUG Dummy
@@ -182,8 +187,12 @@ export const insertAssignmentList = async function () {
     )
 
     appendAssignment(assignment)
+    assignmentsData.push(assignment.toString())
   }
   // #endregion
+
+  // Store data to be used by reminders.
+  storage.set(constants['storage-keys']['assignments-data'], assignmentsData)
 
   // Sort the assignment list.
   document
