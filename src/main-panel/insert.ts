@@ -118,7 +118,7 @@ const appendAssignment = function (assignment: Assignment) {
       weekday: 'short',
       hour: 'numeric',
       minute: 'numeric',
-    })
+    }) ?? ''
   )
   row.insertCell().appendChild(deadlineText)
 

@@ -11,13 +11,13 @@ export default class Assignment {
    * @param url The URL to the assignment page
    * @param title The title of the assignment
    * @param course The name of the parent course
-   * @param deadline The deadline of the assignment
+   * @param deadline The deadline of the assignment if set, otherwise null
    */
   constructor(
     public readonly url: string,
     public readonly title: string,
     public readonly course: string,
-    public readonly deadline: Date
+    public readonly deadline: Date = null
   ) {
     this.hash = sha256(url)
   }

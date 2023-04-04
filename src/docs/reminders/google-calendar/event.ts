@@ -10,11 +10,15 @@ let calendarId: string = null
 /**
  * Insert an event associated with an assignment into a calendar.
  * @param assignment The source assignment of the event
- * @returns The inserted event
+ * @returns The event if it is inserted, otherwise null
  */
 const insertEvent = async function (assignment: Assignment) {
     if (calendarId === null) {
-        return
+        return null
+    }
+
+    if (assignment.deadline === null) {
+        return null
     }
 
     const summary = `${assignment.title} | ${assignment.course}`
