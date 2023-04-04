@@ -3,6 +3,7 @@ import Assignment from '../../main-panel/assignment'
 import * as storage from '../../utils/storage'
 import constants from '../../constants'
 import { encode } from './assignments'
+import event from './event'
 
 /**
  * Get stored assignments from local storage.
@@ -63,4 +64,6 @@ getOptions().then(async function () {
 
   const button = document.querySelector('#register button')
   button.setAttribute('assignments', attribute)
+
+  event()
 })

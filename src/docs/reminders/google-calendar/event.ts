@@ -76,23 +76,29 @@ const insertEvent = async function (assignment: Assignment) {
 
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
-  const response = await gapi.client.calendar.events.insert({
-    calendarId: calendarId,
-    resource: {
-      summary: summary,
-      description: description,
-      start: {
-        dateTime: startDateTime.toISOString(),
-        timeZone: timezone,
+  try {
+    const response = await gapi.client.calendar.events.insert({
+      calendarId: calendarId,
+      resource: {
+        summary: summary,
+        description: description,
+        start: {
+          dateTime: startDateTime.toISOString(),
+          timeZone: timezone,
+        },
+        end: {
+          dateTime: endDateTime.toISOString(),
+          timeZone: timezone,
+        },
       },
-      end: {
-        dateTime: endDateTime.toISOString(),
-        timeZone: timezone,
-      },
-    },
-  })
-
-  return response.result
+    })
+  
+    return response.result
+  } catch (error) {
+    console.error(error)
+  }
+  
+  return null
 }
 
 /**
