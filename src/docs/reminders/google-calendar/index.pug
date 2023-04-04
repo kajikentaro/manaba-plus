@@ -1,0 +1,26 @@
+extends ../../../layout
+
+block prepend head
+  - var title = 'Googleカレンダー'
+  script(defer src="https://apis.google.com/js/api.js")
+  script(defer src="https://accounts.google.com/gsi/client")
+
+block content
+  .container
+    //- #initialize.card(disabled)
+    //-   p まずはmanabaの課題専用のカレンダーを作りましょう。
+    //-   button Googleカレンダーを作成する
+
+    #register.card(disabled)
+      | 課題を登録する前にカレンダーの通知設定を行いましょう。設定の方法は
+      a(href="../tips/reminders/google-calendar", target="_blank", rel="noopener noreferrer") こちら
+      button Googleカレンダーに課題を登録する
+
+    #message.card
+        #initializing(hidden) カレンダーを初期化中。。。
+        #initialized(hidden) カレンダーの初期化が完了しました。
+        #initialization-failed(hidden) カレンダーの初期化に失敗しました。
+        #created(hidden) カレンダーが追加されました。課題は登録されていません。通知設定を行ってから再度ボタンを押してください。
+        #registering(hidden) 課題を登録中。。。
+        #registered(hidden) 課題の登録が完了しました。
+

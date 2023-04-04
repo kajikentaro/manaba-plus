@@ -1,0 +1,30 @@
+@use '../../../base';
+
+body {
+  height: calc(100vh - 20px);
+  margin: 0;
+}
+
+.container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+}
+
+.card {
+  margin: 20px;
+}
+
+[hidden] {
+  display: none;
+}
+
+:disabled {
+  opacity: 0.3;
+
+  button {
+    pointer-events: none;
+  }
+}
