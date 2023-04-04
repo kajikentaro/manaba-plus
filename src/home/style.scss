@@ -98,7 +98,7 @@ table[class='stdlist'] {
 
     background-color: base.$primary-color-light;
     border: 1px solid base.$primary-color-dark;
-    height: 60px;
+    min-height: 60px;
     padding: 4px;
 
     .pastcourselist & {
