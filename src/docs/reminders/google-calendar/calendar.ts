@@ -1,4 +1,4 @@
-import constants from '../../constants'
+import constants from '../../../constants'
 
 /**
  * Get the id of the calendar in the user's calendar list.
