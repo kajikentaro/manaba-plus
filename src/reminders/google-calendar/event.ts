@@ -1,9 +1,10 @@
 import getOptions from '../../options/model'
-import Assignment from '../../main-panel/assignment'
+import { decode } from './assignments'
 
 const recordAssignments = async function (event: Event) {
-  const callback = event.target
-  if (!('assignments' in callback)) {
+  const callback = event.target as HTMLElement
+  const attribute = callback.getAttribute('assignments')
+  if (attribute === null) {
     return
   }
 
@@ -13,7 +14,7 @@ const recordAssignments = async function (event: Event) {
     options.reminders['google-calendar']['registered-assignments-gc'].value
   )
 
-  const registeredAssignments = callback.assignments as Assignment[]
+  const registeredAssignments = decode(attribute)
 
   for (const assignment of registeredAssignments) {
     const hash = await assignment.hash

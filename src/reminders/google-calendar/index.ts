@@ -2,6 +2,7 @@ import getOptions from '../../options/model'
 import Assignment from '../../main-panel/assignment'
 import * as storage from '../../utils/storage'
 import constants from '../../constants'
+import { encode } from './assignments'
 
 /**
  * Get stored assignments from local storage.
@@ -58,9 +59,8 @@ const getAssignments = async function () {
 // Entry point.
 getOptions().then(async function () {
   const assignments = await getAssignments()
+  const attribute = encode(assignments)
 
   const button = document.querySelector('#register button')
-  Object.defineProperty(button, 'assignments', {
-    value: assignments,
-  })
+  button.setAttribute('assignments', attribute)
 })
