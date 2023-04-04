@@ -10,7 +10,7 @@ const storageKey = 'messages'
 export const popMessages = async function () {
   const pairs = await chrome.storage.local.get({ [storageKey]: [] })
   await chrome.storage.local.remove(storageKey)
-  return new Set<string>(pairs[storageKey])
+  return new Set(pairs[storageKey])
 }
 
 /**
@@ -25,6 +25,6 @@ export const pushMessages = async function (...messages: string[]) {
   }
 
   await chrome.storage.local.set({
-    [storageKey]: messageSet,
+    [storageKey]: Array.from(messageSet),
   })
 }
