@@ -1,5 +1,5 @@
 {
-  "version": "2.3.1",
+  "version": "2.4.0",
   "private": true,
   "scripts": {
     "prepare": "husky install",
@@ -20,6 +20,9 @@
   "devDependencies": {
     "@prettier/plugin-pug": "^2.4.1",
     "@types/chrome": "^0.0.217",
+    "@types/gapi": "^0.0.44",
+    "@types/gapi.client.calendar-v3": "^0.0.1",
+    "@types/google.accounts": "^0.0.7",
     "@types/pug": "^2.0.6",
     "auto-changelog": "^2.4.0",
     "copy-webpack-plugin": "^11.0.0",

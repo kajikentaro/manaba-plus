@@ -2,7 +2,7 @@ import { popMessages } from '../utils/messages'
 import Assignment from './assignment'
 import '../extension/htmlElement'
 import getOptions from '../options/model'
-import scrape from './scrape'
+import * as assignments from './assignments'
 import * as time from '../utils/time'
 import * as event from './event'
 
@@ -167,38 +167,9 @@ export const insertAssignmentList = async function () {
 
   const { options } = await getOptions()
 
-  const assignmentSet = new Set<string>()
-  const removedAssignmentSet = new Set<string>(
-    options['main-panel']['removed-assignments'].value
-  )
-
-  for await (const assignment of scrape()) {
-    const hash = await assignment.hash
-
-    assignmentSet.add(hash)
-
-    assignment.isShown = !removedAssignmentSet.has(hash)
-    assignment.onIsShownChanged.push(function (value) {
-      if (value) {
-        removedAssignmentSet.delete(hash)
-      } else {
-        removedAssignmentSet.add(hash)
-      }
-      options['main-panel']['removed-assignments'].value =
-        Array.from(removedAssignmentSet)
-    })
-
+  for await (const assignment of assignments.list()) {
     appendAssignment(assignment)
   }
-
-  for (const hash of removedAssignmentSet) {
-    if (!assignmentSet.has(hash)) {
-      removedAssignmentSet.delete(hash)
-    }
-  }
-
-  options['main-panel']['removed-assignments'].value =
-    Array.from(removedAssignmentSet)
 
   // #region DEBUG Dummy
   // Insert dummy assignments.
@@ -214,6 +185,7 @@ export const insertAssignmentList = async function () {
   }
   // #endregion
 
+  // Sort the assignment list.
   document
     .querySelector('#assignment-list-deadline-header')
     ?.dispatchEvent(new Event('click'))

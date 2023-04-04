@@ -44,14 +44,31 @@ const createCollectionFragment = function (
 ) {
   const fragment = document.createDocumentFragment()
 
-  const hintDiv = document.createElement('div')
-  hintDiv.className = 'hint'
-  hintDiv.textContent = bindValue(item.hint, item.value)
-  fragment.appendChild(hintDiv)
+  const container = document.createElement('div')
+  container.className = 'container'
+
+  const hintSpan = document.createElement('span')
+  hintSpan.className = 'hint'
+  hintSpan.textContent = bindValue(item.hint, item.value)
+  container.appendChild(hintSpan)
+
+  const resetButton = document.createElement('button')
+  resetButton.id = key
+  resetButton.addEventListener('click', function () {
+    item.value = null
+    location.reload()
+  })
+  container.appendChild(resetButton)
+
+  const descriptionDiv = document.createElement('div')
+  descriptionDiv.className = 'description'
+  descriptionDiv.textContent = bindValue(item.description, item.value)
+  container.appendChild(descriptionDiv)
+
+  fragment.append(container)
 
   // #region DEBUG Collection Items
   const details = document.createElement('details')
-  details.id = key
   details.className = 'unselectable'
   for (const v of item.value) {
     const vDiv = document.createElement('div')
@@ -60,11 +77,6 @@ const createCollectionFragment = function (
   }
   fragment.appendChild(details)
   // #endregion
-
-  const descriptionDiv = document.createElement('div')
-  descriptionDiv.className = 'description'
-  descriptionDiv.textContent = bindValue(item.description, item.value)
-  fragment.appendChild(descriptionDiv)
 
   return fragment
 }
