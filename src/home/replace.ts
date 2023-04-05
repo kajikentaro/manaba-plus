@@ -171,8 +171,8 @@ const getTitleAndStatus = function (course: Element) {
           continue
         }
 
-        const type = counter.id.replace('status', '')
-        newChildren[1].href = `${courseUrl}_${type}`
+        const menuAnchor = menu.querySelector('a')
+        newChildren[1].href = menuAnchor.href
         break
       }
     })
