@@ -230,21 +230,24 @@ const getYearAndRemarks = function (course: Element) {
  */
 const replaceCourses = function () {
   // #region cell type
-  document.querySelectorAll('.course-cell').forEach(function (pastCourse) {
-    const { title, actions, status } = getComponents(pastCourse)
+  document
+    .querySelectorAll<HTMLTableCellElement>('.course-cell')
+    .forEach(function (pastCourse) {
+      const { title, actions, status } = getComponents(pastCourse)
 
-    const cell = document.createElement('td')
+      const cell = document.createElement('td')
+      cell.rowSpan = pastCourse.rowSpan
 
-    const course = document.createElement('div')
-    course.className = 'course cell'
-    title?.joinIn(course)
-    course.appendChild(actions)
-    status?.joinIn(course)
+      const course = document.createElement('div')
+      course.className = 'course cell'
+      title?.joinIn(course)
+      course.appendChild(actions)
+      status?.joinIn(course)
 
-    cell.appendChild(course)
+      cell.appendChild(course)
 
-    pastCourse.replaceWith(cell)
-  })
+      pastCourse.replaceWith(cell)
+    })
   // #endregion
 
   // #region row type
