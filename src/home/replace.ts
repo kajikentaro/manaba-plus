@@ -236,6 +236,7 @@ const replaceCourses = function () {
       const { title, actions, status } = getComponents(pastCourse)
 
       const cell = document.createElement('td')
+      cell.className = 'has-course'
       cell.rowSpan = pastCourse.rowSpan
 
       const course = document.createElement('div')

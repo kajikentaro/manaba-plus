@@ -25,6 +25,10 @@
 table[class='stdlist'] {
   td {
     padding: 0 !important;
+
+    &.has-course {
+      border: 2px solid base.$primary-color-dark !important;
+    }
   }
 }
 
@@ -97,8 +101,8 @@ table[class='stdlist'] {
     @include base.grid-box(1fr auto, 1fr auto);
 
     background-color: base.$primary-color-light;
-    border: 1px solid base.$primary-color-dark;
-    min-height: 60px;
+    min-height: 70px;
+    height: calc(100% - 4px * 2);
     padding: 4px;
 
     .pastcourselist & {
