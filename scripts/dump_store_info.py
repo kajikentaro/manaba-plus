@@ -4,7 +4,7 @@ import argparse
 begin_tag = '<!-- store-info-begin -->'.replace(' ', r'\s*?')
 end_tag = '<!-- store-info-end -->'.replace(' ', r'\s*?')
 
-content_regex = re.compile(fr"{begin_tag}(.+?){end_tag}", re.DOTALL)
+content_regex = re.compile(fr"{begin_tag}\n(.+?)\n{end_tag}", re.DOTALL)
 
 replace_regex = {
     re.compile(r'`(.+)`'): r'\1',
