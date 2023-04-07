@@ -24,6 +24,10 @@ const arrangeIds = async function () {
     options.home['visibility-and-movement']['hide-or-move-centernews'].id
   )
   setId(
+    '.my-infolist-bulkquery',
+    options.home['visibility-and-movement']['hide-or-move-bulkquery'].id
+  )
+  setId(
     '.my-infolist-searchall',
     options.home['visibility-and-movement']['hide-or-move-syllabus'].id
   )
@@ -64,7 +68,7 @@ const arrangeClasses = function () {
   addClass('.courselist', 'fixed-table', 'striped-table')
   addClass('.period', 'center-align')
 
-  addClass('#alert, #news', 'side-item', 'big')
+  addClass('#alert, #news, #survey', 'side-item', 'big')
   addClass('#syllabus, #former-link, #kikuzou', 'side-item', 'small')
 }
 

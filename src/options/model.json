@@ -146,6 +146,30 @@
         ],
         "id": "news"
       },
+      "hide-or-move-bulkquery": {
+        "hint": "「大学からの課題・アンケート」",
+        "description": "ホーム画面の「大学からの課題・アンケート」の表示方法を選んでください。",
+        "type": "radio",
+        "value": "move",
+        "choices": [
+          {
+            "key": "ignore",
+            "hint": "上部に表示する",
+            "description": "選択すると、ホーム画面の上部に表示されます。"
+          },
+          {
+            "key": "move",
+            "hint": "下部に表示する",
+            "description": "選択すると、ホーム画面の下部に表示されます。"
+          },
+          {
+            "key": "hide",
+            "hint": "表示しない",
+            "description": "選択すると、表示されません。"
+          }
+        ],
+        "id": "survey"
+      },
       "hide-or-move-syllabus": {
         "hint": "「シラバス検索」",
         "description": "ホーム画面のシラバス検索ボックスの表示方法を選んでください。",
