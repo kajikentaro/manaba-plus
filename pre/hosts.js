@@ -56,7 +56,10 @@ const exportHostList = async function () {
   const dirPath = path.resolve('docs/host-list')
   const filePath = path.resolve('docs/host-list/index.md')
 
-  fs.mkdirSync(dirPath)
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath)
+  }
+
   const stream = fs.createWriteStream(filePath)
 
   stream.on('error', function (error) {
