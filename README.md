@@ -109,7 +109,7 @@ You no longer need to go and come between Syllabus and Self-Registration!!
 
 ### Only Tsukuba, right?
 
-Adapt to [many schools](host-list.md).
+Adapt to [many schools](docs/host-list/index.md).
 
 Your school should be adapted.
 

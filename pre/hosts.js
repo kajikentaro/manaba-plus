@@ -53,8 +53,10 @@ const valueLists = hosts.then(function (hosts) {
  * Export the host list to `./host-list.md`.
  */
 const exportHostList = async function () {
-  const filePath = path.resolve('host-list.md')
+  const dirPath = path.resolve('docs/host-list')
+  const filePath = path.resolve('docs/host-list/index.md')
 
+  fs.mkdirSync(dirPath)
   const stream = fs.createWriteStream(filePath)
 
   stream.on('error', function (error) {
