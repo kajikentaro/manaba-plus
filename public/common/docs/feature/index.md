@@ -70,7 +70,7 @@ Manaba Plusはmanabaのシラバスの詳細画面にそのコースの自己登
 
 ## 筑波だけではありません！！
 
-Manaba Plusは筑波大学のmanabaだけでなく、[多くの大学](https://github.com/HotariTobu/manaba-plus/blob/master/host-list.md)に対応しています！！
+Manaba Plusは筑波大学のmanabaだけでなく、[多くの大学](../host-list)に対応しています！！
 
 ## Chromeだけではありません！！
 
