@@ -66,7 +66,7 @@ Counting down rushes you!!
 
 ### Why do you enter my sight? Bother.
 
-You can hide or move away Memos, Alerts, Announcements, Syllabus Search, Assignments, Old smartphone-optimized screens, Ads of Asahi Shimbun, and Banners.
+You can hide or move away Memos, Alerts, Announcements, Specific Assignments / Surveys, Syllabus Search, Assignments, Old smartphone-optimized screens, Ads of Asahi Shimbun, and Banners.
 
 For you, who like the simple style.
 
