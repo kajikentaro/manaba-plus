@@ -125,3 +125,11 @@
     }
   }
 }
+
+#assignment-list-holder {
+  &:not(:has(> :not([style*='display: none']))) {
+    &::after {
+      content: 'ないヨ。_(:3 」∠ )_';
+    }
+  }
+}
