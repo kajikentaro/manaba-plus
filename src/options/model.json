@@ -403,6 +403,13 @@
       "type": "checkbox",
       "value": true
     },
+    "transition-delay-time": {
+      "hint": "移動までの時間",
+      "description": "タイムアウト画面から自動的にリンク先へ移動するまでのミリ秒数です。",
+      "type": "number",
+      "value": 2000,
+      "dependency": "transition-automatically"
+    },
     "timeout-button-label": {
       "hint": "ボタンのラベル",
       "description": "タイムアウト画面に追加されるボタンのラベルです。",

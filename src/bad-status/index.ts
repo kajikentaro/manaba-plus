@@ -6,7 +6,15 @@ let url: string
 /**
  * Transition to another page.
  */
-const transition = function () {
+const transition = async function (event?: Event) {
+  if (typeof event === 'undefined') {
+    const { options } = await getOptions()
+
+    if (options['main-panel'].messages['notify-timeout'].value) {
+      pushMessages(messages.timeout)
+    }
+  }
+
   window.location.href = url
 }
 
@@ -21,12 +29,8 @@ getOptions().then(async function ({ options }) {
   }
 
   if (options.timeout['transition-automatically'].value) {
-    if (options['main-panel'].messages['notify-timeout'].value) {
-      await pushMessages(messages.timeout)
-    }
-
     // To avoid looping in login sessions.
-    setTimeout(transition, 1000)
+    setTimeout(transition, options.timeout['transition-delay-time'].value)
   } else if (options.common['allow-changing'].value) {
     // Add a button.
     const transitionInput = document.createElement('input')
