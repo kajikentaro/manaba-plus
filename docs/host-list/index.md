@@ -39,7 +39,7 @@
 - 金城学院大学 [->](https://kinjo.manaba.jp/ct/home_course)
 - 鹿児島大学 [->](https://www.kagoshima-u.ac.jp/manaba/manaba.html)
 - 関東学院大学 [->](https://univ.kanto-gakuin.ac.jp/students.html)
-- 神奈川工科大学 [->](https://kait.manaba.jp/)
+- 神奈川工科大学 [->](https://kaitc2.manaba.jp/ct/)
 - 日本女子大学 [->](https://manaba.jwu.ac.jp/ct/login)
 - 順天堂大学 [->](https://med-lms.juntendo.ac.jp/ct/login?lang=ja)
 - 城西国際大学 [->](https://www.jiu.ac.jp/johocenter/20/4_manaba.htm)
