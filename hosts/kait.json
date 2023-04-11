@@ -1,12 +1,11 @@
 {
     "name": "神奈川工科大学",
-    "source": "https://kait.manaba.jp/",
+    "source": "https://kaitc2.manaba.jp/ct/",
     "tags": [
         "#春からKAIT",
         "#春から神奈川工科",
         "#春から神奈川工科大学"
     ],
-    
-    "manaba-url": "https://kait.manaba.jp/ct",
+    "manaba-url": "https://kaitc2.manaba.jp/ct/",
     "bad-status": []
 }
