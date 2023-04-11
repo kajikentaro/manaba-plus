@@ -22,12 +22,16 @@
   gap: 20px;
 }
 
-table[class='stdlist'] {
-  td {
+.stdlist {
+  .has-course {
     padding: 0 !important;
+    border: 2px solid base.$primary-color-dark !important;
 
-    &.has-course {
-      border: 2px solid base.$primary-color-dark !important;
+    .container {
+      @include base.flex-box(column);
+
+      gap: 0;
+      min-height: 100%;
     }
   }
 }
@@ -102,8 +106,13 @@ table[class='stdlist'] {
 
     background-color: base.$primary-color-light;
     min-height: 70px;
-    height: calc(100% - 4px * 2);
+    flex-grow: 1;
     padding: 4px;
+    border-top: 1px dashed gray;
+
+    &:first-of-type {
+      border-top: none;
+    }
 
     .pastcourselist & {
       background-color: #f8f0e0;

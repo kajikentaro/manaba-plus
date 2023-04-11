@@ -232,22 +232,28 @@ const replaceCourses = function () {
   // #region cell type
   document
     .querySelectorAll<HTMLTableCellElement>('.course-cell')
-    .forEach(function (pastCourse) {
-      const { title, actions, status } = getComponents(pastCourse)
-
+    .forEach(function (pastCell) {
       const cell = document.createElement('td')
       cell.className = 'has-course'
-      cell.rowSpan = pastCourse.rowSpan
+      cell.rowSpan = pastCell.rowSpan
 
-      const course = document.createElement('div')
-      course.className = 'course cell'
-      title?.joinIn(course)
-      course.appendChild(actions)
-      status?.joinIn(course)
+      const container = document.createElement('div')
+      container.className = 'container'
 
-      cell.appendChild(course)
+      for (const pastCourse of pastCell.children) {
+        const { title, actions, status } = getComponents(pastCourse)
 
-      pastCourse.replaceWith(cell)
+        const course = document.createElement('div')
+        course.className = 'course cell'
+        title?.joinIn(course)
+        course.appendChild(actions)
+        status?.joinIn(course)
+
+        container.appendChild(course)
+      }
+
+      cell.appendChild(container)
+      pastCell.replaceWith(cell)
     })
   // #endregion
 
