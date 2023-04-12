@@ -1,3 +1,28 @@
+/*
+form = document.querySelector('form:has(.report-form)')
+
+input = document.querySelector('input[type=file]')
+input.removeAttribute('onchange')
+input.style.display = ''
+
+  form.addEventListener('dragover', function () {
+    event.preventDefault()
+  })
+  form.addEventListener('drop', function (event) {
+    event.preventDefault()
+    input.files = event.dataTransfer.files
+    
+    console.log(input.files)
+  })
+*/
+
+/*
+hidden = document.querySelector('[name="action_ReportStudent_submitdone"]')
+hidden.value = 1
+hidden.removeAttribute('type')
+form.submit()
+*/
+
 /**
  * ドラックアンドドロップでレポートを提出するプログラム
  */
