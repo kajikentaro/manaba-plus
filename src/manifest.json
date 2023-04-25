@@ -55,24 +55,13 @@
     },
     {
       "matches": [
-        "$manaba-url$course*_report"
+        "$manaba-url$course*_report_*"
       ],
       "js": [
         "report/index.js"
       ],
       "css": [
         "report/style.css"
-      ]
-    },
-    {
-      "matches": [
-        "$manaba-url$course*_report_*"
-      ],
-      "js": [
-        "attachment/index.js"
-      ],
-      "css": [
-        "attachment/style.css"
       ]
     },
     {

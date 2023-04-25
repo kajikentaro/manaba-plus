@@ -1,1 +1,13 @@
 @use '../base';
+
+form:has(.report-form) {
+  &[dragging] {
+    background-color: base.$primary-color-light;
+  }
+}
+
+#form-messages {
+  &::after {
+    content: 'またはここにファイルをドロップ';
+  }
+}
