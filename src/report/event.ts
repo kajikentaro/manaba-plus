@@ -3,37 +3,9 @@ const form = document.querySelector<HTMLFormElement>('form:has(.report-form)')
 /**
  * Upload a file.
  * @param file The file to be submitted
- * @returns The promise object to wait
+ * @returns True if the submission was succeeded, otherwise false
  */
 const submit = async function (file: File) {
-  // return new Promise<void>(function (resolve) {
-  // const win = window.open(location.href)
-
-  // win.addEventListener('DOMContentLoaded', function () {
-  //   // Set a file to an input element.
-  //   const input = win.document.querySelector<HTMLInputElement>('[name="RptSubmitFile"]')
-  //   const data = new DataTransfer()
-  //   data.items.add(file)
-  //   input.files = data.files
-
-  //   // Set a flag.
-  //   const hidden = win.document.querySelector<HTMLInputElement>('[name="action_ReportStudent_submitdone"]')
-  //   hidden.value = '1'
-  //   hidden.removeAttribute('type')
-
-  //   const form = win.document.querySelector<HTMLFormElement>('form:has(.report-form)')
-  //   form.submit()
-
-  //   console.log('submit!!', new Date())
-
-  //   win.addEventListener('beforeunload', function () {
-  //     console.log('close!!', new Date())
-
-  //     // win.close()
-  //     // resolve()
-  //   })
-  // })
-
   if (form === null) {
     return false
   }
@@ -48,9 +20,12 @@ const submit = async function (file: File) {
   })
 
   return response.ok
-  // })
 }
 
+/**
+ * Upload files.
+ * @param files The file list to be submitted
+ */
 const submitAll = async function (files: FileList) {
   const promises: Promise<boolean>[] = []
 

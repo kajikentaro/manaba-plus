@@ -26,16 +26,6 @@
   table-layout: fixed;
 }
 
-.striped-table {
-  tr:nth-of-type(odd) {
-    background-color: unset !important;
-  }
-
-  tr:nth-of-type(even) {
-    background-color: whitesmoke !important;
-  }
-}
-
 .assignment {
   &.defcon-4 {
     background-color: #ffe6e9;

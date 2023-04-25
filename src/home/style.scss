@@ -124,6 +124,14 @@
   }
 
   &.row {
+    &:nth-of-type(odd) {
+      background-color: unset !important;
+    }
+
+    &:nth-of-type(even) {
+      background-color: whitesmoke !important;
+    }
+
     td {
       height: unset !important;
     }
