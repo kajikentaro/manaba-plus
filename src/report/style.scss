@@ -1,6 +1,7 @@
 @use '../base';
 
-form:has(.report-form) {
+// form:has(.report-form) {
+.form form {
   &[dragging] {
     background-color: base.$primary-color-light;
   }

@@ -1,4 +1,5 @@
-const form = document.querySelector<HTMLFormElement>('form:has(.report-form)')
+// const form = document.querySelector<HTMLFormElement>('form:has(.report-form)')
+const form = document.querySelector<HTMLFormElement>('.form form')
 
 /**
  * Upload a file.
