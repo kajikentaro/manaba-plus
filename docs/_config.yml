@@ -3,14 +3,6 @@ theme: minima
 minima:
   skin: auto
   
-sass:
-  sass_dir: _sass
-  style: compressed
-  include:
-    - _sass
-    - _sass/minima
-    - _sass/minima/custom-styles.scss
-  
 header_pages:
   - feature/index.md
   - development/index.md
