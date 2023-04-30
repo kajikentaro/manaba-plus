@@ -9,6 +9,7 @@ sass:
   include:
     - _sass
     - _sass/minima
+    - _sass/minima/custom-styles.scss
   
 header_pages:
   - feature/index.md
