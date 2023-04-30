@@ -2,12 +2,4 @@
 ---
 
 @import "minima";
-
-img {
-  width: 100%;
-
-  margin-block-start: 10px;
-  margin-block-end: 40px;
-
-  filter: drop-shadow(0 0 10px lightgray);
-}
+@import "minima/custom-styles";
