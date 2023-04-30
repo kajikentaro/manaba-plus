@@ -11,5 +11,5 @@ sass:
     - _sass/minima
   
 header_pages:
-  - feature
-  - development
+  - feature/index.md
+  - development/index.md
