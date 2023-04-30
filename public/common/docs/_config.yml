@@ -1,0 +1,4 @@
+theme: minima
+
+minima:
+  skin: auto
