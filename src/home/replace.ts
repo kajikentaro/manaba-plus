@@ -29,7 +29,10 @@ const replaceFormerLink = async function () {
   const selfRegistrationItem = container.querySelector(
     '#h3-self-registration'
   )?.parentElement
-  if (selfRegistrationItem === null) {
+  if (
+    selfRegistrationItem === null ||
+    typeof selfRegistrationItem === 'undefined'
+  ) {
     return
   }
 
