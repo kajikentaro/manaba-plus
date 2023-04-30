@@ -4,7 +4,7 @@
 
 Manaba Plusならできます！！
 
-![](img/DnD.jpg)
+![](img/DnD.gif)
 
 ## タイムアウトしたからってログイン画面に移ってくれない中大SSOにキレ散らかしているそこのあなた！！
 
@@ -38,13 +38,13 @@ Manaba Plusはmanaba上の課題を締め切り順で一覧表示することが
 
 Manaba Plusはmanabaのホーム画面のレイアウトを変更することで必要最低限のことだけ表示することができます！！
 
-![](img/hide-or-move.png)
+![](img/hide-or-move.gif)
 
 ## 「使わないコース」なんて表示しなければいいのにと思っているそこのあなた！！
 
 Manaba Plusはmanabaのホーム画面のコースを非表示にすることができます！！
 
-![](img/remove-courses.png)
+![](img/remove-courses.gif)
 
 ## ⭐をつけたいそこのあなた！！
 
