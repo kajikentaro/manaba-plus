@@ -1,3 +1,14 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+post-content {
+  h1 {
+    display: none;
+  }
+}
+
 img {
   width: 100%;
 
