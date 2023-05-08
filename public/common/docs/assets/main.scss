@@ -7,13 +7,13 @@ post-content {
   h1 {
     display: none;
   }
-}
 
-img {
-  width: 100%;
+  img {
+    width: 100%;
 
-  margin-block-start: 10px;
-  margin-block-end: 40px;
+    margin-block-start: 10px;
+    margin-block-end: 40px;
 
-  filter: drop-shadow(0 0 10px lightgray);
+    filter: drop-shadow(0 0 10px lightgray);
+  }
 }
