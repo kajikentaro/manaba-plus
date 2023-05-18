@@ -30,7 +30,7 @@ Manaba Plusがmanabaのレポートの提出画面へのリンクを貼ります
 
 ## 課題を溜めがちなそこのあなた！！
 
-Manaba Plusはmanaba上の課題を締め切り順で一覧表示することができます！！
+Manaba Plusはmanaba上の課題の締切までの時間を表示し、それによって色分けすることができます！！
 
 ![](img/assignment-list.gif)
 
