@@ -12,5 +12,8 @@ do
     # If the source entry is directory, make it.
     [ -d "$s" ] && mkdir -p "$d" && continue
 
-    cp -u "$s" "$d"
+    # cp -u "$s" "$d"
+    if [ "$s" -nt "$d" ]; then
+        cp "$s" "$d"
+    fi
 done
