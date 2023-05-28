@@ -1,0 +1,13 @@
+@use '../base';
+
+.pagelimitview {
+  &.highlight {
+    width: fit-content;
+    margin-inline-end: auto;
+    padding: 5px 10px;
+    font-size: 1.5em;
+    color: white;
+    background-color: base.$primary-color-dark;
+    border-radius: 10px;
+  }
+}

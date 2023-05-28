@@ -418,6 +418,15 @@
       "dependency": "!transition-automatically"
     }
   },
+  "resources-page": {
+    "title": "コースコンテンツ",
+    "highlight-open-period": {
+      "hint": "公開期間を強調する",
+      "description": "チェックを入れると、コースコンテンツの公開期間を強調して表示します。",
+      "type": "checkbox",
+      "value": false
+    }
+  },
   "other": {
     "title": "その他",
     "reset-options": {
